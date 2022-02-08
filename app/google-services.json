@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "587787462511",
+    "project_id": "kakebe-shop-lira",
+    "storage_bucket": "kakebe-shop-lira.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:587787462511:android:ca1ecd412df87f964d2a9a",
+        "android_client_info": {
+          "package_name": "com.pkasemer.kakebeshoplira"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "587787462511-pq1l0399kge5n4r0jvn9tq6ptjfepp5a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDlyu12Irp9Ewr1-bgXWsebiA8mtH2wKgY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "587787462511-pq1l0399kge5n4r0jvn9tq6ptjfepp5a.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:587787462511:android:10558f993e61e6b84d2a9a",
+        "android_client_info": {
+          "package_name": "com.pkasemer.kakebeshoplira"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "587787462511-pq1l0399kge5n4r0jvn9tq6ptjfepp5a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDlyu12Irp9Ewr1-bgXWsebiA8mtH2wKgY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "587787462511-pq1l0399kge5n4r0jvn9tq6ptjfepp5a.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
