@@ -21,17 +21,6 @@
         tools:replace="android:icon">
         <activity android:name="com.pkasemer.kakebeshoplira.ManageOrders" />
 
-        <receiver
-            android:name="com.pkasemer.kakebeshoplira.Utils.NetworkStateChecker"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
-            </intent-filter>
-        </receiver>
-
-        <activity
-            android:name="com.pkasemer.kakebeshoplira.Demo"
-            android:exported="true" />
         <activity
             android:name="com.pkasemer.kakebeshoplira.PlaceOrder"
             android:exported="true" />

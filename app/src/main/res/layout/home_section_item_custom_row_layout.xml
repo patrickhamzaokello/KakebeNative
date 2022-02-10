@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@color/rootbg"
+    android:background="@color/white"
     android:clipToPadding="false"
     android:layout_margin="5dp"
     android:padding="10dp">
@@ -14,6 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:scaleType="fitXY"
+        app:cardElevation="0dp"
         app:cardCornerRadius="5dp">
 
         <ImageView
@@ -21,7 +22,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="fitXY"
-            android:background="@color/purple_500"
+            android:background="#C1000000"
             android:src="@drawable/beefstew"></ImageView>
 
         <ProgressBar
@@ -75,11 +76,11 @@
             android:id="@+id/item_price"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="left"
-            android:layout_toLeftOf="@+id/home_addToCart"
             android:layout_below="@+id/item_rating"
-            android:text="Ugx 3,800"
             android:layout_marginTop="10dp"
+            android:layout_toLeftOf="@+id/home_addToCart"
+            android:gravity="left"
+            android:text="Ugx 3,800"
             android:textColor="@color/black"
             android:textSize="14sp" />
 
@@ -93,7 +94,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_alignParentRight="true"
                 android:layout_alignBottom="@+id/item_price"
-                app:cardBackgroundColor="@color/black"
+                app:cardBackgroundColor="@color/purple_200"
                 app:cardCornerRadius="100dp">
 
                 <RelativeLayout
@@ -107,8 +108,8 @@
                         android:layout_height="match_parent"
                         android:layout_centerInParent="true"
                         android:background="@drawable/custom_plus_btn"
-                        android:theme="@style/WhiteBtn"
-                        android:backgroundTint="@color/white" />
+                        android:backgroundTint="@color/white"
+                        android:theme="@style/WhiteBtn" />
 
 
                 </RelativeLayout>

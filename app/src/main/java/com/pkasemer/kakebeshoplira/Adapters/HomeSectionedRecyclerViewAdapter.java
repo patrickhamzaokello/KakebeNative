@@ -11,7 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.pkasemer.kakebeshoplira.Models.SectionedCategoryResult;
+import com.pkasemer.kakebeshoplira.Models.Category;
 import com.pkasemer.kakebeshoplira.MySelectedCategory;
 import com.pkasemer.kakebeshoplira.R;
 import com.pkasemer.kakebeshoplira.RootActivity;
@@ -35,11 +35,11 @@ public class HomeSectionedRecyclerViewAdapter extends RecyclerView.Adapter<HomeS
     }
 
     private final Context context;
-    List<SectionedCategoryResult> sectionedCategoryResults;
+    List<Category> categories;
 
-    public HomeSectionedRecyclerViewAdapter(Context context, List<SectionedCategoryResult> sectionedCategoryResults) {
+    public HomeSectionedRecyclerViewAdapter(Context context, List<Category> categories) {
         this.context = context;
-        this.sectionedCategoryResults = sectionedCategoryResults;
+        this.categories = categories;
     }
 
     @Override
@@ -50,8 +50,8 @@ public class HomeSectionedRecyclerViewAdapter extends RecyclerView.Adapter<HomeS
 
     @Override
     public void onBindViewHolder(SectionViewHolder holder, int position) {
-        final SectionedCategoryResult sectionedCategoryResult = sectionedCategoryResults.get(position);
-        holder.sectionLabel.setText(sectionedCategoryResult.getName());
+        final Category category = categories.get(position);
+        holder.sectionLabel.setText(category.getName());
 
         //recycler view for items
 //        holder.itemRecyclerView.setHasFixedSize(true);
@@ -62,7 +62,7 @@ public class HomeSectionedRecyclerViewAdapter extends RecyclerView.Adapter<HomeS
         holder.itemRecyclerView.setLayoutManager(gridLayoutManager);
 
 
-        HomeSectionedRecyclerViewItemAdapter adapter = new HomeSectionedRecyclerViewItemAdapter(context, sectionedCategoryResult.getSectionedMenuItems());
+        HomeSectionedRecyclerViewItemAdapter adapter = new HomeSectionedRecyclerViewItemAdapter(context, category.getProducts());
         holder.itemRecyclerView.setAdapter(adapter);
 
         //show toast on click of show all button
@@ -73,7 +73,7 @@ public class HomeSectionedRecyclerViewAdapter extends RecyclerView.Adapter<HomeS
                 Intent i = new Intent(context.getApplicationContext(), MySelectedCategory.class);
                 //PACK DATA
                 i.putExtra("SENDER_KEY", "MyFragment");
-                i.putExtra("category_selected_key", sectionedCategoryResult.getId());
+                i.putExtra("category_selected_key", category.getId());
                 context.startActivity(i);
 
 
@@ -96,7 +96,7 @@ public class HomeSectionedRecyclerViewAdapter extends RecyclerView.Adapter<HomeS
 
     @Override
     public int getItemCount() {
-        return sectionedCategoryResults.size();
+        return categories.size();
     }
 
 

@@ -28,11 +28,11 @@ import com.pkasemer.kakebeshoplira.Adapters.HomeSliderAdapter;
 import com.pkasemer.kakebeshoplira.Apis.MovieApi;
 import com.pkasemer.kakebeshoplira.Apis.MovieService;
 import com.pkasemer.kakebeshoplira.Models.Banner;
+import com.pkasemer.kakebeshoplira.Models.Category;
 import com.pkasemer.kakebeshoplira.Models.HomeBannerModel;
+import com.pkasemer.kakebeshoplira.Models.HomeCategories;
 import com.pkasemer.kakebeshoplira.Models.HomeMenuCategoryModel;
 import com.pkasemer.kakebeshoplira.Models.HomeMenuCategoryModelResult;
-import com.pkasemer.kakebeshoplira.Models.SectionedCategoryMenu;
-import com.pkasemer.kakebeshoplira.Models.SectionedCategoryResult;
 import com.pkasemer.kakebeshoplira.R;
 import com.pkasemer.kakebeshoplira.RootActivity;
 import com.smarteist.autoimageslider.SliderView;
@@ -52,19 +52,13 @@ public class Home extends Fragment  {
     }
 
     private static final String TAG = "MainActivity";
-    RecyclerView rv;
     ProgressBar progressBar;
     LinearLayout errorLayout;
     Button btnRetry;
-    TextView txtError,categorylable,category_desc;
-    SliderView sliderView;
-    CardView welcome_card_layout;
+    TextView txtError;
 
     RecyclerView sectionedmenurecyclerView;
-    List<HomeMenuCategoryModelResult> homeMenuCategoryModelResults;
-    List<SectionedCategoryResult> sectionedCategoryResults;
-    List<Banner> banners;
-    HomeMenuCategoryAdapter homeMenuCategoryAdapter;
+    List<Category> categories;
     private MovieService movieService;
     private Object PaginationAdapterCallback;
 
@@ -86,30 +80,16 @@ public class Home extends Fragment  {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
         // new
-        rv = view.findViewById(R.id.home_main_recycler);
-        progressBar = view.findViewById(R.id.home_main_progress);
+        progressBar = view.findViewById(R.id.main_progress);
         errorLayout = view.findViewById(R.id.error_layout);
         btnRetry = view.findViewById(R.id.error_btn_retry);
         txtError = view.findViewById(R.id.error_txt_cause);
 
 
-        categorylable = view.findViewById(R.id.categorylable);
-        category_desc = view.findViewById(R.id.category_desc);
-        sliderView = view.findViewById(R.id.home_slider);
-        welcome_card_layout = view.findViewById(R.id.welcome_card_layout);
-
-
-        homeMenuCategoryAdapter = new HomeMenuCategoryAdapter(getContext());
-        StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.HORIZONTAL);
-        rv.setLayoutManager(staggeredGridLayoutManager);
-        rv.setItemAnimator(new DefaultItemAnimator());
-        rv.setAdapter(homeMenuCategoryAdapter);
-
         //init service and load data
         movieService = MovieApi.getClient(getContext()).create(MovieService.class);
 
         setUpHomeSectionRecyclerView(view);
-
 
         btnRetry.setOnClickListener(v -> {
             loadFirstPage();
@@ -148,9 +128,6 @@ public class Home extends Fragment  {
 
                 // To ensure list is visible when retry button in error view is clicked
                 hideErrorView();
-
-                homeslider();
-                populateHomeCategories();
                 populateHomeSectionRecyclerView();
             }
 
@@ -164,150 +141,62 @@ public class Home extends Fragment  {
         ulLoadFirstPage.execute();
     }
 
-    private void populateHomeCategories() {
-        callGetMenuCategoriesApi().enqueue(new Callback<HomeMenuCategoryModel>() {
-            @Override
-            public void onResponse(Call<HomeMenuCategoryModel> call, Response<HomeMenuCategoryModel> response) {
-                hideErrorView();
-                // Got data. Send it to adapter
-                homeMenuCategoryModelResults = fetchResults(response);
-                progressBar.setVisibility(View.GONE);
-                if (homeMenuCategoryModelResults.isEmpty()) {
-                    return;
-                } else {
-                    homeMenuCategoryAdapter.addAll(homeMenuCategoryModelResults);
-                    sliderView.setVisibility(View.VISIBLE);
-                    categorylable.setVisibility(View.VISIBLE);
-                    category_desc.setVisibility(View.VISIBLE);
-                    welcome_card_layout.setVisibility(View.VISIBLE);
-
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<HomeMenuCategoryModel> call, Throwable t) {
-                t.printStackTrace();
-                showErrorView(t);
-            }
-        });
-    }
 
     //populate Sectioned view
     private void populateHomeSectionRecyclerView() {
         // To ensure list is visible when retry button in error view is clicked
         hideErrorView();
-        callGetSectionedCategoriesApi().enqueue(new Callback<SectionedCategoryMenu>() {
+        callGetSectionedCategoriesApi().enqueue(new Callback<HomeCategories>() {
             @Override
-            public void onResponse(Call<SectionedCategoryMenu> call, Response<SectionedCategoryMenu> response) {
+            public void onResponse(Call<HomeCategories> call, Response<HomeCategories> response) {
                 hideErrorView();
                 // Got data. Send it to adapter
-                sectionedCategoryResults = fetchSectionedResults(response);
+                categories = fetchSectionedResults(response);
                 progressBar.setVisibility(View.GONE);
-                if (sectionedCategoryResults.isEmpty()) {
+                if (categories.isEmpty()) {
                     return;
                 } else {
-                    HomeSectionedRecyclerViewAdapter adapter = new HomeSectionedRecyclerViewAdapter(getContext(), sectionedCategoryResults);
+                    HomeSectionedRecyclerViewAdapter adapter = new HomeSectionedRecyclerViewAdapter(getContext(), categories);
                     sectionedmenurecyclerView.setAdapter(adapter);
                 }
 
             }
 
             @Override
-            public void onFailure(Call<SectionedCategoryMenu> call, Throwable t) {
+            public void onFailure(Call<HomeCategories> call, Throwable t) {
                 t.printStackTrace();
                 showErrorView(t);
             }
         });
 
     }
-
-    public void homeslider() {
-
-        callGetHomeBanners().enqueue(new Callback<HomeBannerModel>() {
-            @Override
-            public void onResponse(Call<HomeBannerModel> call, Response<HomeBannerModel> response) {
-                hideErrorView();
-                // Got data. Send it to adapter
-                banners = fetchBannerResults(response);
-                progressBar.setVisibility(View.GONE);
-                if (banners.isEmpty()) {
-                    return;
-                } else {
-                    // initializing the slider view.
-                    sliderView.setAutoCycleDirection(SliderView.LAYOUT_DIRECTION_LTR);
-                    sliderView.setScrollTimeInSec(3);
-                    sliderView.setAutoCycle(true);
-                    sliderView.startAutoCycle();
-                    // passing this array list inside our adapter class.
-                    HomeSliderAdapter adapter = new HomeSliderAdapter(getContext(), banners);
-                    sliderView.setSliderAdapter(adapter);
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<HomeBannerModel> call, Throwable t) {
-                t.printStackTrace();
-                showErrorView(t);
-            }
-        });
-
-    }
-
-
-    private List<HomeMenuCategoryModelResult> fetchResults(Response<HomeMenuCategoryModel> response) {
-        HomeMenuCategoryModel homeMenuCategoryModel = response.body();
-        int TOTAL_PAGES = homeMenuCategoryModel.getTotalPages();
-        System.out.println("total pages cat" + TOTAL_PAGES);
-        return homeMenuCategoryModel.getResults();
-    }
-
-    private List<SectionedCategoryResult> fetchSectionedResults(Response<SectionedCategoryMenu> response) {
-        SectionedCategoryMenu sectionedCategoryMenu = response.body();
-        int TOTAL_PAGES = sectionedCategoryMenu.getTotalPages();
-        System.out.println("total pages cat" + TOTAL_PAGES);
-        return sectionedCategoryMenu.getSectionedCategoryResults();
-    }
-
-    private List<Banner> fetchBannerResults(Response<HomeBannerModel> response) {
-        HomeBannerModel homeBannerModel = response.body();
-        int TOTAL_PAGES = homeBannerModel.getTotalPages();
-        System.out.println("total pages banners" + TOTAL_PAGES);
-        return homeBannerModel.getBanners();
-    }
-
-
-    /**
-     * Performs a Retrofit call to the callGetMenuCategoriesApi API.
-     * Same API call for Pagination.
-     */
-    private Call<HomeBannerModel> callGetHomeBanners() {
-        return movieService.getHomeBanners();
-    }
-
-    private Call<HomeMenuCategoryModel> callGetMenuCategoriesApi() {
-        return movieService.getMenuCategories();
-    }
-
-    private Call<SectionedCategoryMenu> callGetSectionedCategoriesApi() {
-        return movieService.getMenuCategoriesSection();
-    }
-
 
     private void setUpHomeSectionRecyclerView(View view) {
-        sectionedmenurecyclerView = view.findViewById(R.id.menu_sectioned_recyclerView);
-        sectionedmenurecyclerView.setHasFixedSize(true);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext()) {
-            @Override
-            public boolean canScrollVertically() {
-                return false;
-            }
-        };
+        sectionedmenurecyclerView = (RecyclerView) view.findViewById(R.id.main_recycler);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         sectionedmenurecyclerView.setLayoutManager(linearLayoutManager);
     }
 
 
+
+
+
+    private List<Category> fetchSectionedResults(Response<HomeCategories> response) {
+        HomeCategories homeCategories = response.body();
+        int TOTAL_PAGES = homeCategories.getTotalPages();
+        System.out.println("total pages cat" + TOTAL_PAGES);
+        return homeCategories.getCategories();
+    }
+
+
+
+
+
+    private Call<HomeCategories> callGetSectionedCategoriesApi() {
+        return movieService.getMenuCategoriesSection(
+                1
+        );
+    }
 
 
 

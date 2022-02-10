@@ -1,10 +1,10 @@
 package com.pkasemer.kakebeshoplira.Apis;
 
 import com.pkasemer.kakebeshoplira.Models.HomeBannerModel;
+import com.pkasemer.kakebeshoplira.Models.HomeCategories;
 import com.pkasemer.kakebeshoplira.Models.HomeMenuCategoryModel;
 import com.pkasemer.kakebeshoplira.Models.OrderRequest;
 import com.pkasemer.kakebeshoplira.Models.OrderResponse;
-import com.pkasemer.kakebeshoplira.Models.SectionedCategoryMenu;
 import com.pkasemer.kakebeshoplira.Models.SelectedCategoryMenuItem;
 import com.pkasemer.kakebeshoplira.Models.UserOrders;
 
@@ -31,8 +31,13 @@ public interface MovieService {
     @GET("menucategory/readPaginated.php")
     Call<HomeMenuCategoryModel> getMenuCategories();
 
-    @GET("menucategory/readSectionedMenu.php")
-    Call<SectionedCategoryMenu> getMenuCategoriesSection();
+    @GET("category/allcombined.php")
+    Call<HomeCategories> getMenuCategoriesSection(
+            @Query("page") int pageIndex
+    );
+
+
+
 
     @GET("banner/read.php")
     Call<HomeBannerModel> getHomeBanners();
@@ -46,11 +51,11 @@ public interface MovieService {
     );
 
 
+    //post all Orders
     @POST("orders/create_order.php")
     Call<OrderResponse> postCartOrder(
             @Body OrderRequest orderRequest
     );
-
 
 
     //fetch past orders
