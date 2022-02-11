@@ -26,6 +26,8 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.pkasemer.kakebeshoplira.Adapters.SearchAdapter;
 import com.pkasemer.kakebeshoplira.Apis.MovieApi;
 import com.pkasemer.kakebeshoplira.Apis.MovieService;
+import com.pkasemer.kakebeshoplira.Models.Product;
+import com.pkasemer.kakebeshoplira.Models.SearchResult;
 import com.pkasemer.kakebeshoplira.Models.SelectedCategoryMenuItem;
 import com.pkasemer.kakebeshoplira.Models.SelectedCategoryMenuItemResult;
 import com.pkasemer.kakebeshoplira.R;
@@ -63,9 +65,10 @@ public class Search extends Fragment implements PaginationAdapterCallback {
     // limiting to 5 for this tutorial, since total pages in actual API is very large. Feel free to modify.
     private static int TOTAL_PAGES = 5;
     private int currentPage = PAGE_START;
+    private String queryString;
     private final int selectCategoryId = 3;
 
-    List<SelectedCategoryMenuItemResult> selectedCategoryMenuItemResults;
+    List<Product> products;
 
     private MovieService movieService;
     private Object PaginationAdapterCallback;
@@ -138,7 +141,6 @@ public class Search extends Fragment implements PaginationAdapterCallback {
         //init service and load data
         movieService = MovieApi.getClient(getContext()).create(MovieService.class);
 
-        loadFirstPage();
 
         btnRetry.setOnClickListener(v -> loadFirstPage());
 
@@ -166,7 +168,10 @@ public class Search extends Fragment implements PaginationAdapterCallback {
             public boolean onQueryTextChange(String newText) {
                 // inside on query text change method we are
                 // calling a method to filter our recycler view.
-                filter(newText);
+                queryString = newText;
+                adapter.getMovies().clear();
+                adapter.notifyDataSetChanged();
+                loadFirstPage();
                 return false;
             }
         });
@@ -175,41 +180,12 @@ public class Search extends Fragment implements PaginationAdapterCallback {
         return view;
     }
 
-    private void filter(String text) {
-
-        // creating a new array list to filter our data.
-        List<SelectedCategoryMenuItemResult> filteredlist = new ArrayList<>();
-
-        // running a for loop to compare elements.
-        for (SelectedCategoryMenuItemResult item : selectedCategoryMenuItemResults) {
-            // checking if the entered string matched with any item of our recycler view.
-            if (item.getMenuName().toLowerCase().contains(text.toLowerCase())) {
-                // if the item is matched we are
-                // adding it to our filtered list.
-                filteredlist.add(item);
-            }
-        }
-        if (filteredlist.isEmpty()) {
-            // if no item is added in filtered list we are
-            // displaying a toast message as no data found.
-            Toast.makeText(getContext(), "No Data Found..", Toast.LENGTH_SHORT).show();
-//            loadNextPage();
-
-        } else {
-            // at last we are passing that filtered
-            // list to our adapter class.
-            System.out.println(filteredlist.size());
-            System.out.println(selectedCategoryMenuItemResults.size());
-            adapter.filterList(filteredlist);
-
-        }
-    }
 
 
     private void doRefresh() {
         progressBar.setVisibility(View.VISIBLE);
-        if (callTopRatedMoviesApi().isExecuted())
-            callTopRatedMoviesApi().cancel();
+        if (callSearchAPI().isExecuted())
+            callSearchAPI().cancel();
 
         // TODO: Check if data is stale.
         //  Execute network request if cache is expired; otherwise do not update data.
@@ -226,21 +202,21 @@ public class Search extends Fragment implements PaginationAdapterCallback {
         hideErrorView();
         currentPage = PAGE_START;
 
-        callTopRatedMoviesApi().enqueue(new Callback<SelectedCategoryMenuItem>() {
+        callSearchAPI().enqueue(new Callback<SearchResult>() {
             @Override
-            public void onResponse(Call<SelectedCategoryMenuItem> call, Response<SelectedCategoryMenuItem> response) {
+            public void onResponse(Call<SearchResult> call, Response<SearchResult> response) {
                 hideErrorView();
 
 //                Log.i(TAG, "onResponse: " + (response.raw().cacheResponse() != null ? "Cache" : "Network"));
 
                 // Got data. Send it to adapter
-                selectedCategoryMenuItemResults = fetchResults(response);
+                products = fetchResults(response);
                 progressBar.setVisibility(View.GONE);
-                if(selectedCategoryMenuItemResults.isEmpty()){
+                if(products != null){
+                    adapter.addAll(products);
+                } else {
                     showCategoryErrorView();
                     return;
-                } else {
-                    adapter.addAll(selectedCategoryMenuItemResults);
                 }
 
                 if (currentPage < TOTAL_PAGES) adapter.addLoadingFooter();
@@ -248,7 +224,7 @@ public class Search extends Fragment implements PaginationAdapterCallback {
             }
 
             @Override
-            public void onFailure(Call<SelectedCategoryMenuItem> call, Throwable t) {
+            public void onFailure(Call<SearchResult> call, Throwable t) {
                 t.printStackTrace();
                 showErrorView(t);
             }
@@ -257,35 +233,41 @@ public class Search extends Fragment implements PaginationAdapterCallback {
 
 
 
-    private List<SelectedCategoryMenuItemResult> fetchResults(Response<SelectedCategoryMenuItem> response) {
-        SelectedCategoryMenuItem selectedCategoryMenuItem = response.body();
-        TOTAL_PAGES = selectedCategoryMenuItem.getTotalPages();
+    private List<Product> fetchResults(Response<SearchResult> response) {
+        SearchResult searchResult = response.body();
+        TOTAL_PAGES = searchResult.getTotalPages();
         System.out.println("total pages" + TOTAL_PAGES);
 
-        return selectedCategoryMenuItem.getResults();
+        return searchResult.getProducts();
     }
 
     private void loadNextPage() {
         Log.d(TAG, "loadNextPage: " + currentPage);
 
-        callTopRatedMoviesApi().enqueue(new Callback<SelectedCategoryMenuItem>() {
+        callSearchAPI().enqueue(new Callback<SearchResult>() {
             @Override
-            public void onResponse(Call<SelectedCategoryMenuItem> call, Response<SelectedCategoryMenuItem> response) {
+            public void onResponse(Call<SearchResult> call, Response<SearchResult> response) {
                 Log.i(TAG, "onResponse: " + currentPage
                         + (response.raw().cacheResponse() != null ? "Cache" : "Network"));
 
                 adapter.removeLoadingFooter();
                 isLoading = false;
 
-                selectedCategoryMenuItemResults = fetchResults(response);
-                adapter.addAll(selectedCategoryMenuItemResults);
+                products = fetchResults(response);
+
+                if(products != null){
+                    adapter.addAll(products);
+                } else {
+                    showCategoryErrorView();
+                    return;
+                }
 
                 if (currentPage != TOTAL_PAGES) adapter.addLoadingFooter();
                 else isLastPage = true;
             }
 
             @Override
-            public void onFailure(Call<SelectedCategoryMenuItem> call, Throwable t) {
+            public void onFailure(Call<SearchResult> call, Throwable t) {
                 t.printStackTrace();
                 adapter.showRetry(true, fetchErrorMessage(t));
             }
@@ -299,8 +281,9 @@ public class Search extends Fragment implements PaginationAdapterCallback {
      * As {@link #currentPage} will be incremented automatically
      * by @{@link PaginationScrollListener} to load next page.
      */
-    private Call<SelectedCategoryMenuItem> callTopRatedMoviesApi() {
-        return movieService.getTopMenuItems(
+    private Call<SearchResult> callSearchAPI() {
+        return movieService.getSearch(
+                queryString,
                 currentPage
         );
     }
@@ -333,30 +316,7 @@ public class Search extends Fragment implements PaginationAdapterCallback {
     private void showCategoryErrorView() {
 
         progressBar.setVisibility(View.GONE);
-
-        AlertDialog.Builder android = new AlertDialog.Builder(getContext());
-        android.setTitle("Coming Soon");
-        android.setIcon(R.drawable.africanwoman);
-        android.setMessage("This Menu Category will be updated with great tastes soon, Stay Alert for Updates.")
-                .setCancelable(false)
-
-                .setPositiveButton("Home", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        //go to activity
-                        Intent intent = new Intent(getActivity(), RootActivity.class);
-                        startActivity(intent);
-                    }
-                });
-        android.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                //go to activity
-                Intent intent = new Intent(getActivity(), RootActivity.class);
-                startActivity(intent);
-            }
-        });
-        android.create().show();
+        Toast.makeText(getContext(), "No Result" ,Toast.LENGTH_SHORT).show();
 
     }
 

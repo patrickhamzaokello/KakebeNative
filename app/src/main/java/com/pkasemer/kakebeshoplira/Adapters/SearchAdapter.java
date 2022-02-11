@@ -31,7 +31,7 @@ import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.transition.DrawableCrossFadeFactory;
-import com.pkasemer.kakebeshoplira.Models.SelectedCategoryMenuItemResult;
+import com.pkasemer.kakebeshoplira.Models.Product;
 import com.pkasemer.kakebeshoplira.MyMenuDetail;
 import com.pkasemer.kakebeshoplira.R;
 import com.pkasemer.kakebeshoplira.RootActivity;
@@ -57,10 +57,11 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     private static final String BASE_URL_IMG = "";
 
 
-    private List<SelectedCategoryMenuItemResult> movieSelectedCategoryMenuItemResults;
+    private List<Product> products;
     private final Context context;
 
     private boolean isLoadingAdded = false;
+
     private boolean retryPageLoad = false;
 
     SenseDBHelper db;
@@ -82,15 +83,15 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     public SearchAdapter(Context context, PaginationAdapterCallback callback) {
         this.context = context;
         this.mCallback = callback;
-        movieSelectedCategoryMenuItemResults = new ArrayList<>();
+        products = new ArrayList<>();
     }
 
-    public List<SelectedCategoryMenuItemResult> getMovies() {
-        return movieSelectedCategoryMenuItemResults;
+    public List<Product> getMovies() {
+        return products;
     }
 
-    public void setMovies(List<SelectedCategoryMenuItemResult> movieSelectedCategoryMenuItemResults) {
-        this.movieSelectedCategoryMenuItemResults = movieSelectedCategoryMenuItemResults;
+    public void setMovies(List<Product> movieSelectedCategoryMenuItemResults) {
+        this.products = movieSelectedCategoryMenuItemResults;
     }
 
     @Override
@@ -121,11 +122,11 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
-        SelectedCategoryMenuItemResult selectedCategoryMenuItemResult = movieSelectedCategoryMenuItemResults.get(position); // Movie
+        Product product = products.get(position); // Movie
 
         db = new SenseDBHelper(context);
 
-        food_db_itemchecker = db.checktweetindb(String.valueOf(selectedCategoryMenuItemResult.getMenuId()));
+        food_db_itemchecker = db.checktweetindb(String.valueOf(product.getId()));
 
         updatecartCount();
 
@@ -136,15 +137,15 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             case ITEM:
                 final MovieVH movieVH = (MovieVH) holder;
 
-                movieVH.mMovieTitle.setText(selectedCategoryMenuItemResult.getMenuName());
+                movieVH.mMovieTitle.setText(product.getName());
 
-                movieVH.mMoviePrice.setText("Ugx " + NumberFormat.getNumberInstance(Locale.US).format(selectedCategoryMenuItemResult.getPrice()));
+                movieVH.mMoviePrice.setText("Ugx " + NumberFormat.getNumberInstance(Locale.US).format(product.getUnitPrice()));
 
-                movieVH.mMovieRating.setText( "Rating "+ selectedCategoryMenuItemResult.getRating() + " | "+ "5");
+                movieVH.mMovieRating.setText( "Rating "+ product.getDiscount() + " | "+ "5");
 
                 Glide
                         .with(context)
-                        .load(BASE_URL_IMG + selectedCategoryMenuItemResult.getMenuImage())
+                        .load(BASE_URL_IMG + product.getThumbnailImg())
                         .listener(new RequestListener<Drawable>() {
                             @Override
                             public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
@@ -187,8 +188,8 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                         Intent i = new Intent(context.getApplicationContext(), MyMenuDetail.class);
                         //PACK DATA
                         i.putExtra("SENDER_KEY", "MenuDetails");
-                        i.putExtra("selectMenuId", selectedCategoryMenuItemResult.getMenuId());
-                        i.putExtra("category_selected_key", selectedCategoryMenuItemResult.getMenuTypeId());
+                        i.putExtra("selectMenuId", product.getId());
+                        i.putExtra("category_selected_key", product.getCategoryId());
                         context.startActivity(i);
                     }
                 });
@@ -196,26 +197,26 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 movieVH.search_st_carttn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        food_db_itemchecker = db.checktweetindb(String.valueOf(selectedCategoryMenuItemResult.getMenuId()));
+                        food_db_itemchecker = db.checktweetindb(String.valueOf(product.getId()));
 
 
                         if (food_db_itemchecker) {
-                            db.addTweet(
-                                    selectedCategoryMenuItemResult.getMenuId(),
-                                    selectedCategoryMenuItemResult.getMenuName(),
-                                    selectedCategoryMenuItemResult.getPrice(),
-                                    selectedCategoryMenuItemResult.getDescription(),
-                                    selectedCategoryMenuItemResult.getMenuTypeId(),
-                                    selectedCategoryMenuItemResult.getMenuImage(),
-                                    selectedCategoryMenuItemResult.getBackgroundImage(),
-                                    selectedCategoryMenuItemResult.getIngredients(),
-                                    selectedCategoryMenuItemResult.getMenuStatus(),
-                                    selectedCategoryMenuItemResult.getCreated(),
-                                    selectedCategoryMenuItemResult.getModified(),
-                                    selectedCategoryMenuItemResult.getRating(),
-                                    minteger,
-                                    MENU_NOT_SYNCED_WITH_SERVER
-                            );
+//                            db.addTweet(
+//                                    product.getMenuId(),
+//                                    product.getMenuName(),
+//                                    product.getPrice(),
+//                                    product.getDescription(),
+//                                    product.getMenuTypeId(),
+//                                    product.getMenuImage(),
+//                                    product.getBackgroundImage(),
+//                                    product.getIngredients(),
+//                                    product.getMenuStatus(),
+//                                    product.getCreated(),
+//                                    product.getModified(),
+//                                    product.getRating(),
+//                                    minteger,
+//                                    MENU_NOT_SYNCED_WITH_SERVER
+//                            );
 
 
 
@@ -225,7 +226,7 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
 
                         } else {
-                            db.deleteTweet(String.valueOf(selectedCategoryMenuItemResult.getMenuId()));
+                            db.deleteTweet(String.valueOf(product.getId()));
 
                             movieVH.search_st_carttn.setBackground(context.getResources().getDrawable(R.drawable.custom_plus_btn));
 
@@ -264,13 +265,13 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     @Override
     public int getItemCount() {
-        return movieSelectedCategoryMenuItemResults == null ? 0 : movieSelectedCategoryMenuItemResults.size();
+        return products == null ? 0 : products.size();
     }
 
     @Override
     public int getItemViewType(int position) {
 
-        return (position == movieSelectedCategoryMenuItemResults.size() - 1 && isLoadingAdded) ?
+        return (position == products.size() - 1 && isLoadingAdded) ?
                 LOADING : ITEM;
     }
 
@@ -301,10 +302,7 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
    _________________________________________________________________________________________________
     */
 
-    private String formatYearLabel(SelectedCategoryMenuItemResult selectedCategoryMenuItemResult) {
-        return "Created | " +
-                selectedCategoryMenuItemResult.getCreated().substring(0, 4);
-    }
+
 
     private RequestBuilder<Drawable> loadImage(@NonNull String posterPath) {
         return GlideApp
@@ -313,21 +311,21 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 .centerCrop();
     }
 
-    public void add(SelectedCategoryMenuItemResult r) {
-        movieSelectedCategoryMenuItemResults.add(r);
-        notifyItemInserted(movieSelectedCategoryMenuItemResults.size() - 1);
+    public void add(Product r) {
+        products.add(r);
+        notifyItemInserted(products.size() - 1);
     }
 
-    public void addAll(List<SelectedCategoryMenuItemResult> moveSelectedCategoryMenuItemResults) {
-        for (SelectedCategoryMenuItemResult selectedCategoryMenuItemResult : moveSelectedCategoryMenuItemResults) {
+    public void addAll(List<Product> moveSelectedCategoryMenuItemResults) {
+        for (Product selectedCategoryMenuItemResult : moveSelectedCategoryMenuItemResults) {
             add(selectedCategoryMenuItemResult);
         }
     }
 
-    public void remove(SelectedCategoryMenuItemResult r) {
-        int position = movieSelectedCategoryMenuItemResults.indexOf(r);
+    public void remove(Product r) {
+        int position = products.indexOf(r);
         if (position > -1) {
-            movieSelectedCategoryMenuItemResults.remove(position);
+            products.remove(position);
             notifyItemRemoved(position);
         }
     }
@@ -346,30 +344,30 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     public void addLoadingFooter() {
         isLoadingAdded = true;
-        add(new SelectedCategoryMenuItemResult());
+        add(new Product());
     }
 
     public void removeLoadingFooter() {
         isLoadingAdded = false;
 
-        int position = movieSelectedCategoryMenuItemResults.size() - 1;
-        SelectedCategoryMenuItemResult selectedCategoryMenuItemResult = getItem(position);
+        int position = products.size() - 1;
+        Product selectedCategoryMenuItemResult = getItem(position);
 
         if (selectedCategoryMenuItemResult != null) {
-            movieSelectedCategoryMenuItemResults.remove(position);
+            products.remove(position);
             notifyItemRemoved(position);
         }
     }
 
     public void showRetry(boolean show, @Nullable String errorMsg) {
         retryPageLoad = show;
-        notifyItemChanged(movieSelectedCategoryMenuItemResults.size() - 1);
+        notifyItemChanged(products.size() - 1);
 
         if (errorMsg != null) this.errorMsg = errorMsg;
     }
 
-    public SelectedCategoryMenuItemResult getItem(int position) {
-        return movieSelectedCategoryMenuItemResults.get(position);
+    public Product getItem(int position) {
+        return products.get(position);
     }
 
     @Override
@@ -456,8 +454,8 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
 
     // method for filtering our recyclerview items.
-    public void filterList(List<SelectedCategoryMenuItemResult> filterllist) {
-        movieSelectedCategoryMenuItemResults = filterllist;
+    public void filterList(List<Product> filterllist) {
+        products = filterllist;
         notifyDataSetChanged();
     }
 

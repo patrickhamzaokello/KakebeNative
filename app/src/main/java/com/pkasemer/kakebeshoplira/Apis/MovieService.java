@@ -5,6 +5,7 @@ import com.pkasemer.kakebeshoplira.Models.HomeCategories;
 import com.pkasemer.kakebeshoplira.Models.HomeMenuCategoryModel;
 import com.pkasemer.kakebeshoplira.Models.OrderRequest;
 import com.pkasemer.kakebeshoplira.Models.OrderResponse;
+import com.pkasemer.kakebeshoplira.Models.SearchResult;
 import com.pkasemer.kakebeshoplira.Models.SelectedCategoryMenuItem;
 import com.pkasemer.kakebeshoplira.Models.UserOrders;
 
@@ -28,19 +29,20 @@ public interface MovieService {
             @Query("page") int pageIndex
     );
 
-    @GET("menucategory/readPaginated.php")
-    Call<HomeMenuCategoryModel> getMenuCategories();
+
 
     @GET("category/allcombined.php")
     Call<HomeCategories> getMenuCategoriesSection(
             @Query("page") int pageIndex
     );
 
+//    http://192.168.0.199:8080/projects/KakebeAPI/Requests/category/search.php?query=rings& page=1
+    @GET("category/search.php")
+    Call<SearchResult> getSearch(
+            @Query("query") String queryString,
+            @Query("page") int pageIndex
+    );
 
-
-
-    @GET("banner/read.php")
-    Call<HomeBannerModel> getHomeBanners();
 
 //    menus/menudetails.php?menuId=9&category=3&page=1
     @GET("menus/menudetails.php")

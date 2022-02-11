@@ -1,37 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/rootbg"
-    tools:context=".Fragments.Search">
+    android:background="@color/white"
+    tools:context=".Fragments.Search"
+    android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/purple_500"
-            >
 
             <SearchView
                 android:id="@+id/search_bar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                android:background="@color/white"
-                android:layout_margin="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@color/rootbg"
                 android:iconifiedByDefault="false"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                >
+                app:layout_constraintTop_toTopOf="parent">
+
                 <requestFocus />
             </SearchView>
-        </RelativeLayout>
 
 
 
@@ -48,7 +42,7 @@
                     android:id="@+id/seach_main_recycler"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@color/rootbg"
+                    android:background="@color/white"
                     android:clipToPadding="false"
                     android:paddingTop="10dp"
                     android:paddingBottom="@dimen/activity_margin_content" />
@@ -64,7 +58,6 @@
             <include layout="@layout/error_layout" />
 
         </FrameLayout>
-    </LinearLayout>
 
 
-</FrameLayout>
+</LinearLayout>
