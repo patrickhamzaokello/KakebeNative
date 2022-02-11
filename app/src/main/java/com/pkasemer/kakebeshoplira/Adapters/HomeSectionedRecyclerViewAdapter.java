@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -132,6 +133,22 @@ public class HomeSectionedRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
 
                 HomeSectionedRecyclerViewItemAdapter adapter = new HomeSectionedRecyclerViewItemAdapter(context, category.getProducts());
                 movieVH.itemRecyclerView.setAdapter(adapter);
+
+
+                //show toast on click of show all button
+                movieVH.showAllButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+//                        Intent i = new Intent(context.getApplicationContext(), MySelectedCategory.class);
+//                        //PACK DATA
+//                        i.putExtra("SENDER_KEY", "MyFragment");
+//                        i.putExtra("category_selected_key", sectionedCategoryResult.getId());
+//                        context.startActivity(i);
+
+                        Toast.makeText(v.getContext(), category.getName(), Toast.LENGTH_SHORT).show();
+
+                    }
+                });
 
 
                 break;
