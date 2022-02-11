@@ -4,7 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/rootbg"
-    android:layout_marginHorizontal="10dp"
     android:layout_marginTop="40dp"
     android:orientation="vertical">
 
@@ -23,7 +22,7 @@
             android:layout_alignParentLeft="true"
             android:fontFamily="@font/montserrat_bold"
             android:includeFontPadding="false"
-            android:text="Categories"
+            android:text="Featured Categories"
             android:textColor="@color/black"
             android:textSize="18sp" />
 
@@ -39,7 +38,6 @@
             android:text="Kakebe Shop Online"
             android:textColor="@color/light_black"
             android:textSize="14sp" />
-
 
 
     </RelativeLayout>

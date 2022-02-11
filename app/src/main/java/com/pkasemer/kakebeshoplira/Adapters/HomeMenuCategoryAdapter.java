@@ -111,6 +111,8 @@ public class HomeMenuCategoryAdapter extends RecyclerView.Adapter<RecyclerView.V
             case ITEM:
                 final MovieVH movieVH = (MovieVH) holder;
 
+                movieVH.category_name.setText(featuredCategory.getName());
+
 
                 Glide
                         .with(context)
@@ -300,11 +302,13 @@ public class HomeMenuCategoryAdapter extends RecyclerView.Adapter<RecyclerView.V
 
         private final ImageView mPosterImg;
         private final ProgressBar mProgress;
+        private  final  TextView category_name;
 
         public MovieVH(View itemView) {
             super(itemView);
             mPosterImg = itemView.findViewById(R.id.category_product_imageview);
             mProgress = itemView.findViewById(R.id.cat_product_image_progress);
+            category_name = itemView.findViewById(R.id.category_name);
         }
     }
 
