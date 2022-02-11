@@ -29,6 +29,7 @@ import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.transition.DrawableCrossFadeFactory;
+import com.pkasemer.kakebeshoplira.Models.FeaturedCategory;
 import com.pkasemer.kakebeshoplira.Models.HomeMenuCategoryModelResult;
 import com.pkasemer.kakebeshoplira.Models.SelectedCategoryMenuItemResult;
 import com.pkasemer.kakebeshoplira.MySelectedCategory;
@@ -52,7 +53,7 @@ public class HomeMenuCategoryAdapter extends RecyclerView.Adapter<RecyclerView.V
     private static final String BASE_URL_IMG = "";
 
 
-    private List<HomeMenuCategoryModelResult> movieHomeMenuCategoryModelResults;
+    private List<FeaturedCategory> featuredCategories;
     private final Context context;
 
     private boolean isLoadingAdded = false;
@@ -65,15 +66,15 @@ public class HomeMenuCategoryAdapter extends RecyclerView.Adapter<RecyclerView.V
 
     public HomeMenuCategoryAdapter(Context context) {
         this.context = context;
-        movieHomeMenuCategoryModelResults = new ArrayList<>();
+        featuredCategories = new ArrayList<>();
     }
 
-    public List<HomeMenuCategoryModelResult> getMovies() {
-        return movieHomeMenuCategoryModelResults;
+    public List<FeaturedCategory> getMovies() {
+        return featuredCategories;
     }
 
-    public void setMovies(List<HomeMenuCategoryModelResult> movieHomeMenuCategoryModelResults) {
-        this.movieHomeMenuCategoryModelResults = movieHomeMenuCategoryModelResults;
+    public void setMovies(List<FeaturedCategory> featuredCategories) {
+        this.featuredCategories = featuredCategories;
     }
 
     @Override
@@ -104,7 +105,7 @@ public class HomeMenuCategoryAdapter extends RecyclerView.Adapter<RecyclerView.V
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
-        HomeMenuCategoryModelResult homeMenuCategoryModelResult = movieHomeMenuCategoryModelResults.get(position); // Movie
+        FeaturedCategory featuredCategory = featuredCategories.get(position); // Movie
 
         switch (getItemViewType(position)) {
             case ITEM:
@@ -113,7 +114,7 @@ public class HomeMenuCategoryAdapter extends RecyclerView.Adapter<RecyclerView.V
 
                 Glide
                         .with(context)
-                        .load(BASE_URL_IMG + homeMenuCategoryModelResult.getImageCover())
+                        .load(BASE_URL_IMG + featuredCategory.getBanner())
                         .listener(new RequestListener<Drawable>() {
                             @Override
                             public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
@@ -140,7 +141,7 @@ public class HomeMenuCategoryAdapter extends RecyclerView.Adapter<RecyclerView.V
                         Intent i = new Intent(context.getApplicationContext(), MySelectedCategory.class);
                         //PACK DATA
                         i.putExtra("SENDER_KEY", "MyFragment");
-                        i.putExtra("category_selected_key", homeMenuCategoryModelResult.getId());
+                        i.putExtra("category_selected_key", featuredCategory.getId());
                         context.startActivity(i);
 
 
@@ -176,13 +177,13 @@ public class HomeMenuCategoryAdapter extends RecyclerView.Adapter<RecyclerView.V
 
     @Override
     public int getItemCount() {
-        return movieHomeMenuCategoryModelResults == null ? 0 : movieHomeMenuCategoryModelResults.size();
+        return featuredCategories == null ? 0 : featuredCategories.size();
     }
 
     @Override
     public int getItemViewType(int position) {
 
-        return (position == movieHomeMenuCategoryModelResults.size() - 1 && isLoadingAdded) ?
+        return (position == featuredCategories.size() - 1 && isLoadingAdded) ?
                 LOADING : ITEM;
 
     }
@@ -219,21 +220,21 @@ public class HomeMenuCategoryAdapter extends RecyclerView.Adapter<RecyclerView.V
                 .centerCrop();
     }
 
-    public void add(HomeMenuCategoryModelResult r) {
-        movieHomeMenuCategoryModelResults.add(r);
-        notifyItemInserted(movieHomeMenuCategoryModelResults.size() - 1);
+    public void add(FeaturedCategory r) {
+        featuredCategories.add(r);
+        notifyItemInserted(featuredCategories.size() - 1);
     }
 
-    public void addAll(List<HomeMenuCategoryModelResult> moveHomeMenuCategoryModelResults) {
-        for (HomeMenuCategoryModelResult homeMenuCategoryModelResult : moveHomeMenuCategoryModelResults) {
-            add(homeMenuCategoryModelResult);
+    public void addAll(List<FeaturedCategory> featuredCategories) {
+        for (FeaturedCategory featuredCategory : featuredCategories) {
+            add(featuredCategory);
         }
     }
 
-    public void remove(HomeMenuCategoryModelResult r) {
-        int position = movieHomeMenuCategoryModelResults.indexOf(r);
+    public void remove(FeaturedCategory r) {
+        int position = featuredCategories.indexOf(r);
         if (position > -1) {
-            movieHomeMenuCategoryModelResults.remove(position);
+            featuredCategories.remove(position);
             notifyItemRemoved(position);
         }
     }
@@ -252,30 +253,30 @@ public class HomeMenuCategoryAdapter extends RecyclerView.Adapter<RecyclerView.V
 
     public void addLoadingFooter() {
         isLoadingAdded = true;
-        add(new HomeMenuCategoryModelResult());
+        add(new FeaturedCategory());
     }
 
     public void removeLoadingFooter() {
         isLoadingAdded = false;
 
-        int position = movieHomeMenuCategoryModelResults.size() - 1;
-        HomeMenuCategoryModelResult homeMenuCategoryModelResult = getItem(position);
+        int position = featuredCategories.size() - 1;
+        FeaturedCategory featuredCategory = getItem(position);
 
-        if (homeMenuCategoryModelResult != null) {
-            movieHomeMenuCategoryModelResults.remove(position);
+        if (featuredCategory != null) {
+            featuredCategories.remove(position);
             notifyItemRemoved(position);
         }
     }
 
     public void showRetry(boolean show, @Nullable String errorMsg) {
         retryPageLoad = show;
-        notifyItemChanged(movieHomeMenuCategoryModelResults.size() - 1);
+        notifyItemChanged(featuredCategories.size() - 1);
 
         if (errorMsg != null) this.errorMsg = errorMsg;
     }
 
-    public HomeMenuCategoryModelResult getItem(int position) {
-        return movieHomeMenuCategoryModelResults.get(position);
+    public FeaturedCategory getItem(int position) {
+        return featuredCategories.get(position);
     }
 
     @Override

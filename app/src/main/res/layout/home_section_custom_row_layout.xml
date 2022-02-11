@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/rootbg"
+    android:layout_marginHorizontal="10dp"
     android:layout_marginTop="40dp"
     android:orientation="vertical">
 
@@ -11,9 +12,9 @@
         android:id="@+id/categorytitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:background="@color/purple_200"
-        android:paddingVertical="10dp">
+        android:background="@color/white"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="20dp">
 
         <TextView
             android:id="@+id/section_label"
@@ -23,10 +24,9 @@
             android:layout_alignParentLeft="true"
             android:fontFamily="@font/montserrat_bold"
             android:includeFontPadding="false"
-            android:paddingHorizontal="10dp"
             android:text="Section Name"
-            android:textColor="@color/white"
-            android:textSize="15sp" />
+            android:textColor="@color/black"
+            android:textSize="18sp" />
 
 
         <TextView
@@ -37,9 +37,8 @@
             android:layout_alignParentLeft="true"
             android:fontFamily="@font/montserrat"
             android:includeFontPadding="false"
-            android:paddingHorizontal="10dp"
             android:text="Kakebe Shop Online"
-            android:textColor="@color/white"
+            android:textColor="@color/light_black"
             android:textSize="14sp" />
 
 
@@ -49,13 +48,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="10dp"
             android:fontFamily="@font/montserrat_bold"
             android:paddingTop="8dp"
-            android:paddingRight="15dp"
             android:paddingBottom="8dp"
             android:text="View More"
-            android:textColor="@color/purple_200"
+            android:textColor="@color/black"
             android:textSize="12sp"
             app:backgroundTint="@color/white"
             app:layout_constraintStart_toStartOf="parent"

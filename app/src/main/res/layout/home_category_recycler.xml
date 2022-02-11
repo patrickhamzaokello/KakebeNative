@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/rootbg"
+    android:layout_marginHorizontal="10dp"
+    android:layout_marginTop="40dp"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/categorytitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="20dp">
+
+        <TextView
+            android:id="@+id/section_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:fontFamily="@font/montserrat_bold"
+            android:includeFontPadding="false"
+            android:text="Categories"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
+
+
+        <TextView
+            android:id="@+id/section_label_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/section_label"
+            android:layout_alignParentLeft="true"
+            android:fontFamily="@font/montserrat"
+            android:includeFontPadding="false"
+            android:text="Kakebe Shop Online"
+            android:textColor="@color/light_black"
+            android:textSize="14sp" />
+
+
+
+    </RelativeLayout>
+
+
+    <!--  recycler view for items -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/category_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/categorytitle" />
+</RelativeLayout>

@@ -20,6 +20,7 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.transition.DrawableCrossFadeFactory;
 import com.pkasemer.kakebeshoplira.Models.Banner;
+import com.pkasemer.kakebeshoplira.Models.SliderBanner;
 import com.pkasemer.kakebeshoplira.R;
 import com.smarteist.autoimageslider.SliderViewAdapter;
 
@@ -28,7 +29,7 @@ import java.util.List;
 public class HomeSliderAdapter extends SliderViewAdapter<HomeSliderAdapter.SliderAdapterViewHolder> {
 
     // list for storing urls of images.
-    private final List<Banner> banners;
+    private final List<SliderBanner> sliderBanners;
     private final Context context;
     private static final String BASE_URL_IMG = "";
 
@@ -36,9 +37,9 @@ public class HomeSliderAdapter extends SliderViewAdapter<HomeSliderAdapter.Slide
             new DrawableCrossFadeFactory.Builder().setCrossFadeEnabled(true).build();
 
     // Constructor
-    public HomeSliderAdapter(Context context, List<Banner> banners) {
+    public HomeSliderAdapter(Context context, List<SliderBanner> sliderBanners) {
         this.context = context;
-        this.banners = banners;
+        this.sliderBanners = sliderBanners;
     }
 
     // We are inflating the slider_layout
@@ -54,11 +55,11 @@ public class HomeSliderAdapter extends SliderViewAdapter<HomeSliderAdapter.Slide
     @Override
     public void onBindViewHolder(SliderAdapterViewHolder viewHolder, final int position) {
 
-        final Banner banner = banners.get(position);
+        final SliderBanner sliderBanner = sliderBanners.get(position);
 
         Glide
                 .with(viewHolder.itemView)
-                .load(BASE_URL_IMG + banner.getImageUrl())
+                .load(BASE_URL_IMG + sliderBanner.getFilePath())
                 .listener(new RequestListener<Drawable>() {
                     @Override
                     public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
@@ -83,7 +84,7 @@ public class HomeSliderAdapter extends SliderViewAdapter<HomeSliderAdapter.Slide
     // the count of our list.
     @Override
     public int getCount() {
-        return banners.size();
+        return sliderBanners.size();
     }
 
     static class SliderAdapterViewHolder extends SliderViewAdapter.ViewHolder {

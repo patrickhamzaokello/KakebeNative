@@ -1,6 +1,7 @@
 
 package com.pkasemer.kakebeshoplira.Models;
 
+
 import java.util.List;
 import javax.annotation.Generated;
 import com.google.gson.annotations.Expose;
@@ -9,6 +10,12 @@ import com.google.gson.annotations.SerializedName;
 @Generated("jsonschema2pojo")
 public class Category {
 
+    @SerializedName("sliderBanners")
+    @Expose
+    private List<SliderBanner> sliderBanners = null;
+    @SerializedName("featuredCategories")
+    @Expose
+    private List<FeaturedCategory> featuredCategories = null;
     @SerializedName("id")
     @Expose
     private Integer id;
@@ -29,7 +36,7 @@ public class Category {
     private Integer commisionRate;
     @SerializedName("banner")
     @Expose
-    private Object banner;
+    private String banner;
     @SerializedName("icon")
     @Expose
     private Object icon;
@@ -60,6 +67,22 @@ public class Category {
     @SerializedName("products")
     @Expose
     private List<Product> products = null;
+
+    public List<SliderBanner> getSliderBanners() {
+        return sliderBanners;
+    }
+
+    public void setSliderBanners(List<SliderBanner> sliderBanners) {
+        this.sliderBanners = sliderBanners;
+    }
+
+    public List<FeaturedCategory> getFeaturedCategories() {
+        return featuredCategories;
+    }
+
+    public void setFeaturedCategories(List<FeaturedCategory> featuredCategories) {
+        this.featuredCategories = featuredCategories;
+    }
 
     public Integer getId() {
         return id;
@@ -109,11 +132,11 @@ public class Category {
         this.commisionRate = commisionRate;
     }
 
-    public Object getBanner() {
+    public String getBanner() {
         return banner;
     }
 
-    public void setBanner(Object banner) {
+    public void setBanner(String banner) {
         this.banner = banner;
     }
 

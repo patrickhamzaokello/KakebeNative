@@ -20,8 +20,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestBuilder;
@@ -33,10 +35,12 @@ import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.transition.DrawableCrossFadeFactory;
 import com.pkasemer.kakebeshoplira.Models.Category;
 import com.pkasemer.kakebeshoplira.MyMenuDetail;
+import com.pkasemer.kakebeshoplira.MySelectedCategory;
 import com.pkasemer.kakebeshoplira.R;
 import com.pkasemer.kakebeshoplira.RootActivity;
 import com.pkasemer.kakebeshoplira.Utils.PaginationAdapterCallback;
 import com.pkasemer.kakebeshoplira.localDatabase.SenseDBHelper;
+import com.smarteist.autoimageslider.SliderView;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -52,6 +56,7 @@ public class HomeSectionedRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
     private static final int ITEM = 0;
     private static final int LOADING = 1;
     private static final int HERO = 2;
+    private static final int CATEGORY = 3;
 
     //    private static final String BASE_URL_IMG = "https://image.tmdb.org/t/p/w150";
     private static final String BASE_URL_IMG = "";
@@ -64,9 +69,11 @@ public class HomeSectionedRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
     private boolean retryPageLoad = false;
 
 
-
     private final PaginationAdapterCallback mCallback;
     private String errorMsg;
+
+    DrawableCrossFadeFactory factory =
+            new DrawableCrossFadeFactory.Builder().setCrossFadeEnabled(true).build();
 
     public HomeSectionedRecyclerViewAdapter(Context context, PaginationAdapterCallback callback) {
         this.context = context;
@@ -91,6 +98,10 @@ public class HomeSectionedRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
             case HERO:
                 View viewHero = inflater.inflate(R.layout.home_hero_layout, parent, false);
                 viewHolder = new HeroVH(viewHero);
+                break;
+            case CATEGORY:
+                View viewCategory = inflater.inflate(R.layout.home_category_recycler, parent, false);
+                viewHolder = new CategoryVH(viewCategory);
                 break;
             case ITEM:
                 viewHolder = getViewHolder(parent, inflater);
@@ -119,13 +130,24 @@ public class HomeSectionedRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
         switch (getItemViewType(position)) {
             case HERO:
                 final HeroVH heroVh = (HeroVH) holder;
+                heroVh.sliderView.setAutoCycleDirection(SliderView.LAYOUT_DIRECTION_LTR);
+                heroVh.sliderView.setScrollTimeInSec(3);
+                heroVh.sliderView.setAutoCycle(true);
+                heroVh.sliderView.startAutoCycle();
+                // passing this array list inside our adapter class.
+                HomeSliderAdapter slideradapter = new HomeSliderAdapter(context, category.getSliderBanners());
+                heroVh.sliderView.setSliderAdapter(slideradapter);
+                break;
+            case CATEGORY:
+                final CategoryVH categoryVH = (CategoryVH) holder;
+                HomeMenuCategoryAdapter homeMenuCategoryAdapter = new HomeMenuCategoryAdapter(context);
+                StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.HORIZONTAL);
+                categoryVH.category_recycler_view.setLayoutManager(staggeredGridLayoutManager);
+                categoryVH.category_recycler_view.setItemAnimator(new DefaultItemAnimator());
+                categoryVH.category_recycler_view.setAdapter(homeMenuCategoryAdapter);
+                homeMenuCategoryAdapter.addAll(category.getFeaturedCategories());
 
-//                heroVh.mMovieTitle.setText(selectedCategoryMenuItemResult.getMenuName());
-//                heroVh.mYear.setText(formatYearLabel(selectedCategoryMenuItemResult));
-//                heroVh.mMovieDesc.setText(selectedCategoryMenuItemResult.getDescription());
-//
-//                loadImage(selectedCategoryMenuItemResult.getBackgroundImage())
-//                        .into(heroVh.mPosterImg);
+
                 break;
             case ITEM:
                 final MovieVH movieVH = (MovieVH) holder;
@@ -194,7 +216,10 @@ public class HomeSectionedRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
     public int getItemViewType(int position) {
         if (position == 0) {
             return HERO;
-        } else {
+        } else if(position == 1){
+            return CATEGORY;
+        }
+        else {
             return (position == categories.size() - 1 && isLoadingAdded) ?
                     LOADING : ITEM;
         }
@@ -219,8 +244,6 @@ public class HomeSectionedRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
    Helpers
    _________________________________________________________________________________________________
     */
-
-
 
 
     public void add(Category r) {
@@ -293,13 +316,26 @@ public class HomeSectionedRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
      */
 
     protected class HeroVH extends RecyclerView.ViewHolder {
-//        private final TextView mMovieTitle;
-//        private final ImageView mPosterImg;
+
+        private final SliderView sliderView;
 
         public HeroVH(View itemView) {
             super(itemView);
             // init views
-//            mMovieTitle = itemView.findViewById(R.id.movie_title);
+            sliderView = itemView.findViewById(R.id.home_slider);
+
+        }
+    }
+
+    protected class CategoryVH extends RecyclerView.ViewHolder {
+
+        private final RecyclerView category_recycler_view;
+
+        public CategoryVH(View itemView) {
+            super(itemView);
+            // init views
+            category_recycler_view = itemView.findViewById(R.id.category_recycler_view);
+
         }
     }
 
