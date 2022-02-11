@@ -89,7 +89,7 @@ public class HomeSectionedRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
 
         switch (viewType) {
             case HERO:
-                View viewHero = inflater.inflate(R.layout.selected_category_item_hero, parent, false);
+                View viewHero = inflater.inflate(R.layout.home_hero_layout, parent, false);
                 viewHolder = new HeroVH(viewHero);
                 break;
             case ITEM:
@@ -116,8 +116,17 @@ public class HomeSectionedRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
 
         Category category = categories.get(position); // Movie
 
-
         switch (getItemViewType(position)) {
+            case HERO:
+                final HeroVH heroVh = (HeroVH) holder;
+
+//                heroVh.mMovieTitle.setText(selectedCategoryMenuItemResult.getMenuName());
+//                heroVh.mYear.setText(formatYearLabel(selectedCategoryMenuItemResult));
+//                heroVh.mMovieDesc.setText(selectedCategoryMenuItemResult.getDescription());
+//
+//                loadImage(selectedCategoryMenuItemResult.getBackgroundImage())
+//                        .into(heroVh.mPosterImg);
+                break;
             case ITEM:
                 final MovieVH movieVH = (MovieVH) holder;
                 movieVH.sectionLabel.setText(category.getName());
@@ -183,9 +192,12 @@ public class HomeSectionedRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
 
     @Override
     public int getItemViewType(int position) {
-
-        return (position == categories.size() - 1 && isLoadingAdded) ?
-                LOADING : ITEM;
+        if (position == 0) {
+            return HERO;
+        } else {
+            return (position == categories.size() - 1 && isLoadingAdded) ?
+                    LOADING : ITEM;
+        }
     }
 
     public void switchContent(int id, Fragment fragment) {
@@ -281,18 +293,13 @@ public class HomeSectionedRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
      */
 
     protected class HeroVH extends RecyclerView.ViewHolder {
-        private final TextView mMovieTitle;
-        private final TextView mMovieDesc;
-        private final TextView mYear;
-        private final ImageView mPosterImg;
+//        private final TextView mMovieTitle;
+//        private final ImageView mPosterImg;
 
         public HeroVH(View itemView) {
             super(itemView);
             // init views
-            mMovieTitle = itemView.findViewById(R.id.movie_title);
-            mMovieDesc = itemView.findViewById(R.id.movie_desc);
-            mYear = itemView.findViewById(R.id.movie_year);
-            mPosterImg = itemView.findViewById(R.id.movie_poster);
+//            mMovieTitle = itemView.findViewById(R.id.movie_title);
         }
     }
 
