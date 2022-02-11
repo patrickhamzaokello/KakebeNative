@@ -4,6 +4,12 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/KaKebe/AndroidStudioProjects/KakebeShop/app/src/main/res/layout/activity_my_selected_category.xml" value="0.16530797101449277" />
+        <entry key="..\:/Users/KaKebe/AndroidStudioProjects/KakebeShop/app/src/main/res/layout/dialog_change_location.xml" value="0.1671195652173913" />
+        <entry key="..\:/Users/KaKebe/AndroidStudioProjects/KakebeShop/app/src/main/res/layout/dialog_order_confirmation.xml" value="0.1671195652173913" />
+        <entry key="..\:/Users/KaKebe/AndroidStudioProjects/KakebeShop/app/src/main/res/layout/dialog_order_confirmation_btns.xml" value="0.1671195652173913" />
+        <entry key="..\:/Users/KaKebe/AndroidStudioProjects/KakebeShop/app/src/main/res/layout/dialog_order_failed.xml" value="0.1671195652173913" />
+        <entry key="..\:/Users/KaKebe/AndroidStudioProjects/KakebeShop/app/src/main/res/layout/dialog_order_not_found.xml" value="0.1671195652173913" />
+        <entry key="..\:/Users/KaKebe/AndroidStudioProjects/KakebeShop/app/src/main/res/layout/dialog_update_app.xml" value="0.1671195652173913" />
         <entry key="..\:/Users/KaKebe/AndroidStudioProjects/KakebeShop/app/src/main/res/layout/fragment_home.xml" value="0.16530797101449277" />
         <entry key="..\:/Users/KaKebe/AndroidStudioProjects/KakebeShop/app/src/main/res/layout/fragment_search.xml" value="0.16530797101449277" />
         <entry key="..\:/Users/KaKebe/AndroidStudioProjects/KakebeShop/app/src/main/res/layout/home_category_recycler.xml" value="0.15942028985507245" />
