@@ -43,4 +43,5 @@
     <string name="google_maps_key">AIzaSyB9MxxJBmzLHdfsMEZSdV0vORR_MRwirPI</string>
     <string name="i_am_here">I am Here</string>
     <string name="provider_failed">Provider Failed</string>
+    <string name="search_hint">Search</string>
 </resources>
