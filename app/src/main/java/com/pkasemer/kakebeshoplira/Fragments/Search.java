@@ -23,10 +23,13 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.pkasemer.kakebeshoplira.Adapters.PreviousSearchAdapter;
 import com.pkasemer.kakebeshoplira.Adapters.SearchAdapter;
 import com.pkasemer.kakebeshoplira.Apis.MovieApi;
 import com.pkasemer.kakebeshoplira.Apis.MovieService;
 import com.pkasemer.kakebeshoplira.Models.Product;
+import com.pkasemer.kakebeshoplira.Models.SearchCategoriee;
+import com.pkasemer.kakebeshoplira.Models.SearchHome;
 import com.pkasemer.kakebeshoplira.Models.SearchResult;
 import com.pkasemer.kakebeshoplira.Models.SelectedCategoryMenuItem;
 import com.pkasemer.kakebeshoplira.Models.SelectedCategoryMenuItemResult;
@@ -49,6 +52,7 @@ public class Search extends Fragment implements PaginationAdapterCallback {
     private static final String TAG = "MainActivity";
 
     SearchAdapter adapter;
+    PreviousSearchAdapter psearchAdapter;
     GridLayoutManager gridLayoutManager;
 
     RecyclerView rv;
@@ -104,6 +108,7 @@ public class Search extends Fragment implements PaginationAdapterCallback {
         swipeRefreshLayout = view.findViewById(R.id.seach_main_swiperefresh);
 
         adapter = new SearchAdapter(getContext(),  this);
+        psearchAdapter = new PreviousSearchAdapter(getContext(), this);
 
         gridLayoutManager = new GridLayoutManager(getContext(), 2);
         rv.setLayoutManager(gridLayoutManager);
@@ -111,7 +116,8 @@ public class Search extends Fragment implements PaginationAdapterCallback {
 
         rv.setItemAnimator(new DefaultItemAnimator());
 
-        rv.setAdapter(adapter);
+//        rv.setAdapter(adapter);
+        rv.setAdapter(psearchAdapter);
 
         rv.addOnScrollListener(new GridPaginationScrollListener(gridLayoutManager) {
             @Override
@@ -146,6 +152,7 @@ public class Search extends Fragment implements PaginationAdapterCallback {
 
         swipeRefreshLayout.setOnRefreshListener(this::doRefresh);
 
+        loadSearchHome();
 
 
         // Locate the EditText in listview_main.xml
@@ -195,6 +202,8 @@ public class Search extends Fragment implements PaginationAdapterCallback {
         swipeRefreshLayout.setRefreshing(false);
     }
 
+
+
     private void loadFirstPage() {
         Log.d(TAG, "loadFirstPage: ");
 
@@ -229,6 +238,53 @@ public class Search extends Fragment implements PaginationAdapterCallback {
                 showErrorView(t);
             }
         });
+    }
+
+
+    private void loadSearchHome() {
+        Log.d(TAG, "loadMostSearch: ");
+
+        // To ensure list is visible when retry button in error view is clicked
+        hideErrorView();
+        currentPage = PAGE_START;
+
+        callMostSearched().enqueue(new Callback<SearchHome>() {
+            @Override
+            public void onResponse(Call<SearchHome> call, Response<SearchHome> response) {
+                hideErrorView();
+
+                Log.i(TAG, "onResponse: " + (response.raw().cacheResponse() != null ? "Cache" : "Network"));
+
+                // Got data. Send it to adapter
+                List<SearchCategoriee> searchCategoriee = fetchMostSearched(response);
+                Log.i("searchCategoriee", String.valueOf(response.raw()));
+
+                progressBar.setVisibility(View.GONE);
+                if(searchCategoriee != null){
+                    psearchAdapter.addAll(searchCategoriee);
+                } else {
+                    showCategoryErrorView();
+                    return;
+                }
+
+                if (currentPage < TOTAL_PAGES) psearchAdapter.addLoadingFooter();
+                else isLastPage = true;
+            }
+
+            @Override
+            public void onFailure(Call<SearchHome> call, Throwable t) {
+                t.printStackTrace();
+                showErrorView(t);
+            }
+        });
+    }
+
+    private List<SearchCategoriee> fetchMostSearched(Response<SearchHome> response) {
+        SearchHome searchHome = response.body();
+        TOTAL_PAGES = searchHome.getTotalPages();
+        System.out.println("total pages" + TOTAL_PAGES);
+
+        return searchHome.getSearchCategoriees();
     }
 
 
@@ -284,6 +340,12 @@ public class Search extends Fragment implements PaginationAdapterCallback {
     private Call<SearchResult> callSearchAPI() {
         return movieService.getSearch(
                 queryString,
+                currentPage
+        );
+    }
+
+    private Call<SearchHome> callMostSearched() {
+        return movieService.getMostSearched(
                 currentPage
         );
     }
