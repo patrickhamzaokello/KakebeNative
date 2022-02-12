@@ -10,7 +10,7 @@
     </style>
 
     <style name="CircularProgress" parent="Theme.AppCompat.Light">
-        <item name="colorAccent">#E3F2C2</item>
+        <item name="colorAccent">#FF1100</item>
     </style>
 
     <style name="Closebutton" parent="Theme.AppCompat.Light">

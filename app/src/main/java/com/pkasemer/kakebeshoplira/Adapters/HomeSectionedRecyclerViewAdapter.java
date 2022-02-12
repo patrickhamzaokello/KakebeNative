@@ -318,11 +318,26 @@ public class HomeSectionedRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
     protected class HeroVH extends RecyclerView.ViewHolder {
 
         private final SliderView sliderView;
+        private final ImageView headertopslider;
 
         public HeroVH(View itemView) {
             super(itemView);
             // init views
             sliderView = itemView.findViewById(R.id.home_slider);
+            headertopslider  = itemView.findViewById(R.id.headertopslider);
+//
+//            Glide.with(itemView)
+//                    .load("https://media.giphy.com/media/98uBZTzlXMhkk/giphy.gif")
+//                    .into(headertopslider);
+
+            /*from raw folder*/
+//            Glide.with(itemView)
+//                    .load("https://d2t03bblpoql2z.cloudfront.net/uploads/all/nv4CX8DB7REmZCoQ1FATPb6RiPoEl5o8OG8yDdWz.png")
+//                    .into(headertopslider);
+
+            Glide.with(itemView)
+                    .load("https://d2t03bblpoql2z.cloudfront.net/uploads/all/LrSQZup5egNb4kdjN8qYxtJ7YT5WmLrjWk3EUwV2.gif")
+                    .into(headertopslider);
 
         }
     }

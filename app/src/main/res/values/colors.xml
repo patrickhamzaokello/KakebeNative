@@ -30,11 +30,11 @@
     <color name="mygreen">#064025</color>
     <color name="buttonGreen">#175313</color>
 
-    <color name="profilecards">#292B33</color>
+    <color name="profilecards">#FF2C42</color>
 
     <color name="sweetRed">#FF0012</color>
     <color name="buttonRed">#CE2630</color>
-    <color name="btnClose">#A6A6A6</color>
+    <color name="btnClose">#FFB1B1</color>
 
     <color name="onboardingBG">#fff</color>
     <color name="niceGreen">#15950D</color>
