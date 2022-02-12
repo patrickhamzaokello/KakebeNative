@@ -62,7 +62,6 @@ public class LoginMaterial extends AppCompatActivity {
         loginbtn = findViewById(R.id.login_btn);
         logoText = findViewById(R.id.login_welcomeback);
         sloganText = findViewById(R.id.login_subtext);
-        image = findViewById(R.id.loginlogo);
 
         username_layout = findViewById(R.id.login_username);
         password_layout = findViewById(R.id.login_password);

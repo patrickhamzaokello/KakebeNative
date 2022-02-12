@@ -16,7 +16,6 @@
     <color name="light_black">#404040</color>
 
 
-
     <color name="green1">#ECF2BB</color>
     <color name="green2">#D9CA9C</color>
     <color name="green3">#D9564A</color>
@@ -24,7 +23,6 @@
 
     <color name="changebtn">#228765</color>
     <color name="order_locationcolor">#228765</color>
-
 
 
     <color name="mygreen">#064025</color>
@@ -40,6 +38,7 @@
     <color name="niceGreen">#15950D</color>
     <color name="niceBlue">#0075D3</color>
     <color name="pendingstatus">#D59F00</color>
+    <color name="accountcolors">#FFE0E0</color>
 
 
 </resources>
