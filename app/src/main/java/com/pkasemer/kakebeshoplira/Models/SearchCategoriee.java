@@ -9,9 +9,12 @@ import com.google.gson.annotations.SerializedName;
 @Generated("jsonschema2pojo")
 public class SearchCategoriee {
 
-    @SerializedName("previousSearches")
+    @SerializedName("popularSearch")
     @Expose
-    private PreviousSearches previousSearches;
+    private List<PopularSearch> popularSearch = null;
+    @SerializedName("featuredCategories")
+    @Expose
+    private List<FeaturedCategory> featuredCategories = null;
     @SerializedName("id")
     @Expose
     private Integer id;
@@ -50,10 +53,10 @@ public class SearchCategoriee {
     private String slug;
     @SerializedName("meta_title")
     @Expose
-    private Object metaTitle;
+    private String metaTitle;
     @SerializedName("meta_description")
     @Expose
-    private Object metaDescription;
+    private String metaDescription;
     @SerializedName("created_at")
     @Expose
     private String createdAt;
@@ -64,12 +67,20 @@ public class SearchCategoriee {
     @Expose
     private List<Product> products = null;
 
-    public PreviousSearches getPreviousSearches() {
-        return previousSearches;
+    public List<PopularSearch> getPopularSearch() {
+        return popularSearch;
     }
 
-    public void setPreviousSearches(PreviousSearches previousSearches) {
-        this.previousSearches = previousSearches;
+    public void setPopularSearch(List<PopularSearch> popularSearch) {
+        this.popularSearch = popularSearch;
+    }
+
+    public List<FeaturedCategory> getFeaturedCategories() {
+        return featuredCategories;
+    }
+
+    public void setFeaturedCategories(List<FeaturedCategory> featuredCategories) {
+        this.featuredCategories = featuredCategories;
     }
 
     public Integer getId() {
@@ -168,19 +179,19 @@ public class SearchCategoriee {
         this.slug = slug;
     }
 
-    public Object getMetaTitle() {
+    public String getMetaTitle() {
         return metaTitle;
     }
 
-    public void setMetaTitle(Object metaTitle) {
+    public void setMetaTitle(String metaTitle) {
         this.metaTitle = metaTitle;
     }
 
-    public Object getMetaDescription() {
+    public String getMetaDescription() {
         return metaDescription;
     }
 
-    public void setMetaDescription(Object metaDescription) {
+    public void setMetaDescription(String metaDescription) {
         this.metaDescription = metaDescription;
     }
 

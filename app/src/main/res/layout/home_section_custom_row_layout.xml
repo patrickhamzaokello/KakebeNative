@@ -20,8 +20,9 @@
             android:id="@+id/section_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/section_show_all_button"
             android:layout_alignParentLeft="true"
+            android:layout_marginRight="10dp"
+            android:layout_toLeftOf="@+id/section_show_all_button"
             android:fontFamily="@font/montserrat_bold"
             android:includeFontPadding="false"
             android:text="Section Name"
@@ -35,6 +36,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/section_label"
             android:layout_alignParentLeft="true"
+            android:layout_marginRight="10dp"
+            android:layout_toLeftOf="@+id/section_show_all_button"
             android:fontFamily="@font/montserrat"
             android:includeFontPadding="false"
             android:text="Kakebe Shop Online"
@@ -42,21 +45,14 @@
             android:textSize="14sp" />
 
 
-        <com.google.android.material.button.MaterialButton
+        <Button
             android:id="@+id/section_show_all_button"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_alignParentRight="true"
-            android:fontFamily="@font/montserrat_bold"
-            android:paddingTop="8dp"
-            android:paddingBottom="8dp"
-            android:text="View More"
-            android:textColor="@color/black"
-            android:textSize="12sp"
-            app:backgroundTint="@color/white"
-            app:layout_constraintStart_toStartOf="parent"
-            app:strokeWidth="0dp" />
+            android:background="@drawable/custom_rightarrow_btn"
+            android:backgroundTint="@color/white"
+            android:theme="@style/BlackBtn" />
 
 
     </RelativeLayout>

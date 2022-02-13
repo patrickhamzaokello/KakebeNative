@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Kakebe Native</string>
+    <string name="app_name">Kakebe</string>
     <!--Title-->
 
     <string name="first_slide_title">Welcome!</string>

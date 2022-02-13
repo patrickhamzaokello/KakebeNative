@@ -13,37 +13,24 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.SearchView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.pkasemer.kakebeshoplira.Adapters.HomeSectionedRecyclerViewAdapter;
-import com.pkasemer.kakebeshoplira.Adapters.PreviousSearchAdapter;
-import com.pkasemer.kakebeshoplira.Adapters.SearchAdapter;
+import com.pkasemer.kakebeshoplira.Adapters.SearchModernRecyclerViewAdapter;
 import com.pkasemer.kakebeshoplira.Apis.MovieApi;
 import com.pkasemer.kakebeshoplira.Apis.MovieService;
-import com.pkasemer.kakebeshoplira.Models.Category;
-import com.pkasemer.kakebeshoplira.Models.HomeCategories;
-import com.pkasemer.kakebeshoplira.Models.Product;
 import com.pkasemer.kakebeshoplira.Models.SearchCategoriee;
 import com.pkasemer.kakebeshoplira.Models.SearchHome;
-import com.pkasemer.kakebeshoplira.Models.SearchResult;
-import com.pkasemer.kakebeshoplira.Models.SelectedCategoryMenuItem;
-import com.pkasemer.kakebeshoplira.Models.SelectedCategoryMenuItemResult;
 import com.pkasemer.kakebeshoplira.R;
 import com.pkasemer.kakebeshoplira.RootActivity;
-import com.pkasemer.kakebeshoplira.Utils.GridPaginationScrollListener;
 import com.pkasemer.kakebeshoplira.Utils.PaginationAdapterCallback;
 import com.pkasemer.kakebeshoplira.Utils.PaginationScrollListener;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeoutException;
 
@@ -56,7 +43,7 @@ public class Search extends Fragment implements PaginationAdapterCallback {
 
     private static final String TAG = "MainActivity";
 
-    HomeSectionedRecyclerViewAdapter adapter;
+    SearchModernRecyclerViewAdapter adapter;
     LinearLayoutManager linearLayoutManager;
 
     RecyclerView rv;
@@ -75,7 +62,7 @@ public class Search extends Fragment implements PaginationAdapterCallback {
     private int currentPage = PAGE_START;
     private final int selectCategoryId = 3;
 
-    List<Category> categories;
+    List<SearchCategoriee> searchCategoriees;
 
     private MovieService movieService;
     private Object PaginationAdapterCallback;
@@ -99,16 +86,17 @@ public class Search extends Fragment implements PaginationAdapterCallback {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_home, container, false);
+        View view = inflater.inflate(R.layout.fragment_search, container, false);
 
         rv = view.findViewById(R.id.main_recycler);
         progressBar = view.findViewById(R.id.main_progress);
         errorLayout = view.findViewById(R.id.error_layout);
         btnRetry = view.findViewById(R.id.error_btn_retry);
+
         txtError = view.findViewById(R.id.error_txt_cause);
         swipeRefreshLayout = view.findViewById(R.id.main_swiperefresh);
 
-        adapter = new HomeSectionedRecyclerViewAdapter(getContext(), this);
+        adapter = new SearchModernRecyclerViewAdapter(getContext(), this);
 
         linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         rv.setLayoutManager(linearLayoutManager);
@@ -155,8 +143,8 @@ public class Search extends Fragment implements PaginationAdapterCallback {
     }
     private void doRefresh() {
         progressBar.setVisibility(View.VISIBLE);
-        if (callHomeCategories().isExecuted())
-            callHomeCategories().cancel();
+        if (callMostSearched().isExecuted())
+            callMostSearched().cancel();
 
         // TODO: Check if data is stale.
         //  Execute network request if cache is expired; otherwise do not update data.
@@ -173,21 +161,21 @@ public class Search extends Fragment implements PaginationAdapterCallback {
         hideErrorView();
         currentPage = PAGE_START;
 
-        callHomeCategories().enqueue(new Callback<HomeCategories>() {
+        callMostSearched().enqueue(new Callback<SearchHome>() {
             @Override
-            public void onResponse(Call<HomeCategories> call, Response<HomeCategories> response) {
+            public void onResponse(Call<SearchHome> call, Response<SearchHome> response) {
                 hideErrorView();
 
 //                Log.i(TAG, "onResponse: " + (response.raw().cacheResponse() != null ? "Cache" : "Network"));
 
                 // Got data. Send it to adapter
-                categories = fetchResults(response);
+                searchCategoriees = fetchResults(response);
                 progressBar.setVisibility(View.GONE);
-                if(categories.isEmpty()){
+                if(searchCategoriees.isEmpty()){
                     showCategoryErrorView();
                     return;
                 } else {
-                    adapter.addAll(categories);
+                    adapter.addAll(searchCategoriees);
                 }
 
                 if (currentPage < TOTAL_PAGES) adapter.addLoadingFooter();
@@ -195,7 +183,7 @@ public class Search extends Fragment implements PaginationAdapterCallback {
             }
 
             @Override
-            public void onFailure(Call<HomeCategories> call, Throwable t) {
+            public void onFailure(Call<SearchHome> call, Throwable t) {
                 t.printStackTrace();
                 showErrorView(t);
             }
@@ -204,35 +192,35 @@ public class Search extends Fragment implements PaginationAdapterCallback {
 
 
 
-    private List<Category> fetchResults(Response<HomeCategories> response) {
-        HomeCategories homeCategories = response.body();
-        TOTAL_PAGES = homeCategories.getTotalPages();
+    private List<SearchCategoriee> fetchResults(Response<SearchHome> response) {
+        SearchHome searchHome = response.body();
+        TOTAL_PAGES = searchHome.getTotalPages();
         System.out.println("total pages" + TOTAL_PAGES);
 
-        return homeCategories.getCategories();
+        return searchHome.getSearchCategoriees();
     }
 
     private void loadNextPage() {
         Log.d(TAG, "loadNextPage: " + currentPage);
 
-        callHomeCategories().enqueue(new Callback<HomeCategories>() {
+        callMostSearched().enqueue(new Callback<SearchHome>() {
             @Override
-            public void onResponse(Call<HomeCategories> call, Response<HomeCategories> response) {
+            public void onResponse(Call<SearchHome> call, Response<SearchHome> response) {
                 Log.i(TAG, "onResponse: " + currentPage
                         + (response.raw().cacheResponse() != null ? "Cache" : "Network"));
 
                 adapter.removeLoadingFooter();
                 isLoading = false;
 
-                categories = fetchResults(response);
-                adapter.addAll(categories);
+                searchCategoriees = fetchResults(response);
+                adapter.addAll(searchCategoriees);
 
                 if (currentPage != TOTAL_PAGES) adapter.addLoadingFooter();
                 else isLastPage = true;
             }
 
             @Override
-            public void onFailure(Call<HomeCategories> call, Throwable t) {
+            public void onFailure(Call<SearchHome> call, Throwable t) {
                 t.printStackTrace();
                 adapter.showRetry(true, fetchErrorMessage(t));
             }
@@ -246,8 +234,8 @@ public class Search extends Fragment implements PaginationAdapterCallback {
      * As {@link #currentPage} will be incremented automatically
      * by @{@link PaginationScrollListener} to load next page.
      */
-    private Call<HomeCategories> callHomeCategories() {
-        return movieService.getMenuCategoriesSection(
+    private Call<SearchHome> callMostSearched() {
+        return movieService.getMostSearched(
                 currentPage
         );
     }

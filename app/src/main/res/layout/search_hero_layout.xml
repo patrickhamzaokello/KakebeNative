@@ -1,0 +1,137 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@color/rootbg"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+
+
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/welcome_card_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="#00000000"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp"
+        app:cardCornerRadius="5dp"
+        app:cardElevation="8dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="20dp"
+            android:background="@color/purple_200">
+
+            <TextView
+                android:id="@+id/hello_usertext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:fontFamily="@font/montserrat_bold"
+                android:includeFontPadding="false"
+                android:maxLines="2"
+                android:text="AI Powered Search"
+                android:textColor="@color/white"
+                android:textSize="25sp"
+                android:transitionName="logo_text"
+
+                />
+
+            <TextView
+                android:id="@+id/what_they_eat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/hello_usertext"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/montserrat"
+                android:includeFontPadding="false"
+                android:text="Introducing the Search Engine that's powered by Artificial Intelligence"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:transitionName="logo_desc" />
+
+
+
+
+            <Button
+                android:id="@+id/cardclosebutton"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/custom_btn_close"
+                android:theme="@style/Closebutton" />
+
+
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+
+
+
+
+    <RelativeLayout
+        android:id="@+id/categorytitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="20dp">
+
+        <SearchView
+            android:id="@+id/search_bar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_marginBottom="35dp"
+            android:background="#f2f2f2"
+            android:iconifiedByDefault="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+        </SearchView>
+
+        <TextView
+            android:id="@+id/section_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/search_bar"
+            android:layout_alignParentLeft="true"
+            android:fontFamily="@font/montserrat"
+            android:includeFontPadding="false"
+            android:text="Trending Searches"
+            android:textColor="#0C0C0C"
+            android:textSize="18sp" />
+
+
+        <TextView
+            android:id="@+id/section_label_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/section_label"
+            android:layout_alignParentLeft="true"
+            android:fontFamily="@font/montserrat"
+            android:includeFontPadding="false"
+            android:text="What people are searching on Kakebe Shop"
+            android:textColor="#B1B1B1"
+            android:textSize="14sp" />
+
+
+    </RelativeLayout>
+
+
+    <!--  recycler view for items -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/search_category_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:paddingBottom="20dp"
+        android:layout_below="@+id/categorytitle" />
+
+</LinearLayout>

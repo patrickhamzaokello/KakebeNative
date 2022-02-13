@@ -30,7 +30,6 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.transition.DrawableCrossFadeFactory;
 import com.pkasemer.kakebeshoplira.Models.FeaturedCategory;
-import com.pkasemer.kakebeshoplira.Models.HomeMenuCategoryModelResult;
 import com.pkasemer.kakebeshoplira.Models.SelectedCategoryMenuItemResult;
 import com.pkasemer.kakebeshoplira.MySelectedCategory;
 import com.pkasemer.kakebeshoplira.R;
