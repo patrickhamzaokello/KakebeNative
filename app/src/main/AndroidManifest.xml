@@ -19,31 +19,33 @@
         android:theme="@style/Theme.ZodongoFoods"
         android:usesCleartextTraffic="true"
         tools:replace="android:icon">
-        <activity android:name="com.pkasemer.kakebeshoplira.ManageOrders" />
-
         <activity
-            android:name="com.pkasemer.kakebeshoplira.PlaceOrder"
+            android:name=".SearchView"
+            android:exported="false" />
+        <activity android:name=".ManageOrders" />
+        <activity
+            android:name=".PlaceOrder"
             android:exported="true" />
         <activity
-            android:name="com.pkasemer.kakebeshoplira.MyMenuDetail"
+            android:name=".MyMenuDetail"
             android:exported="true" />
         <activity
-            android:name="com.pkasemer.kakebeshoplira.MySelectedCategory"
+            android:name=".MySelectedCategory"
             android:exported="true" />
         <activity
-            android:name="com.pkasemer.kakebeshoplira.RootActivity"
+            android:name=".RootActivity"
             android:exported="true" />
         <activity
-            android:name="com.pkasemer.kakebeshoplira.RegisterMaterial"
+            android:name=".RegisterMaterial"
             android:exported="true" />
         <activity
-            android:name="com.pkasemer.kakebeshoplira.LoginMaterial"
+            android:name=".LoginMaterial"
             android:exported="true" />
         <activity
-            android:name="com.pkasemer.kakebeshoplira.OnBoarding"
+            android:name=".OnBoarding"
             android:exported="true" />
         <activity
-            android:name="com.pkasemer.kakebeshoplira.SplashActivity"
+            android:name=".SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -53,7 +55,7 @@
         </activity>
 
         <service
-            android:name="com.pkasemer.kakebeshoplira.CustomMessagingService"
+            android:name=".CustomMessagingService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
@@ -77,7 +79,7 @@
             android:value="@string/default_notification_channel_id" />
 
         <receiver
-            android:name="com.pkasemer.kakebeshoplira.NotificationReceiver"
+            android:name=".NotificationReceiver"
             android:enabled="true"
             android:exported="false" />
     </application>

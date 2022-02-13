@@ -320,6 +320,9 @@ public class searchHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             search_bar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                 @Override
                 public boolean onQueryTextSubmit(String query) {
+
+                    mCallback.searchinput(query);
+
                     return false;
                 }
 
@@ -327,7 +330,8 @@ public class searchHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 public boolean onQueryTextChange(String newText) {
                     // inside on query text change method we are
                     // calling a method to filter our recycler view.
-                    mCallback.searchinput(newText);
+//                    mCallback.searchinput(newText);
+
                     return false;
                 }
             });

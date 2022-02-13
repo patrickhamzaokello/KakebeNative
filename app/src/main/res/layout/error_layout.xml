@@ -12,14 +12,22 @@
         android:layout_margin="20dp"
         android:orientation="vertical"
         android:visibility="gone"
+        android:gravity="center_horizontal"
         tools:visibility="visible">
+
+        <ImageView
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:src="@drawable/ic_undraw_connected_world_wuay"/>
 
         <TextView
             style="@style/TextAppearance.AppCompat.Subhead"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat_bold"
+            android:gravity="center"
             android:textColor="@color/black"
-            android:text="No Internet Connection, Try again"/>
+            android:text="You can't access Kakebe Shop Online Right now due to Poor Internet Connection, Try again"/>
 
         <TextView
             android:id="@+id/error_txt_cause"
@@ -34,12 +42,12 @@
         <Button
             android:id="@+id/error_btn_retry"
             style="@style/Widget.AppCompat.Button.Borderless"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="@dimen/activity_margin_content"
             android:background="@color/purple_500"
-            android:text="Retry"
+            android:text="Try Again"
             android:textColor="@color/white"/>
 
     </LinearLayout>

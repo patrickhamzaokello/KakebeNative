@@ -44,7 +44,7 @@ public class Cart extends Fragment implements CartItemHandlerListener {
     RecyclerView recyclerView;
 
     TextView grandtotalvalue;
-    LinearLayout procceed_checkout_layout;
+    LinearLayout procceed_checkout_layout,notFound_layout;
 
     Button btnCheckout;
 
@@ -78,6 +78,7 @@ public class Cart extends Fragment implements CartItemHandlerListener {
         grandtotalvalue = view.findViewById(R.id.grandtotalvalue);
         recyclerView = view.findViewById(R.id.cart_main_recycler);
         procceed_checkout_layout = view.findViewById(R.id.procceed_checkout_layout);
+        notFound_layout = view.findViewById(R.id.notFound_layout);
         btnCheckout = view.findViewById(R.id.btnCheckout);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(view.getContext());
@@ -219,22 +220,8 @@ public class Cart extends Fragment implements CartItemHandlerListener {
     private void emptycartwarning() {
         procceed_checkout_layout.setVisibility(View.GONE);
         progressBar.setVisibility(View.GONE);
+        notFound_layout.setVisibility(View.VISIBLE);
 
-        AlertDialog.Builder android = new AlertDialog.Builder(getContext());
-        android.setTitle("Empty Cart");
-        android.setMessage("Add Items to your cart and check back here later")
-                .setCancelable(false)
-
-                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        //go to activity
-                        Intent intent = new Intent(getActivity(), RootActivity.class);
-                        startActivity(intent);
-                    }
-                });
-
-        android.create().show();
     }
 
 

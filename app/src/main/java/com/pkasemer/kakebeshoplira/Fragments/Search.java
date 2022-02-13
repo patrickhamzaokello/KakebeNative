@@ -34,6 +34,7 @@ import com.pkasemer.kakebeshoplira.Models.SearchHome;
 import com.pkasemer.kakebeshoplira.Models.SearchResult;
 import com.pkasemer.kakebeshoplira.R;
 import com.pkasemer.kakebeshoplira.RootActivity;
+import com.pkasemer.kakebeshoplira.SearchView;
 import com.pkasemer.kakebeshoplira.Utils.PaginationScrollListener;
 import com.pkasemer.kakebeshoplira.Utils.SearchAdapterCallBack;
 
@@ -47,13 +48,9 @@ import retrofit2.Response;
 public class Search extends Fragment implements SearchAdapterCallBack {
 
 
-    private static final String TAG = "MainActivity";
-
+    private static final String TAG = "Search";
     searchHomeAdapter adapter;
-    SearchQueryAdapter searchQueryAdapter;
     LinearLayoutManager linearLayoutManager;
-    private String queryString;
-    List<Product> products;
     RecyclerView rv;
     ProgressBar progressBar;
     LinearLayout errorLayout;
@@ -65,15 +62,12 @@ public class Search extends Fragment implements SearchAdapterCallBack {
 
     private boolean isLoading = false;
     private boolean isLastPage = false;
-    // limiting to 5 for this tutorial, since total pages in actual API is very large. Feel free to modify.
     private static int TOTAL_PAGES = 5;
     private int currentPage = PAGE_START;
-    private final int selectCategoryId = 3;
 
     List<SearchCategoriee> searchCategoriees;
 
     private MovieService movieService;
-    private Object PaginationAdapterCallback;
 
 
     public Search() {
@@ -116,7 +110,6 @@ public class Search extends Fragment implements SearchAdapterCallBack {
             protected void loadMoreItems() {
                 isLoading = true;
                 currentPage += 1;
-
                 loadNextPage();
             }
 
@@ -144,7 +137,6 @@ public class Search extends Fragment implements SearchAdapterCallBack {
         btnRetry.setOnClickListener(v -> loadFirstPage());
 
         swipeRefreshLayout.setOnRefreshListener(this::doRefresh);
-
 
         return view;
     }
@@ -255,138 +247,17 @@ public class Search extends Fragment implements SearchAdapterCallBack {
     @Override
     public void searchinput(String searchquery) {
 
-        searchQueryAdapter = new SearchQueryAdapter(getContext(),  this);
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 3);
-        rv.setLayoutManager(gridLayoutManager);
-        rv.setItemAnimator(new DefaultItemAnimator());
-        rv.setAdapter(searchQueryAdapter);
+
+        String queryString = searchquery;
+
+        Intent i = new Intent(getContext(), SearchView.class);
+        //PACK DATA
+        i.putExtra("SENDER_KEY", "SearchFragment");
+        i.putExtra("queryString", queryString);
+        getContext().startActivity(i);
 
 
-        rv.addOnScrollListener(new PaginationScrollListener(linearLayoutManager) {
-            @Override
-            protected void loadMoreItems() {
-                isLoading = true;
-                currentPage += 1;
-
-                loadQueryNextPage();
-            }
-
-            @Override
-            public int getTotalPageCount() {
-                return TOTAL_PAGES;
-            }
-
-            @Override
-            public boolean isLastPage() {
-                return isLastPage;
-            }
-
-            @Override
-            public boolean isLoading() {
-                return isLoading;
-            }
-        });
-
-
-        queryString = searchquery;
-        searchQueryAdapter.getMovies().clear();
-        searchQueryAdapter.notifyDataSetChanged();
-        loadQueryFirstPage();
-        Toast.makeText(getContext(), "searchquery", Toast.LENGTH_SHORT).show();
     }
-
-
-
-    private void loadQueryFirstPage() {
-        Log.d(TAG, "loadFirstPage: ");
-
-        // To ensure list is visible when retry button in error view is clicked
-        hideErrorView();
-        currentPage = PAGE_START;
-
-        callSearchAPI().enqueue(new Callback<SearchResult>() {
-            @Override
-            public void onResponse(Call<SearchResult> call, Response<SearchResult> response) {
-                hideErrorView();
-
-//                Log.i(TAG, "onResponse: " + (response.raw().cacheResponse() != null ? "Cache" : "Network"));
-
-                // Got data. Send it to adapter
-                products = fetchqueryResults(response);
-                progressBar.setVisibility(View.GONE);
-                if(products != null){
-                    searchQueryAdapter.addAll(products);
-                } else {
-                    showCategoryErrorView();
-                    return;
-                }
-
-                if (currentPage < TOTAL_PAGES) adapter.addLoadingFooter();
-                else isLastPage = true;
-            }
-
-            @Override
-            public void onFailure(Call<SearchResult> call, Throwable t) {
-                t.printStackTrace();
-                showErrorView(t);
-            }
-        });
-    }
-
-
-
-
-
-    private List<Product> fetchqueryResults(Response<SearchResult> response) {
-        SearchResult searchResult = response.body();
-        TOTAL_PAGES = searchResult.getTotalPages();
-        System.out.println("total pages" + TOTAL_PAGES);
-
-        return searchResult.getProducts();
-    }
-
-    private void loadQueryNextPage() {
-        Log.d(TAG, "loadNextPage: " + currentPage);
-
-        callSearchAPI().enqueue(new Callback<SearchResult>() {
-            @Override
-            public void onResponse(Call<SearchResult> call, Response<SearchResult> response) {
-                Log.i(TAG, "onResponse: " + currentPage
-                        + (response.raw().cacheResponse() != null ? "Cache" : "Network"));
-
-                adapter.removeLoadingFooter();
-                isLoading = false;
-
-                products = fetchqueryResults(response);
-
-                if(products != null){
-                    searchQueryAdapter.addAll(products);
-                } else {
-                    showCategoryErrorView();
-                    return;
-                }
-
-                if (currentPage != TOTAL_PAGES) adapter.addLoadingFooter();
-                else isLastPage = true;
-            }
-
-            @Override
-            public void onFailure(Call<SearchResult> call, Throwable t) {
-                t.printStackTrace();
-                adapter.showRetry(true, fetchErrorMessage(t));
-            }
-        });
-    }
-
-
-
-    private Call<SearchResult> callSearchAPI() {
-        return movieService.getSearch(
-                queryString,
-                currentPage
-        );
-    }
-
 
 
     /**
