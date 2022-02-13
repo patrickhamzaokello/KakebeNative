@@ -1,28 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/rootbg"
+    android:background="#FBFBFB"
     android:clipToPadding="false"
-    android:layout_margin="5dp"
     android:padding="10dp">
-
 
     <androidx.cardview.widget.CardView
         android:id="@+id/image_card_view"
-        android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:scaleType="fitXY"
-        app:cardCornerRadius="5dp">
+        app:cardCornerRadius="5dp"
+        app:cardElevation="0dp">
 
         <ImageView
             android:id="@+id/product_imageview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="#f2f2f2"
             android:scaleType="fitXY"
-            android:background="@color/purple_500"
-            android:src="@drawable/cake"></ImageView>
+            android:src="@drawable/beefstew"></ImageView>
 
         <ProgressBar
             android:id="@+id/search_product_image_progress"
@@ -36,91 +35,86 @@
     </androidx.cardview.widget.CardView>
 
 
-
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/product_detail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/image_card_view"
-        android:layout_marginTop="10dp"
-        >
-
+        android:layout_marginTop="5dp"
+        android:orientation="vertical">
 
 
         <TextView
             android:id="@+id/item_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="left"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:fontFamily="@font/montserrat"
-            android:text="Otigo Lwaka"
             android:layout_alignParentTop="true"
+            android:ellipsize="end"
+            android:fontFamily="@font/montserrat"
+            android:gravity="left"
+            android:maxLines="1"
+            android:text="Otigo Lwaka"
             android:textColor="@color/black"
-            android:textSize="14sp" />
+            android:textSize="10sp" />
+
         <TextView
             android:id="@+id/item_rating"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="left"
-            android:layout_toLeftOf="@+id/home_addToCart"
             android:layout_below="@id/item_name"
+            android:layout_toLeftOf="@+id/home_addToCart"
+            android:gravity="left"
             android:includeFontPadding="false"
             android:text="Rating 4|5"
             android:textColor="@color/mygreen"
-            android:textSize="10sp" />
+            android:textSize="8sp" />
 
         <TextView
             android:id="@+id/item_price"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="left"
-            android:layout_toLeftOf="@+id/home_addToCart"
             android:layout_below="@+id/item_rating"
-            android:text="Ugx 3,800"
             android:layout_marginTop="10dp"
+            android:layout_toLeftOf="@+id/home_addToCart"
+            android:gravity="left"
+            android:text="Ugx 3,800"
             android:textColor="@color/black"
-            android:textSize="14sp" />
+            android:textSize="10sp" />
 
 
+    </LinearLayout>
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/home_addToCart"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:clipToPadding="false"
-            android:layout_marginLeft="10dp"
-            android:layout_alignParentRight="true"
-            android:layout_alignBottom="@+id/item_price"
-            app:cardBackgroundColor="@color/black"
-            app:cardCornerRadius="100dp">
+    <androidx.cardview.widget.CardView
+        android:id="@+id/home_addToCart"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignBottom="@+id/item_price"
+        android:layout_alignParentRight="true"
+        android:layout_marginLeft="10dp"
+        android:clipToPadding="false"
+        app:cardBackgroundColor="@color/black"
+        app:cardCornerRadius="100dp">
 
-            <RelativeLayout
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="5dp">
+
+            <Button
+                android:id="@+id/search_st_carttn"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:padding="5dp">
-
-                <Button
-                    android:id="@+id/search_st_carttn"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_centerInParent="true"
-                    android:background="@drawable/custom_plus_btn"
-                    android:theme="@style/WhiteBtn"
-                    android:backgroundTint="@color/white" />
+                android:layout_centerInParent="true"
+                android:background="@drawable/custom_plus_btn"
+                android:backgroundTint="@color/white"
+                android:theme="@style/WhiteBtn" />
 
 
-            </RelativeLayout>
+        </RelativeLayout>
 
 
-        </androidx.cardview.widget.CardView>
-
-
-    </RelativeLayout>
-
-
-
+    </androidx.cardview.widget.CardView>
 
 
 </RelativeLayout>
+

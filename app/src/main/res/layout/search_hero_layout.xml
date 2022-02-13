@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@color/rootbg"
+    android:background="@color/white"
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
@@ -25,18 +25,17 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="20dp"
-            android:background="@color/purple_200">
+            android:background="#4F2EE1"
+            android:padding="20dp">
 
             <TextView
                 android:id="@+id/hello_usertext"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
                 android:fontFamily="@font/montserrat_bold"
                 android:includeFontPadding="false"
                 android:maxLines="2"
-                android:text="AI Powered Search"
+                android:text="Kakebe Shop"
                 android:textColor="@color/white"
                 android:textSize="25sp"
                 android:transitionName="logo_text"
@@ -51,22 +50,10 @@
                 android:layout_marginTop="10dp"
                 android:fontFamily="@font/montserrat"
                 android:includeFontPadding="false"
-                android:text="Introducing the Search Engine that's powered by Artificial Intelligence"
+                android:text="Find any product you looking for today through our powerful search engine"
                 android:textColor="@color/white"
                 android:textSize="14sp"
                 android:transitionName="logo_desc" />
-
-
-
-
-            <Button
-                android:id="@+id/cardclosebutton"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentRight="true"
-                android:background="@drawable/custom_btn_close"
-                android:theme="@style/Closebutton" />
 
 
         </RelativeLayout>
@@ -117,7 +104,7 @@
             android:layout_alignParentLeft="true"
             android:fontFamily="@font/montserrat"
             android:includeFontPadding="false"
-            android:text="What people are searching on Kakebe Shop"
+            android:text="What people are searching for on Kakebe Shop"
             android:textColor="#B1B1B1"
             android:textSize="14sp" />
 

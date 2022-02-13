@@ -14,22 +14,28 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.pkasemer.kakebeshoplira.Adapters.SearchModernRecyclerViewAdapter;
+import com.pkasemer.kakebeshoplira.Adapters.SearchAdapter;
+import com.pkasemer.kakebeshoplira.Adapters.SearchQueryAdapter;
+import com.pkasemer.kakebeshoplira.Adapters.searchHomeAdapter;
 import com.pkasemer.kakebeshoplira.Apis.MovieApi;
 import com.pkasemer.kakebeshoplira.Apis.MovieService;
+import com.pkasemer.kakebeshoplira.Models.Product;
 import com.pkasemer.kakebeshoplira.Models.SearchCategoriee;
 import com.pkasemer.kakebeshoplira.Models.SearchHome;
+import com.pkasemer.kakebeshoplira.Models.SearchResult;
 import com.pkasemer.kakebeshoplira.R;
 import com.pkasemer.kakebeshoplira.RootActivity;
-import com.pkasemer.kakebeshoplira.Utils.PaginationAdapterCallback;
 import com.pkasemer.kakebeshoplira.Utils.PaginationScrollListener;
+import com.pkasemer.kakebeshoplira.Utils.SearchAdapterCallBack;
 
 import java.util.List;
 import java.util.concurrent.TimeoutException;
@@ -38,14 +44,16 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class Search extends Fragment implements PaginationAdapterCallback {
+public class Search extends Fragment implements SearchAdapterCallBack {
 
 
     private static final String TAG = "MainActivity";
 
-    SearchModernRecyclerViewAdapter adapter;
+    searchHomeAdapter adapter;
+    SearchQueryAdapter searchQueryAdapter;
     LinearLayoutManager linearLayoutManager;
-
+    private String queryString;
+    List<Product> products;
     RecyclerView rv;
     ProgressBar progressBar;
     LinearLayout errorLayout;
@@ -73,7 +81,6 @@ public class Search extends Fragment implements PaginationAdapterCallback {
     }
 
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,7 +103,7 @@ public class Search extends Fragment implements PaginationAdapterCallback {
         txtError = view.findViewById(R.id.error_txt_cause);
         swipeRefreshLayout = view.findViewById(R.id.main_swiperefresh);
 
-        adapter = new SearchModernRecyclerViewAdapter(getContext(), this);
+        adapter = new searchHomeAdapter(getContext(), this);
 
         linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         rv.setLayoutManager(linearLayoutManager);
@@ -141,6 +148,7 @@ public class Search extends Fragment implements PaginationAdapterCallback {
 
         return view;
     }
+
     private void doRefresh() {
         progressBar.setVisibility(View.VISIBLE);
         if (callMostSearched().isExecuted())
@@ -171,7 +179,7 @@ public class Search extends Fragment implements PaginationAdapterCallback {
                 // Got data. Send it to adapter
                 searchCategoriees = fetchResults(response);
                 progressBar.setVisibility(View.GONE);
-                if(searchCategoriees.isEmpty()){
+                if (searchCategoriees.isEmpty()) {
                     showCategoryErrorView();
                     return;
                 } else {
@@ -189,7 +197,6 @@ public class Search extends Fragment implements PaginationAdapterCallback {
             }
         });
     }
-
 
 
     private List<SearchCategoriee> fetchResults(Response<SearchHome> response) {
@@ -246,9 +253,140 @@ public class Search extends Fragment implements PaginationAdapterCallback {
     }
 
     @Override
-    public void requestfailed() {
+    public void searchinput(String searchquery) {
 
+        searchQueryAdapter = new SearchQueryAdapter(getContext(),  this);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 3);
+        rv.setLayoutManager(gridLayoutManager);
+        rv.setItemAnimator(new DefaultItemAnimator());
+        rv.setAdapter(searchQueryAdapter);
+
+
+        rv.addOnScrollListener(new PaginationScrollListener(linearLayoutManager) {
+            @Override
+            protected void loadMoreItems() {
+                isLoading = true;
+                currentPage += 1;
+
+                loadQueryNextPage();
+            }
+
+            @Override
+            public int getTotalPageCount() {
+                return TOTAL_PAGES;
+            }
+
+            @Override
+            public boolean isLastPage() {
+                return isLastPage;
+            }
+
+            @Override
+            public boolean isLoading() {
+                return isLoading;
+            }
+        });
+
+
+        queryString = searchquery;
+        searchQueryAdapter.getMovies().clear();
+        searchQueryAdapter.notifyDataSetChanged();
+        loadQueryFirstPage();
+        Toast.makeText(getContext(), "searchquery", Toast.LENGTH_SHORT).show();
     }
+
+
+
+    private void loadQueryFirstPage() {
+        Log.d(TAG, "loadFirstPage: ");
+
+        // To ensure list is visible when retry button in error view is clicked
+        hideErrorView();
+        currentPage = PAGE_START;
+
+        callSearchAPI().enqueue(new Callback<SearchResult>() {
+            @Override
+            public void onResponse(Call<SearchResult> call, Response<SearchResult> response) {
+                hideErrorView();
+
+//                Log.i(TAG, "onResponse: " + (response.raw().cacheResponse() != null ? "Cache" : "Network"));
+
+                // Got data. Send it to adapter
+                products = fetchqueryResults(response);
+                progressBar.setVisibility(View.GONE);
+                if(products != null){
+                    searchQueryAdapter.addAll(products);
+                } else {
+                    showCategoryErrorView();
+                    return;
+                }
+
+                if (currentPage < TOTAL_PAGES) adapter.addLoadingFooter();
+                else isLastPage = true;
+            }
+
+            @Override
+            public void onFailure(Call<SearchResult> call, Throwable t) {
+                t.printStackTrace();
+                showErrorView(t);
+            }
+        });
+    }
+
+
+
+
+
+    private List<Product> fetchqueryResults(Response<SearchResult> response) {
+        SearchResult searchResult = response.body();
+        TOTAL_PAGES = searchResult.getTotalPages();
+        System.out.println("total pages" + TOTAL_PAGES);
+
+        return searchResult.getProducts();
+    }
+
+    private void loadQueryNextPage() {
+        Log.d(TAG, "loadNextPage: " + currentPage);
+
+        callSearchAPI().enqueue(new Callback<SearchResult>() {
+            @Override
+            public void onResponse(Call<SearchResult> call, Response<SearchResult> response) {
+                Log.i(TAG, "onResponse: " + currentPage
+                        + (response.raw().cacheResponse() != null ? "Cache" : "Network"));
+
+                adapter.removeLoadingFooter();
+                isLoading = false;
+
+                products = fetchqueryResults(response);
+
+                if(products != null){
+                    searchQueryAdapter.addAll(products);
+                } else {
+                    showCategoryErrorView();
+                    return;
+                }
+
+                if (currentPage != TOTAL_PAGES) adapter.addLoadingFooter();
+                else isLastPage = true;
+            }
+
+            @Override
+            public void onFailure(Call<SearchResult> call, Throwable t) {
+                t.printStackTrace();
+                adapter.showRetry(true, fetchErrorMessage(t));
+            }
+        });
+    }
+
+
+
+    private Call<SearchResult> callSearchAPI() {
+        return movieService.getSearch(
+                queryString,
+                currentPage
+        );
+    }
+
 
 
     /**
@@ -294,7 +432,6 @@ public class Search extends Fragment implements PaginationAdapterCallback {
         android.create().show();
 
     }
-
 
 
     /**

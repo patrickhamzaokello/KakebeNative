@@ -9,8 +9,8 @@
     >
 
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/image_card_view"
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/searchtag"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:scaleType="fitXY"
@@ -34,7 +34,7 @@
             android:textSize="10sp" />
 
 
-    </androidx.cardview.widget.CardView>
+    </com.google.android.material.card.MaterialCardView>
 
 
 
