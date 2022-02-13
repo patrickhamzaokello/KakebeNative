@@ -126,8 +126,12 @@ public class HomeSectionedRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
             case CATEGORY:
                 final CategoryVH categoryVH = (CategoryVH) holder;
                 HomeMenuCategoryAdapter homeMenuCategoryAdapter = new HomeMenuCategoryAdapter(context);
-                StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.HORIZONTAL);
-                categoryVH.category_recycler_view.setLayoutManager(staggeredGridLayoutManager);
+//                StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.HORIZONTAL);
+//                categoryVH.category_recycler_view.setLayoutManager(staggeredGridLayoutManager);
+
+                GridLayoutManager catgridLayoutManager = new GridLayoutManager(context, 3);
+                categoryVH.category_recycler_view.setLayoutManager(catgridLayoutManager);
+
                 categoryVH.category_recycler_view.setItemAnimator(new DefaultItemAnimator());
                 categoryVH.category_recycler_view.setAdapter(homeMenuCategoryAdapter);
                 homeMenuCategoryAdapter.addAll(category.getFeaturedCategories());
@@ -143,7 +147,7 @@ public class HomeSectionedRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
                 movieVH.itemRecyclerView.setNestedScrollingEnabled(false);
 
                 /* set layout manager on basis of recyclerview enum type */
-                GridLayoutManager gridLayoutManager = new GridLayoutManager(context, 2);
+                GridLayoutManager gridLayoutManager = new GridLayoutManager(context, 3);
                 movieVH.itemRecyclerView.setLayoutManager(gridLayoutManager);
 
 
