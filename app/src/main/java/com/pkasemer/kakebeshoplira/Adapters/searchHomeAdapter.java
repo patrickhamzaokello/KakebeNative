@@ -310,7 +310,7 @@ public class searchHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             category_recycler_view = itemView.findViewById(R.id.search_category_recycler_view);
             search_bar = itemView.findViewById(R.id.search_bar);
 
-            search_bar.setQueryHint("Search for Products on Kakebe");
+            search_bar.setQueryHint("Search for Products");
             search_bar.setActivated(true);
             search_bar.onActionViewExpanded();
             search_bar.setIconified(false);
