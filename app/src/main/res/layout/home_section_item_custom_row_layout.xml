@@ -91,6 +91,7 @@
         android:clipToPadding="false"
         android:layout_marginLeft="10dp"
         android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
         app:cardBackgroundColor="@color/purple_200"
         app:cardCornerRadius="100dp">
 

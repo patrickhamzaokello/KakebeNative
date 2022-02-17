@@ -84,6 +84,37 @@ android:padding="10dp">
 
     </LinearLayout>
 
+    <androidx.cardview.widget.CardView
+        android:id="@+id/home_addToCart"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:clipToPadding="false"
+        android:layout_marginLeft="10dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        app:cardBackgroundColor="@color/purple_200"
+        app:cardCornerRadius="100dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="5dp">
+
+            <Button
+                android:id="@+id/home_st_carttn"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/custom_plus_btn"
+                android:backgroundTint="@color/white"
+                android:theme="@style/WhiteBtn" />
+
+
+        </RelativeLayout>
+
+
+    </androidx.cardview.widget.CardView>
+
 
 
 
