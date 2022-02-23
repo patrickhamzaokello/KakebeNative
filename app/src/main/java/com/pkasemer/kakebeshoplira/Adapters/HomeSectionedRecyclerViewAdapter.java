@@ -3,6 +3,7 @@ package com.pkasemer.kakebeshoplira.Adapters;
 import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +25,7 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.transition.DrawableCrossFadeFactory;
 import com.pkasemer.kakebeshoplira.Models.Category;
+import com.pkasemer.kakebeshoplira.MySelectedCategory;
 import com.pkasemer.kakebeshoplira.R;
 import com.pkasemer.kakebeshoplira.RootActivity;
 import com.pkasemer.kakebeshoplira.Utils.PaginationAdapterCallback;
@@ -159,13 +161,13 @@ public class HomeSectionedRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
                 movieVH.showAllButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-//                        Intent i = new Intent(context.getApplicationContext(), MySelectedCategory.class);
-//                        //PACK DATA
-//                        i.putExtra("SENDER_KEY", "MyFragment");
-//                        i.putExtra("category_selected_key", sectionedCategoryResult.getId());
-//                        context.startActivity(i);
+                        Intent i = new Intent(context.getApplicationContext(), MySelectedCategory.class);
+                        //PACK DATA
+                        i.putExtra("SENDER_KEY", "MyFragment");
+                        i.putExtra("category_selected_key", category.getParentId());
+                        context.startActivity(i);
 
-                        Toast.makeText(v.getContext(), category.getName(), Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(v.getContext(), category.getName(), Toast.LENGTH_SHORT).show();
 
                     }
                 });

@@ -22,8 +22,10 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.pkasemer.kakebeshoplira.Adapters.SelectedCategoryPaginationAdapter;
 import com.pkasemer.kakebeshoplira.Apis.MovieApi;
 import com.pkasemer.kakebeshoplira.Apis.MovieService;
+import com.pkasemer.kakebeshoplira.Models.SelectedCategory;
 import com.pkasemer.kakebeshoplira.Models.SelectedCategoryMenuItem;
 import com.pkasemer.kakebeshoplira.Models.SelectedCategoryMenuItemResult;
+import com.pkasemer.kakebeshoplira.Models.SelectedCategoryResult;
 import com.pkasemer.kakebeshoplira.Utils.PaginationAdapterCallback;
 import com.pkasemer.kakebeshoplira.Utils.PaginationScrollListener;
 
@@ -166,21 +168,21 @@ public class MySelectedCategory extends AppCompatActivity implements PaginationA
         hideErrorView();
         currentPage = PAGE_START;
 
-        callTopRatedMoviesApi().enqueue(new Callback<SelectedCategoryMenuItem>() {
+        callTopRatedMoviesApi().enqueue(new Callback<SelectedCategory>() {
             @Override
-            public void onResponse(Call<SelectedCategoryMenuItem> call, Response<SelectedCategoryMenuItem> response) {
+            public void onResponse(Call<SelectedCategory> call, Response<SelectedCategory> response) {
                 hideErrorView();
 
 //                Log.i(TAG, "onResponse: " + (response.raw().cacheResponse() != null ? "Cache" : "Network"));
 
                 // Got data. Send it to adapter
-                List<SelectedCategoryMenuItemResult> selectedCategoryMenuItemResults = fetchResults(response);
+                List<SelectedCategoryResult> selectedCategoryResults = fetchResults(response);
                 progressBar.setVisibility(View.GONE);
-                if(selectedCategoryMenuItemResults.isEmpty()){
+                if(selectedCategoryResults.isEmpty()){
                     showCategoryErrorView();
                     return;
                 } else {
-                    adapter.addAll(selectedCategoryMenuItemResults);
+                    adapter.addAll(selectedCategoryResults);
                 }
 
                 if (currentPage < TOTAL_PAGES) adapter.addLoadingFooter();
@@ -188,7 +190,7 @@ public class MySelectedCategory extends AppCompatActivity implements PaginationA
             }
 
             @Override
-            public void onFailure(Call<SelectedCategoryMenuItem> call, Throwable t) {
+            public void onFailure(Call<SelectedCategory> call, Throwable t) {
                 t.printStackTrace();
                 showErrorView(t);
             }
@@ -199,34 +201,34 @@ public class MySelectedCategory extends AppCompatActivity implements PaginationA
      * @param response extracts List<{@link SelectedCategoryMenuItemResult >} from response
      * @return
      */
-    private List<SelectedCategoryMenuItemResult> fetchResults(Response<SelectedCategoryMenuItem> response) {
-        SelectedCategoryMenuItem selectedCategoryMenuItem = response.body();
-        TOTAL_PAGES = selectedCategoryMenuItem.getTotalPages();
+    private List<SelectedCategoryResult> fetchResults(Response<SelectedCategory> response) {
+        SelectedCategory selectedCategory = response.body();
+        TOTAL_PAGES = selectedCategory.getTotalPages();
         System.out.println("total pages" + TOTAL_PAGES);
-        return selectedCategoryMenuItem.getResults();
+        return selectedCategory.getSelectedCategory();
     }
 
     private void loadNextPage() {
         Log.d(TAG, "loadNextPage: " + currentPage);
 
-        callTopRatedMoviesApi().enqueue(new Callback<SelectedCategoryMenuItem>() {
+        callTopRatedMoviesApi().enqueue(new Callback<SelectedCategory>() {
             @Override
-            public void onResponse(Call<SelectedCategoryMenuItem> call, Response<SelectedCategoryMenuItem> response) {
+            public void onResponse(Call<SelectedCategory> call, Response<SelectedCategory> response) {
                 Log.i(TAG, "onResponse: " + currentPage
                         + (response.raw().cacheResponse() != null ? "Cache" : "Network"));
 
                 adapter.removeLoadingFooter();
                 isLoading = false;
 
-                List<SelectedCategoryMenuItemResult> selectedCategoryMenuItemResults = fetchResults(response);
-                adapter.addAll(selectedCategoryMenuItemResults);
+                List<SelectedCategoryResult> selectedCategoryResults = fetchResults(response);
+                adapter.addAll(selectedCategoryResults);
 
                 if (currentPage != TOTAL_PAGES) adapter.addLoadingFooter();
                 else isLastPage = true;
             }
 
             @Override
-            public void onFailure(Call<SelectedCategoryMenuItem> call, Throwable t) {
+            public void onFailure(Call<SelectedCategory> call, Throwable t) {
                 t.printStackTrace();
                 adapter.showRetry(true, fetchErrorMessage(t));
             }
@@ -240,13 +242,8 @@ public class MySelectedCategory extends AppCompatActivity implements PaginationA
      * As {@link #currentPage} will be incremented automatically
      * by @{@link PaginationScrollListener} to load next page.
      */
-    private Call<SelectedCategoryMenuItem> callTopRatedMoviesApi() {
-//        return movieService.getTopRatedMovies(
-//                getString(R.string.my_api_key),
-//                "en_US",
-//                currentPage
-//        );
-        return movieService.getTopRatedMovies(
+    private Call<SelectedCategory> callTopRatedMoviesApi() {
+        return movieService.getSelectedCategory(
                 selectCategoryId,
                 currentPage
         );

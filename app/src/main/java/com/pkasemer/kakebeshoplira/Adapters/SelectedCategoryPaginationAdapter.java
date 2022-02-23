@@ -19,6 +19,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -30,6 +32,7 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.transition.DrawableCrossFadeFactory;
 import com.pkasemer.kakebeshoplira.Models.SelectedCategoryMenuItemResult;
+import com.pkasemer.kakebeshoplira.Models.SelectedCategoryResult;
 import com.pkasemer.kakebeshoplira.MyMenuDetail;
 import com.pkasemer.kakebeshoplira.R;
 import com.pkasemer.kakebeshoplira.RootActivity;
@@ -56,7 +59,7 @@ public class SelectedCategoryPaginationAdapter extends RecyclerView.Adapter<Recy
     private static final String BASE_URL_IMG = "";
 
 
-    private List<SelectedCategoryMenuItemResult> movieSelectedCategoryMenuItemResults;
+    private List<SelectedCategoryResult> selectedCategoryResults;
     private final Context context;
 
     private boolean isLoadingAdded = false;
@@ -81,15 +84,15 @@ public class SelectedCategoryPaginationAdapter extends RecyclerView.Adapter<Recy
     public SelectedCategoryPaginationAdapter(Context context, PaginationAdapterCallback callback) {
         this.context = context;
         this.mCallback = callback;
-        movieSelectedCategoryMenuItemResults = new ArrayList<>();
+        selectedCategoryResults = new ArrayList<>();
     }
 
-    public List<SelectedCategoryMenuItemResult> getMovies() {
-        return movieSelectedCategoryMenuItemResults;
+    public List<SelectedCategoryResult> getMovies() {
+        return selectedCategoryResults;
     }
 
-    public void setMovies(List<SelectedCategoryMenuItemResult> movieSelectedCategoryMenuItemResults) {
-        this.movieSelectedCategoryMenuItemResults = movieSelectedCategoryMenuItemResults;
+    public void setMovies(List<SelectedCategoryResult> selectedCategoryResults) {
+        this.selectedCategoryResults = selectedCategoryResults;
     }
 
     @Override
@@ -124,11 +127,11 @@ public class SelectedCategoryPaginationAdapter extends RecyclerView.Adapter<Recy
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
-        SelectedCategoryMenuItemResult selectedCategoryMenuItemResult = movieSelectedCategoryMenuItemResults.get(position); // Movie
+        SelectedCategoryResult selectedCategoryResult = selectedCategoryResults.get(position); // Movie
 
         db = new SenseDBHelper(context);
 
-        food_db_itemchecker = db.checktweetindb(String.valueOf(selectedCategoryMenuItemResult.getMenuId()));
+        food_db_itemchecker = db.checktweetindb(String.valueOf(selectedCategoryResult.getId()));
 
         updatecartCount();
 
@@ -136,26 +139,34 @@ public class SelectedCategoryPaginationAdapter extends RecyclerView.Adapter<Recy
             case HERO:
                 final HeroVH heroVh = (HeroVH) holder;
 
-                heroVh.mMovieTitle.setText(selectedCategoryMenuItemResult.getMenuName());
-                heroVh.mYear.setText(formatYearLabel(selectedCategoryMenuItemResult));
-                heroVh.mMovieDesc.setText(selectedCategoryMenuItemResult.getDescription());
+//                heroVh.mMovieTitle.setText(selectedCategoryMenuItemResult.getMenuName());
+//                heroVh.mYear.setText(formatYearLabel(selectedCategoryMenuItemResult));
+//                heroVh.mMovieDesc.setText(selectedCategoryMenuItemResult.getDescription());
+//
+//                loadImage(selectedCategoryMenuItemResult.getBackgroundImage())
+//                        .into(heroVh.mPosterImg);
+                HomeMenuCategoryAdapter homeMenuCategoryAdapter = new HomeMenuCategoryAdapter(context);
+//                StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.HORIZONTAL);
+//                categoryVH.category_recycler_view.setLayoutManager(staggeredGridLayoutManager);
 
-                loadImage(selectedCategoryMenuItemResult.getBackgroundImage())
-                        .into(heroVh.mPosterImg);
+//                GridLayoutManager catgridLayoutManager = new GridLayoutManager(context, 3);
+//                heroVh.category_recycler_view.setLayoutManager(catgridLayoutManager);
+//
+//                heroVh.category_recycler_view.setItemAnimator(new DefaultItemAnimator());
+//                heroVh.category_recycler_view.setAdapter(homeMenuCategoryAdapter);
+//                homeMenuCategoryAdapter.addAll(selectedCategoryResult.getCategoryInfo());
                 break;
             case ITEM:
                 final MovieVH movieVH = (MovieVH) holder;
 
-                movieVH.mMovieTitle.setText(selectedCategoryMenuItemResult.getMenuName());
+                movieVH.mMovieTitle.setText(selectedCategoryResult.getName());
 
-                movieVH.mMoviePrice.setText("Ugx " + NumberFormat.getNumberInstance(Locale.US).format(selectedCategoryMenuItemResult.getPrice()));
+                movieVH.mMoviePrice.setText("Ugx " + NumberFormat.getNumberInstance(Locale.US).format(selectedCategoryResult.getUnitPrice()));
 
                 movieVH.mYear.setText(
-                        "Rating "+ selectedCategoryMenuItemResult.getRating()
-                                + " | "
-                                + "5"
+                        "5"
                 );
-                movieVH.mMovieDesc.setText(selectedCategoryMenuItemResult.getDescription());
+                movieVH.mMovieDesc.setText(selectedCategoryResult.getMetaDescription());
 
 
 
@@ -176,7 +187,7 @@ public class SelectedCategoryPaginationAdapter extends RecyclerView.Adapter<Recy
 
                 Glide
                         .with(context)
-                        .load(BASE_URL_IMG + selectedCategoryMenuItemResult.getMenuImage())
+                        .load(BASE_URL_IMG + selectedCategoryResult.getThumbnailImg())
                         .listener(new RequestListener<Drawable>() {
                             @Override
                             public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
@@ -204,8 +215,8 @@ public class SelectedCategoryPaginationAdapter extends RecyclerView.Adapter<Recy
                         Intent i = new Intent(context.getApplicationContext(), MyMenuDetail.class);
                         //PACK DATA
                         i.putExtra("SENDER_KEY", "MenuDetails");
-                        i.putExtra("selectMenuId", selectedCategoryMenuItemResult.getMenuId());
-                        i.putExtra("category_selected_key", selectedCategoryMenuItemResult.getMenuTypeId());
+                        i.putExtra("selectMenuId", selectedCategoryResult.getId());
+                        i.putExtra("category_selected_key", selectedCategoryResult.getCategoryId());
                         context.startActivity(i);
                     }
                 });
@@ -213,26 +224,26 @@ public class SelectedCategoryPaginationAdapter extends RecyclerView.Adapter<Recy
                 movieVH.selected_Category_plus.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        food_db_itemchecker = db.checktweetindb(String.valueOf(selectedCategoryMenuItemResult.getMenuId()));
+                        food_db_itemchecker = db.checktweetindb(String.valueOf(selectedCategoryResult.getId()));
 
 
                         if (food_db_itemchecker) {
-                            db.addTweet(
-                                    selectedCategoryMenuItemResult.getMenuId(),
-                                    selectedCategoryMenuItemResult.getMenuName(),
-                                    selectedCategoryMenuItemResult.getPrice(),
-                                    selectedCategoryMenuItemResult.getDescription(),
-                                    selectedCategoryMenuItemResult.getMenuTypeId(),
-                                    selectedCategoryMenuItemResult.getMenuImage(),
-                                    selectedCategoryMenuItemResult.getBackgroundImage(),
-                                    selectedCategoryMenuItemResult.getIngredients(),
-                                    selectedCategoryMenuItemResult.getMenuStatus(),
-                                    selectedCategoryMenuItemResult.getCreated(),
-                                    selectedCategoryMenuItemResult.getModified(),
-                                    selectedCategoryMenuItemResult.getRating(),
-                                    minteger,
-                                    MENU_NOT_SYNCED_WITH_SERVER
-                            );
+//                            db.addTweet(
+//                                    selectedCategoryMenuItemResult.getMenuId(),
+//                                    selectedCategoryMenuItemResult.getMenuName(),
+//                                    selectedCategoryMenuItemResult.getPrice(),
+//                                    selectedCategoryMenuItemResult.getDescription(),
+//                                    selectedCategoryMenuItemResult.getMenuTypeId(),
+//                                    selectedCategoryMenuItemResult.getMenuImage(),
+//                                    selectedCategoryMenuItemResult.getBackgroundImage(),
+//                                    selectedCategoryMenuItemResult.getIngredients(),
+//                                    selectedCategoryMenuItemResult.getMenuStatus(),
+//                                    selectedCategoryMenuItemResult.getCreated(),
+//                                    selectedCategoryMenuItemResult.getModified(),
+//                                    selectedCategoryMenuItemResult.getRating(),
+//                                    minteger,
+//                                    MENU_NOT_SYNCED_WITH_SERVER
+//                            );
 
 
 
@@ -242,7 +253,7 @@ public class SelectedCategoryPaginationAdapter extends RecyclerView.Adapter<Recy
 
 
                         } else {
-                            db.deleteTweet(String.valueOf(selectedCategoryMenuItemResult.getMenuId()));
+                            db.deleteTweet(String.valueOf(selectedCategoryResult.getId()));
 
                             movieVH.selected_Category_plus.setBackground(context.getResources().getDrawable(R.drawable.custom_plus_btn));
 
@@ -280,7 +291,7 @@ public class SelectedCategoryPaginationAdapter extends RecyclerView.Adapter<Recy
 
     @Override
     public int getItemCount() {
-        return movieSelectedCategoryMenuItemResults == null ? 0 : movieSelectedCategoryMenuItemResults.size();
+        return selectedCategoryResults == null ? 0 : selectedCategoryResults.size();
     }
 
     @Override
@@ -288,7 +299,7 @@ public class SelectedCategoryPaginationAdapter extends RecyclerView.Adapter<Recy
         if (position == 0) {
             return HERO;
         } else {
-            return (position == movieSelectedCategoryMenuItemResults.size() - 1 && isLoadingAdded) ?
+            return (position == selectedCategoryResults.size() - 1 && isLoadingAdded) ?
                     LOADING : ITEM;
         }
     }
@@ -320,10 +331,7 @@ public class SelectedCategoryPaginationAdapter extends RecyclerView.Adapter<Recy
    _________________________________________________________________________________________________
     */
 
-    private String formatYearLabel(SelectedCategoryMenuItemResult selectedCategoryMenuItemResult) {
-        return "Created | " +
-                selectedCategoryMenuItemResult.getCreated().substring(0, 4);
-    }
+
 
     private RequestBuilder< Drawable > loadImage(@NonNull String posterPath) {
         return GlideApp
@@ -332,21 +340,21 @@ public class SelectedCategoryPaginationAdapter extends RecyclerView.Adapter<Recy
                 .centerCrop();
     }
 
-    public void add(SelectedCategoryMenuItemResult r) {
-        movieSelectedCategoryMenuItemResults.add(r);
-        notifyItemInserted(movieSelectedCategoryMenuItemResults.size() - 1);
+    public void add(SelectedCategoryResult r) {
+        selectedCategoryResults.add(r);
+        notifyItemInserted(selectedCategoryResults.size() - 1);
     }
 
-    public void addAll(List<SelectedCategoryMenuItemResult> moveSelectedCategoryMenuItemResults) {
-        for (SelectedCategoryMenuItemResult selectedCategoryMenuItemResult : moveSelectedCategoryMenuItemResults) {
-            add(selectedCategoryMenuItemResult);
+    public void addAll(List<SelectedCategoryResult> selectedCategoryResults) {
+        for (SelectedCategoryResult selectedCategoryResult : selectedCategoryResults) {
+            add(selectedCategoryResult);
         }
     }
 
-    public void remove(SelectedCategoryMenuItemResult r) {
-        int position = movieSelectedCategoryMenuItemResults.indexOf(r);
+    public void remove(SelectedCategoryResult r) {
+        int position = selectedCategoryResults.indexOf(r);
         if (position > -1) {
-            movieSelectedCategoryMenuItemResults.remove(position);
+            selectedCategoryResults.remove(position);
             notifyItemRemoved(position);
         }
     }
@@ -365,30 +373,30 @@ public class SelectedCategoryPaginationAdapter extends RecyclerView.Adapter<Recy
 
     public void addLoadingFooter() {
         isLoadingAdded = true;
-        add(new SelectedCategoryMenuItemResult());
+        add(new SelectedCategoryResult());
     }
 
     public void removeLoadingFooter() {
         isLoadingAdded = false;
 
-        int position = movieSelectedCategoryMenuItemResults.size() - 1;
-        SelectedCategoryMenuItemResult selectedCategoryMenuItemResult = getItem(position);
+        int position = selectedCategoryResults.size() - 1;
+        SelectedCategoryResult selectedCategoryResult = getItem(position);
 
-        if (selectedCategoryMenuItemResult != null) {
-            movieSelectedCategoryMenuItemResults.remove(position);
+        if (selectedCategoryResult != null) {
+            selectedCategoryResults.remove(position);
             notifyItemRemoved(position);
         }
     }
 
     public void showRetry(boolean show, @Nullable String errorMsg) {
         retryPageLoad = show;
-        notifyItemChanged(movieSelectedCategoryMenuItemResults.size() - 1);
+        notifyItemChanged(selectedCategoryResults.size() - 1);
 
         if (errorMsg != null) this.errorMsg = errorMsg;
     }
 
-    public SelectedCategoryMenuItemResult getItem(int position) {
-        return movieSelectedCategoryMenuItemResults.get(position);
+    public SelectedCategoryResult getItem(int position) {
+        return selectedCategoryResults.get(position);
     }
 
 

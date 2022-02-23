@@ -7,6 +7,7 @@ import com.pkasemer.kakebeshoplira.Models.OrderRequest;
 import com.pkasemer.kakebeshoplira.Models.OrderResponse;
 import com.pkasemer.kakebeshoplira.Models.SearchHome;
 import com.pkasemer.kakebeshoplira.Models.SearchResult;
+import com.pkasemer.kakebeshoplira.Models.SelectedCategory;
 import com.pkasemer.kakebeshoplira.Models.SelectedCategoryMenuItem;
 import com.pkasemer.kakebeshoplira.Models.UserOrders;
 
@@ -20,15 +21,11 @@ import retrofit2.http.Query;
 public interface MovieService {
 
     @GET("menus/menupages.php")
-    Call<SelectedCategoryMenuItem> getTopRatedMovies(
+    Call<SelectedCategory> getSelectedCategory(
             @Query("category") int menu_category_id,
             @Query("page") int pageIndex
     );
 
-    @GET("menus/topmenuitems.php")
-    Call<SelectedCategoryMenuItem> getTopMenuItems(
-            @Query("page") int pageIndex
-    );
 
 
     @GET("category/allcombined.php")
