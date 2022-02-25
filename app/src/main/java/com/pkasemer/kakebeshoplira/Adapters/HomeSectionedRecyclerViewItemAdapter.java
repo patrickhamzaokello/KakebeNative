@@ -117,7 +117,7 @@ public class HomeSectionedRecyclerViewItemAdapter extends RecyclerView.Adapter<H
 
 
         holder.item_name.setText(product.getName());
-        holder.item_rating.setText( "Rating "+ product.getDiscount() + " | "+ "5");
+        holder.item_rating.setText("Rating " + product.getDiscount() + " | " + "5");
         holder.item_price.setText("Ugx " + NumberFormat.getNumberInstance(Locale.US).format(product.getUnitPrice()));
 
         Glide
@@ -167,7 +167,6 @@ public class HomeSectionedRecyclerViewItemAdapter extends RecyclerView.Adapter<H
 //                    );
 
 
-
                     holder.home_st_carttn.setBackground(context.getResources().getDrawable(R.drawable.custom_check_btn));
 
                     updatecartCount();
@@ -191,6 +190,8 @@ public class HomeSectionedRecyclerViewItemAdapter extends RecyclerView.Adapter<H
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(context.getApplicationContext(), MyMenuDetail.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+
                 //PACK DATA
                 i.putExtra("SENDER_KEY", "MenuDetails");
                 i.putExtra("selectMenuId", product.getId());
@@ -211,7 +212,7 @@ public class HomeSectionedRecyclerViewItemAdapter extends RecyclerView.Adapter<H
 
     }
 
-    private RequestBuilder< Drawable > loadImage(@NonNull String posterPath) {
+    private RequestBuilder<Drawable> loadImage(@NonNull String posterPath) {
         return GlideApp
                 .with(context)
                 .load(BASE_URL_IMG + posterPath)

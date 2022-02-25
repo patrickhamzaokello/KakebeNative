@@ -192,6 +192,8 @@ public class SimilarProductsAdapter extends RecyclerView.Adapter<SimilarProducts
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(context.getApplicationContext(), MyMenuDetail.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+
                 //PACK DATA
                 i.putExtra("SENDER_KEY", "MenuDetails");
                 i.putExtra("selectMenuId", product.getId());

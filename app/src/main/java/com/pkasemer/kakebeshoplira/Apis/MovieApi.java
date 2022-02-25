@@ -31,7 +31,7 @@ public class MovieApi {
         final Interceptor REWRITE_CACHE_CONTROL_INTERCEPTOR = chain -> {
             Response originalResponse = chain.proceed(chain.request());
             if (NetworkUtil.hasNetwork(context)) {
-                int maxAge = 60; // read from cache for 1 minute
+                int maxAge = 60 * 30; // read from cache for 1 minute
                 return originalResponse.newBuilder()
                         .header("Cache-Control", "public, max-age=" + maxAge)
                         .build();
@@ -62,8 +62,8 @@ public class MovieApi {
                     .client(buildClient(context))
                     .addConverterFactory(GsonConverterFactory.create())
 //                    .baseUrl("http://192.168.0.110:8080/projects/KakebeAPI/Requests/")
-                    .baseUrl("http://192.168.0.199:8080/projects/KakebeAPI/Requests/")
-//                    .baseUrl("https://xyzobide.kakebeshop.com/KakebeAPI/Requests/")
+//                    .baseUrl("http://192.168.0.199:8080/projects/KakebeAPI/Requests/")
+                    .baseUrl("https://xyzobide.kakebeshop.com/KakebeAPI/Requests/")
                     .build();
         }
         return retrofit;
