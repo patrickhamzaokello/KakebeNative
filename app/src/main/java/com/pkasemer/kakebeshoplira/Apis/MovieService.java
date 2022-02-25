@@ -20,8 +20,17 @@ import retrofit2.http.Query;
 
 public interface MovieService {
 
-    @GET("menus/menupages.php")
+//    http://localhost:8080/projects/KakebeAPI/Requests/menus/featuredcategoryProducts.php?page=1&category=4
+    @GET("menus/featuredcategoryProducts.php")
     Call<SelectedCategory> getSelectedCategory(
+            @Query("category") int menu_category_id,
+            @Query("page") int pageIndex
+    );
+
+    //  http://localhost:8080/projects/KakebeAPI/Requests/menus/selectedProduct.php?page=2&category=41&productID=45
+    @GET("menus/selectedProduct.php")
+    Call<SelectedCategoryMenuItem> getMenuDetails(
+            @Query("productID") int menu_id,
             @Query("category") int menu_category_id,
             @Query("page") int pageIndex
     );
@@ -33,7 +42,7 @@ public interface MovieService {
             @Query("page") int pageIndex
     );
 
-    //    http://192.168.0.199:8080/projects/KakebeAPI/Requests/category/search.php?query=rings& page=1
+    // http://localhost:8080/projects/KakebeAPI/Requests/category/search.php?query=rings& page=1
     @GET("category/search.php")
     Call<SearchResult> getSearch(
             @Query("query") String queryString,
@@ -43,15 +52,6 @@ public interface MovieService {
     //    http://192.168.0.199:8080/projects/KakebeAPI/Requests/category/searchhomepage.php?page=1
     @GET("category/searchhomepage.php")
     Call<SearchHome> getMostSearched(
-            @Query("page") int pageIndex
-    );
-
-
-    //    menus/menudetails.php?menuId=9&category=3&page=1
-    @GET("menus/menudetails.php")
-    Call<SelectedCategoryMenuItem> getMenuDetails(
-            @Query("menuId") int menu_id,
-            @Query("category") int menu_category_id,
             @Query("page") int pageIndex
     );
 
