@@ -5,6 +5,7 @@ import com.pkasemer.kakebeshoplira.Models.HomeCategories;
 import com.pkasemer.kakebeshoplira.Models.HomeMenuCategoryModel;
 import com.pkasemer.kakebeshoplira.Models.OrderRequest;
 import com.pkasemer.kakebeshoplira.Models.OrderResponse;
+import com.pkasemer.kakebeshoplira.Models.ProductDetail;
 import com.pkasemer.kakebeshoplira.Models.SearchHome;
 import com.pkasemer.kakebeshoplira.Models.SearchResult;
 import com.pkasemer.kakebeshoplira.Models.SelectedCategory;
@@ -29,12 +30,11 @@ public interface MovieService {
 
     //  http://localhost:8080/projects/KakebeAPI/Requests/menus/selectedProduct.php?page=2&category=41&productID=45
     @GET("menus/selectedProduct.php")
-    Call<SelectedCategoryMenuItem> getMenuDetails(
+    Call<ProductDetail> getMenuDetails(
             @Query("productID") int menu_id,
             @Query("category") int menu_category_id,
             @Query("page") int pageIndex
     );
-
 
 
     @GET("category/allcombined.php")

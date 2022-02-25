@@ -61,7 +61,8 @@ public class MovieApi {
             retrofit = new Retrofit.Builder()
                     .client(buildClient(context))
                     .addConverterFactory(GsonConverterFactory.create())
-                    .baseUrl("http://192.168.0.110:8080/projects/KakebeAPI/Requests/")
+//                    .baseUrl("http://192.168.0.110:8080/projects/KakebeAPI/Requests/")
+                    .baseUrl("http://192.168.0.199:8080/projects/KakebeAPI/Requests/")
 //                    .baseUrl("https://xyzobide.kakebeshop.com/KakebeAPI/Requests/")
                     .build();
         }

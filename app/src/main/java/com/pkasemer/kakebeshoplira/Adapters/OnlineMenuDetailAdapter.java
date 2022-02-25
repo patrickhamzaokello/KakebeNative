@@ -29,6 +29,7 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.transition.DrawableCrossFadeFactory;
 import com.pkasemer.kakebeshoplira.Models.SelectedCategoryMenuItemResult;
+import com.pkasemer.kakebeshoplira.Models.SelectedProduct;
 import com.pkasemer.kakebeshoplira.MyMenuDetail;
 import com.pkasemer.kakebeshoplira.PlaceOrder;
 import com.pkasemer.kakebeshoplira.R;
@@ -61,7 +62,7 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
     public static final int MENU_NOT_SYNCED_WITH_SERVER = 0;
 
 
-    private List<SelectedCategoryMenuItemResult> movieSelectedCategoryMenuItemResults;
+    private List<SelectedProduct> selectedProducts;
     private final Context context;
 
     private boolean isLoadingAdded = false;
@@ -83,15 +84,15 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
     public OnlineMenuDetailAdapter(Context context, MenuDetailListener callback) {
         this.context = context;
         this.mCallback = callback;
-        movieSelectedCategoryMenuItemResults = new ArrayList<>();
+        selectedProducts = new ArrayList<>();
     }
 
-    public List<SelectedCategoryMenuItemResult> getMovies() {
-        return movieSelectedCategoryMenuItemResults;
+    public List<SelectedProduct> getMovies() {
+        return selectedProducts;
     }
 
-    public void setMovies(List<SelectedCategoryMenuItemResult> movieSelectedCategoryMenuItemResults) {
-        this.movieSelectedCategoryMenuItemResults = movieSelectedCategoryMenuItemResults;
+    public void setMovies(List<SelectedProduct> selectedProducts) {
+        this.selectedProducts = selectedProducts;
     }
 
     @Override
@@ -126,7 +127,7 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
-        SelectedCategoryMenuItemResult selectedCategoryMenuItemResult = movieSelectedCategoryMenuItemResults.get(position); // Movie
+        SelectedProduct selectedProduct = selectedProducts.get(position); // Movie
         db = new SenseDBHelper(context);
 
         switch (getItemViewType(position)) {
@@ -134,13 +135,13 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
                 final HeroVH heroVh = (HeroVH) holder;
 
 
-                heroVh.menu_name.setText(selectedCategoryMenuItemResult.getMenuName());
-                heroVh.menu_shortinfo.setText(formatYearLabel(selectedCategoryMenuItemResult));
-                heroVh.menu_description.setText(selectedCategoryMenuItemResult.getDescription());
+                heroVh.menu_name.setText(selectedProduct.getName());
+                heroVh.menu_shortinfo.setText("Kakebe Shop Online");
+                heroVh.menu_description.setText(selectedProduct.getMetaDescription());
 
                 Glide
                         .with(context)
-                        .load(BASE_URL_IMG + selectedCategoryMenuItemResult.getMenuImage())
+                        .load(BASE_URL_IMG + selectedProduct.getThumbnailImg())
                         .listener(new RequestListener<Drawable>() {
                             @Override
                             public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
@@ -161,12 +162,12 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
                         .into(heroVh.menu_image);
 
 
-                heroVh.ratingnumber.setText(selectedCategoryMenuItemResult.getRating() + " | " + "5");
-                heroVh.menu_price.setText(NumberFormat.getNumberInstance(Locale.US).format(selectedCategoryMenuItemResult.getPrice()));
+                heroVh.ratingnumber.setText("5");
+                heroVh.menu_price.setText(NumberFormat.getNumberInstance(Locale.US).format(selectedProduct.getUnitPrice()));
                 heroVh.menu_qtn.setText("1");
-                heroVh.menu_total_price.setText(NumberFormat.getNumberInstance(Locale.US).format(selectedCategoryMenuItemResult.getPrice()));
+                heroVh.menu_total_price.setText(NumberFormat.getNumberInstance(Locale.US).format(selectedProduct.getUnitPrice()));
 
-                food_db_itemchecker = db.checktweetindb(String.valueOf(selectedCategoryMenuItemResult.getMenuId()));
+                food_db_itemchecker = db.checktweetindb(String.valueOf(selectedProduct.getId()));
 
                 updatecartCount();
 
@@ -185,9 +186,9 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
                     heroVh.btnAddtoCart.setBackgroundColor(ContextCompat.getColor(context, R.color.buttonGreen));
                     heroVh.btnAddtoCart.setTextColor(ContextCompat.getColor(context, R.color.white));
 
-                    minteger = db.getMenuQtn(String.valueOf(selectedCategoryMenuItemResult.getMenuId()));
+                    minteger = db.getMenuQtn(String.valueOf(selectedProduct.getId()));
 
-                    display(minteger,heroVh,selectedCategoryMenuItemResult);
+                    display(minteger,heroVh,selectedProduct);
 
                     heroVh.menu_detail_st_cartbtn.setBackground(context.getResources().getDrawable(R.drawable.custom_cart_btn_done));
                     heroVh.menu_detail_st_likebtn.setBackground(context.getResources().getDrawable(R.drawable.custom_cart_like_btn_done));
@@ -199,7 +200,7 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
                     @Override
                     public void onClick(View v) {
                         minteger = minteger + 1;
-                        display(minteger,heroVh, selectedCategoryMenuItemResult);
+                        display(minteger,heroVh, selectedProduct);
                     }
                 });
 
@@ -210,9 +211,9 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
 
                         if (minteger <= 1) {
                             minteger = 1;
-                            display(minteger,heroVh,selectedCategoryMenuItemResult);
+                            display(minteger,heroVh,selectedProduct);
                         } else {
-                            display(minteger,heroVh,selectedCategoryMenuItemResult);
+                            display(minteger,heroVh,selectedProduct);
                         }
                     }
                 });
@@ -221,44 +222,44 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
                     @Override
                     public void onClick(View v) {
 
-                        food_db_itemchecker = db.checktweetindb(String.valueOf(selectedCategoryMenuItemResult.getMenuId()));
-
-
-                        if (food_db_itemchecker) {
-                            db.addTweet(
-                                    selectedCategoryMenuItemResult.getMenuId(),
-                                    selectedCategoryMenuItemResult.getMenuName(),
-                                    selectedCategoryMenuItemResult.getPrice(),
-                                    selectedCategoryMenuItemResult.getDescription(),
-                                    selectedCategoryMenuItemResult.getMenuTypeId(),
-                                    selectedCategoryMenuItemResult.getMenuImage(),
-                                    selectedCategoryMenuItemResult.getBackgroundImage(),
-                                    selectedCategoryMenuItemResult.getIngredients(),
-                                    selectedCategoryMenuItemResult.getMenuStatus(),
-                                    selectedCategoryMenuItemResult.getCreated(),
-                                    selectedCategoryMenuItemResult.getModified(),
-                                    selectedCategoryMenuItemResult.getRating(),
-                                    minteger,
-                                    MENU_NOT_SYNCED_WITH_SERVER
-                            );
-
-
-                            updatecartCount();
-
-
-                            Intent i = new Intent(context.getApplicationContext(), PlaceOrder.class);
-                            //PACK DATA
-                            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                            context.startActivity(i);
-
-
-                        } else {
-                            updatecartCount();
-                            Intent i = new Intent(context.getApplicationContext(), PlaceOrder.class);
-                            //PACK DATA
-                            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                            context.startActivity(i);
-                        }
+//                        food_db_itemchecker = db.checktweetindb(String.valueOf(selectedCategoryMenuItemResult.getMenuId()));
+//
+//
+//                        if (food_db_itemchecker) {
+//                            db.addTweet(
+//                                    selectedCategoryMenuItemResult.getMenuId(),
+//                                    selectedCategoryMenuItemResult.getMenuName(),
+//                                    selectedCategoryMenuItemResult.getPrice(),
+//                                    selectedCategoryMenuItemResult.getDescription(),
+//                                    selectedCategoryMenuItemResult.getMenuTypeId(),
+//                                    selectedCategoryMenuItemResult.getMenuImage(),
+//                                    selectedCategoryMenuItemResult.getBackgroundImage(),
+//                                    selectedCategoryMenuItemResult.getIngredients(),
+//                                    selectedCategoryMenuItemResult.getMenuStatus(),
+//                                    selectedCategoryMenuItemResult.getCreated(),
+//                                    selectedCategoryMenuItemResult.getModified(),
+//                                    selectedCategoryMenuItemResult.getRating(),
+//                                    minteger,
+//                                    MENU_NOT_SYNCED_WITH_SERVER
+//                            );
+//
+//
+//                            updatecartCount();
+//
+//
+//                            Intent i = new Intent(context.getApplicationContext(), PlaceOrder.class);
+//                            //PACK DATA
+//                            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+//                            context.startActivity(i);
+//
+//
+//                        } else {
+//                            updatecartCount();
+//                            Intent i = new Intent(context.getApplicationContext(), PlaceOrder.class);
+//                            //PACK DATA
+//                            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+//                            context.startActivity(i);
+//                        }
                     }
                 });
 
@@ -266,53 +267,53 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
                     @Override
                     public void onClick(View v) {
 
-                        food_db_itemchecker = db.checktweetindb(String.valueOf(selectedCategoryMenuItemResult.getMenuId()));
-
-
-                        if (food_db_itemchecker) {
-                            db.addTweet(
-                                    selectedCategoryMenuItemResult.getMenuId(),
-                                    selectedCategoryMenuItemResult.getMenuName(),
-                                    selectedCategoryMenuItemResult.getPrice(),
-                                    selectedCategoryMenuItemResult.getDescription(),
-                                    selectedCategoryMenuItemResult.getMenuTypeId(),
-                                    selectedCategoryMenuItemResult.getMenuImage(),
-                                    selectedCategoryMenuItemResult.getBackgroundImage(),
-                                    selectedCategoryMenuItemResult.getIngredients(),
-                                    selectedCategoryMenuItemResult.getMenuStatus(),
-                                    selectedCategoryMenuItemResult.getCreated(),
-                                    selectedCategoryMenuItemResult.getModified(),
-                                    selectedCategoryMenuItemResult.getRating(),
-                                    minteger,
-                                    MENU_NOT_SYNCED_WITH_SERVER
-                            );
-
-
-                            heroVh.btnAddtoCart.setText("Remove from Cart");
-                            heroVh.btnAddtoCart.setBackgroundColor(ContextCompat.getColor(v.getContext(), R.color.buttonGreen));
-                            heroVh.btnAddtoCart.setTextColor(ContextCompat.getColor(v.getContext(), R.color.white));
-
-                            heroVh.menu_detail_st_cartbtn.setBackground(context.getResources().getDrawable(R.drawable.custom_cart_btn_done));
-                            heroVh.menu_detail_st_likebtn.setBackground(context.getResources().getDrawable(R.drawable.custom_cart_like_btn_done));
-
-
-                            updatecartCount();
-
-
-                        } else {
-                            db.deleteTweet(String.valueOf(selectedCategoryMenuItemResult.getMenuId()));
-
-                            heroVh.btnAddtoCart.setText("Add to Cart");
-                            heroVh.btnAddtoCart.setBackgroundColor(ContextCompat.getColor(context, R.color.purple_200));
-                            heroVh.btnAddtoCart.setTextColor(ContextCompat.getColor(context, R.color.white));
-
-
-                            heroVh.menu_detail_st_cartbtn.setBackground(context.getResources().getDrawable(R.drawable.custom_cart_btn));
-                            heroVh.menu_detail_st_likebtn.setBackground(context.getResources().getDrawable(R.drawable.custom_cart_like_btn));
-
-                            updatecartCount();
-
-                        }
+//                        food_db_itemchecker = db.checktweetindb(String.valueOf(selectedCategoryMenuItemResult.getMenuId()));
+//
+//
+//                        if (food_db_itemchecker) {
+//                            db.addTweet(
+//                                    selectedCategoryMenuItemResult.getMenuId(),
+//                                    selectedCategoryMenuItemResult.getMenuName(),
+//                                    selectedCategoryMenuItemResult.getPrice(),
+//                                    selectedCategoryMenuItemResult.getDescription(),
+//                                    selectedCategoryMenuItemResult.getMenuTypeId(),
+//                                    selectedCategoryMenuItemResult.getMenuImage(),
+//                                    selectedCategoryMenuItemResult.getBackgroundImage(),
+//                                    selectedCategoryMenuItemResult.getIngredients(),
+//                                    selectedCategoryMenuItemResult.getMenuStatus(),
+//                                    selectedCategoryMenuItemResult.getCreated(),
+//                                    selectedCategoryMenuItemResult.getModified(),
+//                                    selectedCategoryMenuItemResult.getRating(),
+//                                    minteger,
+//                                    MENU_NOT_SYNCED_WITH_SERVER
+//                            );
+//
+//
+//                            heroVh.btnAddtoCart.setText("Remove from Cart");
+//                            heroVh.btnAddtoCart.setBackgroundColor(ContextCompat.getColor(v.getContext(), R.color.buttonGreen));
+//                            heroVh.btnAddtoCart.setTextColor(ContextCompat.getColor(v.getContext(), R.color.white));
+//
+//                            heroVh.menu_detail_st_cartbtn.setBackground(context.getResources().getDrawable(R.drawable.custom_cart_btn_done));
+//                            heroVh.menu_detail_st_likebtn.setBackground(context.getResources().getDrawable(R.drawable.custom_cart_like_btn_done));
+//
+//
+//                            updatecartCount();
+//
+//
+//                        } else {
+//                            db.deleteTweet(String.valueOf(selectedCategoryMenuItemResult.getMenuId()));
+//
+//                            heroVh.btnAddtoCart.setText("Add to Cart");
+//                            heroVh.btnAddtoCart.setBackgroundColor(ContextCompat.getColor(context, R.color.purple_200));
+//                            heroVh.btnAddtoCart.setTextColor(ContextCompat.getColor(context, R.color.white));
+//
+//
+//                            heroVh.menu_detail_st_cartbtn.setBackground(context.getResources().getDrawable(R.drawable.custom_cart_btn));
+//                            heroVh.menu_detail_st_likebtn.setBackground(context.getResources().getDrawable(R.drawable.custom_cart_like_btn));
+//
+//                            updatecartCount();
+//
+//                        }
                     }
                 });
 
@@ -320,53 +321,53 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
                 heroVh.menu_detail_st_cartbtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        food_db_itemchecker = db.checktweetindb(String.valueOf(selectedCategoryMenuItemResult.getMenuId()));
-
-
-                        if (food_db_itemchecker) {
-                            db.addTweet(
-                                    selectedCategoryMenuItemResult.getMenuId(),
-                                    selectedCategoryMenuItemResult.getMenuName(),
-                                    selectedCategoryMenuItemResult.getPrice(),
-                                    selectedCategoryMenuItemResult.getDescription(),
-                                    selectedCategoryMenuItemResult.getMenuTypeId(),
-                                    selectedCategoryMenuItemResult.getMenuImage(),
-                                    selectedCategoryMenuItemResult.getBackgroundImage(),
-                                    selectedCategoryMenuItemResult.getIngredients(),
-                                    selectedCategoryMenuItemResult.getMenuStatus(),
-                                    selectedCategoryMenuItemResult.getCreated(),
-                                    selectedCategoryMenuItemResult.getModified(),
-                                    selectedCategoryMenuItemResult.getRating(),
-                                    minteger,
-                                    MENU_NOT_SYNCED_WITH_SERVER
-                            );
-
-
-                            heroVh.btnAddtoCart.setText("Remove from Cart");
-                            heroVh.btnAddtoCart.setBackgroundColor(ContextCompat.getColor(v.getContext(), R.color.buttonGreen));
-                            heroVh.btnAddtoCart.setTextColor(ContextCompat.getColor(v.getContext(), R.color.white));
-
-                            heroVh.menu_detail_st_cartbtn.setBackground(context.getResources().getDrawable(R.drawable.custom_cart_btn_done));
-                            heroVh.menu_detail_st_likebtn.setBackground(context.getResources().getDrawable(R.drawable.custom_cart_like_btn_done));
-
-                            updatecartCount();
-
-
-                        } else {
-                            db.deleteTweet(String.valueOf(selectedCategoryMenuItemResult.getMenuId()));
-
-                            heroVh.btnAddtoCart.setText("Add to Cart");
-                            heroVh.btnAddtoCart.setBackgroundColor(ContextCompat.getColor(context, R.color.purple_200));
-                            heroVh.btnAddtoCart.setTextColor(ContextCompat.getColor(context, R.color.white));
-
-
-                            heroVh.menu_detail_st_cartbtn.setBackground(context.getResources().getDrawable(R.drawable.custom_cart_btn));
-                            heroVh.menu_detail_st_likebtn.setBackground(context.getResources().getDrawable(R.drawable.custom_cart_like_btn));
-
-
-                            updatecartCount();
-
-                        }
+//                        food_db_itemchecker = db.checktweetindb(String.valueOf(selectedCategoryMenuItemResult.getMenuId()));
+//
+//
+//                        if (food_db_itemchecker) {
+//                            db.addTweet(
+//                                    selectedCategoryMenuItemResult.getMenuId(),
+//                                    selectedCategoryMenuItemResult.getMenuName(),
+//                                    selectedCategoryMenuItemResult.getPrice(),
+//                                    selectedCategoryMenuItemResult.getDescription(),
+//                                    selectedCategoryMenuItemResult.getMenuTypeId(),
+//                                    selectedCategoryMenuItemResult.getMenuImage(),
+//                                    selectedCategoryMenuItemResult.getBackgroundImage(),
+//                                    selectedCategoryMenuItemResult.getIngredients(),
+//                                    selectedCategoryMenuItemResult.getMenuStatus(),
+//                                    selectedCategoryMenuItemResult.getCreated(),
+//                                    selectedCategoryMenuItemResult.getModified(),
+//                                    selectedCategoryMenuItemResult.getRating(),
+//                                    minteger,
+//                                    MENU_NOT_SYNCED_WITH_SERVER
+//                            );
+//
+//
+//                            heroVh.btnAddtoCart.setText("Remove from Cart");
+//                            heroVh.btnAddtoCart.setBackgroundColor(ContextCompat.getColor(v.getContext(), R.color.buttonGreen));
+//                            heroVh.btnAddtoCart.setTextColor(ContextCompat.getColor(v.getContext(), R.color.white));
+//
+//                            heroVh.menu_detail_st_cartbtn.setBackground(context.getResources().getDrawable(R.drawable.custom_cart_btn_done));
+//                            heroVh.menu_detail_st_likebtn.setBackground(context.getResources().getDrawable(R.drawable.custom_cart_like_btn_done));
+//
+//                            updatecartCount();
+//
+//
+//                        } else {
+//                            db.deleteTweet(String.valueOf(selectedCategoryMenuItemResult.getMenuId()));
+//
+//                            heroVh.btnAddtoCart.setText("Add to Cart");
+//                            heroVh.btnAddtoCart.setBackgroundColor(ContextCompat.getColor(context, R.color.purple_200));
+//                            heroVh.btnAddtoCart.setTextColor(ContextCompat.getColor(context, R.color.white));
+//
+//
+//                            heroVh.menu_detail_st_cartbtn.setBackground(context.getResources().getDrawable(R.drawable.custom_cart_btn));
+//                            heroVh.menu_detail_st_likebtn.setBackground(context.getResources().getDrawable(R.drawable.custom_cart_like_btn));
+//
+//
+//                            updatecartCount();
+//
+//                        }
                     }
                 });
 
@@ -374,53 +375,53 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
                 heroVh.menu_detail_st_likebtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        food_db_itemchecker = db.checktweetindb(String.valueOf(selectedCategoryMenuItemResult.getMenuId()));
-
-
-                        if (food_db_itemchecker) {
-                            db.addTweet(
-                                    selectedCategoryMenuItemResult.getMenuId(),
-                                    selectedCategoryMenuItemResult.getMenuName(),
-                                    selectedCategoryMenuItemResult.getPrice(),
-                                    selectedCategoryMenuItemResult.getDescription(),
-                                    selectedCategoryMenuItemResult.getMenuTypeId(),
-                                    selectedCategoryMenuItemResult.getMenuImage(),
-                                    selectedCategoryMenuItemResult.getBackgroundImage(),
-                                    selectedCategoryMenuItemResult.getIngredients(),
-                                    selectedCategoryMenuItemResult.getMenuStatus(),
-                                    selectedCategoryMenuItemResult.getCreated(),
-                                    selectedCategoryMenuItemResult.getModified(),
-                                    selectedCategoryMenuItemResult.getRating(),
-                                    minteger,
-                                    MENU_NOT_SYNCED_WITH_SERVER
-                            );
-
-
-                            heroVh.btnAddtoCart.setText("Remove from Cart");
-                            heroVh.btnAddtoCart.setBackgroundColor(ContextCompat.getColor(v.getContext(), R.color.buttonGreen));
-                            heroVh.btnAddtoCart.setTextColor(ContextCompat.getColor(v.getContext(), R.color.white));
-
-                            heroVh.menu_detail_st_cartbtn.setBackground(context.getResources().getDrawable(R.drawable.custom_cart_btn_done));
-                            heroVh.menu_detail_st_likebtn.setBackground(context.getResources().getDrawable(R.drawable.custom_cart_like_btn_done));
-
-                            updatecartCount();
-
-
-                        } else {
-                            db.deleteTweet(String.valueOf(selectedCategoryMenuItemResult.getMenuId()));
-
-                            heroVh.btnAddtoCart.setText("Add to Cart");
-                            heroVh.btnAddtoCart.setBackgroundColor(ContextCompat.getColor(context, R.color.purple_200));
-                            heroVh.btnAddtoCart.setTextColor(ContextCompat.getColor(context, R.color.white));
-
-
-                            heroVh.menu_detail_st_cartbtn.setBackground(context.getResources().getDrawable(R.drawable.custom_cart_btn));
-                            heroVh.menu_detail_st_likebtn.setBackground(context.getResources().getDrawable(R.drawable.custom_cart_like_btn));
-
-
-                            updatecartCount();
-
-                        }
+//                        food_db_itemchecker = db.checktweetindb(String.valueOf(selectedCategoryMenuItemResult.getMenuId()));
+//
+//
+//                        if (food_db_itemchecker) {
+//                            db.addTweet(
+//                                    selectedCategoryMenuItemResult.getMenuId(),
+//                                    selectedCategoryMenuItemResult.getMenuName(),
+//                                    selectedCategoryMenuItemResult.getPrice(),
+//                                    selectedCategoryMenuItemResult.getDescription(),
+//                                    selectedCategoryMenuItemResult.getMenuTypeId(),
+//                                    selectedCategoryMenuItemResult.getMenuImage(),
+//                                    selectedCategoryMenuItemResult.getBackgroundImage(),
+//                                    selectedCategoryMenuItemResult.getIngredients(),
+//                                    selectedCategoryMenuItemResult.getMenuStatus(),
+//                                    selectedCategoryMenuItemResult.getCreated(),
+//                                    selectedCategoryMenuItemResult.getModified(),
+//                                    selectedCategoryMenuItemResult.getRating(),
+//                                    minteger,
+//                                    MENU_NOT_SYNCED_WITH_SERVER
+//                            );
+//
+//
+//                            heroVh.btnAddtoCart.setText("Remove from Cart");
+//                            heroVh.btnAddtoCart.setBackgroundColor(ContextCompat.getColor(v.getContext(), R.color.buttonGreen));
+//                            heroVh.btnAddtoCart.setTextColor(ContextCompat.getColor(v.getContext(), R.color.white));
+//
+//                            heroVh.menu_detail_st_cartbtn.setBackground(context.getResources().getDrawable(R.drawable.custom_cart_btn_done));
+//                            heroVh.menu_detail_st_likebtn.setBackground(context.getResources().getDrawable(R.drawable.custom_cart_like_btn_done));
+//
+//                            updatecartCount();
+//
+//
+//                        } else {
+//                            db.deleteTweet(String.valueOf(selectedCategoryMenuItemResult.getMenuId()));
+//
+//                            heroVh.btnAddtoCart.setText("Add to Cart");
+//                            heroVh.btnAddtoCart.setBackgroundColor(ContextCompat.getColor(context, R.color.purple_200));
+//                            heroVh.btnAddtoCart.setTextColor(ContextCompat.getColor(context, R.color.white));
+//
+//
+//                            heroVh.menu_detail_st_cartbtn.setBackground(context.getResources().getDrawable(R.drawable.custom_cart_btn));
+//                            heroVh.menu_detail_st_likebtn.setBackground(context.getResources().getDrawable(R.drawable.custom_cart_like_btn));
+//
+//
+//                            updatecartCount();
+//
+//                        }
                     }
                 });
 
@@ -429,117 +430,7 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
             case ITEM:
                 final MovieVH movieVH = (MovieVH) holder;
 
-                movieVH.mMovieTitle.setText(selectedCategoryMenuItemResult.getMenuName());
-
-                movieVH.mMoviePrice.setText("Ugx " + NumberFormat.getNumberInstance(Locale.US).format(selectedCategoryMenuItemResult.getPrice()));
-
-                movieVH.mYear.setText(
-                        "Rating " + selectedCategoryMenuItemResult.getRating()
-                                + " | "
-                                + "5"
-                );
-                movieVH.mMovieDesc.setText(selectedCategoryMenuItemResult.getDescription());
-
-                Glide
-                        .with(context)
-                        .load(BASE_URL_IMG + selectedCategoryMenuItemResult.getMenuImage())
-                        .listener(new RequestListener<Drawable>() {
-                            @Override
-                            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-                                movieVH.mProgress.setVisibility(View.GONE);
-                                return false;
-                            }
-
-                            @Override
-                            public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-                                movieVH.mProgress.setVisibility(View.GONE);
-                                return false;
-                            }
-
-                        })
-                        .diskCacheStrategy(DiskCacheStrategy.ALL)   // cache both original & resized image
-                        .centerCrop()
-                        .transition(withCrossFade(factory))
-                        .into(movieVH.mPosterImg);
-
-                //show toast on click of show all button
-                movieVH.mPosterImg.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent i = new Intent(context.getApplicationContext(), MyMenuDetail.class);
-                        //PACK DATA
-                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-
-                        i.putExtra("SENDER_KEY", "MenuDetails");
-                        i.putExtra("selectMenuId", selectedCategoryMenuItemResult.getMenuId());
-                        i.putExtra("category_selected_key", selectedCategoryMenuItemResult.getMenuTypeId());
-                        context.startActivity(i);
-
-                    }
-                });
-
-                food_db_itemchecker = db.checktweetindb(String.valueOf(selectedCategoryMenuItemResult.getMenuId()));
-
-
-                if (food_db_itemchecker) {
-
-                    //food not existing
-                    movieVH.menu_st_carttn.setBackground(context.getResources().getDrawable(R.drawable.custom_plus_btn));
-
-                } else {
-
-                    //food existing
-                    movieVH.menu_st_carttn.setBackground(context.getResources().getDrawable(R.drawable.custom_check_btn));
-
-
-                }
-                updatecartCount();
-
-                movieVH.menu_st_carttn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        food_db_itemchecker = db.checktweetindb(String.valueOf(selectedCategoryMenuItemResult.getMenuId()));
-
-
-                        if (food_db_itemchecker) {
-                            db.addTweet(
-                                    selectedCategoryMenuItemResult.getMenuId(),
-                                    selectedCategoryMenuItemResult.getMenuName(),
-                                    selectedCategoryMenuItemResult.getPrice(),
-                                    selectedCategoryMenuItemResult.getDescription(),
-                                    selectedCategoryMenuItemResult.getMenuTypeId(),
-                                    selectedCategoryMenuItemResult.getMenuImage(),
-                                    selectedCategoryMenuItemResult.getBackgroundImage(),
-                                    selectedCategoryMenuItemResult.getIngredients(),
-                                    selectedCategoryMenuItemResult.getMenuStatus(),
-                                    selectedCategoryMenuItemResult.getCreated(),
-                                    selectedCategoryMenuItemResult.getModified(),
-                                    selectedCategoryMenuItemResult.getRating(),
-                                    minteger,
-                                    MENU_NOT_SYNCED_WITH_SERVER
-                            );
-
-
-                            movieVH.menu_st_carttn.setBackground(context.getResources().getDrawable(R.drawable.custom_check_btn));
-
-                            updatecartCount();
-
-
-                        } else {
-                            db.deleteTweet(String.valueOf(selectedCategoryMenuItemResult.getMenuId()));
-
-
-                            movieVH.menu_st_carttn.setBackground(context.getResources().getDrawable(R.drawable.custom_plus_btn));
-
-
-                            updatecartCount();
-
-                        }
-                    }
-                });
-
-
-
+                //recycler view for grid items products
 
                 break;
 
@@ -568,7 +459,7 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
 
     @Override
     public int getItemCount() {
-        return movieSelectedCategoryMenuItemResults == null ? 0 : movieSelectedCategoryMenuItemResults.size();
+        return selectedProducts == null ? 0 : selectedProducts.size();
     }
 
     @Override
@@ -576,7 +467,7 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
         if (position == 0) {
             return HERO;
         } else {
-            return (position == movieSelectedCategoryMenuItemResults.size() - 1 && isLoadingAdded) ?
+            return (position == selectedProducts.size() - 1 && isLoadingAdded) ?
                     LOADING : ITEM;
         }
     }
@@ -600,10 +491,7 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
    _________________________________________________________________________________________________
     */
 
-    private String formatYearLabel(SelectedCategoryMenuItemResult selectedCategoryMenuItemResult) {
-        return "Created | " +
-                selectedCategoryMenuItemResult.getCreated().substring(0, 4);
-    }
+
 
     private RequestBuilder<Drawable> loadImage(@NonNull String posterPath) {
         return GlideApp
@@ -612,21 +500,21 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
                 .centerCrop();
     }
 
-    public void add(SelectedCategoryMenuItemResult r) {
-        movieSelectedCategoryMenuItemResults.add(r);
-        notifyItemInserted(movieSelectedCategoryMenuItemResults.size() - 1);
+    public void add(SelectedProduct r) {
+        selectedProducts.add(r);
+        notifyItemInserted(selectedProducts.size() - 1);
     }
 
-    public void addAll(List<SelectedCategoryMenuItemResult> moveSelectedCategoryMenuItemResults) {
-        for (SelectedCategoryMenuItemResult selectedCategoryMenuItemResult : moveSelectedCategoryMenuItemResults) {
-            add(selectedCategoryMenuItemResult);
+    public void addAll(List<SelectedProduct> selectedProducts) {
+        for (SelectedProduct selectedProduct : selectedProducts) {
+            add(selectedProduct);
         }
     }
 
-    public void remove(SelectedCategoryMenuItemResult r) {
-        int position = movieSelectedCategoryMenuItemResults.indexOf(r);
+    public void remove(SelectedProduct r) {
+        int position = selectedProducts.indexOf(r);
         if (position > -1) {
-            movieSelectedCategoryMenuItemResults.remove(position);
+            selectedProducts.remove(position);
             notifyItemRemoved(position);
         }
     }
@@ -645,30 +533,30 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
 
     public void addLoadingFooter() {
         isLoadingAdded = true;
-        add(new SelectedCategoryMenuItemResult());
+        add(new SelectedProduct());
     }
 
     public void removeLoadingFooter() {
         isLoadingAdded = false;
 
-        int position = movieSelectedCategoryMenuItemResults.size() - 1;
-        SelectedCategoryMenuItemResult selectedCategoryMenuItemResult = getItem(position);
+        int position = selectedProducts.size() - 1;
+        SelectedProduct selectedProduct = getItem(position);
 
-        if (selectedCategoryMenuItemResult != null) {
-            movieSelectedCategoryMenuItemResults.remove(position);
+        if (selectedProduct != null) {
+            selectedProducts.remove(position);
             notifyItemRemoved(position);
         }
     }
 
     public void showRetry(boolean show, @Nullable String errorMsg) {
         retryPageLoad = show;
-        notifyItemChanged(movieSelectedCategoryMenuItemResults.size() - 1);
+        notifyItemChanged(selectedProducts.size() - 1);
 
         if (errorMsg != null) this.errorMsg = errorMsg;
     }
 
-    public SelectedCategoryMenuItemResult getItem(int position) {
-        return movieSelectedCategoryMenuItemResults.get(position);
+    public SelectedProduct getItem(int position) {
+        return selectedProducts.get(position);
     }
 
 
@@ -681,20 +569,20 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
     }
 
 
-    private void display(int number,HeroVH heroVh , SelectedCategoryMenuItemResult selectedCategoryMenuItemResult) {
+    private void display(int number,HeroVH heroVh , SelectedProduct selectedProduct) {
 
-        totalPrice = number * (selectedCategoryMenuItemResult.getPrice());
+        totalPrice = number * (selectedProduct.getUnitPrice());
 
         heroVh.itemQuanEt.setText("" + number);
         heroVh.menu_total_price.setText(NumberFormat.getNumberInstance(Locale.US).format(totalPrice));
 
-        food_db_itemchecker = db.checktweetindb(String.valueOf(selectedCategoryMenuItemResult.getMenuId()));
+        food_db_itemchecker = db.checktweetindb(String.valueOf(selectedProduct.getId()));
 
         if (food_db_itemchecker) {
             return;
             //item doesnt exist
         } else {
-            db.updateMenuCount(number,selectedCategoryMenuItemResult.getMenuId());
+            db.updateMenuCount(number,selectedProduct.getId());
             //item exists
 
         }

@@ -23,8 +23,9 @@ import com.pkasemer.kakebeshoplira.Adapters.OnlineMenuDetailAdapter;
 import com.pkasemer.kakebeshoplira.Apis.MovieApi;
 import com.pkasemer.kakebeshoplira.Apis.MovieService;
 import com.pkasemer.kakebeshoplira.Models.FoodDBModel;
-import com.pkasemer.kakebeshoplira.Models.SelectedCategoryMenuItem;
+import com.pkasemer.kakebeshoplira.Models.ProductDetail;
 import com.pkasemer.kakebeshoplira.Models.SelectedCategoryMenuItemResult;
+import com.pkasemer.kakebeshoplira.Models.SelectedProduct;
 import com.pkasemer.kakebeshoplira.Utils.MenuDetailListener;
 import com.pkasemer.kakebeshoplira.Utils.PaginationScrollListener;
 
@@ -61,7 +62,7 @@ public class MyMenuDetail extends AppCompatActivity implements MenuDetailListene
 
     private MovieService movieService;
     ActionBar actionBar;
-
+    List<SelectedProduct> categories;
 
 
     @Override
@@ -144,116 +145,23 @@ public class MyMenuDetail extends AppCompatActivity implements MenuDetailListene
     }
 
 
-    /**
-     * Triggers the actual background refresh via the {@link SwipeRefreshLayout}
-     */
-    private void doRefresh() {
-        progressBar.setVisibility(View.VISIBLE);
-        if (callTopRatedMoviesApi().isExecuted())
-            callTopRatedMoviesApi().cancel();
+    private void receiveData()
+    {
+        //RECEIVE DATA VIA INTENT
+        Intent i = getIntent();
+        int menu_detail_id = i.getIntExtra("selectMenuId",1);
+        int category_selected_key = i.getIntExtra("category_selected_key",0);
 
-        // TODO: Check if data is stale.
-        //  Execute network request if cache is expired; otherwise do not update data.
-        adapter.getMovies().clear();
-        adapter.notifyDataSetChanged();
+
+        System.out.println("category_selected_key "+category_selected_key);
+        //SET DATA TO TEXTVIEWS
+        selectCategoryId = category_selected_key;
+        selectMenuId = menu_detail_id;
         loadFirstPage();
-        swipeRefreshLayout.setRefreshing(false);
-    }
 
-    private void loadFirstPage() {
-        Log.d(TAG, "loadFirstPage: ");
-
-        // To ensure list is visible when retry button in error view is clicked
-        hideErrorView();
-        currentPage = PAGE_START;
-
-        callTopRatedMoviesApi().enqueue(new Callback<SelectedCategoryMenuItem>() {
-            @Override
-            public void onResponse(Call<SelectedCategoryMenuItem> call, Response<SelectedCategoryMenuItem> response) {
-                hideErrorView();
-
-//                Log.i(TAG, "onResponse: " + (response.raw().cacheResponse() != null ? "Cache" : "Network"));
-
-                // Got data. Send it to adapter
-                List<SelectedCategoryMenuItemResult> selectedCategoryMenuItemResults = fetchResults(response);
-                progressBar.setVisibility(View.GONE);
-                if(selectedCategoryMenuItemResults.isEmpty()){
-                    showCategoryErrorView();
-                    return;
-                } else {
-                    adapter.addAll(selectedCategoryMenuItemResults);
-                }
-
-                if (currentPage < TOTAL_PAGES) adapter.addLoadingFooter();
-                else isLastPage = true;
-            }
-
-            @Override
-            public void onFailure(Call<SelectedCategoryMenuItem> call, Throwable t) {
-                t.printStackTrace();
-                showErrorView(t);
-            }
-        });
-    }
-
-    /**
-     * @param response extracts List<{@link SelectedCategoryMenuItemResult >} from response
-     * @return
-     */
-    private List<SelectedCategoryMenuItemResult> fetchResults(Response<SelectedCategoryMenuItem> response) {
-        SelectedCategoryMenuItem selectedCategoryMenuItem = response.body();
-        TOTAL_PAGES = selectedCategoryMenuItem.getTotalPages();
-        System.out.println("total pages" + TOTAL_PAGES);
-        return selectedCategoryMenuItem.getResults();
-    }
-
-    private void loadNextPage() {
-        Log.d(TAG, "loadNextPage: " + currentPage);
-
-        callTopRatedMoviesApi().enqueue(new Callback<SelectedCategoryMenuItem>() {
-            @Override
-            public void onResponse(Call<SelectedCategoryMenuItem> call, Response<SelectedCategoryMenuItem> response) {
-                Log.i(TAG, "onResponse: " + currentPage
-                        + (response.raw().cacheResponse() != null ? "Cache" : "Network"));
-
-                adapter.removeLoadingFooter();
-                isLoading = false;
-
-                List<SelectedCategoryMenuItemResult> selectedCategoryMenuItemResults = fetchResults(response);
-                adapter.addAll(selectedCategoryMenuItemResults);
-
-                if (currentPage != TOTAL_PAGES) adapter.addLoadingFooter();
-                else isLastPage = true;
-            }
-
-            @Override
-            public void onFailure(Call<SelectedCategoryMenuItem> call, Throwable t) {
-                t.printStackTrace();
-                adapter.showRetry(true, fetchErrorMessage(t));
-            }
-        });
     }
 
 
-    /**
-     * Performs a Retrofit call to the top rated movies API.
-     * Same API call for Pagination.
-     * As {@link #currentPage} will be incremented automatically
-     * by @{@link PaginationScrollListener} to load next page.
-     */
-    private Call<SelectedCategoryMenuItem> callTopRatedMoviesApi() {
-        return movieService.getMenuDetails(
-                selectMenuId,
-                selectCategoryId,
-                currentPage
-        );
-    }
-
-
-    @Override
-    public void retryPageLoad() {
-        loadNextPage();
-    }
 
     @Override
     public void incrementqtn(int qty, FoodDBModel foodDBModel) {
@@ -275,11 +183,111 @@ public class MyMenuDetail extends AppCompatActivity implements MenuDetailListene
 
     }
 
+    private void doRefresh() {
+        progressBar.setVisibility(View.VISIBLE);
+        if (callProductDetail().isExecuted())
+            callProductDetail().cancel();
 
-    /**
-     * @param throwable required for {@link #fetchErrorMessage(Throwable)}
-     * @return
-     */
+        // TODO: Check if data is stale.
+        //  Execute network request if cache is expired; otherwise do not update data.
+        adapter.getMovies().clear();
+        adapter.notifyDataSetChanged();
+        loadFirstPage();
+        swipeRefreshLayout.setRefreshing(false);
+    }
+
+    private void loadFirstPage() {
+        Log.d(TAG, "loadFirstPage: ");
+
+        // To ensure list is visible when retry button in error view is clicked
+        hideErrorView();
+        currentPage = PAGE_START;
+
+        callProductDetail().enqueue(new Callback<ProductDetail>() {
+            @Override
+            public void onResponse(Call<ProductDetail> call, Response<ProductDetail> response) {
+                hideErrorView();
+
+//                Log.i(TAG, "onResponse: " + (response.raw().cacheResponse() != null ? "Cache" : "Network"));
+
+                // Got data. Send it to adapter
+                categories = fetchResults(response);
+                progressBar.setVisibility(View.GONE);
+                if(categories.isEmpty()){
+                    showCategoryErrorView();
+                    return;
+                } else {
+                    adapter.addAll(categories);
+                }
+
+                if (currentPage < TOTAL_PAGES) adapter.addLoadingFooter();
+                else isLastPage = true;
+            }
+
+            @Override
+            public void onFailure(Call<ProductDetail> call, Throwable t) {
+                t.printStackTrace();
+                showErrorView(t);
+            }
+        });
+    }
+
+
+    private void loadNextPage() {
+        Log.d(TAG, "loadNextPage: " + currentPage);
+
+        callProductDetail().enqueue(new Callback<ProductDetail>() {
+            @Override
+            public void onResponse(Call<ProductDetail> call, Response<ProductDetail> response) {
+                Log.i(TAG, "onResponse: " + currentPage
+                        + (response.raw().cacheResponse() != null ? "Cache" : "Network"));
+
+                adapter.removeLoadingFooter();
+                isLoading = false;
+
+                categories = fetchResults(response);
+                adapter.addAll(categories);
+
+                if (currentPage != TOTAL_PAGES) adapter.addLoadingFooter();
+                else isLastPage = true;
+            }
+
+            @Override
+            public void onFailure(Call<ProductDetail> call, Throwable t) {
+                t.printStackTrace();
+                adapter.showRetry(true, fetchErrorMessage(t));
+            }
+        });
+    }
+
+
+
+    private List<SelectedProduct> fetchResults(Response<ProductDetail> response) {
+        ProductDetail productDetail = response.body();
+        TOTAL_PAGES = productDetail.getTotalPages();
+        System.out.println("total pages" + TOTAL_PAGES);
+
+        return productDetail.getSelectedProduct();
+    }
+
+
+    private Call<ProductDetail> callProductDetail() {
+        return movieService.getMenuDetails(
+                selectMenuId,
+                selectCategoryId,
+                currentPage
+        );
+    }
+
+
+    @Override
+    public void retryPageLoad() {
+        loadNextPage();
+    }
+
+
+
+
     private void showErrorView(Throwable throwable) {
 
         if (errorLayout.getVisibility() == View.GONE) {
@@ -354,24 +362,9 @@ public class MyMenuDetail extends AppCompatActivity implements MenuDetailListene
      * @return
      */
     private boolean isNetworkConnected() {
-        ConnectivityManager cm = (ConnectivityManager) MyMenuDetail.this.getSystemService(CONNECTIVITY_SERVICE);
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
         return cm.getActiveNetworkInfo() != null;
     }
 
-    private void receiveData()
-    {
-        //RECEIVE DATA VIA INTENT
-        Intent i = getIntent();
-        int menu_detail_id = i.getIntExtra("selectMenuId",1);
-        int category_selected_key = i.getIntExtra("category_selected_key",0);
-
-
-        System.out.println("category_selected_key "+category_selected_key);
-        //SET DATA TO TEXTVIEWS
-        selectCategoryId = category_selected_key;
-        selectMenuId = menu_detail_id;
-        loadFirstPage();
-
-    }
 
 }
