@@ -18,6 +18,7 @@ import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -432,6 +433,18 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
 
                 //recycler view for grid items products
 
+                //recycler view for items
+                movieVH.itemRecyclerView.setHasFixedSize(true);
+                movieVH.itemRecyclerView.setNestedScrollingEnabled(false);
+
+                /* set layout manager on basis of recyclerview enum type */
+                GridLayoutManager gridLayoutManager = new GridLayoutManager(context, 3);
+                movieVH.itemRecyclerView.setLayoutManager(gridLayoutManager);
+
+
+                SimilarProductsAdapter adapter = new SimilarProductsAdapter(context, selectedProduct.getSimilarProducts());
+                movieVH.itemRecyclerView.setAdapter(adapter);
+
                 break;
 
             case LOADING:
@@ -642,25 +655,15 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
     }
 
     protected class MovieVH extends RecyclerView.ViewHolder {
-        private final TextView mMovieTitle;
-        private final TextView mMovieDesc;
-        private final TextView mMoviePrice;
-        private final TextView mYear; // displays "year | language"
-        private final ImageView mPosterImg;
-        private final ProgressBar mProgress;
-        private final Button menu_st_carttn;
+        private TextView sectionLabel, showAllButton;
+        private RecyclerView itemRecyclerView;
 
         public MovieVH(View itemView) {
             super(itemView);
 
-            mMovieTitle = itemView.findViewById(R.id.movie_title);
-            mMovieDesc = itemView.findViewById(R.id.movie_desc);
-            mMoviePrice = itemView.findViewById(R.id.movie_price);
-            mYear = itemView.findViewById(R.id.movie_year);
-            mPosterImg = itemView.findViewById(R.id.movie_poster);
-            mProgress = itemView.findViewById(R.id.movie_progress);
-
-            menu_st_carttn = itemView.findViewById(R.id.menu_st_carttn);
+            sectionLabel = (TextView) itemView.findViewById(R.id.section_label);
+            showAllButton = (TextView) itemView.findViewById(R.id.section_show_all_button);
+            itemRecyclerView = (RecyclerView) itemView.findViewById(R.id.item_recycler_view);
 
         }
     }
