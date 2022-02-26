@@ -137,8 +137,14 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
 
 
                 heroVh.menu_name.setText(selectedProduct.getName());
-                heroVh.menu_shortinfo.setText("Kakebe Shop Online");
-                heroVh.menu_description.setText(selectedProduct.getMetaDescription());
+
+                if ((selectedProduct.getMetaDescription()).length() >= 20) {
+                    heroVh.descriptionlayout.setVisibility(View.VISIBLE);
+                    heroVh.menu_description.setText(selectedProduct.getMetaDescription());
+                } else {
+                    heroVh.descriptionlayout.setVisibility(View.GONE);
+                }
+
 
                 Glide
                         .with(context)
@@ -163,7 +169,6 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
                         .into(heroVh.menu_image);
 
 
-                heroVh.ratingnumber.setText("5");
                 heroVh.menu_price.setText(NumberFormat.getNumberInstance(Locale.US).format(selectedProduct.getUnitPrice()));
                 heroVh.menu_qtn.setText("1");
                 heroVh.menu_total_price.setText(NumberFormat.getNumberInstance(Locale.US).format(selectedProduct.getUnitPrice()));
@@ -189,7 +194,7 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
 
                     minteger = db.getMenuQtn(String.valueOf(selectedProduct.getId()));
 
-                    display(minteger,heroVh,selectedProduct);
+                    display(minteger, heroVh, selectedProduct);
 
                     heroVh.menu_detail_st_cartbtn.setBackground(context.getResources().getDrawable(R.drawable.custom_cart_btn_done));
                     heroVh.menu_detail_st_likebtn.setBackground(context.getResources().getDrawable(R.drawable.custom_cart_like_btn_done));
@@ -201,7 +206,7 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
                     @Override
                     public void onClick(View v) {
                         minteger = minteger + 1;
-                        display(minteger,heroVh, selectedProduct);
+                        display(minteger, heroVh, selectedProduct);
                     }
                 });
 
@@ -212,9 +217,9 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
 
                         if (minteger <= 1) {
                             minteger = 1;
-                            display(minteger,heroVh,selectedProduct);
+                            display(minteger, heroVh, selectedProduct);
                         } else {
-                            display(minteger,heroVh,selectedProduct);
+                            display(minteger, heroVh, selectedProduct);
                         }
                     }
                 });
@@ -505,7 +510,6 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
     */
 
 
-
     private RequestBuilder<Drawable> loadImage(@NonNull String posterPath) {
         return GlideApp
                 .with(context)
@@ -582,7 +586,7 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
     }
 
 
-    private void display(int number,HeroVH heroVh , SelectedProduct selectedProduct) {
+    private void display(int number, HeroVH heroVh, SelectedProduct selectedProduct) {
 
         totalPrice = number * (selectedProduct.getUnitPrice());
 
@@ -595,7 +599,7 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
             return;
             //item doesnt exist
         } else {
-            db.updateMenuCount(number,selectedProduct.getId());
+            db.updateMenuCount(number, selectedProduct.getId());
             //item exists
 
         }
@@ -616,7 +620,6 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
         private final TextView menu_name;
         private final TextView menu_shortinfo;
         private final TextView menu_description;
-        private final TextView ratingnumber;
         private final TextView menu_price;
         private final TextView menu_qtn;
         private final TextView itemQuanEt;
@@ -629,6 +632,8 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
         private final Button menu_detail_st_likebtn;
         private final ProgressBar mProgress;
 
+        private final LinearLayout descriptionlayout, relatedProductslayout;
+
 
         public HeroVH(View itemView) {
             super(itemView);
@@ -637,7 +642,6 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
             menu_name = itemView.findViewById(R.id.menu_name);
             menu_shortinfo = itemView.findViewById(R.id.menu_shortinfo);
             menu_description = itemView.findViewById(R.id.menu_description);
-            ratingnumber = itemView.findViewById(R.id.ratingnumber);
             menu_price = itemView.findViewById(R.id.menu_price);
             menu_qtn = itemView.findViewById(R.id.menu_qtn);
             itemQuanEt = itemView.findViewById(R.id.itemQuanEt);
@@ -651,6 +655,10 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
             menu_detail_st_likebtn = itemView.findViewById(R.id.menu_detail_st_likebtn);
 
             mProgress = itemView.findViewById(R.id.product_detail_image_progress);
+            descriptionlayout = itemView.findViewById(R.id.descriptionlayout);
+            relatedProductslayout = itemView.findViewById(R.id.relatedProductslayout);
+
+
         }
     }
 

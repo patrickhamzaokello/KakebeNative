@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/KaKebe/AndroidStudioProjects/KakebeShop/app/src/main/res/drawable/custom_call_btn.xml" value="0.1745" />
         <entry key="..\:/Users/KaKebe/AndroidStudioProjects/KakebeShop/app/src/main/res/drawable/custom_rightarrow_btn.xml" value="0.1355" />
         <entry key="..\:/Users/KaKebe/AndroidStudioProjects/KakebeShop/app/src/main/res/font/montserrat_bold.xml" value="0.234375" />
         <entry key="..\:/Users/KaKebe/AndroidStudioProjects/KakebeShop/app/src/main/res/layout/activity_login_material.xml" value="0.1671195652173913" />
@@ -32,6 +33,7 @@
         <entry key="..\:/Users/KaKebe/AndroidStudioProjects/KakebeShop/app/src/main/res/layout/home_slider_layout.xml" value="0.16530797101449277" />
         <entry key="..\:/Users/KaKebe/AndroidStudioProjects/KakebeShop/app/src/main/res/layout/item_container_ads.xml" value="0.13768115942028986" />
         <entry key="..\:/Users/KaKebe/AndroidStudioProjects/KakebeShop/app/src/main/res/layout/item_container_news.xml" value="0.13768115942028986" />
+        <entry key="..\:/Users/KaKebe/AndroidStudioProjects/KakebeShop/app/src/main/res/layout/online_menudetail_hero.xml" value="0.372507869884575" />
         <entry key="..\:/Users/KaKebe/AndroidStudioProjects/KakebeShop/app/src/main/res/layout/online_menudetail_pagination_item_list.xml" value="0.17391304347826086" />
         <entry key="..\:/Users/KaKebe/AndroidStudioProjects/KakebeShop/app/src/main/res/layout/order_recommend_layout.xml" value="0.33" />
         <entry key="..\:/Users/KaKebe/AndroidStudioProjects/KakebeShop/app/src/main/res/layout/previous_searches_custom_iteem_layout.xml" value="0.7046413502109705" />
