@@ -29,7 +29,7 @@ public class SelectedCategoryResult {
     private String thumbnailImg;
     @SerializedName("unit_price")
     @Expose
-    private Double unitPrice;
+    private Integer unitPrice;
     @SerializedName("discount")
     @Expose
     private Double discount;
@@ -100,11 +100,11 @@ public class SelectedCategoryResult {
         this.thumbnailImg = thumbnailImg;
     }
 
-    public Double getUnitPrice() {
+    public Integer getUnitPrice() {
         return unitPrice;
     }
 
-    public void setUnitPrice(Double unitPrice) {
+    public void setUnitPrice(Integer unitPrice) {
         this.unitPrice = unitPrice;
     }
 

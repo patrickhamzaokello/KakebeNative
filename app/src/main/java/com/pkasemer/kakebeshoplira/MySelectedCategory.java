@@ -15,6 +15,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -26,6 +27,7 @@ import com.pkasemer.kakebeshoplira.Models.SelectedCategory;
 import com.pkasemer.kakebeshoplira.Models.SelectedCategoryMenuItem;
 import com.pkasemer.kakebeshoplira.Models.SelectedCategoryMenuItemResult;
 import com.pkasemer.kakebeshoplira.Models.SelectedCategoryResult;
+import com.pkasemer.kakebeshoplira.Utils.GridPaginationScrollListener;
 import com.pkasemer.kakebeshoplira.Utils.PaginationAdapterCallback;
 import com.pkasemer.kakebeshoplira.Utils.PaginationScrollListener;
 
@@ -42,7 +44,7 @@ public class MySelectedCategory extends AppCompatActivity implements PaginationA
     private static final String TAG = "MainActivity";
 
     SelectedCategoryPaginationAdapter adapter;
-    LinearLayoutManager linearLayoutManager;
+    private final static int NUM_GRIDS = 3;
 
     RecyclerView rv;
     ProgressBar progressBar;
@@ -86,13 +88,21 @@ public class MySelectedCategory extends AppCompatActivity implements PaginationA
 
         adapter = new SelectedCategoryPaginationAdapter(MySelectedCategory.this,  this);
 
-        linearLayoutManager = new LinearLayoutManager(MySelectedCategory.this, LinearLayoutManager.VERTICAL, false);
-        rv.setLayoutManager(linearLayoutManager);
+        GridLayoutManager catgridLayoutManager = new GridLayoutManager(MySelectedCategory.this, NUM_GRIDS);
+        catgridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup()
+        {
+            @Override
+            public int getSpanSize(int position)
+            {
+                return position == 0 ? 3 : 1;
+            }
+        });
+        rv.setLayoutManager(catgridLayoutManager);
         rv.setItemAnimator(new DefaultItemAnimator());
 
         rv.setAdapter(adapter);
 
-        rv.addOnScrollListener(new PaginationScrollListener(linearLayoutManager) {
+        rv.addOnScrollListener(new GridPaginationScrollListener(catgridLayoutManager) {
             @Override
             protected void loadMoreItems() {
                 isLoading = true;

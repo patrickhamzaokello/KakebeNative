@@ -19,7 +19,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -31,7 +30,6 @@ import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.transition.DrawableCrossFadeFactory;
-import com.pkasemer.kakebeshoplira.Models.SelectedCategoryMenuItemResult;
 import com.pkasemer.kakebeshoplira.Models.SelectedCategoryResult;
 import com.pkasemer.kakebeshoplira.MyMenuDetail;
 import com.pkasemer.kakebeshoplira.R;
@@ -139,22 +137,18 @@ public class SelectedCategoryPaginationAdapter extends RecyclerView.Adapter<Recy
             case HERO:
                 final HeroVH heroVh = (HeroVH) holder;
 
-//                heroVh.mMovieTitle.setText(selectedCategoryMenuItemResult.getMenuName());
-//                heroVh.mYear.setText(formatYearLabel(selectedCategoryMenuItemResult));
-//                heroVh.mMovieDesc.setText(selectedCategoryMenuItemResult.getDescription());
-//
-//                loadImage(selectedCategoryMenuItemResult.getBackgroundImage())
-//                        .into(heroVh.mPosterImg);
-                HomeMenuCategoryAdapter homeMenuCategoryAdapter = new HomeMenuCategoryAdapter(context);
-//                StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.HORIZONTAL);
-//                categoryVH.category_recycler_view.setLayoutManager(staggeredGridLayoutManager);
+                //recycler view for items
+                heroVh.itemRecyclerView.setHasFixedSize(true);
+                heroVh.itemRecyclerView.setNestedScrollingEnabled(false);
 
-//                GridLayoutManager catgridLayoutManager = new GridLayoutManager(context, 3);
-//                heroVh.category_recycler_view.setLayoutManager(catgridLayoutManager);
-//
-//                heroVh.category_recycler_view.setItemAnimator(new DefaultItemAnimator());
-//                heroVh.category_recycler_view.setAdapter(homeMenuCategoryAdapter);
-//                homeMenuCategoryAdapter.addAll(selectedCategoryResult.getCategoryInfo());
+                /* set layout manager on basis of recyclerview enum type */
+                GridLayoutManager gridLayoutManager = new GridLayoutManager(context, 1);
+                heroVh.itemRecyclerView.setLayoutManager(gridLayoutManager);
+
+                SelectedCategoryInfoAdapter adapter = new SelectedCategoryInfoAdapter(context, selectedCategoryResult.getCategoryInfo());
+                heroVh.itemRecyclerView.setAdapter(adapter);
+
+
                 break;
             case ITEM:
                 final MovieVH movieVH = (MovieVH) holder;
@@ -162,11 +156,6 @@ public class SelectedCategoryPaginationAdapter extends RecyclerView.Adapter<Recy
                 movieVH.mMovieTitle.setText(selectedCategoryResult.getName());
 
                 movieVH.mMoviePrice.setText("Ugx " + NumberFormat.getNumberInstance(Locale.US).format(selectedCategoryResult.getUnitPrice()));
-
-                movieVH.mYear.setText(
-                        "5"
-                );
-                movieVH.mMovieDesc.setText(selectedCategoryResult.getMetaDescription());
 
 
 
@@ -228,22 +217,15 @@ public class SelectedCategoryPaginationAdapter extends RecyclerView.Adapter<Recy
 
 
                         if (food_db_itemchecker) {
-//                            db.addTweet(
-//                                    selectedCategoryMenuItemResult.getMenuId(),
-//                                    selectedCategoryMenuItemResult.getMenuName(),
-//                                    selectedCategoryMenuItemResult.getPrice(),
-//                                    selectedCategoryMenuItemResult.getDescription(),
-//                                    selectedCategoryMenuItemResult.getMenuTypeId(),
-//                                    selectedCategoryMenuItemResult.getMenuImage(),
-//                                    selectedCategoryMenuItemResult.getBackgroundImage(),
-//                                    selectedCategoryMenuItemResult.getIngredients(),
-//                                    selectedCategoryMenuItemResult.getMenuStatus(),
-//                                    selectedCategoryMenuItemResult.getCreated(),
-//                                    selectedCategoryMenuItemResult.getModified(),
-//                                    selectedCategoryMenuItemResult.getRating(),
-//                                    minteger,
-//                                    MENU_NOT_SYNCED_WITH_SERVER
-//                            );
+                            db.addTweet(
+                                    selectedCategoryResult.getId(),
+                                    selectedCategoryResult.getName(),
+                                    selectedCategoryResult.getUnitPrice(),
+                                    selectedCategoryResult.getCategoryId(),
+                                    selectedCategoryResult.getThumbnailImg(),
+                                    minteger,
+                                    MENU_NOT_SYNCED_WITH_SERVER
+                            );
 
 
 
@@ -410,26 +392,19 @@ public class SelectedCategoryPaginationAdapter extends RecyclerView.Adapter<Recy
      */
 
     protected class HeroVH extends RecyclerView.ViewHolder {
-        private final TextView mMovieTitle;
-        private final TextView mMovieDesc;
-        private final TextView mYear;
-        private final ImageView mPosterImg;
+        private TextView sectionLabel;
+        private RecyclerView itemRecyclerView;
 
         public HeroVH(View itemView) {
             super(itemView);
-            // init views
-            mMovieTitle = itemView.findViewById(R.id.movie_title);
-            mMovieDesc = itemView.findViewById(R.id.movie_desc);
-            mYear = itemView.findViewById(R.id.movie_year);
-            mPosterImg = itemView.findViewById(R.id.movie_poster);
+            sectionLabel = (TextView) itemView.findViewById(R.id.section_label);
+            itemRecyclerView = (RecyclerView) itemView.findViewById(R.id.item_recycler_view);
         }
     }
 
     protected class MovieVH extends RecyclerView.ViewHolder {
         private final TextView mMovieTitle;
-        private final TextView mMovieDesc;
         private final TextView mMoviePrice;
-        private final TextView mYear; // displays "year | language"
         private final ImageView mPosterImg;
         private final ProgressBar mProgress;
 
@@ -438,13 +413,11 @@ public class SelectedCategoryPaginationAdapter extends RecyclerView.Adapter<Recy
         public MovieVH(View itemView) {
             super(itemView);
 
-            mMovieTitle = itemView.findViewById(R.id.movie_title);
-            mMovieDesc = itemView.findViewById(R.id.movie_desc);
-            mMoviePrice = itemView.findViewById(R.id.movie_price);
-            mYear = itemView.findViewById(R.id.movie_year);
-            mPosterImg = itemView.findViewById(R.id.movie_poster);
-            mProgress = itemView.findViewById(R.id.movie_progress);
-            selected_Category_plus = itemView.findViewById(R.id.selected_Category_plus);
+            mMovieTitle = itemView.findViewById(R.id.item_name);
+            mMoviePrice = itemView.findViewById(R.id.item_price);
+            mPosterImg = itemView.findViewById(R.id.product_imageview);
+            mProgress = itemView.findViewById(R.id.home_product_image_progress);
+            selected_Category_plus = itemView.findViewById(R.id.home_st_carttn);
         }
     }
 

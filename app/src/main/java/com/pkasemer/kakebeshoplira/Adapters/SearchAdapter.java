@@ -387,21 +387,7 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
      * Main list's content ViewHolder
      */
 
-    protected class HeroVH extends RecyclerView.ViewHolder {
-        private final TextView mMovieTitle;
-        private final TextView mMovieDesc;
-        private final TextView mYear;
-        private final ImageView mPosterImg;
 
-        public HeroVH(View itemView) {
-            super(itemView);
-            // init views
-            mMovieTitle = itemView.findViewById(R.id.movie_title);
-            mMovieDesc = itemView.findViewById(R.id.movie_desc);
-            mYear = itemView.findViewById(R.id.movie_year);
-            mPosterImg = itemView.findViewById(R.id.movie_poster);
-        }
-    }
 
     protected class MovieVH extends RecyclerView.ViewHolder {
         private final TextView mMovieTitle;
