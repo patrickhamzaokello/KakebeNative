@@ -13,22 +13,15 @@ import java.util.List;
 
 public class SenseDBHelper extends SQLiteOpenHelper {
 
-    private static final String DB_NAME = "zodongo";
+    private static final String DB_NAME = "kakebe";
     private static final int DB_VERSION = 7;
     private static final String TABLE_NAME = "CART";
     public static final String COLUMN_id = "_id";
     public static final String COLUMN_menuId = "menuId";
     public static final String COLUMN_menuName = "menuName";
     public static final String COLUMN_price = "price";
-    public static final String COLUMN_description = "description";
     public static final String COLUMN_menuTypeId = "menuTypeId";
     public static final String COLUMN_menuImage = "menuImage";
-    public static final String COLUMN_backgroundImage = "backgroundImage";
-    public static final String COLUMN_ingredients = "ingredients";
-    public static final String COLUMN_menuStatus = "menuStatus";
-    public static final String COLUMN_created = "created";
-    public static final String COLUMN_modified = "modified";
-    public static final String COLUMN_rating = "rating";
     public static final String COLUMN_quantity = "quantity";
     public static final String COLUMN_order_status = "order_status";
 
@@ -49,15 +42,8 @@ public class SenseDBHelper extends SQLiteOpenHelper {
                 COLUMN_menuId + " INTEGER," +
                 COLUMN_menuName + " TEXT," +
                 COLUMN_price + " INTEGER," +
-                COLUMN_description + " TEXT," +
                 COLUMN_menuTypeId +" INTEGER," +
                 COLUMN_menuImage + " TEXT," +
-                COLUMN_backgroundImage + " TEXT," +
-                COLUMN_ingredients + " TEXT," +
-                COLUMN_menuStatus + " INTEGER," +
-                COLUMN_created + " TEXT," +
-                COLUMN_modified + " TEXT," +
-                COLUMN_rating + " INTEGER," +
                 COLUMN_quantity + " INTEGER DEFAULT 1," +
                 COLUMN_order_status + " TINYINT )";
 
@@ -84,19 +70,12 @@ public class SenseDBHelper extends SQLiteOpenHelper {
                 int menuId = Integer.parseInt(cursor.getString(1));
                 String menuname = cursor.getString(2);
                 int price = Integer.parseInt(cursor.getString(3));
-                String description = cursor.getString(4);
-                int menutypid = Integer.parseInt(cursor.getString(5));
-                String menuimage = cursor.getString(6);
-                String backgroundimage = cursor.getString(7);
-                String ingredients = cursor.getString(8);
-                int menuStatus = Integer.parseInt(cursor.getString(9));
-                String created = cursor.getString(10);
-                String modified = cursor.getString(11);
-                int rating = Integer.parseInt(cursor.getString(12));
-                int quantity = Integer.parseInt(cursor.getString(13));
-                int order_status = Integer.parseInt(cursor.getString(14));
+                int menutypid = Integer.parseInt(cursor.getString(4));
+                String menuimage = cursor.getString(5);
+                int quantity = Integer.parseInt(cursor.getString(6));
+                int order_status = Integer.parseInt(cursor.getString(7));
 
-                foodDBModelList.add(new FoodDBModel(menuId, menuname, price,description, menutypid, menuimage,backgroundimage, ingredients,menuStatus, created,modified, rating,quantity,order_status));
+                foodDBModelList.add(new FoodDBModel(menuId, menuname, price, menutypid, menuimage,quantity,order_status));
             }
             while (cursor.moveToNext());
         }
@@ -108,15 +87,8 @@ public class SenseDBHelper extends SQLiteOpenHelper {
             int menuId,
             String menuname,
             int price,
-            String description,
             int menutypeid,
             String menuImage,
-            String backgroundImage,
-            String ingredients,
-            int menustatus,
-            String created,
-            String modified,
-            int rating,
             int quantity,
             int order_status
     ) {
@@ -124,15 +96,8 @@ public class SenseDBHelper extends SQLiteOpenHelper {
         values.put(COLUMN_menuId, menuId);
         values.put(COLUMN_menuName, menuname);
         values.put(COLUMN_price, price);
-        values.put(COLUMN_description, description);
         values.put(COLUMN_menuTypeId, menutypeid);
         values.put(COLUMN_menuImage, menuImage);
-        values.put(COLUMN_backgroundImage, backgroundImage);
-        values.put(COLUMN_ingredients, ingredients);
-        values.put(COLUMN_menuStatus, menustatus);
-        values.put(COLUMN_created, created);
-        values.put(COLUMN_modified, modified);
-        values.put(COLUMN_rating, rating);
         values.put(COLUMN_quantity, quantity);
         values.put(COLUMN_order_status, order_status);
         SQLiteDatabase db = this.getWritableDatabase();
@@ -165,7 +130,7 @@ public class SenseDBHelper extends SQLiteOpenHelper {
     public boolean checktweetindb(String id_str) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(TABLE_NAME,
-                new String[]{COLUMN_menuId, COLUMN_menuName, COLUMN_description},
+                new String[]{COLUMN_menuId, COLUMN_menuName},
                 COLUMN_menuId + " = ?",
                 new String[]{id_str},
                 null, null, null, null);

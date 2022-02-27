@@ -46,6 +46,7 @@ public class searchFeaturedCategoryProductedAdapter extends RecyclerView.Adapter
         private final TextView item_rating;
         private final ImageView itemimage;
         private final ProgressBar mProgress;
+        Button home_st_carttn;
 
 
         public ItemViewHolder(View itemView) {
@@ -56,6 +57,7 @@ public class searchFeaturedCategoryProductedAdapter extends RecyclerView.Adapter
             item_price = itemView.findViewById(R.id.item_price);
             mProgress = itemView.findViewById(R.id.home_product_image_progress);
 
+            home_st_carttn = itemView.findViewById(R.id.home_st_carttn);
 
 
         }
@@ -69,7 +71,11 @@ public class searchFeaturedCategoryProductedAdapter extends RecyclerView.Adapter
     DrawableCrossFadeFactory factory =
             new DrawableCrossFadeFactory.Builder().setCrossFadeEnabled(true).build();
 
+    SenseDBHelper db;
+    boolean food_db_itemchecker;
 
+    int minteger = 1;
+    int totalPrice;
 
     public static final int MENU_SYNCED_WITH_SERVER = 1;
     public static final int MENU_NOT_SYNCED_WITH_SERVER = 0;
@@ -88,6 +94,27 @@ public class searchFeaturedCategoryProductedAdapter extends RecyclerView.Adapter
     @Override
     public void onBindViewHolder(ItemViewHolder holder, int position) {
         final Product product = products.get(position);
+
+        db = new SenseDBHelper(context);
+
+        food_db_itemchecker = db.checktweetindb(String.valueOf(product.getId()));
+
+        updatecartCount();
+
+        if (food_db_itemchecker) {
+
+
+            holder.home_st_carttn.setBackground(context.getResources().getDrawable(R.drawable.custom_plus_btn));
+
+
+        } else {
+
+
+            holder.home_st_carttn.setBackground(context.getResources().getDrawable(R.drawable.custom_check_btn));
+
+
+        }
+
 
 
         holder.item_name.setText(product.getName());
@@ -115,6 +142,41 @@ public class searchFeaturedCategoryProductedAdapter extends RecyclerView.Adapter
                 .centerCrop()
                 .transition(withCrossFade(factory))
                 .into(holder.itemimage);
+
+        holder.home_st_carttn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                food_db_itemchecker = db.checktweetindb(String.valueOf(product.getId()));
+
+
+                if (food_db_itemchecker) {
+                    db.addTweet(
+                            product.getId(),
+                            product.getName(),
+                            product.getUnitPrice(),
+                            product.getCategoryId(),
+                            product.getThumbnailImg(),
+                            minteger,
+                            MENU_NOT_SYNCED_WITH_SERVER
+                    );
+
+
+                    holder.home_st_carttn.setBackground(context.getResources().getDrawable(R.drawable.custom_check_btn));
+
+                    updatecartCount();
+
+
+                } else {
+                    db.deleteTweet(String.valueOf(product.getId()));
+
+                    holder.home_st_carttn.setBackground(context.getResources().getDrawable(R.drawable.custom_plus_btn));
+
+
+                    updatecartCount();
+
+                }
+            }
+        });
 
 
 
@@ -151,6 +213,15 @@ public class searchFeaturedCategoryProductedAdapter extends RecyclerView.Adapter
                 .with(context)
                 .load(BASE_URL_IMG + posterPath)
                 .centerCrop();
+    }
+
+
+    private void updatecartCount() {
+        db = new SenseDBHelper(context);
+        String mycartcount = String.valueOf(db.countCart());
+        Intent intent = new Intent(context.getString(R.string.cartcoutAction));
+        intent.putExtra(context.getString(R.string.cartCount), mycartcount);
+        LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
     }
 
 

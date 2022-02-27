@@ -1,6 +1,7 @@
 package com.pkasemer.kakebeshoplira.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,7 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.bumptech.glide.request.transition.DrawableCrossFadeFactory;
 import com.pkasemer.kakebeshoplira.Models.SearchCategoriee;
+import com.pkasemer.kakebeshoplira.MySelectedCategory;
 import com.pkasemer.kakebeshoplira.R;
 import com.pkasemer.kakebeshoplira.RootActivity;
 import com.pkasemer.kakebeshoplira.Utils.PaginationAdapterCallback;
@@ -156,7 +158,14 @@ public class searchHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                     @Override
                     public void onClick(View v) {
 
-                        Toast.makeText(v.getContext(), searchCategoriee.getName(), Toast.LENGTH_SHORT).show();
+
+                        Intent i = new Intent(context.getApplicationContext(), MySelectedCategory.class);
+                        //PACK DATA
+                        i.putExtra("SENDER_KEY", "MyFragment");
+                        i.putExtra("category_selected_key", searchCategoriee.getId());
+                        context.startActivity(i);
+
+
 
                     }
                 });

@@ -204,22 +204,15 @@ public class SearchQueryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
 
                         if (food_db_itemchecker) {
-//                            db.addTweet(
-//                                    product.getMenuId(),
-//                                    product.getMenuName(),
-//                                    product.getPrice(),
-//                                    product.getDescription(),
-//                                    product.getMenuTypeId(),
-//                                    product.getMenuImage(),
-//                                    product.getBackgroundImage(),
-//                                    product.getIngredients(),
-//                                    product.getMenuStatus(),
-//                                    product.getCreated(),
-//                                    product.getModified(),
-//                                    product.getRating(),
-//                                    minteger,
-//                                    MENU_NOT_SYNCED_WITH_SERVER
-//                            );
+                            db.addTweet(
+                                    product.getId(),
+                                    product.getName(),
+                                    product.getUnitPrice(),
+                                    product.getCategoryId(),
+                                    product.getThumbnailImg(),
+                                    minteger,
+                                    MENU_NOT_SYNCED_WITH_SERVER
+                            );
 
 
 
@@ -455,12 +448,6 @@ public class SearchQueryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         }
     }
 
-
-    // method for filtering our recyclerview items.
-    public void filterList(List<Product> filterllist) {
-        products = filterllist;
-        notifyDataSetChanged();
-    }
 
 
 }

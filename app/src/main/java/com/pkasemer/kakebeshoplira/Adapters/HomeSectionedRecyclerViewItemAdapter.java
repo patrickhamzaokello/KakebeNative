@@ -149,22 +149,15 @@ public class HomeSectionedRecyclerViewItemAdapter extends RecyclerView.Adapter<H
 
 
                 if (food_db_itemchecker) {
-//                    db.addTweet(
-//                            product.getMenuId(),
-//                            product.getMenuName(),
-//                            product.getPrice(),
-//                            product.getDescription(),
-//                            product.getMenuTypeId(),
-//                            product.getMenuImage(),
-//                            product.getBackgroundImage(),
-//                            product.getIngredients(),
-//                            product.getMenuStatus(),
-//                            product.getCreated(),
-//                            product.getModified(),
-//                            product.getRating(),
-//                            minteger,
-//                            MENU_NOT_SYNCED_WITH_SERVER
-//                    );
+                    db.addTweet(
+                            product.getId(),
+                            product.getName(),
+                            product.getUnitPrice(),
+                            product.getCategoryId(),
+                            product.getThumbnailImg(),
+                            minteger,
+                            MENU_NOT_SYNCED_WITH_SERVER
+                    );
 
 
                     holder.home_st_carttn.setBackground(context.getResources().getDrawable(R.drawable.custom_check_btn));

@@ -86,6 +86,8 @@ public class SearchView extends AppCompatActivity implements SearchAdapterCallBa
         swipeRefreshLayout = findViewById(R.id.main_swiperefresh);
 
         searchQueryAdapter = new SearchQueryAdapter(SearchView.this, this);
+        searchQueryAdapter.getMovies().clear();
+        searchQueryAdapter.notifyDataSetChanged();
 
        gridLayoutManager = new GridLayoutManager(SearchView.this, 3);
         rv.setLayoutManager(gridLayoutManager);
@@ -119,9 +121,6 @@ public class SearchView extends AppCompatActivity implements SearchAdapterCallBa
 
         //init service and load data
         movieService = MovieApi.getClient(SearchView.this).create(MovieService.class);
-
-        searchQueryAdapter.getMovies().clear();
-        searchQueryAdapter.notifyDataSetChanged();
 
 
 
