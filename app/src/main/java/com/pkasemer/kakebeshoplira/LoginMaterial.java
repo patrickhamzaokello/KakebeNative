@@ -20,6 +20,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.pkasemer.kakebeshoplira.HelperClasses.SharedPrefManager;
 import com.pkasemer.kakebeshoplira.HttpRequests.RequestHandler;
 import com.pkasemer.kakebeshoplira.HttpRequests.URLs;
+import com.pkasemer.kakebeshoplira.Models.User;
 import com.pkasemer.kakebeshoplira.Models.UserModel;
 
 import org.json.JSONException;
@@ -158,14 +159,11 @@ public class LoginMaterial extends AppCompatActivity {
                         JSONObject userJson = obj.getJSONObject("user");
 
                         //creating a new user object
-                        UserModel userModel = new UserModel(
+                        User userModel = new User(
                                 userJson.getInt("id"),
                                 userJson.getString("fullname"),
-                                userJson.getString("username"),
                                 userJson.getString("email"),
-                                userJson.getString("phone"),
-                                userJson.getString("address"),
-                                userJson.getString("profileimage")
+                                userJson.getString("phone")
                         );
 
                         //storing the user in shared preferences

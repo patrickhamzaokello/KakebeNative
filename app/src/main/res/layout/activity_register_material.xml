@@ -78,31 +78,7 @@
 
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/login_username"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:hint="Username"
-                    app:hintTextColor="@color/black"
-                    android:textColorHint="@color/black"
-                    app:boxStrokeColor="@color/black"
-                    app:boxStrokeErrorColor="@color/purple_500"
-                    android:transitionName="username_input"
-                    app:counterMaxLength="15">
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/inputTextUsername"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="text"
-                        android:textColor="@color/black"
-
-                        />
-
-
-                </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/login_user_email"
@@ -150,28 +126,7 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/login_user_address"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    app:hintTextColor="@color/black"
-                    android:textColorHint="@color/black"
-                    app:boxStrokeColor="@color/black"
-                    app:boxStrokeErrorColor="@color/purple_500"
-                    android:hint="Location Address">
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/inputTextUserAddress"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/black"
-
-                        android:inputType="textPostalAddress" />
-
-
-                </com.google.android.material.textfield.TextInputLayout>
 
 
 

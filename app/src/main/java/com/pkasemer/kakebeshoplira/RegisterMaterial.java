@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -20,6 +21,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.pkasemer.kakebeshoplira.HelperClasses.SharedPrefManager;
 import com.pkasemer.kakebeshoplira.HttpRequests.RequestHandler;
 import com.pkasemer.kakebeshoplira.HttpRequests.URLs;
+import com.pkasemer.kakebeshoplira.Models.User;
 import com.pkasemer.kakebeshoplira.Models.UserModel;
 
 import org.json.JSONException;
@@ -35,7 +37,7 @@ public class RegisterMaterial extends AppCompatActivity {
     Button callLogIN, register_btn;
     TextInputLayout username_layout, password_layout;
 
-    TextInputEditText inputTextFullname, inputTextUsername, inputTextEmail, inputTextPhone,inputTextUserAddress, inputTextPassword, inputTextConfirmPassword;
+    TextInputEditText inputTextFullname, inputTextEmail, inputTextPhone, inputTextPassword, inputTextConfirmPassword;
     RadioGroup radioGroupGender;
 
     @Override
@@ -70,10 +72,8 @@ public class RegisterMaterial extends AppCompatActivity {
 
         //get text from input boxes
         inputTextFullname = findViewById(R.id.inputTextFullname);
-        inputTextUsername = findViewById(R.id.inputTextUsername);
         inputTextEmail = findViewById(R.id.inputTextEmail);
         inputTextPhone = findViewById(R.id.inputTextPhone);
-        inputTextUserAddress = findViewById(R.id.inputTextUserAddress);
         inputTextPassword = findViewById(R.id.inputTextPassword);
         inputTextConfirmPassword = findViewById(R.id.inputTextConfirmPassword);
 
@@ -111,10 +111,8 @@ public class RegisterMaterial extends AppCompatActivity {
 
     private void registerUser() {
         final String full_name = inputTextFullname.getText().toString().trim();
-        final String user_name = inputTextUsername.getText().toString().trim();
         final String user_email = inputTextEmail.getText().toString().trim();
         final String user_phone = inputTextPhone.getText().toString().trim();
-        final String location_address  = inputTextUserAddress.getText().toString().trim();
         final String user_password = inputTextPassword.getText().toString().trim();
         final String confirm_password = inputTextConfirmPassword.getText().toString().trim();
 
@@ -129,11 +127,6 @@ public class RegisterMaterial extends AppCompatActivity {
             return;
         }
 
-        if (TextUtils.isEmpty(user_name)) {
-            inputTextUsername.setError("Please enter username");
-            inputTextUsername.requestFocus();
-            return;
-        }
 
         if (TextUtils.isEmpty(user_email)) {
             inputTextEmail.setError("Please enter your email");
@@ -159,11 +152,6 @@ public class RegisterMaterial extends AppCompatActivity {
             return;
         }
 
-        if (TextUtils.isEmpty(location_address)) {
-            inputTextUserAddress.setError("Enter Your Location Address");
-            inputTextUserAddress.requestFocus();
-            return;
-        }
 
         if (!user_password.equals(confirm_password)) {
             inputTextPassword.setError("Password Does not Match");
@@ -186,11 +174,9 @@ public class RegisterMaterial extends AppCompatActivity {
                 //creating request parameters
                 HashMap<String, String> params = new HashMap<>();
                 params.put("full_name", full_name);
-                params.put("username", user_name);
                 params.put("email", user_email);
                 params.put("user_phone", user_phone);
                 params.put("password", user_password);
-                params.put("location_address", location_address);
 
                 //returing the response
                 return requestHandler.sendPostRequest(URLs.URL_REGISTER, params);
@@ -219,7 +205,11 @@ public class RegisterMaterial extends AppCompatActivity {
 
                 try {
                     //converting response to json object
+                    Log.i("obj", URLs.URL_REGISTER);
+
                     JSONObject obj = new JSONObject(s);
+
+
 
                     //if no error in response
                     if (!obj.getBoolean("error")) {
@@ -229,14 +219,11 @@ public class RegisterMaterial extends AppCompatActivity {
                         JSONObject userJson = obj.getJSONObject("user");
 
                         //creating a new user object
-                        UserModel userModel = new UserModel(
+                        User userModel = new User(
                                 userJson.getInt("id"),
                                 userJson.getString("fullname"),
-                                userJson.getString("username"),
                                 userJson.getString("email"),
-                                userJson.getString("phone"),
-                                userJson.getString("address"),
-                                userJson.getString("profileimage")
+                                userJson.getString("phone")
                         );
 
                         //storing the user in shared preferences

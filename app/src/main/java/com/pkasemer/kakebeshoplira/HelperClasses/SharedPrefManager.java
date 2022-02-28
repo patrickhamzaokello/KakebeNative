@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 
 import com.pkasemer.kakebeshoplira.LoginMaterial;
+import com.pkasemer.kakebeshoplira.Models.User;
 import com.pkasemer.kakebeshoplira.Models.UserModel;
 
 /**
@@ -42,7 +43,7 @@ public class SharedPrefManager {
 
     //method to let the user login
     //this method will store the user data in shared preferences
-    public void userLogin(UserModel userModel) {
+    public void userAccount(UserModel userModel) {
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt(KEY_ID, userModel.getId());
@@ -52,6 +53,16 @@ public class SharedPrefManager {
         editor.putString(KEY_PHONE, userModel.getPhone());
         editor.putString(KEY_ADDRESS, userModel.getAddress());
         editor.putString(KEY_PROFILEIMAGE, userModel.getProfileimage());
+        editor.apply();
+    }
+
+    public void userLogin(User userModel) {
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt(KEY_ID, userModel.getId());
+        editor.putString(KEY_FULLNAME, userModel.getFullname());
+        editor.putString(KEY_EMAIL, userModel.getEmail());
+        editor.putString(KEY_PHONE, userModel.getPhone());
         editor.apply();
     }
 
