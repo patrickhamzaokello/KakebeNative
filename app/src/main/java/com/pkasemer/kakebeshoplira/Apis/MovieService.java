@@ -1,5 +1,6 @@
 package com.pkasemer.kakebeshoplira.Apis;
 
+import com.pkasemer.kakebeshoplira.Models.Address;
 import com.pkasemer.kakebeshoplira.Models.HomeBannerModel;
 import com.pkasemer.kakebeshoplira.Models.HomeCategories;
 import com.pkasemer.kakebeshoplira.Models.HomeMenuCategoryModel;
@@ -35,6 +36,15 @@ public interface MovieService {
             @Query("category") int menu_category_id,
             @Query("page") int pageIndex
     );
+
+
+    // http://localhost:8080/projects/KakebeAPI/Requests/Address/userAddress.php?userId=49&page=1
+    @GET("Address/userAddress.php")
+    Call<Address> getAddresses(
+            @Query("userId") int userId,
+            @Query("page") int page
+    );
+
 
 
     @GET("category/allcombined.php")

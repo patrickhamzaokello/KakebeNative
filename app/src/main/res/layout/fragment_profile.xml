@@ -1,207 +1,252 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/rootbg"
-    tools:context=".Fragments.Profile"
+    android:orientation="vertical"
+    tools:context=".Fragments.Profile">
 
-    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/profilecards"
+        android:orientation="vertical"
+        android:layout_marginBottom="20dp"
+        android:padding="20dp">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/image_profile_card_view"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_centerVertical="true"
+            android:scaleType="fitXY"
+            app:cardCornerRadius="100dp">
+
+            <ImageView
+                android:id="@+id/profile_image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/zodongo_user_profile" />
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/full_name_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@+id/image_profile_card_view"
+            android:fontFamily="@font/montserrat_bold"
+            android:includeFontPadding="false"
+            android:text="Patrick Hamza"
+            android:textColor="@color/profilecardtext"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/card_email_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/full_name"
+            android:layout_toRightOf="@+id/image_profile_card_view"
+
+            android:includeFontPadding="false"
+            android:text="Pkasemer"
+            android:textColor="@color/profilecardtext"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/card_phone_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/email_text"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@+id/image_profile_card_view"
+            android:includeFontPadding="false"
+            android:text="Lira, Adyel"
+            android:textColor="@color/profilecardtext"
+            android:textSize="13sp" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/image_profile_card_view"
+            android:layout_marginTop="20dp">
+
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/manageOrders"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                app:cardBackgroundColor="#880B33"
+                app:cardCornerRadius="20dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical"
+                    android:padding="10dp">
+
+
+                    <TextView
+                        android:id="@+id/wallet_labels"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:fontFamily="@font/montserrat_bold"
+                        android:includeFontPadding="false"
+                        android:text="Orders"
+                        android:textColor="@color/white"
+                        android:textSize="15sp" />
+
+                </LinearLayout>
+
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                app:cardBackgroundColor="#880B33"
+                app:cardCornerRadius="20dp"
+
+                >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical"
+                    android:padding="10dp">
+
+
+                    <TextView
+                        android:id="@+id/wallet_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:fontFamily="@font/montserrat_bold"
+                        android:includeFontPadding="false"
+                        android:text="Credits"
+                        android:textColor="@color/white"
+                        android:textSize="15sp" />
+
+                </LinearLayout>
+
+
+            </com.google.android.material.card.MaterialCardView>
+
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/buttonLogout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                app:cardBackgroundColor="#880B33"
+                app:cardCornerRadius="20dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical"
+                    android:padding="10dp">
+
+
+                    <TextView
+                        android:id="@+id/logoout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:fontFamily="@font/montserrat_bold"
+                        android:includeFontPadding="false"
+                        android:text="Exit"
+                        android:textColor="@color/white"
+                        android:textSize="15sp" />
+
+                </LinearLayout>
+
+
+            </com.google.android.material.card.MaterialCardView>
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        >
 
-
-        <LinearLayout
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#FF9E9E"
-            android:orientation="vertical"
-            android:padding="20dp">
+            android:fontFamily="@font/montserrat_bold"
+            android:includeFontPadding="false"
+            android:text="Delivery Address Info"
+            android:textColor="@color/black"
+            android:paddingHorizontal="20dp"
+            android:textSize="20sp" />
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/image_profile_card_view"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:layout_centerVertical="true"
-                android:scaleType="fitXY"
-                app:cardCornerRadius="100dp">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:fontFamily="@font/montserrat"
+            android:includeFontPadding="false"
+            android:text="Manage all your address here"
+            android:paddingHorizontal="20dp"
 
-                <ImageView
-                    android:id="@+id/profile_image"
+            android:textColor="@color/light_grey"
+            android:textSize="12sp" />
+
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                android:id="@+id/main_swiperefresh"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/main_recycler"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:src="@drawable/zodongo_user_profile" />
-            </androidx.cardview.widget.CardView>
+                    android:clipToPadding="false"
+                    android:paddingBottom="@dimen/activity_margin_content" />
 
-            <TextView
-                android:id="@+id/full_name_text"
+            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+            <ProgressBar
+                android:id="@+id/main_progress"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginTop="10dp"
-                android:layout_toRightOf="@+id/image_profile_card_view"
-                android:fontFamily="@font/montserrat_bold"
-                android:includeFontPadding="false"
-                android:text="Patrick Hamza"
-                android:textColor="@color/profilecardtext"
-                android:textSize="20sp" />
+                android:layout_gravity="center" />
 
-            <TextView
-                android:id="@+id/card_email_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/full_name"
-                android:layout_toRightOf="@+id/image_profile_card_view"
-
-                android:includeFontPadding="false"
-                android:text="Pkasemer"
-                android:textColor="@color/profilecardtext"
-                android:textSize="14sp" />
-
-            <TextView
-                android:id="@+id/card_phone_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/email_text"
-                android:layout_marginTop="10dp"
-                android:layout_toRightOf="@+id/image_profile_card_view"
-                android:includeFontPadding="false"
-                android:text="Lira, Adyel"
-                android:textColor="@color/profilecardtext"
-                android:textSize="13sp" />
+            <include layout="@layout/error_layout" />
 
 
-        </LinearLayout>
+        </FrameLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="20dp"
-            android:paddingHorizontal="20dp"
-            android:paddingBottom="20dp">
-
-
-
-
-
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/montserrat_bold"
-                android:includeFontPadding="false"
-                android:text="Delivery Address Info"
-                android:textColor="@color/black"
-                android:textSize="20sp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:fontFamily="@font/montserrat"
-                android:includeFontPadding="false"
-                android:text="Manage all your address here"
-                android:textColor="@color/light_grey"
-                android:textSize="12sp" />
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:layout_below="@+id/image_profile_card_view"
-                >
-
-
-                <com.google.android.material.card.MaterialCardView
-                    android:layout_width="0dp"
-                    android:id="@+id/manageOrders"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginRight="10dp"
-                    android:layout_weight="1"
-                    app:cardBackgroundColor="@color/profilecards"
-                    app:cardCornerRadius="5dp">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical"
-                        android:gravity="center_vertical"
-                        android:padding="10dp">
-
-
-
-                        <TextView
-                            android:id="@+id/wallet_labels"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:fontFamily="@font/montserrat_bold"
-                            android:includeFontPadding="false"
-                            android:text="Orders"
-                            android:textColor="@color/white"
-                            android:textSize="15sp" />
-
-                    </LinearLayout>
-
-
-                </com.google.android.material.card.MaterialCardView>
-
-                <com.google.android.material.card.MaterialCardView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_weight="1"
-                    app:cardBackgroundColor="@color/profilecards"
-                    app:cardCornerRadius="5dp"
-
-                    >
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical"
-                        android:gravity="center_vertical"
-                        android:padding="10dp">
-
-
-
-                        <TextView
-                            android:id="@+id/wallet_label"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:fontFamily="@font/montserrat_bold"
-                            android:includeFontPadding="false"
-                            android:text="Credits"
-                            android:textColor="@color/white"
-                            android:textSize="15sp" />
-
-                    </LinearLayout>
-
-
-                </com.google.android.material.card.MaterialCardView>
-
-            </LinearLayout>
-
-
-            <Button
-                android:id="@+id/buttonLogout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:background="@color/purple_200"
-                android:fontFamily="@font/montserrat_bold"
-                android:text="Logout" />
-
-        </LinearLayout>
     </LinearLayout>
 
 
-</ScrollView>
+</LinearLayout>
+
+

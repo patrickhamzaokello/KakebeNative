@@ -28,7 +28,7 @@
     <color name="mygreen">#064025</color>
     <color name="buttonGreen">#175313</color>
 
-    <color name="profilecards">#FF2C42</color>
+    <color name="profilecards">#EC0F43</color>
 
     <color name="sweetRed">#FF0012</color>
     <color name="buttonRed">#CE2630</color>
@@ -38,8 +38,8 @@
     <color name="niceGreen">#15950D</color>
     <color name="niceBlue">#0075D3</color>
     <color name="pendingstatus">#D59F00</color>
-    <color name="accountcolors">#FFE0E0</color>
-    <color name="profilecardtext">#252525</color>
+    <color name="accountcolors">#FFFFFF</color>
+    <color name="profilecardtext">#ECECEC</color>
 
 
 </resources>
