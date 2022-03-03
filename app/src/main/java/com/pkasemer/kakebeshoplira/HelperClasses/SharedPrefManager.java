@@ -69,8 +69,13 @@ public class SharedPrefManager {
     //this method will checker whether user is already logged in or not
     public boolean isLoggedIn() {
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
-        return sharedPreferences.getString(KEY_USERNAME, null) != null;
+        return sharedPreferences.getString(KEY_EMAIL, null) != null;
     }
+
+//    public boolean isLoggedIn() {
+//        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+//        return sharedPreferences.getString(KEY_USERNAME, null) != null;
+//    }
 
     //this method will give the logged in user
     public UserModel getUser() {

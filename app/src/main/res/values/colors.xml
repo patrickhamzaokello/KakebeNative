@@ -39,6 +39,7 @@
     <color name="niceBlue">#0075D3</color>
     <color name="pendingstatus">#D59F00</color>
     <color name="accountcolors">#FFE0E0</color>
+    <color name="profilecardtext">#252525</color>
 
 
 </resources>
