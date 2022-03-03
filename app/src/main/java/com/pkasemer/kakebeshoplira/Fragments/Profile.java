@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -59,8 +60,8 @@ public class Profile extends Fragment implements com.pkasemer.kakebeshoplira.Uti
 
     RecyclerView rv;
     ProgressBar progressBar;
-    LinearLayout errorLayout;
-    Button btnRetry;
+    LinearLayout errorLayout, add_address_layout;
+    Button btnRetry,add_address_btn_retry;
     TextView txtError;
     SwipeRefreshLayout swipeRefreshLayout;
 
@@ -71,7 +72,7 @@ public class Profile extends Fragment implements com.pkasemer.kakebeshoplira.Uti
     // limiting to 5 for this tutorial, since total pages in actual API is very large. Feel free to modify.
     private static int TOTAL_PAGES = 5;
     private int currentPage = PAGE_START;
-    private final int selectCategoryId = 3;
+    private int userId;
 
     List<UserAddress> userAddresses;
 
@@ -122,9 +123,12 @@ public class Profile extends Fragment implements com.pkasemer.kakebeshoplira.Uti
         //setting the values to the textviews
 
 
+
+
         full_name_text.setText(userModel.getFullname());
         card_email_text.setText(userModel.getEmail());
         card_phone_text.setText(userModel.getPhone());
+        userId = userModel.getId();
 
 
         //when the user presses logout button
@@ -153,6 +157,11 @@ public class Profile extends Fragment implements com.pkasemer.kakebeshoplira.Uti
         errorLayout = view.findViewById(R.id.error_layout);
         btnRetry = view.findViewById(R.id.error_btn_retry);
         txtError = view.findViewById(R.id.error_txt_cause);
+
+
+        add_address_layout = view.findViewById(R.id.add_address_layout);
+        add_address_btn_retry = view.findViewById(R.id.add_address_btn_retry);
+
         swipeRefreshLayout = view.findViewById(R.id.main_swiperefresh);
 
 
@@ -235,16 +244,31 @@ public class Profile extends Fragment implements com.pkasemer.kakebeshoplira.Uti
 
                 // Got data. Send it to adapter
                 userAddresses = fetchResults(response);
-                progressBar.setVisibility(View.GONE);
-                if(userAddresses.isEmpty()){
-                    showCategoryErrorView();
-                    return;
+
+
+                if(userAddresses != null ){
+                    Log.i("userAddresses", "not null " + String.valueOf(userAddresses));
+
+                    progressBar.setVisibility(View.GONE);
+                    if(userAddresses.isEmpty()){
+                        showCategoryErrorView();
+                        return;
+                    } else {
+                        adapter.addAll(userAddresses);
+                    }
+
+                    if (currentPage < TOTAL_PAGES) adapter.addLoadingFooter();
+                    else isLastPage = true;
                 } else {
-                    adapter.addAll(userAddresses);
+                    Log.i("userAddresses", String.valueOf(userAddresses));
+
+                    progressBar.setVisibility(View.GONE);
+                    add_address_layout.setVisibility(View.VISIBLE);
+                    errorLayout.setVisibility(View.GONE);
+
                 }
 
-                if (currentPage < TOTAL_PAGES) adapter.addLoadingFooter();
-                else isLastPage = true;
+
             }
 
             @Override
@@ -260,9 +284,14 @@ public class Profile extends Fragment implements com.pkasemer.kakebeshoplira.Uti
     private List<UserAddress> fetchResults(Response<Address> response) {
         Address address = response.body();
         TOTAL_PAGES = address.getTotalPages();
-        System.out.println("total pages" + TOTAL_PAGES);
 
-        return address.getUserAddress();
+        int total_results = address.getTotalResults();
+        if(total_results > 0){
+            return address.getUserAddress();
+        } else {
+            return null;
+        }
+
     }
 
     private void loadNextPage() {
@@ -301,8 +330,8 @@ public class Profile extends Fragment implements com.pkasemer.kakebeshoplira.Uti
      */
     private Call<Address> callUserAddresses() {
         return movieService.getAddresses(
-                49,
-                1
+                userId,
+                currentPage
         );
     }
 
@@ -325,6 +354,7 @@ public class Profile extends Fragment implements com.pkasemer.kakebeshoplira.Uti
 
         if (errorLayout.getVisibility() == View.GONE) {
             errorLayout.setVisibility(View.VISIBLE);
+            add_address_layout.setVisibility(View.GONE);
             progressBar.setVisibility(View.GONE);
 
             txtError.setText(fetchErrorMessage(throwable));
@@ -334,6 +364,8 @@ public class Profile extends Fragment implements com.pkasemer.kakebeshoplira.Uti
     private void showCategoryErrorView() {
 
         progressBar.setVisibility(View.GONE);
+        add_address_layout.setVisibility(View.GONE);
+
 
         AlertDialog.Builder android = new AlertDialog.Builder(getContext());
         android.setTitle("Coming Soon");
@@ -385,6 +417,7 @@ public class Profile extends Fragment implements com.pkasemer.kakebeshoplira.Uti
     private void hideErrorView() {
         if (errorLayout.getVisibility() == View.VISIBLE) {
             errorLayout.setVisibility(View.GONE);
+            add_address_layout.setVisibility(View.GONE);
             progressBar.setVisibility(View.VISIBLE);
         }
     }

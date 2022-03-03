@@ -241,6 +241,8 @@
 
             <include layout="@layout/error_layout" />
 
+            <include layout="@layout/create_address_layout" />
+
 
         </FrameLayout>
 

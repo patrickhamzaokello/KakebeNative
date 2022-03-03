@@ -101,8 +101,9 @@ public class UserAddressesAdapter extends RecyclerView.Adapter<RecyclerView.View
             case ITEM:
                 final MovieVH movieVH = (MovieVH) holder;
                 movieVH.username.setText(userAddress.getUsername());
-
-
+                movieVH.email.setText(userAddress.getEmail());
+                movieVH.phone.setText(userAddress.getPhone());
+                movieVH.city.setText(userAddress.getCountry() + " , " + userAddress.getCity() +" , "+ userAddress.getAddress());
                 break;
 
             case LOADING:
@@ -233,12 +234,16 @@ public class UserAddressesAdapter extends RecyclerView.Adapter<RecyclerView.View
 
 
     protected class MovieVH extends RecyclerView.ViewHolder {
-        private TextView username;
+        private TextView username,email,phone,city;
 
         public MovieVH(View itemView) {
             super(itemView);
 
             username = (TextView) itemView.findViewById(R.id.username);
+            email = (TextView) itemView.findViewById(R.id.email);
+            phone = (TextView) itemView.findViewById(R.id.phone);
+            city = (TextView) itemView.findViewById(R.id.city);
+
         }
     }
 
