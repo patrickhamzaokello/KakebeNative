@@ -1,14 +1,22 @@
 package com.pkasemer.kakebeshoplira.Fragments;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
+import android.util.Patterns;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -22,20 +30,32 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.material.card.MaterialCardView;
-import com.pkasemer.kakebeshoplira.Adapters.HomeSectionedRecyclerViewAdapter;
+import com.google.android.material.textfield.TextInputEditText;
 import com.pkasemer.kakebeshoplira.Adapters.UserAddressesAdapter;
 import com.pkasemer.kakebeshoplira.Apis.MovieApi;
 import com.pkasemer.kakebeshoplira.Apis.MovieService;
+import com.pkasemer.kakebeshoplira.Dialogs.OrderConfirmationDialog;
 import com.pkasemer.kakebeshoplira.HelperClasses.SharedPrefManager;
+import com.pkasemer.kakebeshoplira.HttpRequests.RequestHandler;
+import com.pkasemer.kakebeshoplira.HttpRequests.URLs;
 import com.pkasemer.kakebeshoplira.LoginMaterial;
 import com.pkasemer.kakebeshoplira.ManageOrders;
 import com.pkasemer.kakebeshoplira.Models.Address;
+import com.pkasemer.kakebeshoplira.Models.CreateAddress;
+import com.pkasemer.kakebeshoplira.Models.CreateAddressResponse;
+import com.pkasemer.kakebeshoplira.Models.OrderRequest;
+import com.pkasemer.kakebeshoplira.Models.OrderResponse;
+import com.pkasemer.kakebeshoplira.Models.User;
 import com.pkasemer.kakebeshoplira.Models.UserAddress;
 import com.pkasemer.kakebeshoplira.Models.UserModel;
 import com.pkasemer.kakebeshoplira.R;
 import com.pkasemer.kakebeshoplira.RootActivity;
 import com.pkasemer.kakebeshoplira.Utils.PaginationScrollListener;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.TimeoutException;
 
@@ -47,7 +67,7 @@ import retrofit2.Response;
 public class Profile extends Fragment implements com.pkasemer.kakebeshoplira.Utils.PaginationAdapterCallback {
 
 
-    TextView textViewUsername, textViewEmail,full_name_text,card_email_text,card_phone_text;
+    TextView textViewUsername, textViewEmail, full_name_text, card_email_text, card_phone_text;
 
 
     MaterialCardView manageOrders;
@@ -61,11 +81,12 @@ public class Profile extends Fragment implements com.pkasemer.kakebeshoplira.Uti
     RecyclerView rv;
     ProgressBar progressBar;
     LinearLayout errorLayout, add_address_layout;
-    Button btnRetry,add_address_btn_retry;
+    Button btnRetry, add_address_btn;
     TextView txtError;
     SwipeRefreshLayout swipeRefreshLayout;
 
     private static final int PAGE_START = 1;
+    CreateAddress createAddress = new CreateAddress();
 
     private boolean isLoading = false;
     private boolean isLastPage = false;
@@ -123,8 +144,6 @@ public class Profile extends Fragment implements com.pkasemer.kakebeshoplira.Uti
         //setting the values to the textviews
 
 
-
-
         full_name_text.setText(userModel.getFullname());
         card_email_text.setText(userModel.getEmail());
         card_phone_text.setText(userModel.getPhone());
@@ -145,7 +164,7 @@ public class Profile extends Fragment implements com.pkasemer.kakebeshoplira.Uti
             @Override
             public void onClick(View view) {
 
-                Log.i("show past order ", "orders" );
+                Log.i("show past order ", "orders");
                 Intent i = new Intent(getContext(), ManageOrders.class);
                 startActivity(i);
             }
@@ -160,7 +179,7 @@ public class Profile extends Fragment implements com.pkasemer.kakebeshoplira.Uti
 
 
         add_address_layout = view.findViewById(R.id.add_address_layout);
-        add_address_btn_retry = view.findViewById(R.id.add_address_btn_retry);
+        add_address_btn = view.findViewById(R.id.add_address_btn);
 
         swipeRefreshLayout = view.findViewById(R.id.main_swiperefresh);
 
@@ -204,15 +223,131 @@ public class Profile extends Fragment implements com.pkasemer.kakebeshoplira.Uti
         loadFirstPage();
 
         btnRetry.setOnClickListener(v -> loadFirstPage());
+        add_address_btn.setOnClickListener(v -> createNewAddress());
 
         swipeRefreshLayout.setOnRefreshListener(this::doRefresh);
-
-
-
 
         return view;
     }
 
+    private void createNewAddress() {
+        final Dialog dialog = new Dialog(getContext());
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.fragment_show_round_dialog);
+
+        TextInputEditText user_phone, user_location, user_district;
+        Button save_address;
+
+
+        user_phone = dialog.findViewById(R.id.user_phone);
+        user_location = dialog.findViewById(R.id.user_location);
+        user_district = dialog.findViewById(R.id.user_district);
+        save_address = dialog.findViewById(R.id.save_address);
+
+
+        save_address.setOnClickListener(v -> AddUserAddress(save_address,dialog, user_phone, user_location, user_district));
+
+
+        dialog.show();
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+        dialog.getWindow().setGravity(Gravity.BOTTOM);
+    }
+
+    private void AddUserAddress(Button save_address, Dialog dialog, TextInputEditText user_phone, TextInputEditText user_location, TextInputEditText user_district) {
+        final String phone = user_phone.getText().toString().trim();
+        final String location = user_location.getText().toString().trim();
+        final String district = user_district.getText().toString().trim();
+        progressBar = dialog.findViewById(R.id.progressBar);
+
+        createAddress.setUserId(String.valueOf(userId));
+        createAddress.setPhone(phone);
+        createAddress.setLocation(location);
+        createAddress.setDistrict(district);
+
+        if (TextUtils.isEmpty(district)) {
+            user_district.setError("Specify your District");
+            user_district.requestFocus();
+            return;
+        }
+
+
+        if (TextUtils.isEmpty(location)) {
+            user_location.setError("Provide your location");
+            user_location.requestFocus();
+            return;
+        }
+
+        if (phone.length() < 9) {
+            user_phone.setError("Invalid Phone number");
+            user_phone.requestFocus();
+            return;
+        }
+
+        if (phone.length() > 10) {
+            user_phone.setError("Use format 07xxxxxxxx ");
+            user_phone.requestFocus();
+            return;
+        }
+
+        postCreateUserAddress().enqueue(new Callback<CreateAddressResponse>() {
+            @Override
+            public void onResponse(Call<CreateAddressResponse> call, Response<CreateAddressResponse> response) {
+
+                //set response body to match OrderResponse Model
+                CreateAddressResponse createAddressResponse = response.body();
+                progressBar.setVisibility(View.VISIBLE);
+
+
+                //if orderResponses is not null
+                if (createAddressResponse != null) {
+
+                    //if no error- that is error = false
+                    if (!createAddressResponse.getError()) {
+
+                        Log.i("Order Success", createAddressResponse.getMessage() + createAddressResponse.getError());
+
+                    } else {
+                        Log.i("Ress", "message: " + (createAddressResponse.getMessage()));
+                        Log.i("et", "error false: " + (createAddressResponse.getError()));
+                        save_address.setEnabled(true);
+                        save_address.setClickable(true);
+
+//                        ShowOrderFailed();
+
+                    }
+
+
+                } else {
+                    Log.i("Order Response null", "Order is null Try Again: " + createAddressResponse);
+                    save_address.setEnabled(true);
+                    save_address.setClickable(true);
+                    return;
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<CreateAddressResponse> call, Throwable t) {
+                progressBar.setVisibility(View.GONE);
+
+                save_address.setEnabled(true);
+                save_address.setClickable(true);
+
+                t.printStackTrace();
+                Log.i("Order Failed", "Order Failed Try Again: " + t);
+            }
+        });
+
+
+    }
+
+
+    private Call<CreateAddressResponse> postCreateUserAddress() {
+        return movieService.postCreateAddress(createAddress);
+    }
 
 
     private void doRefresh() {
@@ -246,11 +381,11 @@ public class Profile extends Fragment implements com.pkasemer.kakebeshoplira.Uti
                 userAddresses = fetchResults(response);
 
 
-                if(userAddresses != null ){
+                if (userAddresses != null) {
                     Log.i("userAddresses", "not null " + String.valueOf(userAddresses));
 
                     progressBar.setVisibility(View.GONE);
-                    if(userAddresses.isEmpty()){
+                    if (userAddresses.isEmpty()) {
                         showCategoryErrorView();
                         return;
                     } else {
@@ -280,13 +415,12 @@ public class Profile extends Fragment implements com.pkasemer.kakebeshoplira.Uti
     }
 
 
-
     private List<UserAddress> fetchResults(Response<Address> response) {
         Address address = response.body();
         TOTAL_PAGES = address.getTotalPages();
 
         int total_results = address.getTotalResults();
-        if(total_results > 0){
+        if (total_results > 0) {
             return address.getUserAddress();
         } else {
             return null;
@@ -392,7 +526,6 @@ public class Profile extends Fragment implements com.pkasemer.kakebeshoplira.Uti
         android.create().show();
 
     }
-
 
 
     /**

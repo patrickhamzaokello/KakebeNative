@@ -1,6 +1,8 @@
 package com.pkasemer.kakebeshoplira.Apis;
 
 import com.pkasemer.kakebeshoplira.Models.Address;
+import com.pkasemer.kakebeshoplira.Models.CreateAddress;
+import com.pkasemer.kakebeshoplira.Models.CreateAddressResponse;
 import com.pkasemer.kakebeshoplira.Models.HomeBannerModel;
 import com.pkasemer.kakebeshoplira.Models.HomeCategories;
 import com.pkasemer.kakebeshoplira.Models.HomeMenuCategoryModel;
@@ -71,6 +73,13 @@ public interface MovieService {
     Call<OrderResponse> postCartOrder(
             @Body OrderRequest orderRequest
     );
+
+    //post Address
+    @POST("Address/create_address.php")
+    Call<CreateAddressResponse> postCreateAddress(
+            @Body CreateAddress createAddress
+    );
+
 
 
     //fetch past orders
