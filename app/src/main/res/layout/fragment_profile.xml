@@ -192,27 +192,60 @@
         android:orientation="vertical"
         >
 
-        <TextView
+
+        <RelativeLayout
+            android:id="@+id/categorytitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/montserrat_bold"
-            android:includeFontPadding="false"
-            android:text="Delivery Address Info"
-            android:textColor="@color/black"
-            android:paddingHorizontal="20dp"
-            android:textSize="20sp" />
+            android:background="@color/white"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="20dp">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:fontFamily="@font/montserrat"
-            android:includeFontPadding="false"
-            android:text="Manage all your address here"
-            android:paddingHorizontal="20dp"
+            <TextView
+                android:id="@+id/section_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_marginRight="10dp"
+                android:layout_toLeftOf="@+id/addnewAddress"
+                android:fontFamily="@font/montserrat_bold"
+                android:includeFontPadding="false"
+                android:text="Delivery Address Info"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
 
-            android:textColor="@color/light_grey"
-            android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/section_label_desc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/section_label"
+                android:layout_alignParentLeft="true"
+                android:layout_marginRight="10dp"
+                android:layout_toLeftOf="@+id/addnewAddress"
+                android:fontFamily="@font/montserrat"
+
+                android:includeFontPadding="false"
+                android:text="Manage all your address here"
+                android:textColor="@color/light_grey"
+                android:textSize="14sp" />
+
+
+            <Button
+                android:id="@+id/addnewAddress"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/custom_btn_add"
+                android:backgroundTint="@color/white"
+                android:text="Add"
+                android:theme="@style/BlackBtn" />
+
+
+        </RelativeLayout>
+
+
+
 
 
         <FrameLayout

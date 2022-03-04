@@ -18,6 +18,7 @@ import com.pkasemer.kakebeshoplira.Models.UserOrders;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
 
@@ -40,13 +41,6 @@ public interface MovieService {
     );
 
 
-    // http://localhost:8080/projects/KakebeAPI/Requests/Address/userAddress.php?userId=49&page=1
-    @GET("Address/userAddress.php")
-    Call<Address> getAddresses(
-            @Query("userId") int userId,
-            @Query("page") int page
-    );
-
 
 
     @GET("category/allcombined.php")
@@ -68,25 +62,37 @@ public interface MovieService {
     );
 
 
+    //fetch past orders
+    @GET("orders/userOrders.php")
+    @Headers("Cache-Control: no-cache")
+    Call<UserOrders> getUserOrders(
+            @Query("customerId") int customerID,
+            @Query("page") int pageIndex
+    );
+
+
     //post all Orders
     @POST("orders/create_order.php")
     Call<OrderResponse> postCartOrder(
             @Body OrderRequest orderRequest
     );
 
-    //post Address
-    @POST("Address/create_address.php")
-    Call<CreateAddressResponse> postCreateAddress(
-            @Body CreateAddress createAddress
+
+
+    // http://localhost:8080/projects/KakebeAPI/Requests/Address/userAddress.php?userId=49&page=1
+    @GET("Address/userAddress.php")
+    @Headers("Cache-Control: no-cache")
+    Call<Address> getAddresses(
+            @Query("userId") int userId,
+            @Query("page") int page
     );
 
 
-
-    //fetch past orders
-    @GET("orders/userOrders.php")
-    Call<UserOrders> getUserOrders(
-            @Query("customerId") int customerID,
-            @Query("page") int pageIndex
+    //post Address
+    @POST("Address/create_address.php")
+    @Headers("Cache-Control: no-cache")
+    Call<CreateAddressResponse> postCreateAddress(
+            @Body CreateAddress createAddress
     );
 
 

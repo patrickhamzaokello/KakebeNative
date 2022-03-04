@@ -7,11 +7,9 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
-import android.util.Patterns;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,28 +32,18 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.pkasemer.kakebeshoplira.Adapters.UserAddressesAdapter;
 import com.pkasemer.kakebeshoplira.Apis.MovieApi;
 import com.pkasemer.kakebeshoplira.Apis.MovieService;
-import com.pkasemer.kakebeshoplira.Dialogs.OrderConfirmationDialog;
 import com.pkasemer.kakebeshoplira.HelperClasses.SharedPrefManager;
-import com.pkasemer.kakebeshoplira.HttpRequests.RequestHandler;
-import com.pkasemer.kakebeshoplira.HttpRequests.URLs;
 import com.pkasemer.kakebeshoplira.LoginMaterial;
 import com.pkasemer.kakebeshoplira.ManageOrders;
 import com.pkasemer.kakebeshoplira.Models.Address;
 import com.pkasemer.kakebeshoplira.Models.CreateAddress;
 import com.pkasemer.kakebeshoplira.Models.CreateAddressResponse;
-import com.pkasemer.kakebeshoplira.Models.OrderRequest;
-import com.pkasemer.kakebeshoplira.Models.OrderResponse;
-import com.pkasemer.kakebeshoplira.Models.User;
 import com.pkasemer.kakebeshoplira.Models.UserAddress;
 import com.pkasemer.kakebeshoplira.Models.UserModel;
 import com.pkasemer.kakebeshoplira.R;
 import com.pkasemer.kakebeshoplira.RootActivity;
 import com.pkasemer.kakebeshoplira.Utils.PaginationScrollListener;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.TimeoutException;
 
@@ -81,7 +69,7 @@ public class Profile extends Fragment implements com.pkasemer.kakebeshoplira.Uti
     RecyclerView rv;
     ProgressBar progressBar;
     LinearLayout errorLayout, add_address_layout;
-    Button btnRetry, add_address_btn;
+    Button btnRetry, add_address_btn, addNewAddress;
     TextView txtError;
     SwipeRefreshLayout swipeRefreshLayout;
 
@@ -136,6 +124,8 @@ public class Profile extends Fragment implements com.pkasemer.kakebeshoplira.Uti
         card_email_text = view.findViewById(R.id.card_email_text);
         card_phone_text = view.findViewById(R.id.card_phone_text);
         manageOrders = view.findViewById(R.id.manageOrders);
+
+        addNewAddress = view.findViewById(R.id.addnewAddress);
 
         //getting the current user
         UserModel userModel = SharedPrefManager.getInstance(getContext()).getUser();
@@ -224,6 +214,7 @@ public class Profile extends Fragment implements com.pkasemer.kakebeshoplira.Uti
 
         btnRetry.setOnClickListener(v -> loadFirstPage());
         add_address_btn.setOnClickListener(v -> createNewAddress());
+        addNewAddress.setOnClickListener(v -> createNewAddress());
 
         swipeRefreshLayout.setOnRefreshListener(this::doRefresh);
 
@@ -233,7 +224,7 @@ public class Profile extends Fragment implements com.pkasemer.kakebeshoplira.Uti
     private void createNewAddress() {
         final Dialog dialog = new Dialog(getContext());
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.fragment_show_round_dialog);
+        dialog.setContentView(R.layout.fragment_add_address_round_dialog);
 
         TextInputEditText user_phone, user_location, user_district;
         Button save_address;
@@ -306,13 +297,23 @@ public class Profile extends Fragment implements com.pkasemer.kakebeshoplira.Uti
                     //if no error- that is error = false
                     if (!createAddressResponse.getError()) {
 
-                        Log.i("Order Success", createAddressResponse.getMessage() + createAddressResponse.getError());
+                        Log.i("Address Success", createAddressResponse.getMessage() + createAddressResponse.getError());
+                        progressBar.setVisibility(View.GONE);
+                        dialog.hide();
+
+                        Toast.makeText(getContext(), "Address Saved", Toast.LENGTH_SHORT).show();
+
+                        //refresh adapter
+                        doRefresh();
 
                     } else {
                         Log.i("Ress", "message: " + (createAddressResponse.getMessage()));
                         Log.i("et", "error false: " + (createAddressResponse.getError()));
                         save_address.setEnabled(true);
                         save_address.setClickable(true);
+                        progressBar.setVisibility(View.GONE);
+                        Toast.makeText(getContext(), "Adding Address Failed", Toast.LENGTH_SHORT).show();
+
 
 //                        ShowOrderFailed();
 
@@ -320,7 +321,9 @@ public class Profile extends Fragment implements com.pkasemer.kakebeshoplira.Uti
 
 
                 } else {
-                    Log.i("Order Response null", "Order is null Try Again: " + createAddressResponse);
+                    Log.i("Address Response null", "Address is null Try Again: " + createAddressResponse);
+                    Toast.makeText(getContext(), "Adding Address Failed", Toast.LENGTH_SHORT).show();
+                    progressBar.setVisibility(View.GONE);
                     save_address.setEnabled(true);
                     save_address.setClickable(true);
                     return;
