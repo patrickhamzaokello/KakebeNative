@@ -25,7 +25,7 @@ public class UserOrdersResult {
     private Integer totalAmount;
     @SerializedName("order_status")
     @Expose
-    private Integer orderStatus;
+    private String orderStatus;
     @SerializedName("processed_by")
     @Expose
     private Integer processedBy;
@@ -70,11 +70,11 @@ public class UserOrdersResult {
         this.totalAmount = totalAmount;
     }
 
-    public Integer getOrderStatus() {
+    public String getOrderStatus() {
         return orderStatus;
     }
 
-    public void setOrderStatus(Integer orderStatus) {
+    public void setOrderStatus(String orderStatus) {
         this.orderStatus = orderStatus;
     }
 

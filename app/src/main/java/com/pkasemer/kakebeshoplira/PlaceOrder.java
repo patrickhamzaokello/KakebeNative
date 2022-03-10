@@ -123,7 +123,7 @@ public class PlaceOrder extends AppCompatActivity implements ChangeLocation.Noti
         orderRequest.setOrderAddress(userModel.getAddress() + " - " + userModel.getPhone());
         orderRequest.setCustomerId(String.valueOf(userModel.getId()));
         orderRequest.setTotalAmount(String.valueOf(db.sumPriceCartItems()));
-        orderRequest.setOrderStatus("1");
+        orderRequest.setOrderStatus("pending");
         orderRequest.setProcessedBy("1");
         orderRequest.setOrderItemList(cartitemlist);
 

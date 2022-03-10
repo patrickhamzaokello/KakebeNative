@@ -9,7 +9,7 @@
     android:layout_marginEnd="10dp"
     android:layout_marginTop="20dp"
     app:cardCornerRadius="5dp"
-    app:cardElevation="8dp">
+    app:cardElevation="1dp">
 
     <RelativeLayout
         android:id="@+id/order_layout_card"
@@ -23,95 +23,78 @@
 
 
         <TextView
-            android:id="@+id/order_no"
+            android:id="@+id/order_date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_marginBottom="10dp"
-            android:layout_toLeftOf="@+id/order_date"
-            android:fontFamily="@font/montserrat_bold"
+            android:fontFamily="@font/montserrat"
             android:maxLines="2"
             android:textColor="@color/black"
             tools:text="Order No: KakebeMZR9" />
 
-        <TextView
-            android:id="@+id/order_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/light_grey"
-            android:layout_alignParentRight="true"
-            android:fontFamily="@font/montserrat"
-            android:maxLines="1"
-            android:textStyle="bold"
-            tools:text="05 07 2022" />
 
         <TextView
             android:id="@+id/order_tracking_lable"
-            android:layout_below="@+id/order_no"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="10dp"
-            android:textColor="@color/light_grey"
-            android:fontFamily="@font/montserrat"
-            android:ellipsize="end"
-            android:maxLines="2"
-            android:text="Tracking No:" />
-
-        <TextView
-            android:id="@+id/order_tracking_no"
-            android:layout_toRightOf="@id/order_tracking_lable"
-            android:layout_below="@+id/order_no"
             style="@style/TextAppearance.AppCompat.Caption"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:fontFamily="@font/montserrat_bold"
+            android:layout_below="@+id/order_date"
+            android:layout_marginRight="10dp"
             android:ellipsize="end"
+            android:fontFamily="@font/montserrat"
             android:maxLines="2"
+            android:text="Tracking ID: "
+            android:textColor="@color/light_grey"
+            android:textSize="12sp"
+
+            />
+
+        <TextView
+            android:id="@+id/order_tracking_no"
+            style="@style/TextAppearance.AppCompat.Caption"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/order_date"
+            android:layout_toRightOf="@id/order_tracking_lable"
+            android:ellipsize="end"
+            android:fontFamily="@font/montserrat"
+
+            android:maxLines="2"
+            android:textColor="@color/black"
+            android:textSize="12sp"
             tools:text="UMKK34099112" />
 
 
         <TextView
             android:id="@+id/order_total_label"
-            android:layout_below="@+id/order_tracking_lable"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="10dp"
-            android:textColor="@color/light_grey"
-            android:fontFamily="@font/montserrat"
-            android:ellipsize="end"
-            android:maxLines="2"
-            android:text="Total Amount:" />
-
-        <TextView
-            android:id="@+id/order_total_price"
-            android:layout_toRightOf="@id/order_total_label"
-            android:layout_below="@+id/order_tracking_lable"
             style="@style/TextAppearance.AppCompat.Caption"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:layout_marginRight="50dp"
-            android:fontFamily="@font/montserrat_bold"
+            android:layout_below="@+id/order_tracking_lable"
+            android:layout_marginRight="10dp"
             android:ellipsize="end"
+            android:fontFamily="@font/montserrat"
             android:maxLines="2"
-            tools:text="UGX 34,600" />
+            android:text="Total Amount: "
 
-
-
+            android:textColor="@color/light_grey"
+            android:textSize="12sp" />
 
         <TextView
-            android:id="@+id/order_address"
-            android:layout_below="@+id/order_total_price"
-            android:layout_width="match_parent"
+            android:id="@+id/order_total_price"
+            style="@style/TextAppearance.AppCompat.Caption"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/profilecards"
-            android:fontFamily="@font/montserrat"
+            android:layout_below="@+id/order_tracking_lable"
+            android:layout_marginRight="50dp"
+            android:layout_toRightOf="@id/order_total_label"
             android:ellipsize="end"
+            android:fontFamily="@font/montserrat"
             android:maxLines="2"
-            android:layout_marginTop="10dp"
-            tools:text="Address: Lira, Adyel 0787250196"
-            />
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            tools:text="UGX 34,600" />
 
 
         <TextView
@@ -119,38 +102,57 @@
             style="@style/TextAppearance.AppCompat.Caption"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:ellipsize="end"
+            android:layout_below="@+id/order_total_price"
             android:layout_marginTop="8dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginRight="15dp"
             android:layout_toLeftOf="@+id/order_status"
-            android:layout_below="@+id/order_address"
+            android:ellipsize="end"
             android:fontFamily="@font/montserrat"
             android:maxLines="2"
-            android:textColor="@color/light_grey"
-            android:text="Status" />
-
-
-
+            android:text="Status"
+            android:textColor="@color/light_grey" />
 
         <TextView
             android:id="@+id/order_status"
             style="@style/TextAppearance.AppCompat.Caption"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:layout_marginTop="8dp"
-
+            android:layout_below="@+id/order_total_price"
             android:layout_alignParentEnd="true"
-            android:layout_below="@+id/order_address"
+
+            android:layout_marginTop="8dp"
+            android:ellipsize="end"
             android:fontFamily="sans-serif"
             android:maxLines="2"
             android:textColor="@color/niceGreen"
             tools:text="Delivered" />
 
 
+        <TextView
+            android:id="@+id/order_address_lable"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/order_total_price"
+            android:layout_marginTop="20dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/montserrat"
+            android:maxLines="2"
+            android:text="Delivery Info"
+            android:textSize="12sp"
+            android:textColor="@color/light_grey" />
 
-
-
+        <TextView
+            android:id="@+id/order_address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/order_address_lable"
+            android:layout_marginTop="3dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/montserrat"
+            android:maxLines="3"
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            tools:text="Lira, Adyel 0787250196" />
 
 
     </RelativeLayout>

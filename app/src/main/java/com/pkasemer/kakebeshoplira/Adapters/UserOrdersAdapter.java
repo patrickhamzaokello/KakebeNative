@@ -107,29 +107,14 @@ public class UserOrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
                 if (userOrdersResult.getOrderId() != 0) {
 
-                    movieVH.order_no.setText("No: KakebeRM34" + userOrdersResult.getOrderId());
-                    movieVH.order_date.setText(formatYearLabel(userOrdersResult));
+                    movieVH.order_date.setText("Created | " +userOrdersResult.getOrderDate());
                     movieVH.order_total_price.setText("Ugx " + NumberFormat.getNumberInstance(Locale.US).format(userOrdersResult.getTotalAmount()));
                     movieVH.order_tracking_no.setText("KE34099112" + userOrdersResult.getOrderId());
-                    movieVH.order_address.setText("Address:" + userOrdersResult.getOrderAddress());
+                    movieVH.order_address.setText("" + userOrdersResult.getOrderAddress());
 
-                    // check order conditioin
-                    /*
-                     * 1 - pending --
-                     * 2 - processing --
-                     * 3 - delivered -- green color
-                     * */
-                    if ((userOrdersResult.getOrderStatus()) == 1) {
-                        movieVH.order_status.setText("Pending");
-                        movieVH.order_status.setTextColor(ContextCompat.getColor(context, R.color.pendingstatus));
-                    } else if ((userOrdersResult.getOrderStatus()) == 2) {
-                        movieVH.order_status.setText("Processing");
-                        movieVH.order_status.setTextColor(ContextCompat.getColor(context, R.color.niceBlue));
+                    movieVH.order_status.setText(userOrdersResult.getOrderStatus());
 
-                    } else {
-                        movieVH.order_status.setText("Delivered");
-                        movieVH.order_status.setTextColor(ContextCompat.getColor(context, R.color.niceGreen));
-                    }
+                    movieVH.order_status.setTextColor(ContextCompat.getColor(context, R.color.niceGreen));
 
 
                 } else {
@@ -185,10 +170,6 @@ public class UserOrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
    _________________________________________________________________________________________________
     */
 
-    private String formatYearLabel(UserOrdersResult userOrdersResult) {
-        return "Created | " +
-                userOrdersResult.getOrderDate().substring(0, 10);
-    }
 
     private RequestBuilder<Drawable> loadImage(@NonNull String posterPath) {
         return GlideApp
@@ -267,13 +248,12 @@ public class UserOrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
      */
 
     protected class MovieVH extends RecyclerView.ViewHolder {
-        private final TextView order_no, order_total_price, order_address, order_status, order_tracking_no, order_date;
+        private final TextView order_total_price, order_address, order_status, order_tracking_no, order_date;
         private final RelativeLayout order_layout_card;
 
         public MovieVH(View itemView) {
             super(itemView);
 
-            order_no = itemView.findViewById(R.id.order_no);
             order_tracking_no = itemView.findViewById(R.id.order_tracking_no);
             order_total_price = itemView.findViewById(R.id.order_total_price);
             order_date = itemView.findViewById(R.id.order_date);
