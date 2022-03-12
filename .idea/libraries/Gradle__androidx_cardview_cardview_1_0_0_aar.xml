@@ -4,9 +4,9 @@
       <root url="jar://$USER_HOME$/Library/Android/sdk/caches/transforms-3/6cd3697d072f6985c9352b2e6aea2143/transformed/cardview-1.0.0/jars/classes.jar!/" />
       <root url="file://$USER_HOME$/Library/Android/sdk/caches/transforms-3/6cd3697d072f6985c9352b2e6aea2143/transformed/cardview-1.0.0/res" />
       <root url="file://$USER_HOME$/Library/Android/sdk/caches/transforms-3/6cd3697d072f6985c9352b2e6aea2143/transformed/cardview-1.0.0/AndroidManifest.xml" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/bd1f7a11c177259c25bd2715821f3064/transformed/cardview-1.0.0/AndroidManifest.xml" />
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/bd1f7a11c177259c25bd2715821f3064/transformed/cardview-1.0.0/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/bd1f7a11c177259c25bd2715821f3064/transformed/cardview-1.0.0/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/ccd28c48a108d81f976d0c12a900b7f4/transformed/cardview-1.0.0/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/ccd28c48a108d81f976d0c12a900b7f4/transformed/cardview-1.0.0/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/ccd28c48a108d81f976d0c12a900b7f4/transformed/cardview-1.0.0/AndroidManifest.xml" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>

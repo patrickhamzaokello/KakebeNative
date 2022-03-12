@@ -42,6 +42,7 @@ import com.pkasemer.kakebeshoplira.HelperClasses.SharedPrefManager;
 import com.pkasemer.kakebeshoplira.Models.FoodDBModel;
 import com.pkasemer.kakebeshoplira.Models.OrderRequest;
 import com.pkasemer.kakebeshoplira.Models.OrderResponse;
+import com.pkasemer.kakebeshoplira.Models.User;
 import com.pkasemer.kakebeshoplira.Models.UserModel;
 import com.pkasemer.kakebeshoplira.localDatabase.SenseDBHelper;
 
@@ -112,16 +113,16 @@ public class PlaceOrder extends AppCompatActivity implements ChangeLocation.Noti
 
         OrderTotalling();
 
-        UserModel userModel = SharedPrefManager.getInstance(PlaceOrder.this).getUser();
+        User user = SharedPrefManager.getInstance(PlaceOrder.this).getUser();
 
-        order_page_fullname.setText(userModel.getFullname());
-        order_page_username.setText(userModel.getUsername());
-        order_page_phoneno.setText(userModel.getPhone());
-        location_address_view.setText(userModel.getAddress());
+        order_page_fullname.setText(user.getFullname());
+//        order_page_username.setText(user.getUsername());
+        order_page_phoneno.setText(user.getPhone());
+//        location_address_view.setText(user.getAddress());
 
 
-        orderRequest.setOrderAddress(userModel.getAddress() + " - " + userModel.getPhone());
-        orderRequest.setCustomerId(String.valueOf(userModel.getId()));
+//        orderRequest.setOrderAddress(user.getAddress() + " - " + user.getPhone());
+        orderRequest.setCustomerId(String.valueOf(user.getId()));
         orderRequest.setTotalAmount(String.valueOf(db.sumPriceCartItems()));
         orderRequest.setOrderStatus("pending");
         orderRequest.setProcessedBy("1");

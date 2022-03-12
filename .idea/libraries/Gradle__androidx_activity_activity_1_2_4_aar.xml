@@ -2,16 +2,17 @@
   <library name="Gradle: androidx.activity:activity:1.2.4@aar">
     <ANNOTATIONS>
       <root url="jar://$USER_HOME$/Library/Android/sdk/caches/transforms-3/c9aa3a16b5da77be9d641911a29999ca/transformed/jetified-activity-1.2.4/annotations.zip!/" />
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/86cc3baa44baab54a5e0435d8bed9e52/transformed/jetified-activity-1.2.4/annotations.zip!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/588f8bb4d66e251497f58444b45bcd77/transformed/jetified-activity-1.2.4/annotations.zip!/" />
     </ANNOTATIONS>
     <CLASSES>
       <root url="file://$USER_HOME$/Library/Android/sdk/caches/transforms-3/f8fd4362dd7ccc09379a82220de7ea9c/transformed/jetified-activity-1.2.4/res" />
       <root url="jar://$USER_HOME$/Library/Android/sdk/caches/transforms-3/c9aa3a16b5da77be9d641911a29999ca/transformed/jetified-activity-1.2.4/jars/classes.jar!/" />
       <root url="file://$USER_HOME$/Library/Android/sdk/caches/transforms-3/c9aa3a16b5da77be9d641911a29999ca/transformed/jetified-activity-1.2.4/AndroidManifest.xml" />
       <root url="file://$USER_HOME$/Library/Android/sdk/caches/transforms-3/c9aa3a16b5da77be9d641911a29999ca/transformed/jetified-activity-1.2.4/res" />
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/86cc3baa44baab54a5e0435d8bed9e52/transformed/jetified-activity-1.2.4/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/86cc3baa44baab54a5e0435d8bed9e52/transformed/jetified-activity-1.2.4/AndroidManifest.xml" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/86cc3baa44baab54a5e0435d8bed9e52/transformed/jetified-activity-1.2.4/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/588f8bb4d66e251497f58444b45bcd77/transformed/jetified-activity-1.2.4/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/588f8bb4d66e251497f58444b45bcd77/transformed/jetified-activity-1.2.4/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/588f8bb4d66e251497f58444b45bcd77/transformed/jetified-activity-1.2.4/AndroidManifest.xml" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>

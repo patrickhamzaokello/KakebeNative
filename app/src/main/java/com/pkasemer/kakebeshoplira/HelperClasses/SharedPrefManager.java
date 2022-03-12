@@ -78,16 +78,13 @@ public class SharedPrefManager {
 //    }
 
     //this method will give the logged in user
-    public UserModel getUser() {
+    public User getUser() {
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
-        return new UserModel(
+        return new User(
                 sharedPreferences.getInt(KEY_ID, -1),
                 sharedPreferences.getString(KEY_FULLNAME, null),
-                sharedPreferences.getString(KEY_USERNAME, null),
                 sharedPreferences.getString(KEY_EMAIL, null),
-                sharedPreferences.getString(KEY_PHONE, null),
-                sharedPreferences.getString(KEY_ADDRESS, null),
-                sharedPreferences.getString(KEY_PROFILEIMAGE, null)
+                sharedPreferences.getString(KEY_PHONE, null)
         );
     }
 

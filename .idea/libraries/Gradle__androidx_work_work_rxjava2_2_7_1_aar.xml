@@ -4,9 +4,9 @@
       <root url="jar://$USER_HOME$/Library/Android/sdk/caches/transforms-3/234a947235422c3f63570a3882e3b7fc/transformed/work-rxjava2-2.7.1/jars/classes.jar!/" />
       <root url="file://$USER_HOME$/Library/Android/sdk/caches/transforms-3/234a947235422c3f63570a3882e3b7fc/transformed/work-rxjava2-2.7.1/AndroidManifest.xml" />
       <root url="file://$USER_HOME$/Library/Android/sdk/caches/transforms-3/234a947235422c3f63570a3882e3b7fc/transformed/work-rxjava2-2.7.1/res" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/7df567fa05dae7e72a3760683b6727e3/transformed/work-rxjava2-2.7.1/res" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/7df567fa05dae7e72a3760683b6727e3/transformed/work-rxjava2-2.7.1/AndroidManifest.xml" />
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/7df567fa05dae7e72a3760683b6727e3/transformed/work-rxjava2-2.7.1/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/5115fdaf77bce2a05987f9f0c10f7b03/transformed/work-rxjava2-2.7.1/AndroidManifest.xml" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/5115fdaf77bce2a05987f9f0c10f7b03/transformed/work-rxjava2-2.7.1/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/5115fdaf77bce2a05987f9f0c10f7b03/transformed/work-rxjava2-2.7.1/jars/classes.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>

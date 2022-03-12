@@ -4,9 +4,9 @@
       <root url="file://$USER_HOME$/Library/Android/sdk/caches/transforms-3/abf89fa0b6e903423018a9dedd7c4951/transformed/jetified-work-multiprocess-2.7.1/res" />
       <root url="file://$USER_HOME$/Library/Android/sdk/caches/transforms-3/abf89fa0b6e903423018a9dedd7c4951/transformed/jetified-work-multiprocess-2.7.1/AndroidManifest.xml" />
       <root url="jar://$USER_HOME$/Library/Android/sdk/caches/transforms-3/abf89fa0b6e903423018a9dedd7c4951/transformed/jetified-work-multiprocess-2.7.1/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/d538b91330258cd97b872e421c721bd2/transformed/jetified-work-multiprocess-2.7.1/res" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/d538b91330258cd97b872e421c721bd2/transformed/jetified-work-multiprocess-2.7.1/AndroidManifest.xml" />
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/d538b91330258cd97b872e421c721bd2/transformed/jetified-work-multiprocess-2.7.1/jars/classes.jar!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/c91f02eefd458cc01b94f5616f8a10ec/transformed/jetified-work-multiprocess-2.7.1/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/c91f02eefd458cc01b94f5616f8a10ec/transformed/jetified-work-multiprocess-2.7.1/AndroidManifest.xml" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/c91f02eefd458cc01b94f5616f8a10ec/transformed/jetified-work-multiprocess-2.7.1/res" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>

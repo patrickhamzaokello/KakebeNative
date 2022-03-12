@@ -2,16 +2,17 @@
   <library name="Gradle: androidx.exifinterface:exifinterface:1.2.0@aar">
     <ANNOTATIONS>
       <root url="jar://$USER_HOME$/Library/Android/sdk/caches/transforms-3/5fab5bac55fed996fe83a608187c1531/transformed/exifinterface-1.2.0/annotations.zip!/" />
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/c967f48afe24b4093681b11f45c1b875/transformed/exifinterface-1.2.0/annotations.zip!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/6af399a95079966ebff57015cd8020f2/transformed/exifinterface-1.2.0/annotations.zip!/" />
     </ANNOTATIONS>
     <CLASSES>
       <root url="file://$USER_HOME$/Library/Android/sdk/caches/transforms-3/96dfdd7c6cb6d119a1f6861accbe3b31/transformed/exifinterface-1.2.0/res" />
       <root url="jar://$USER_HOME$/Library/Android/sdk/caches/transforms-3/5fab5bac55fed996fe83a608187c1531/transformed/exifinterface-1.2.0/jars/classes.jar!/" />
       <root url="file://$USER_HOME$/Library/Android/sdk/caches/transforms-3/5fab5bac55fed996fe83a608187c1531/transformed/exifinterface-1.2.0/AndroidManifest.xml" />
       <root url="file://$USER_HOME$/Library/Android/sdk/caches/transforms-3/5fab5bac55fed996fe83a608187c1531/transformed/exifinterface-1.2.0/res" />
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/c967f48afe24b4093681b11f45c1b875/transformed/exifinterface-1.2.0/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/c967f48afe24b4093681b11f45c1b875/transformed/exifinterface-1.2.0/AndroidManifest.xml" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/c967f48afe24b4093681b11f45c1b875/transformed/exifinterface-1.2.0/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/6af399a95079966ebff57015cd8020f2/transformed/exifinterface-1.2.0/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/6af399a95079966ebff57015cd8020f2/transformed/exifinterface-1.2.0/AndroidManifest.xml" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/6af399a95079966ebff57015cd8020f2/transformed/exifinterface-1.2.0/jars/classes.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>

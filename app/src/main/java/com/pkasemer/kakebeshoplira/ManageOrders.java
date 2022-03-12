@@ -25,6 +25,7 @@ import com.pkasemer.kakebeshoplira.Apis.MovieService;
 import com.pkasemer.kakebeshoplira.Dialogs.OrderNotFound;
 import com.pkasemer.kakebeshoplira.HelperClasses.SharedPrefManager;
 import com.pkasemer.kakebeshoplira.Models.SelectedCategoryMenuItemResult;
+import com.pkasemer.kakebeshoplira.Models.User;
 import com.pkasemer.kakebeshoplira.Models.UserModel;
 import com.pkasemer.kakebeshoplira.Models.UserOrders;
 import com.pkasemer.kakebeshoplira.Models.UserOrdersResult;
@@ -142,8 +143,8 @@ public class ManageOrders extends AppCompatActivity implements PaginationAdapter
 
     private void receiveData()
     {
-        UserModel userModel = SharedPrefManager.getInstance(ManageOrders.this).getUser();
-        customerId = userModel.getId();
+        User user = SharedPrefManager.getInstance(ManageOrders.this).getUser();
+        customerId = user.getId();
         loadFirstPage();
 
     }

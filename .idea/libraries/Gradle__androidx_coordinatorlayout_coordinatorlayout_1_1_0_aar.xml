@@ -2,15 +2,15 @@
   <library name="Gradle: androidx.coordinatorlayout:coordinatorlayout:1.1.0@aar">
     <ANNOTATIONS>
       <root url="jar://$USER_HOME$/Library/Android/sdk/caches/transforms-3/2812e627395f98abfd960d15128bef28/transformed/coordinatorlayout-1.1.0/annotations.zip!/" />
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/3d7da13085be9cc5911af832600722e4/transformed/coordinatorlayout-1.1.0/annotations.zip!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/2a9b44b28a14a4bcb526a75fcc7011b0/transformed/coordinatorlayout-1.1.0/annotations.zip!/" />
     </ANNOTATIONS>
     <CLASSES>
       <root url="file://$USER_HOME$/Library/Android/sdk/caches/transforms-3/2812e627395f98abfd960d15128bef28/transformed/coordinatorlayout-1.1.0/res" />
       <root url="file://$USER_HOME$/Library/Android/sdk/caches/transforms-3/2812e627395f98abfd960d15128bef28/transformed/coordinatorlayout-1.1.0/AndroidManifest.xml" />
       <root url="jar://$USER_HOME$/Library/Android/sdk/caches/transforms-3/2812e627395f98abfd960d15128bef28/transformed/coordinatorlayout-1.1.0/jars/classes.jar!/" />
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/3d7da13085be9cc5911af832600722e4/transformed/coordinatorlayout-1.1.0/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/3d7da13085be9cc5911af832600722e4/transformed/coordinatorlayout-1.1.0/AndroidManifest.xml" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/3d7da13085be9cc5911af832600722e4/transformed/coordinatorlayout-1.1.0/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/2a9b44b28a14a4bcb526a75fcc7011b0/transformed/coordinatorlayout-1.1.0/AndroidManifest.xml" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/2a9b44b28a14a4bcb526a75fcc7011b0/transformed/coordinatorlayout-1.1.0/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/2a9b44b28a14a4bcb526a75fcc7011b0/transformed/coordinatorlayout-1.1.0/jars/classes.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>

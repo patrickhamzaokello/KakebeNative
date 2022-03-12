@@ -2,15 +2,15 @@
   <library name="Gradle: com.firebaseui:firebase-ui-auth:7.2.0@aar">
     <ANNOTATIONS>
       <root url="jar://$USER_HOME$/Library/Android/sdk/caches/transforms-3/041007a3cb2b0832d7c6f7dc03fb7d5f/transformed/jetified-firebase-ui-auth-7.2.0/annotations.zip!/" />
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/cb29d6ebea28e1f2abfd18067a58b59c/transformed/jetified-firebase-ui-auth-7.2.0/annotations.zip!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/4e2d5ec96dd3ab04a28ad2e70323e442/transformed/jetified-firebase-ui-auth-7.2.0/annotations.zip!/" />
     </ANNOTATIONS>
     <CLASSES>
       <root url="jar://$USER_HOME$/Library/Android/sdk/caches/transforms-3/041007a3cb2b0832d7c6f7dc03fb7d5f/transformed/jetified-firebase-ui-auth-7.2.0/jars/classes.jar!/" />
       <root url="file://$USER_HOME$/Library/Android/sdk/caches/transforms-3/041007a3cb2b0832d7c6f7dc03fb7d5f/transformed/jetified-firebase-ui-auth-7.2.0/res" />
       <root url="file://$USER_HOME$/Library/Android/sdk/caches/transforms-3/041007a3cb2b0832d7c6f7dc03fb7d5f/transformed/jetified-firebase-ui-auth-7.2.0/AndroidManifest.xml" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/cb29d6ebea28e1f2abfd18067a58b59c/transformed/jetified-firebase-ui-auth-7.2.0/AndroidManifest.xml" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/cb29d6ebea28e1f2abfd18067a58b59c/transformed/jetified-firebase-ui-auth-7.2.0/res" />
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/cb29d6ebea28e1f2abfd18067a58b59c/transformed/jetified-firebase-ui-auth-7.2.0/jars/classes.jar!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/4e2d5ec96dd3ab04a28ad2e70323e442/transformed/jetified-firebase-ui-auth-7.2.0/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/4e2d5ec96dd3ab04a28ad2e70323e442/transformed/jetified-firebase-ui-auth-7.2.0/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/4e2d5ec96dd3ab04a28ad2e70323e442/transformed/jetified-firebase-ui-auth-7.2.0/AndroidManifest.xml" />
     </CLASSES>
     <JAVADOC>
       <root url="jar://$USER_HOME$/Library/Android/sdk/caches/modules-2/files-2.1/com.firebaseui/firebase-ui-auth/7.2.0/7684e180533079cef3f53deb35243ff87964d2d3/firebase-ui-auth-7.2.0-javadoc.jar!/" />

@@ -38,6 +38,7 @@ import com.pkasemer.kakebeshoplira.ManageOrders;
 import com.pkasemer.kakebeshoplira.Models.Address;
 import com.pkasemer.kakebeshoplira.Models.CreateAddress;
 import com.pkasemer.kakebeshoplira.Models.CreateAddressResponse;
+import com.pkasemer.kakebeshoplira.Models.User;
 import com.pkasemer.kakebeshoplira.Models.UserAddress;
 import com.pkasemer.kakebeshoplira.Models.UserModel;
 import com.pkasemer.kakebeshoplira.R;
@@ -128,16 +129,16 @@ public class Profile extends Fragment implements com.pkasemer.kakebeshoplira.Uti
         addNewAddress = view.findViewById(R.id.addnewAddress);
 
         //getting the current user
-        UserModel userModel = SharedPrefManager.getInstance(getContext()).getUser();
+        User user = SharedPrefManager.getInstance(getContext()).getUser();
 //        userModel.getId();
 
         //setting the values to the textviews
 
 
-        full_name_text.setText(userModel.getFullname());
-        card_email_text.setText(userModel.getEmail());
-        card_phone_text.setText(userModel.getPhone());
-        userId = userModel.getId();
+        full_name_text.setText(user.getFullname());
+        card_email_text.setText(user.getEmail());
+        card_phone_text.setText(user.getPhone());
+        userId = user.getId();
 
 
         //when the user presses logout button
@@ -177,6 +178,9 @@ public class Profile extends Fragment implements com.pkasemer.kakebeshoplira.Uti
         adapter = new UserAddressesAdapter(getContext(), this);
 
         linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+
+        rv.setHasFixedSize(true);
+        rv.setNestedScrollingEnabled(false);
         rv.setLayoutManager(linearLayoutManager);
         rv.setItemAnimator(new DefaultItemAnimator());
 
@@ -553,8 +557,11 @@ public class Profile extends Fragment implements com.pkasemer.kakebeshoplira.Uti
     private void hideErrorView() {
         if (errorLayout.getVisibility() == View.VISIBLE) {
             errorLayout.setVisibility(View.GONE);
-            add_address_layout.setVisibility(View.GONE);
             progressBar.setVisibility(View.VISIBLE);
+        }
+
+        if( add_address_layout.getVisibility() == View.VISIBLE){
+            add_address_layout.setVisibility(View.GONE);
         }
     }
 

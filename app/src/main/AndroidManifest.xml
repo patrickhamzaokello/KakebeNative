@@ -20,6 +20,9 @@
         android:usesCleartextTraffic="true"
         tools:replace="android:icon">
         <activity
+            android:name=".DeliveryAddress"
+            android:exported="false" />
+        <activity
             android:name=".SearchView"
             android:exported="false" />
         <activity android:name=".ManageOrders" />

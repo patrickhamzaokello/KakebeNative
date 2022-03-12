@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.pkasemer.kakebeshoplira.Adapters.CartAdapter;
+import com.pkasemer.kakebeshoplira.DeliveryAddress;
 import com.pkasemer.kakebeshoplira.HelperClasses.CartItemHandlerListener;
 import com.pkasemer.kakebeshoplira.Models.FoodDBModel;
 import com.pkasemer.kakebeshoplira.PlaceOrder;
@@ -103,7 +104,7 @@ public class Cart extends Fragment implements CartItemHandlerListener {
         btnCheckout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(getContext(), PlaceOrder.class);
+                Intent i = new Intent(getContext(), DeliveryAddress.class);
                 startActivity(i);
             }
         });

@@ -93,7 +93,7 @@
                 android:backgroundTint="@color/purple_500"
                 android:fontFamily="@font/montserrat_bold"
                 android:gravity="center"
-                android:text="Continue to Checkout"
+                android:text="Continue to Delivery"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
                 app:layout_constraintStart_toStartOf="parent"

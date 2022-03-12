@@ -4,9 +4,9 @@
       <root url="jar://$USER_HOME$/Library/Android/sdk/caches/transforms-3/329b55ff095aadfd13c3f0b770d8e484/transformed/jetified-play-services-auth-20.1.0/jars/classes.jar!/" />
       <root url="file://$USER_HOME$/Library/Android/sdk/caches/transforms-3/329b55ff095aadfd13c3f0b770d8e484/transformed/jetified-play-services-auth-20.1.0/res" />
       <root url="file://$USER_HOME$/Library/Android/sdk/caches/transforms-3/329b55ff095aadfd13c3f0b770d8e484/transformed/jetified-play-services-auth-20.1.0/AndroidManifest.xml" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/48582f2b59f617344ef75f1ea275bd34/transformed/jetified-play-services-auth-20.1.0/res" />
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/48582f2b59f617344ef75f1ea275bd34/transformed/jetified-play-services-auth-20.1.0/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/48582f2b59f617344ef75f1ea275bd34/transformed/jetified-play-services-auth-20.1.0/AndroidManifest.xml" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/71687c9cad25ef0aa8a89d915aac748e/transformed/jetified-play-services-auth-20.1.0/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/71687c9cad25ef0aa8a89d915aac748e/transformed/jetified-play-services-auth-20.1.0/AndroidManifest.xml" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/71687c9cad25ef0aa8a89d915aac748e/transformed/jetified-play-services-auth-20.1.0/jars/classes.jar!/" />
     </CLASSES>
     <JAVADOC>
       <root url="jar://$USER_HOME$/Library/Android/sdk/caches/modules-2/files-2.1/com.google.android.gms/play-services-auth/20.1.0/d489fef829b0f701ae0c4da0040da38bf95e46c/play-services-auth-20.1.0-javadoc.jar!/" />

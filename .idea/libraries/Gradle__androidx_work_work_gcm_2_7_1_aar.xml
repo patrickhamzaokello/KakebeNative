@@ -4,9 +4,9 @@
       <root url="file://$USER_HOME$/Library/Android/sdk/caches/transforms-3/9499f84cd3df03490c7431849c35b41a/transformed/jetified-work-gcm-2.7.1/AndroidManifest.xml" />
       <root url="file://$USER_HOME$/Library/Android/sdk/caches/transforms-3/9499f84cd3df03490c7431849c35b41a/transformed/jetified-work-gcm-2.7.1/res" />
       <root url="jar://$USER_HOME$/Library/Android/sdk/caches/transforms-3/9499f84cd3df03490c7431849c35b41a/transformed/jetified-work-gcm-2.7.1/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/e190a68f8913e7b14b02a39dacafcbbf/transformed/jetified-work-gcm-2.7.1/res" />
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/e190a68f8913e7b14b02a39dacafcbbf/transformed/jetified-work-gcm-2.7.1/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/e190a68f8913e7b14b02a39dacafcbbf/transformed/jetified-work-gcm-2.7.1/AndroidManifest.xml" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/dc24a161de745729ab1a012a375a4c43/transformed/jetified-work-gcm-2.7.1/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/dc24a161de745729ab1a012a375a4c43/transformed/jetified-work-gcm-2.7.1/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/dc24a161de745729ab1a012a375a4c43/transformed/jetified-work-gcm-2.7.1/AndroidManifest.xml" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>
