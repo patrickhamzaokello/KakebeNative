@@ -121,9 +121,6 @@ public class CartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 movieVH.itemQuanEt.setText((foodDBModel.getQuantity()).toString());
                 movieVH.fooditemtotal.setText("Ugx " + NumberFormat.getNumberInstance(Locale.US).format((foodDBModel.getPrice())*(foodDBModel.getQuantity())));
 
-                movieVH.cart_item_Rating.setText(  "Rating "+ foodDBModel.getRating()
-                        + " | "
-                        + "5");
 
                 Glide
                         .with(context)
@@ -282,7 +279,6 @@ public class CartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         private final TextView cart_product_price;
         private final TextView itemQuanEt;
         private final TextView fooditemtotal;
-        private final TextView cart_item_Rating;
         private final ImageView cart_product_image;
         private final Button btnCartItemRemove;
         private final Button cart_addBtn;
@@ -298,7 +294,6 @@ public class CartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             btnCartItemRemove = itemView.findViewById(R.id.btnCartItemRemove);
             mProgress = itemView.findViewById(R.id.cart_progress);
             fooditemtotal = itemView.findViewById(R.id.fooditemtotal);
-            cart_item_Rating = itemView.findViewById(R.id.cart_item_Rating);
             cart_addBtn = itemView.findViewById(R.id.cart_addBtn);
             cart_removeBtn = itemView.findViewById(R.id.cart_removeBtn);
         }

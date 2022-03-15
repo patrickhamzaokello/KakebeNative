@@ -11,6 +11,8 @@
     app:cardCornerRadius="5dp"
     app:cardElevation="1dp">
 
+
+
     <LinearLayout
         android:id="@+id/order_layout_card"
         android:layout_width="match_parent"
@@ -40,6 +42,7 @@
             android:layout_alignParentTop="true"
             android:fontFamily="@font/montserrat"
             android:maxLines="2"
+            android:layout_marginTop="10dp"
             android:textColor="#787878"
             android:text="Contact" />
 
@@ -87,13 +90,17 @@
             android:textColor="@color/black"
             android:text="Uganda, Lira City, Obote Avenue" />
 
-
-
-
-
-
     </LinearLayout>
 
+
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_nice_pattern"
+        android:background="#BC027704"
+        />
 
 
 

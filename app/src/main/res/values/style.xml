@@ -25,6 +25,12 @@
         <item name="colorAccent">@color/buttonRed</item>
     </style>
 
+    <style name="LightBTN" parent="Theme.AppCompat.Light">
+        <item name="colorPrimary">@color/btnLight</item>
+        <item name="colorPrimaryDark">@color/btnLight</item>
+        <item name="colorAccent">@color/btnLight</item>
+    </style>
+
 
     <style name="BlackBtn" parent="Theme.AppCompat.Light">
         <item name="colorPrimary">@color/black</item>

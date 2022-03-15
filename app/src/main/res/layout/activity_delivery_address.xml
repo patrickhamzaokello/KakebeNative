@@ -1,9 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:context=".DeliveryAddress">
+
+    <TextView
+        android:id="@+id/register_welcomeback"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/montserrat_bold"
+        android:includeFontPadding="false"
+        android:text="New Address"
+        android:textColor="#000"
+        android:textSize="20sp"
+        android:transitionName="logo_text"
+        android:layout_marginHorizontal="10dp"
+
+
+        />
+
+    <TextView
+        android:id="@+id/register_subtext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/montserrat"
+        android:layout_marginHorizontal="10dp"
+        android:includeFontPadding="false"
+        android:text="Create delivery address"
+        android:textColor="@color/light_black"
+        android:textSize="18sp"
+        android:transitionName="logo_desc" />
+
     <FrameLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-         tools:context=".DeliveryAddress"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -15,11 +47,12 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/main_recycler"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:clipToPadding="false"
                 android:paddingBottom="@dimen/activity_margin_content" />
 
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
 
         <ProgressBar
             android:id="@+id/main_progress"
@@ -33,3 +66,6 @@
 
 
     </FrameLayout>
+
+</LinearLayout>
+

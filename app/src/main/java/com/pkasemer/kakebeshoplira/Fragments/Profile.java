@@ -68,7 +68,7 @@ public class Profile extends Fragment implements com.pkasemer.kakebeshoplira.Uti
     LinearLayoutManager linearLayoutManager;
 
     RecyclerView rv;
-    ProgressBar progressBar;
+    ProgressBar progressBar,addressprogressBar;
     LinearLayout errorLayout, add_address_layout;
     Button btnRetry, add_address_btn, addNewAddress;
     TextView txtError;
@@ -238,6 +238,8 @@ public class Profile extends Fragment implements com.pkasemer.kakebeshoplira.Uti
         user_location = dialog.findViewById(R.id.user_location);
         user_district = dialog.findViewById(R.id.user_district);
         save_address = dialog.findViewById(R.id.save_address);
+        addressprogressBar = dialog.findViewById(R.id.addressprogressBar);
+
 
 
         save_address.setOnClickListener(v -> AddUserAddress(save_address,dialog, user_phone, user_location, user_district));
@@ -254,7 +256,8 @@ public class Profile extends Fragment implements com.pkasemer.kakebeshoplira.Uti
         final String phone = user_phone.getText().toString().trim();
         final String location = user_location.getText().toString().trim();
         final String district = user_district.getText().toString().trim();
-        progressBar = dialog.findViewById(R.id.progressBar);
+        addressprogressBar.setVisibility(View.VISIBLE);
+
 
         createAddress.setUserId(String.valueOf(userId));
         createAddress.setPhone(phone);
@@ -264,6 +267,8 @@ public class Profile extends Fragment implements com.pkasemer.kakebeshoplira.Uti
         if (TextUtils.isEmpty(district)) {
             user_district.setError("Specify your District");
             user_district.requestFocus();
+            addressprogressBar.setVisibility(View.GONE);
+
             return;
         }
 
@@ -271,18 +276,24 @@ public class Profile extends Fragment implements com.pkasemer.kakebeshoplira.Uti
         if (TextUtils.isEmpty(location)) {
             user_location.setError("Provide your location");
             user_location.requestFocus();
+            addressprogressBar.setVisibility(View.GONE);
+
             return;
         }
 
         if (phone.length() < 9) {
             user_phone.setError("Invalid Phone number");
             user_phone.requestFocus();
+            addressprogressBar.setVisibility(View.GONE);
+
             return;
         }
 
         if (phone.length() > 10) {
             user_phone.setError("Use format 07xxxxxxxx ");
             user_phone.requestFocus();
+            addressprogressBar.setVisibility(View.GONE);
+
             return;
         }
 
@@ -292,7 +303,7 @@ public class Profile extends Fragment implements com.pkasemer.kakebeshoplira.Uti
 
                 //set response body to match OrderResponse Model
                 CreateAddressResponse createAddressResponse = response.body();
-                progressBar.setVisibility(View.VISIBLE);
+                addressprogressBar.setVisibility(View.VISIBLE);
 
 
                 //if orderResponses is not null
@@ -302,10 +313,9 @@ public class Profile extends Fragment implements com.pkasemer.kakebeshoplira.Uti
                     if (!createAddressResponse.getError()) {
 
                         Log.i("Address Success", createAddressResponse.getMessage() + createAddressResponse.getError());
-                        progressBar.setVisibility(View.GONE);
-                        dialog.hide();
-
+                        addressprogressBar.setVisibility(View.GONE);
                         Toast.makeText(getContext(), "Address Saved", Toast.LENGTH_SHORT).show();
+                        dialog.hide();
 
                         //refresh adapter
                         doRefresh();
@@ -315,7 +325,7 @@ public class Profile extends Fragment implements com.pkasemer.kakebeshoplira.Uti
                         Log.i("et", "error false: " + (createAddressResponse.getError()));
                         save_address.setEnabled(true);
                         save_address.setClickable(true);
-                        progressBar.setVisibility(View.GONE);
+                        addressprogressBar.setVisibility(View.GONE);
                         Toast.makeText(getContext(), "Adding Address Failed", Toast.LENGTH_SHORT).show();
 
 
@@ -327,7 +337,7 @@ public class Profile extends Fragment implements com.pkasemer.kakebeshoplira.Uti
                 } else {
                     Log.i("Address Response null", "Address is null Try Again: " + createAddressResponse);
                     Toast.makeText(getContext(), "Adding Address Failed", Toast.LENGTH_SHORT).show();
-                    progressBar.setVisibility(View.GONE);
+                    addressprogressBar.setVisibility(View.GONE);
                     save_address.setEnabled(true);
                     save_address.setClickable(true);
                     return;
@@ -338,13 +348,13 @@ public class Profile extends Fragment implements com.pkasemer.kakebeshoplira.Uti
 
             @Override
             public void onFailure(Call<CreateAddressResponse> call, Throwable t) {
-                progressBar.setVisibility(View.GONE);
+                addressprogressBar.setVisibility(View.GONE);
+                Toast.makeText(getContext(), "Address Can't be Added now, Try again!", Toast.LENGTH_SHORT).show();
 
                 save_address.setEnabled(true);
                 save_address.setClickable(true);
-
                 t.printStackTrace();
-                Log.i("Order Failed", "Order Failed Try Again: " + t);
+
             }
         });
 

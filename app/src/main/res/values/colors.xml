@@ -34,6 +34,8 @@
     <color name="buttonRed">#CE2630</color>
     <color name="btnClose">#FFB1B1</color>
 
+    <color name="btnLight">#8C8C8C</color>
+
     <color name="onboardingBG">#fff</color>
     <color name="niceGreen">#15950D</color>
     <color name="niceBlue">#0075D3</color>

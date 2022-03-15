@@ -41,7 +41,6 @@ public class UserAddressesAdapter extends RecyclerView.Adapter<RecyclerView.View
     private static final int LOADING = 1;
 
 
-
     private List<UserAddress> userAddresses;
     private final Context context;
 
@@ -100,10 +99,15 @@ public class UserAddressesAdapter extends RecyclerView.Adapter<RecyclerView.View
 
             case ITEM:
                 final MovieVH movieVH = (MovieVH) holder;
-                movieVH.username.setText(userAddress.getUsername());
-                movieVH.email.setText(userAddress.getEmail());
-                movieVH.phone.setText(userAddress.getPhone());
-                movieVH.city.setText(userAddress.getCountry() + " , " + userAddress.getCity() +" , "+ userAddress.getAddress());
+                if (userAddress != null) {
+                    movieVH.username.setText(userAddress.getUsername());
+                    movieVH.email.setText(userAddress.getEmail());
+                    movieVH.phone.setText(userAddress.getPhone());
+                    movieVH.city.setText(userAddress.getCountry() + " , " + userAddress.getCity() + " , " + userAddress.getAddress());
+
+                } else {
+                    mCallback.requestfailed();
+                }
                 break;
 
             case LOADING:
@@ -136,8 +140,8 @@ public class UserAddressesAdapter extends RecyclerView.Adapter<RecyclerView.View
 
     @Override
     public int getItemViewType(int position) {
-            return (position == userAddresses.size() - 1 && isLoadingAdded) ?
-                    LOADING : ITEM;
+        return (position == userAddresses.size() - 1 && isLoadingAdded) ?
+                LOADING : ITEM;
     }
 
     public void switchContent(int id, Fragment fragment) {
@@ -231,10 +235,8 @@ public class UserAddressesAdapter extends RecyclerView.Adapter<RecyclerView.View
      */
 
 
-
-
     protected class MovieVH extends RecyclerView.ViewHolder {
-        private TextView username,email,phone,city;
+        private TextView username, email, phone, city;
 
         public MovieVH(View itemView) {
             super(itemView);

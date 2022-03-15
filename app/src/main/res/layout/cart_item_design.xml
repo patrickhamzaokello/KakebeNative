@@ -1,19 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardBackgroundColor="@color/white"
     android:layout_marginBottom="10dp"
-    app:cardCornerRadius="10dp"
-    android:layout_marginHorizontal="10dp"
-    app:cardPreventCornerOverlap="false">
+    android:orientation="vertical"
+    >
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="10dp"
+        android:background="@color/white"
 
         >
 
@@ -26,8 +24,7 @@
                 android:id="@+id/image_card_view"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
-                android:scaleType="fitXY"
-                app:cardCornerRadius="10dp">
+                android:scaleType="fitXY">
 
                 <ImageView
                     android:id="@+id/cart_product_image"
@@ -54,12 +51,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:layout_toRightOf="@+id/cart_product_image_layout"
-            android:orientation="vertical"
+            android:layout_marginHorizontal="10dp"
             android:layout_toLeftOf="@id/btnCartItemRemove"
-            android:padding="10dp"
-
-            >
+            android:layout_toRightOf="@+id/cart_product_image_layout"
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -68,26 +63,29 @@
 
                 <TextView
                     android:id="@+id/cart_product_name"
-                    style="@style/TextAppearance.AppCompat.Subhead.Inverse"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
+                    android:fontFamily="@font/montserrat"
+                    android:includeFontPadding="false"
                     android:maxLength="100"
                     android:maxLines="2"
                     android:text="Fresh Vegan Salads"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/black"
+                    android:textSize="15sp" />
 
                 <TextView
                     android:id="@+id/movie_year"
-                    style="@style/TextAppearance.AppCompat.Caption"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:alpha="0.4"
+                    android:fontFamily="@font/montserrat"
                     android:gravity="left"
                     android:includeFontPadding="false"
                     android:maxLines="1"
-                    android:text="Zodongo Foods"
+                    android:text="Kakebe shop"
                     android:textColor="@color/black"
+                    android:textSize="13sp"
                     android:textStyle="bold" />
 
             </LinearLayout>
@@ -96,22 +94,13 @@
                 android:id="@+id/cart_product_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="10dp"
                 android:includeFontPadding="false"
                 android:maxLines="2"
-                android:textSize="12sp"
                 android:text="UGX 8,400"
-                android:textColor="@color/black" />
-            <TextView
-                android:id="@+id/cart_item_Rating"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:includeFontPadding="false"
-                android:maxLines="2"
-                android:textColor="#077334"
-                android:textSize="10sp"
-                android:text="Rating"
-                />
+                android:textColor="@color/black"
+                android:textSize="13sp" />
+
 
         </LinearLayout>
 
@@ -157,7 +146,8 @@
                     android:layout_centerVertical="true"
                     android:layout_toLeftOf="@+id/itemQuanEt"
                     android:background="@drawable/custom_btn_remove"
-                    android:backgroundTint="@color/purple_500" />
+                    android:theme="@style/LightBTN"
+                    />
 
                 <TextView
                     android:id="@+id/itemQuanEt"
@@ -184,8 +174,9 @@
                     android:layout_centerVertical="true"
                     android:layout_marginEnd="0dp"
                     android:background="@drawable/custom_btn_add"
-                    android:backgroundTint="@color/button_background_color"
-                    android:textColor="#FFD600" />
+                    android:textColor="#FFD600"
+                    android:theme="@style/LightBTN"
+                    />
 
 
             </RelativeLayout>
@@ -199,9 +190,9 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
             android:background="@drawable/custom_btn_close"
-            android:theme="@style/Redbtn" />
+            android:theme="@style/LightBTN" />
 
     </RelativeLayout>
 
 
-</androidx.cardview.widget.CardView>
+</LinearLayout>

@@ -32,6 +32,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.pkasemer.kakebeshoplira.Adapters.UserAddressesAdapter;
 import com.pkasemer.kakebeshoplira.Apis.MovieApi;
 import com.pkasemer.kakebeshoplira.Apis.MovieService;
+import com.pkasemer.kakebeshoplira.Dialogs.OrderNotFound;
 import com.pkasemer.kakebeshoplira.HelperClasses.SharedPrefManager;
 import com.pkasemer.kakebeshoplira.Models.Address;
 import com.pkasemer.kakebeshoplira.Models.CreateAddress;
@@ -433,6 +434,8 @@ public class DeliveryAddress extends AppCompatActivity implements  com.pkasemer.
 
     @Override
     public void requestfailed() {
+//        OrderNotFound orderNotFound = new OrderNotFound();
+//        orderNotFound.show(getSupportFragmentManager(), "Order Not Found");
 
     }
 
