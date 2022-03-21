@@ -53,7 +53,7 @@ public class DeliveryAddress extends AppCompatActivity implements  com.pkasemer.
 
     ActionBar actionBar;
 
-    TextView textViewUsername, textViewEmail, full_name_text, card_email_text, card_phone_text;
+    TextView createnewtext, textViewUsername, textViewEmail, full_name_text, card_email_text, card_phone_text;
 
 
     MaterialCardView manageOrders;
@@ -118,6 +118,7 @@ public class DeliveryAddress extends AppCompatActivity implements  com.pkasemer.
 
         add_address_layout = findViewById(R.id.add_address_layout);
         add_address_btn = findViewById(R.id.add_address_btn);
+        createnewtext = findViewById(R.id.createnewtext);
 
         swipeRefreshLayout = findViewById(R.id.main_swiperefresh);
 
@@ -161,7 +162,7 @@ public class DeliveryAddress extends AppCompatActivity implements  com.pkasemer.
 
         btnRetry.setOnClickListener(v -> loadFirstPage());
         add_address_btn.setOnClickListener(v -> createNewAddress());
-//        addNewAddress.setOnClickListener(v -> createNewAddress());
+        createnewtext.setOnClickListener(v -> createNewAddress());
 
         swipeRefreshLayout.setOnRefreshListener(this::doRefresh);
 

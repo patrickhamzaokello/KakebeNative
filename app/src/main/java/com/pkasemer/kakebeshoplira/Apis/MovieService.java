@@ -42,7 +42,6 @@ public interface MovieService {
 
 
 
-
     @GET("category/allcombined.php")
     Call<HomeCategories> getMenuCategoriesSection(
             @Query("page") int pageIndex

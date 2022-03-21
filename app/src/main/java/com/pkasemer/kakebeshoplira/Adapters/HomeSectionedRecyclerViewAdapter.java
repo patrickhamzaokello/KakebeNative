@@ -7,10 +7,12 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -310,12 +312,23 @@ public class HomeSectionedRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
 
         private final SliderView sliderView;
         private final ImageView headertopslider;
+        private final Button cardclosebutton;
+        private final RelativeLayout not_card;
 
         public HeroVH(View itemView) {
             super(itemView);
             // init views
             sliderView = itemView.findViewById(R.id.home_slider);
             headertopslider  = itemView.findViewById(R.id.headertopslider);
+            cardclosebutton = itemView.findViewById(R.id.cardclosebutton);
+            not_card = itemView.findViewById(R.id.not_card);
+
+            cardclosebutton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    not_card.setVisibility(View.GONE);
+                }
+            });
 //
 //            Glide.with(itemView)
 //                    .load("https://media.giphy.com/media/98uBZTzlXMhkk/giphy.gif")

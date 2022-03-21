@@ -30,6 +30,7 @@
         app:cardElevation="8dp">
 
         <RelativeLayout
+            android:id="@+id/not_card"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:padding="20dp"

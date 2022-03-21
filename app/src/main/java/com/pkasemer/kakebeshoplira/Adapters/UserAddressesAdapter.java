@@ -10,9 +10,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -104,6 +106,14 @@ public class UserAddressesAdapter extends RecyclerView.Adapter<RecyclerView.View
                     movieVH.email.setText(userAddress.getEmail());
                     movieVH.phone.setText(userAddress.getPhone());
                     movieVH.city.setText(userAddress.getCountry() + " , " + userAddress.getCity() + " , " + userAddress.getAddress());
+
+                    movieVH.addressCard.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Toast.makeText(view.getContext(), "Address Added", Toast.LENGTH_SHORT).show();
+
+                        }
+                    });
 
                 } else {
                     mCallback.requestfailed();
@@ -237,6 +247,7 @@ public class UserAddressesAdapter extends RecyclerView.Adapter<RecyclerView.View
 
     protected class MovieVH extends RecyclerView.ViewHolder {
         private TextView username, email, phone, city;
+        private CardView addressCard;
 
         public MovieVH(View itemView) {
             super(itemView);
@@ -245,6 +256,8 @@ public class UserAddressesAdapter extends RecyclerView.Adapter<RecyclerView.View
             email = (TextView) itemView.findViewById(R.id.email);
             phone = (TextView) itemView.findViewById(R.id.phone);
             city = (TextView) itemView.findViewById(R.id.city);
+            addressCard = (CardView) itemView.findViewById(R.id.addressCard);
+
 
         }
     }

@@ -5,35 +5,31 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
+    android:background="@color/white"
     tools:context=".DeliveryAddress">
 
+
+
+
     <TextView
-        android:id="@+id/register_welcomeback"
+        android:id="@+id/createnewtext"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:fontFamily="@font/montserrat_bold"
+        android:fontFamily="@font/montserrat"
         android:includeFontPadding="false"
-        android:text="New Address"
-        android:textColor="#000"
-        android:textSize="20sp"
+        android:text="Create a new Address"
+        android:layout_marginTop="20dp"
+        android:background="@color/black"
+        android:padding="10dp"
+        android:textColor="@color/white"
+        android:textSize="15sp"
         android:transitionName="logo_text"
         android:layout_marginHorizontal="10dp"
 
 
         />
 
-    <TextView
-        android:id="@+id/register_subtext"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/montserrat"
-        android:layout_marginHorizontal="10dp"
-        android:includeFontPadding="false"
-        android:text="Create delivery address"
-        android:textColor="@color/light_black"
-        android:textSize="18sp"
-        android:transitionName="logo_desc" />
+
 
     <FrameLayout
         android:layout_width="match_parent"
