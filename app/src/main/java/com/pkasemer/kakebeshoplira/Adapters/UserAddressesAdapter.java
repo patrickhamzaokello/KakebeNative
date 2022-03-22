@@ -2,6 +2,9 @@ package com.pkasemer.kakebeshoplira.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,10 +27,13 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.transition.DrawableCrossFadeFactory;
 import com.pkasemer.kakebeshoplira.Models.Category;
 import com.pkasemer.kakebeshoplira.Models.UserAddress;
+import com.pkasemer.kakebeshoplira.MyMenuDetail;
 import com.pkasemer.kakebeshoplira.MySelectedCategory;
+import com.pkasemer.kakebeshoplira.PlaceOrder;
 import com.pkasemer.kakebeshoplira.R;
 import com.pkasemer.kakebeshoplira.RootActivity;
 import com.pkasemer.kakebeshoplira.Utils.PaginationAdapterCallback;
+import com.pkasemer.kakebeshoplira.localDatabase.SenseDBHelper;
 import com.smarteist.autoimageslider.SliderView;
 
 import java.util.ArrayList;
@@ -58,6 +64,9 @@ public class UserAddressesAdapter extends RecyclerView.Adapter<RecyclerView.View
         this.mCallback = callback;
         userAddresses = new ArrayList<>();
     }
+
+    SenseDBHelper db;
+    boolean address_itemchecker;
 
     public List<UserAddress> getMovies() {
         return userAddresses;
@@ -102,6 +111,22 @@ public class UserAddressesAdapter extends RecyclerView.Adapter<RecyclerView.View
             case ITEM:
                 final MovieVH movieVH = (MovieVH) holder;
                 if (userAddress != null) {
+
+                    db = new SenseDBHelper(context);
+
+                    address_itemchecker = db.checkAddressinDB(String.valueOf(userAddress.getId()));
+
+                    if (address_itemchecker) {
+
+                        movieVH.addressCard.setBackgroundColor(context.getResources().getColor(R.color.white));
+
+
+                    } else {
+
+                        movieVH.addressCard.setBackgroundColor(context.getResources().getColor(R.color.purple_200));
+
+                    }
+
                     movieVH.username.setText(userAddress.getUsername());
                     movieVH.email.setText(userAddress.getEmail());
                     movieVH.phone.setText(userAddress.getPhone());
@@ -110,7 +135,33 @@ public class UserAddressesAdapter extends RecyclerView.Adapter<RecyclerView.View
                     movieVH.addressCard.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            Toast.makeText(view.getContext(), "Address Added", Toast.LENGTH_SHORT).show();
+                            movieVH.addressCard.setBackgroundColor(context.getResources().getColor(R.color.purple_200));
+
+                            address_itemchecker = db.checkAddressinDB(String.valueOf(userAddress.getId()));
+
+
+                            if (address_itemchecker) {
+                                db.clearAddress();
+                                db.addADDress(userAddress.getId());
+                                movieVH.addressCard.setBackgroundColor(context.getResources().getColor(R.color.purple_200));
+                                Toast.makeText(view.getContext(), "Address Added ", Toast.LENGTH_SHORT).show();
+
+                                Intent i = new Intent(context.getApplicationContext(), PlaceOrder.class);
+                                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+
+                                //PACK DATA
+                                i.putExtra("SELECTED_ADDRESS", "PlaceOrder");
+                                i.putExtra("selected_address_id", userAddress.getId());
+                                context.startActivity(i);
+
+
+                            } else {
+                                db.deleteAddress(String.valueOf(userAddress.getId()));
+                                movieVH.addressCard.setBackgroundColor(context.getResources().getColor(R.color.white));
+                                Toast.makeText(view.getContext(), "Address Deleted", Toast.LENGTH_SHORT).show();
+
+                            }
+
 
                         }
                     });

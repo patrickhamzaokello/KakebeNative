@@ -16,6 +16,7 @@ public class SenseDBHelper extends SQLiteOpenHelper {
     private static final String DB_NAME = "kakebe";
     private static final int DB_VERSION = 7;
     private static final String TABLE_NAME = "CART";
+    private static final String TABLE_ADDRESS = "ADDRESS";
     public static final String COLUMN_id = "_id";
     public static final String COLUMN_menuId = "menuId";
     public static final String COLUMN_menuName = "menuName";
@@ -25,6 +26,8 @@ public class SenseDBHelper extends SQLiteOpenHelper {
     public static final String COLUMN_quantity = "quantity";
     public static final String COLUMN_order_status = "order_status";
 
+
+    public static final String COLUMN_ADDRESS_id = "addressId";
 
 
     List<FoodDBModel> foodDBModelList;
@@ -37,17 +40,22 @@ public class SenseDBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
 
+        //create CART table
         String sql = "CREATE TABLE CART (" +
                 COLUMN_id + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                 COLUMN_menuId + " INTEGER," +
                 COLUMN_menuName + " TEXT," +
                 COLUMN_price + " INTEGER," +
-                COLUMN_menuTypeId +" INTEGER," +
+                COLUMN_menuTypeId + " INTEGER," +
                 COLUMN_menuImage + " TEXT," +
                 COLUMN_quantity + " INTEGER DEFAULT 1," +
                 COLUMN_order_status + " TINYINT )";
 
         db.execSQL(sql);
+
+        //create address table
+        String address_sql = "CREATE TABLE ADDRESS (" + COLUMN_id + " INTEGER PRIMARY KEY AUTOINCREMENT," + COLUMN_ADDRESS_id + " INTEGER )";
+        db.execSQL(address_sql);
     }
 
     //upgrading the database
@@ -75,7 +83,7 @@ public class SenseDBHelper extends SQLiteOpenHelper {
                 int quantity = Integer.parseInt(cursor.getString(6));
                 int order_status = Integer.parseInt(cursor.getString(7));
 
-                foodDBModelList.add(new FoodDBModel(menuId, menuname, price, menutypid, menuimage,quantity,order_status));
+                foodDBModelList.add(new FoodDBModel(menuId, menuname, price, menutypid, menuimage, quantity, order_status));
             }
             while (cursor.moveToNext());
         }
@@ -106,7 +114,7 @@ public class SenseDBHelper extends SQLiteOpenHelper {
     }
 
 
-   public void updateMenuCount(Integer qtn, Integer menuID) {
+    public void updateMenuCount(Integer qtn, Integer menuID) {
         ContentValues values = new ContentValues();
         values.put(COLUMN_quantity, qtn);
         SQLiteDatabase db = this.getWritableDatabase();
@@ -126,6 +134,7 @@ public class SenseDBHelper extends SQLiteOpenHelper {
         db.delete(TABLE_NAME, null, null);
         db.close();
     }
+
 
     public boolean checktweetindb(String id_str) {
         SQLiteDatabase db = this.getReadableDatabase();
@@ -148,11 +157,11 @@ public class SenseDBHelper extends SQLiteOpenHelper {
         }
     }
 
-    public int countCart(){
+    public int countCart() {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor mCount= db.rawQuery("select count(*) from " + TABLE_NAME, null);
+        Cursor mCount = db.rawQuery("select count(*) from " + TABLE_NAME, null);
         mCount.moveToFirst();
-        int count= mCount.getInt(0);
+        int count = mCount.getInt(0);
         mCount.close();
 
         db.close();
@@ -170,13 +179,13 @@ public class SenseDBHelper extends SQLiteOpenHelper {
                 null, null, null, null);
         if (cursor.moveToFirst()) {
             //recordexist
-            int count= cursor.getInt(0);
+            int count = cursor.getInt(0);
             cursor.close();
             db.close();
             return count;
         } else {
             //record not existing
-            int count= 1;
+            int count = 1;
             cursor.close();
             db.close();
             return count;
@@ -186,7 +195,7 @@ public class SenseDBHelper extends SQLiteOpenHelper {
     public int sumPriceCartItems() {
         int result = 0;
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery("select sum("+ COLUMN_price + " * " + COLUMN_quantity + ") from " + TABLE_NAME, null);
+        Cursor cursor = db.rawQuery("select sum(" + COLUMN_price + " * " + COLUMN_quantity + ") from " + TABLE_NAME, null);
         if (cursor.moveToFirst()) result = cursor.getInt(0);
         cursor.close();
         db.close();
@@ -199,6 +208,50 @@ public class SenseDBHelper extends SQLiteOpenHelper {
         String sql = "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_order_status + " = 0";
         Cursor c = db.rawQuery(sql, null);
         return c;
+    }
+
+    //    Get address
+    public void clearAddress() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_ADDRESS, null, null);
+        db.close();
+    }
+
+    public void deleteAddress(String id_str) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_ADDRESS, COLUMN_ADDRESS_id + " = ?", new String[]{id_str});
+        db.close();
+    }
+
+    public void addADDress(
+            int addressID
+    ) {
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_ADDRESS_id, addressID);
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.insert(TABLE_ADDRESS, null, values);
+        db.close();
+    }
+
+    public boolean checkAddressinDB(String id_str) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(TABLE_ADDRESS,
+                new String[]{COLUMN_ADDRESS_id},
+                COLUMN_ADDRESS_id + " = ?",
+                new String[]{id_str},
+                null, null, null, null);
+        if (cursor.moveToFirst()) {
+            //recordexist
+            cursor.close();
+            db.close();
+            return false;
+        } else {
+            //record not existing
+            cursor.close();
+            db.close();
+
+            return true;
+        }
     }
 
 
