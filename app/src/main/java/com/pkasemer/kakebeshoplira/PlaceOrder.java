@@ -146,7 +146,7 @@ public class PlaceOrder extends AppCompatActivity implements ChangeLocation.Noti
 
                 Log.i("addressStringxs",selected_address_json );
 
-                orderRequest.setOrderAddressID(selected_address_json.toString());
+                orderRequest.setOrderAddressID(selected_address_json);
                 orderRequest.setCustomerId(String.valueOf(user.getId()));
                 orderRequest.setTotalAmount(String.valueOf(db.sumPriceCartItems()));
                 orderRequest.setOrderStatus("pending");

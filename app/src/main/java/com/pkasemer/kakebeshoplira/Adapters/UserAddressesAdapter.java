@@ -39,6 +39,7 @@ import com.pkasemer.kakebeshoplira.Utils.PaginationAdapterCallback;
 import com.pkasemer.kakebeshoplira.localDatabase.SenseDBHelper;
 import com.smarteist.autoimageslider.SliderView;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -125,16 +126,31 @@ public class UserAddressesAdapter extends RecyclerView.Adapter<RecyclerView.View
                         public void onClick(View view) {
 
                             // convert addressmodel to json with gson
-                            Gson gson = new Gson();
-                            String addressjson = gson.toJson(userAddress);
-                            Log.i("addressString",addressjson );
+                            JSONObject obj = new JSONObject();
+                            try {
+                                obj.put("address", userAddress.getAddress());
+                                obj.put("city", userAddress.getAddress());
+                                obj.put("country", userAddress.getAddress());
+                                obj.put("email", userAddress.getAddress());
+                                obj.put("id", userAddress.getAddress());
+                                obj.put("phone", userAddress.getAddress());
+                                obj.put("user_id", userAddress.getAddress());
+                                obj.put("username", userAddress.getAddress());
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+
+                            final String addressJson = obj.toString(); // <-- JSON string
+                            Log.i("addressString",addressJson );
+
 
                             Intent i = new Intent(context.getApplicationContext(), PlaceOrder.class);
                             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
 
                             //PACK DATA
                             i.putExtra("SELECTED_ADDRESS", "PlaceOrder");
-                            i.putExtra("selected_address_json", addressjson);
+                            i.putExtra("selected_address_json", addressJson);
                             context.startActivity(i);
 
 
