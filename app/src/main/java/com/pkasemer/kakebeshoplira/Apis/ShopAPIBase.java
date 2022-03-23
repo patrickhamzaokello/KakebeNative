@@ -19,7 +19,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Copyright (c) 2016. Suleiman Ali Shakir. All rights reserved.
  */
 
-public class MovieApi {
+public class ShopAPIBase {
 
     private static Retrofit retrofit = null;
 
@@ -61,7 +61,7 @@ public class MovieApi {
             retrofit = new Retrofit.Builder()
                     .client(buildClient(context))
                     .addConverterFactory(GsonConverterFactory.create())
-                    .baseUrl("http://192.168.1.102:8080/projects/KakebeAPI/Requests/")
+                    .baseUrl("http://192.168.88.251:8080/projects/KakebeAPI/Requests/")
 //                    .baseUrl("https://xyzobide.kakebeshop.com/KakebeAPI/Requests/")
                     .build();
         }

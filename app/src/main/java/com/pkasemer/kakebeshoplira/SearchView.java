@@ -4,12 +4,9 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
@@ -21,11 +18,9 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.pkasemer.kakebeshoplira.Adapters.SearchQueryAdapter;
-import com.pkasemer.kakebeshoplira.Adapters.searchHomeAdapter;
-import com.pkasemer.kakebeshoplira.Apis.MovieApi;
-import com.pkasemer.kakebeshoplira.Apis.MovieService;
+import com.pkasemer.kakebeshoplira.Apis.ShopAPIBase;
+import com.pkasemer.kakebeshoplira.Apis.ShopApiEndPoints;
 import com.pkasemer.kakebeshoplira.Models.Product;
-import com.pkasemer.kakebeshoplira.Models.SearchCategoriee;
 import com.pkasemer.kakebeshoplira.Models.SearchResult;
 import com.pkasemer.kakebeshoplira.Utils.PaginationScrollListener;
 import com.pkasemer.kakebeshoplira.Utils.SearchAdapterCallBack;
@@ -62,7 +57,7 @@ public class SearchView extends AppCompatActivity implements SearchAdapterCallBa
     private final int selectCategoryId = 3;
 
     ActionBar actionBar;
-    private MovieService movieService;
+    private ShopApiEndPoints shopApiEndPoints;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,7 +115,7 @@ public class SearchView extends AppCompatActivity implements SearchAdapterCallBa
         });
 
         //init service and load data
-        movieService = MovieApi.getClient(SearchView.this).create(MovieService.class);
+        shopApiEndPoints = ShopAPIBase.getClient(SearchView.this).create(ShopApiEndPoints.class);
 
 
 
@@ -242,7 +237,7 @@ public class SearchView extends AppCompatActivity implements SearchAdapterCallBa
     }
 
     private Call<SearchResult> callSearchAPI() {
-        return movieService.getSearch(
+        return shopApiEndPoints.getSearch(
                 queryString,
                 currentPage
         );

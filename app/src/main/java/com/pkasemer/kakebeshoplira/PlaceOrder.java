@@ -2,18 +2,10 @@ package com.pkasemer.kakebeshoplira;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
-import android.Manifest;
-import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -24,16 +16,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapView;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.textfield.TextInputEditText;
-import com.pkasemer.kakebeshoplira.Apis.MovieApi;
-import com.pkasemer.kakebeshoplira.Apis.MovieService;
+import com.pkasemer.kakebeshoplira.Apis.ShopAPIBase;
+import com.pkasemer.kakebeshoplira.Apis.ShopApiEndPoints;
 import com.pkasemer.kakebeshoplira.Dialogs.ChangeLocation;
 import com.pkasemer.kakebeshoplira.Dialogs.ChangePaymentMethod;
 import com.pkasemer.kakebeshoplira.Dialogs.OrderConfirmationDialog;
@@ -43,7 +28,6 @@ import com.pkasemer.kakebeshoplira.Models.FoodDBModel;
 import com.pkasemer.kakebeshoplira.Models.OrderRequest;
 import com.pkasemer.kakebeshoplira.Models.OrderResponse;
 import com.pkasemer.kakebeshoplira.Models.User;
-import com.pkasemer.kakebeshoplira.Models.UserModel;
 import com.pkasemer.kakebeshoplira.localDatabase.SenseDBHelper;
 
 import java.text.NumberFormat;
@@ -56,7 +40,8 @@ import retrofit2.Response;
 
 public class PlaceOrder extends AppCompatActivity implements ChangeLocation.NoticeDialogListener, OrderConfirmationDialog.OrderConfirmLister {
 
-    private MovieService movieService;
+    ActionBar actionBar;
+    private ShopApiEndPoints shopApiEndPoints;
     private SenseDBHelper db;
     boolean food_db_itemchecker;
     List<FoodDBModel> cartitemlist;
@@ -68,6 +53,7 @@ public class PlaceOrder extends AppCompatActivity implements ChangeLocation.Noti
     RelativeLayout placeorde_relative_layout;
     LinearLayout orderRecommendLayout;
     Button btnCheckout,btnTodaysMEnu,btnGoHOme;
+    String selected_address_json;
 
 
     @Override
@@ -80,12 +66,11 @@ public class PlaceOrder extends AppCompatActivity implements ChangeLocation.Noti
             startActivity(new Intent(PlaceOrder.this, LoginMaterial.class));
         }
 
-        ActionBar actionBar = getSupportActionBar(); // or getActionBar();
-        getSupportActionBar().setTitle("Zodongo Foods"); // set the top title
-        String title = actionBar.getTitle().toString(); // get the title
-        actionBar.hide();
+        actionBar = getSupportActionBar(); // or getActionBar();
+        actionBar.setTitle("Place Order");
 
-        movieService = MovieApi.getClient(PlaceOrder.this).create(MovieService.class);
+
+        shopApiEndPoints = ShopAPIBase.getClient(PlaceOrder.this).create(ShopApiEndPoints.class);
         db = new SenseDBHelper(PlaceOrder.this);
         cartitemlist = db.listTweetsBD();
 
@@ -121,12 +106,6 @@ public class PlaceOrder extends AppCompatActivity implements ChangeLocation.Noti
 //        location_address_view.setText(user.getAddress());
 
 
-//        orderRequest.setOrderAddress(user.getAddress() + " - " + user.getPhone());
-        orderRequest.setCustomerId(String.valueOf(user.getId()));
-        orderRequest.setTotalAmount(String.valueOf(db.sumPriceCartItems()));
-        orderRequest.setOrderStatus("pending");
-        orderRequest.setProcessedBy("1");
-        orderRequest.setOrderItemList(cartitemlist);
 
         btn_change_location.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -163,6 +142,16 @@ public class PlaceOrder extends AppCompatActivity implements ChangeLocation.Noti
         btnCheckout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+
+                Log.i("addressStringxs",selected_address_json );
+
+                orderRequest.setOrderAddressID(selected_address_json.toString());
+                orderRequest.setCustomerId(String.valueOf(user.getId()));
+                orderRequest.setTotalAmount(String.valueOf(db.sumPriceCartItems()));
+                orderRequest.setOrderStatus("pending");
+                orderRequest.setProcessedBy("1");
+                orderRequest.setOrderItemList(cartitemlist);
 
                 btnCheckout.setEnabled(false);
                 btnCheckout.setClickable(false);
@@ -242,7 +231,7 @@ public class PlaceOrder extends AppCompatActivity implements ChangeLocation.Noti
 
 
     private Call<OrderResponse> postAllCartItems() {
-        return movieService.postCartOrder(orderRequest);
+        return shopApiEndPoints.postCartOrder(orderRequest);
     }
 
 
@@ -266,7 +255,7 @@ public class PlaceOrder extends AppCompatActivity implements ChangeLocation.Noti
 
     private void updatelocationView(String location) {
         location_address_view.setText(location);
-        orderRequest.setOrderAddress(location);
+        orderRequest.setOrderAddressID(location);
     }
 
 
@@ -301,9 +290,32 @@ public class PlaceOrder extends AppCompatActivity implements ChangeLocation.Noti
 
     @Override
     protected void onResume() {
+
         super.onResume();
+
+        //DETERMINE WHO STARTED THIS ACTIVITY
+        final String sender=this.getIntent().getExtras().getString("SELECTED_ADDRESS");
+
+        //IF ITS THE FRAGMENT THEN RECEIVE DATA
+        if(sender != null)
+        {
+            this.receiveData();
+        }
     }
 
+
+    private void receiveData()
+    {
+        //RECEIVE DATA VIA INTENT
+        Intent i = getIntent();
+        selected_address_json = i.getStringExtra("selected_address_json");
+
+        Log.i("addressStrings",selected_address_json );
+        //SET DATA
+        OrderTotalling();
+
+
+    }
     @Override
     protected void onPause() {
         super.onPause();

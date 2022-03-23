@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#DD0000"
+    android:background="#FF004D"
     android:orientation="vertical"
     android:layout_centerVertical="true"
     android:layout_gravity="center"
@@ -15,7 +15,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/ic_nice_pattern"
+        android:background="@drawable/ic_patternpad__1__2"
         android:gravity="center"
         >
 

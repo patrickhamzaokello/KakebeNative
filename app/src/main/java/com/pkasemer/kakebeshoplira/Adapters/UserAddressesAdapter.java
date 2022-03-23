@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +26,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.transition.DrawableCrossFadeFactory;
+import com.google.android.material.card.MaterialCardView;
+import com.google.gson.Gson;
 import com.pkasemer.kakebeshoplira.Models.Category;
 import com.pkasemer.kakebeshoplira.Models.UserAddress;
 import com.pkasemer.kakebeshoplira.MyMenuDetail;
@@ -35,6 +38,8 @@ import com.pkasemer.kakebeshoplira.RootActivity;
 import com.pkasemer.kakebeshoplira.Utils.PaginationAdapterCallback;
 import com.pkasemer.kakebeshoplira.localDatabase.SenseDBHelper;
 import com.smarteist.autoimageslider.SliderView;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,8 +70,6 @@ public class UserAddressesAdapter extends RecyclerView.Adapter<RecyclerView.View
         userAddresses = new ArrayList<>();
     }
 
-    SenseDBHelper db;
-    boolean address_itemchecker;
 
     public List<UserAddress> getMovies() {
         return userAddresses;
@@ -112,22 +115,7 @@ public class UserAddressesAdapter extends RecyclerView.Adapter<RecyclerView.View
                 final MovieVH movieVH = (MovieVH) holder;
                 if (userAddress != null) {
 
-                    db = new SenseDBHelper(context);
 
-                    address_itemchecker = db.checkAddressinDB(String.valueOf(userAddress.getId()));
-
-                    if (address_itemchecker) {
-
-                        movieVH.addressCard.setBackgroundColor(context.getResources().getColor(R.color.white));
-
-
-                    } else {
-
-                        movieVH.addressCard.setBackgroundColor(context.getResources().getColor(R.color.purple_200));
-
-                    }
-
-                    movieVH.username.setText(userAddress.getUsername());
                     movieVH.email.setText(userAddress.getEmail());
                     movieVH.phone.setText(userAddress.getPhone());
                     movieVH.city.setText(userAddress.getCountry() + " , " + userAddress.getCity() + " , " + userAddress.getAddress());
@@ -135,32 +123,19 @@ public class UserAddressesAdapter extends RecyclerView.Adapter<RecyclerView.View
                     movieVH.addressCard.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            movieVH.addressCard.setBackgroundColor(context.getResources().getColor(R.color.purple_200));
 
-                            address_itemchecker = db.checkAddressinDB(String.valueOf(userAddress.getId()));
+                            // convert addressmodel to json with gson
+                            Gson gson = new Gson();
+                            String addressjson = gson.toJson(userAddress);
+                            Log.i("addressString",addressjson );
 
+                            Intent i = new Intent(context.getApplicationContext(), PlaceOrder.class);
+                            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
 
-                            if (address_itemchecker) {
-                                db.clearAddress();
-                                db.addADDress(userAddress.getId());
-                                movieVH.addressCard.setBackgroundColor(context.getResources().getColor(R.color.purple_200));
-                                Toast.makeText(view.getContext(), "Address Added ", Toast.LENGTH_SHORT).show();
-
-                                Intent i = new Intent(context.getApplicationContext(), PlaceOrder.class);
-                                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-
-                                //PACK DATA
-                                i.putExtra("SELECTED_ADDRESS", "PlaceOrder");
-                                i.putExtra("selected_address_id", userAddress.getId());
-                                context.startActivity(i);
-
-
-                            } else {
-                                db.deleteAddress(String.valueOf(userAddress.getId()));
-                                movieVH.addressCard.setBackgroundColor(context.getResources().getColor(R.color.white));
-                                Toast.makeText(view.getContext(), "Address Deleted", Toast.LENGTH_SHORT).show();
-
-                            }
+                            //PACK DATA
+                            i.putExtra("SELECTED_ADDRESS", "PlaceOrder");
+                            i.putExtra("selected_address_json", addressjson);
+                            context.startActivity(i);
 
 
                         }
@@ -297,17 +272,16 @@ public class UserAddressesAdapter extends RecyclerView.Adapter<RecyclerView.View
 
 
     protected class MovieVH extends RecyclerView.ViewHolder {
-        private TextView username, email, phone, city;
-        private CardView addressCard;
+        private TextView email, phone, city;
+        private MaterialCardView addressCard;
 
         public MovieVH(View itemView) {
             super(itemView);
 
-            username = (TextView) itemView.findViewById(R.id.username);
             email = (TextView) itemView.findViewById(R.id.email);
             phone = (TextView) itemView.findViewById(R.id.phone);
             city = (TextView) itemView.findViewById(R.id.city);
-            addressCard = (CardView) itemView.findViewById(R.id.addressCard);
+            addressCard = (MaterialCardView) itemView.findViewById(R.id.addressCard);
 
 
         }

@@ -23,7 +23,7 @@ import retrofit2.http.POST;
 import retrofit2.http.Query;
 
 
-public interface MovieService {
+public interface ShopApiEndPoints {
 
 //    http://localhost:8080/projects/KakebeAPI/Requests/menus/featuredcategoryProducts.php?page=1&category=4
     @GET("menus/featuredcategoryProducts.php")

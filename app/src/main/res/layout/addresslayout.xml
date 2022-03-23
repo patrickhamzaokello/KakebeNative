@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardBackgroundColor="@color/white"
+    app:cardBackgroundColor="@color/changeaddress"
     android:layout_marginStart="10dp"
     android:layout_marginEnd="10dp"
     android:layout_marginTop="20dp"
@@ -28,24 +28,12 @@
 
 
         <TextView
-            android:id="@+id/username"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_marginBottom="10dp"
-            android:fontFamily="@font/montserrat_bold"
-            android:maxLines="2"
-            android:textColor="@color/black"
-            android:text="Oweta jacob emmy" />
-
-        <TextView
             android:id="@+id/contactlable"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:fontFamily="@font/montserrat"
             android:maxLines="2"
-            android:layout_marginTop="10dp"
             android:textColor="#787878"
             android:text="Contact" />
 
@@ -79,7 +67,7 @@
             android:fontFamily="@font/montserrat"
             android:maxLines="2"
             android:textColor="#787878"
-            android:text="Address" />
+            android:text="Location" />
 
 
 
@@ -97,4 +85,4 @@
 
 
 
-</androidx.cardview.widget.CardView>
+</com.google.android.material.card.MaterialCardView>

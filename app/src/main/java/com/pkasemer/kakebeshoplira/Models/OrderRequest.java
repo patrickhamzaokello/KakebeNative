@@ -11,7 +11,7 @@ public class OrderRequest {
 
     @SerializedName("order_address")
     @Expose
-    private String orderAddress;
+    private String orderAddressID;
     @SerializedName("customer_id")
     @Expose
     private String customerId;
@@ -28,12 +28,12 @@ public class OrderRequest {
     @Expose
     private List<FoodDBModel> orderItemList = null;
 
-    public String getOrderAddress() {
-        return orderAddress;
+    public String getOrderAddressID() {
+        return orderAddressID;
     }
 
-    public void setOrderAddress(String orderAddress) {
-        this.orderAddress = orderAddress;
+    public void setOrderAddressID(String orderAddressID) {
+        this.orderAddressID = orderAddressID;
     }
 
     public String getCustomerId() {

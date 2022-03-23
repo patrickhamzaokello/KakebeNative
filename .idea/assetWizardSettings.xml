@@ -309,8 +309,8 @@
                           <map>
                             <entry key="assetSourceType" value="FILE" />
                             <entry key="color" value="ffffff" />
-                            <entry key="outputName" value="ic_kakebeicon" />
-                            <entry key="sourceFile" value="C:\Users\jamsp\Downloads\Group 101.svg" />
+                            <entry key="outputName" value="ic_group" />
+                            <entry key="sourceFile" value="C:\Users\jamsp\Downloads\Group.svg" />
                           </map>
                         </option>
                       </PersistentState>

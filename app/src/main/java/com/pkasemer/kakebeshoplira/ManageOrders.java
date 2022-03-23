@@ -20,13 +20,12 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.pkasemer.kakebeshoplira.Adapters.UserOrdersAdapter;
-import com.pkasemer.kakebeshoplira.Apis.MovieApi;
-import com.pkasemer.kakebeshoplira.Apis.MovieService;
+import com.pkasemer.kakebeshoplira.Apis.ShopAPIBase;
+import com.pkasemer.kakebeshoplira.Apis.ShopApiEndPoints;
 import com.pkasemer.kakebeshoplira.Dialogs.OrderNotFound;
 import com.pkasemer.kakebeshoplira.HelperClasses.SharedPrefManager;
 import com.pkasemer.kakebeshoplira.Models.SelectedCategoryMenuItemResult;
 import com.pkasemer.kakebeshoplira.Models.User;
-import com.pkasemer.kakebeshoplira.Models.UserModel;
 import com.pkasemer.kakebeshoplira.Models.UserOrders;
 import com.pkasemer.kakebeshoplira.Models.UserOrdersResult;
 import com.pkasemer.kakebeshoplira.Utils.PaginationAdapterCallback;
@@ -62,7 +61,7 @@ public class ManageOrders extends AppCompatActivity implements PaginationAdapter
     private int currentPage = PAGE_START;
     private int customerId;
 
-    private MovieService movieService;
+    private ShopApiEndPoints shopApiEndPoints;
     private Object PaginationAdapterCallback;
 
     ActionBar actionBar;
@@ -120,7 +119,7 @@ public class ManageOrders extends AppCompatActivity implements PaginationAdapter
         });
 
         //init service and load data
-        movieService = MovieApi.getClient(ManageOrders.this).create(MovieService.class);
+        shopApiEndPoints = ShopAPIBase.getClient(ManageOrders.this).create(ShopApiEndPoints.class);
         btnRetry.setOnClickListener(v -> loadFirstPage());
         swipeRefreshLayout.setOnRefreshListener(this::doRefresh);
 
@@ -248,7 +247,7 @@ public class ManageOrders extends AppCompatActivity implements PaginationAdapter
      * by @{@link PaginationScrollListener} to load next page.
      */
     private Call<UserOrders> callUserOrdersApi() {
-        return movieService.getUserOrders(
+        return shopApiEndPoints.getUserOrders(
                 customerId,
                 currentPage
         );

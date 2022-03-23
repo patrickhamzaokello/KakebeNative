@@ -16,15 +16,13 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.pkasemer.kakebeshoplira.Adapters.SelectedCategoryPaginationAdapter;
-import com.pkasemer.kakebeshoplira.Apis.MovieApi;
-import com.pkasemer.kakebeshoplira.Apis.MovieService;
+import com.pkasemer.kakebeshoplira.Apis.ShopAPIBase;
+import com.pkasemer.kakebeshoplira.Apis.ShopApiEndPoints;
 import com.pkasemer.kakebeshoplira.Models.SelectedCategory;
-import com.pkasemer.kakebeshoplira.Models.SelectedCategoryMenuItem;
 import com.pkasemer.kakebeshoplira.Models.SelectedCategoryMenuItemResult;
 import com.pkasemer.kakebeshoplira.Models.SelectedCategoryResult;
 import com.pkasemer.kakebeshoplira.Utils.GridPaginationScrollListener;
@@ -62,7 +60,7 @@ public class MySelectedCategory extends AppCompatActivity implements PaginationA
     private int currentPage = PAGE_START;
     private int selectCategoryId;
 
-    private MovieService movieService;
+    private ShopApiEndPoints shopApiEndPoints;
     private Object PaginationAdapterCallback;
 
 
@@ -128,7 +126,7 @@ public class MySelectedCategory extends AppCompatActivity implements PaginationA
         });
 
         //init service and load data
-        movieService = MovieApi.getClient(MySelectedCategory.this).create(MovieService.class);
+        shopApiEndPoints = ShopAPIBase.getClient(MySelectedCategory.this).create(ShopApiEndPoints.class);
         btnRetry.setOnClickListener(v -> loadFirstPage());
         swipeRefreshLayout.setOnRefreshListener(this::doRefresh);
 
@@ -253,7 +251,7 @@ public class MySelectedCategory extends AppCompatActivity implements PaginationA
      * by @{@link PaginationScrollListener} to load next page.
      */
     private Call<SelectedCategory> callTopRatedMoviesApi() {
-        return movieService.getSelectedCategory(
+        return shopApiEndPoints.getSelectedCategory(
                 selectCategoryId,
                 currentPage
         );

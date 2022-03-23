@@ -92,7 +92,22 @@
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Continue to Delivery"
+                android:text="Complete Your Order"
+                android:textColor="@color/purple_500"
+                android:backgroundTint="@color/white"
+                android:transitionName="account_change"
+                app:layout_constraintStart_toStartOf="parent"
+                app:strokeColor="@color/white"
+                app:strokeWidth="1dp" />
+
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/signup_screen"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Call To Order"
+                android:layout_marginTop="5dp"
                 android:textColor="@color/white"
                 android:transitionName="account_change"
                 app:layout_constraintStart_toStartOf="parent"

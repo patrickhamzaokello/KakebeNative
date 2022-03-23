@@ -42,6 +42,7 @@
     <color name="pendingstatus">#D59F00</color>
     <color name="accountcolors">#FFFFFF</color>
     <color name="profilecardtext">#ECECEC</color>
+    <color name="changeaddress">#717171</color>
 
 
 </resources>

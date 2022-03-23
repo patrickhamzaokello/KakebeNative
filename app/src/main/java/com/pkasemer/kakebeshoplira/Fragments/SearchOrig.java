@@ -21,11 +21,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.pkasemer.kakebeshoplira.Adapters.SearchAdapter;
-import com.pkasemer.kakebeshoplira.Apis.MovieApi;
-import com.pkasemer.kakebeshoplira.Apis.MovieService;
+import com.pkasemer.kakebeshoplira.Apis.ShopAPIBase;
+import com.pkasemer.kakebeshoplira.Apis.ShopApiEndPoints;
 import com.pkasemer.kakebeshoplira.Models.Product;
-import com.pkasemer.kakebeshoplira.Models.SearchCategoriee;
-import com.pkasemer.kakebeshoplira.Models.SearchHome;
 import com.pkasemer.kakebeshoplira.Models.SearchResult;
 import com.pkasemer.kakebeshoplira.R;
 import com.pkasemer.kakebeshoplira.Utils.GridPaginationScrollListener;
@@ -65,7 +63,7 @@ public class SearchOrig extends Fragment implements PaginationAdapterCallback {
 
     List<Product> products;
 
-    private MovieService movieService;
+    private ShopApiEndPoints shopApiEndPoints;
     private Object PaginationAdapterCallback;
 
 
@@ -134,7 +132,7 @@ public class SearchOrig extends Fragment implements PaginationAdapterCallback {
         });
 
         //init service and load data
-        movieService = MovieApi.getClient(getContext()).create(MovieService.class);
+        shopApiEndPoints = ShopAPIBase.getClient(getContext()).create(ShopApiEndPoints.class);
 
 
         btnRetry.setOnClickListener(v -> loadFirstPage());
@@ -280,7 +278,7 @@ public class SearchOrig extends Fragment implements PaginationAdapterCallback {
      * by @{@link PaginationScrollListener} to load next page.
      */
     private Call<SearchResult> callSearchAPI() {
-        return movieService.getSearch(
+        return shopApiEndPoints.getSearch(
                 queryString,
                 currentPage
         );

@@ -30,8 +30,8 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.textfield.TextInputEditText;
 import com.pkasemer.kakebeshoplira.Adapters.UserAddressesAdapter;
-import com.pkasemer.kakebeshoplira.Apis.MovieApi;
-import com.pkasemer.kakebeshoplira.Apis.MovieService;
+import com.pkasemer.kakebeshoplira.Apis.ShopAPIBase;
+import com.pkasemer.kakebeshoplira.Apis.ShopApiEndPoints;
 import com.pkasemer.kakebeshoplira.HelperClasses.SharedPrefManager;
 import com.pkasemer.kakebeshoplira.LoginMaterial;
 import com.pkasemer.kakebeshoplira.ManageOrders;
@@ -40,7 +40,6 @@ import com.pkasemer.kakebeshoplira.Models.CreateAddress;
 import com.pkasemer.kakebeshoplira.Models.CreateAddressResponse;
 import com.pkasemer.kakebeshoplira.Models.User;
 import com.pkasemer.kakebeshoplira.Models.UserAddress;
-import com.pkasemer.kakebeshoplira.Models.UserModel;
 import com.pkasemer.kakebeshoplira.R;
 import com.pkasemer.kakebeshoplira.RootActivity;
 import com.pkasemer.kakebeshoplira.Utils.PaginationScrollListener;
@@ -86,7 +85,7 @@ public class Profile extends Fragment implements com.pkasemer.kakebeshoplira.Uti
 
     List<UserAddress> userAddresses;
 
-    private MovieService movieService;
+    private ShopApiEndPoints shopApiEndPoints;
     private Object PaginationAdapterCallback;
 
 
@@ -212,7 +211,7 @@ public class Profile extends Fragment implements com.pkasemer.kakebeshoplira.Uti
         });
 
         //init service and load data
-        movieService = MovieApi.getClient(getContext()).create(MovieService.class);
+        shopApiEndPoints = ShopAPIBase.getClient(getContext()).create(ShopApiEndPoints.class);
 
         loadFirstPage();
 
@@ -363,7 +362,7 @@ public class Profile extends Fragment implements com.pkasemer.kakebeshoplira.Uti
 
 
     private Call<CreateAddressResponse> postCreateUserAddress() {
-        return movieService.postCreateAddress(createAddress);
+        return shopApiEndPoints.postCreateAddress(createAddress);
     }
 
 
@@ -480,7 +479,7 @@ public class Profile extends Fragment implements com.pkasemer.kakebeshoplira.Uti
      * by @{@link PaginationScrollListener} to load next page.
      */
     private Call<Address> callUserAddresses() {
-        return movieService.getAddresses(
+        return shopApiEndPoints.getAddresses(
                 userId,
                 currentPage
         );

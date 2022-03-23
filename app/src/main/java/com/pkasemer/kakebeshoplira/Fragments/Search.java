@@ -14,24 +14,18 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.pkasemer.kakebeshoplira.Adapters.SearchAdapter;
-import com.pkasemer.kakebeshoplira.Adapters.SearchQueryAdapter;
 import com.pkasemer.kakebeshoplira.Adapters.searchHomeAdapter;
-import com.pkasemer.kakebeshoplira.Apis.MovieApi;
-import com.pkasemer.kakebeshoplira.Apis.MovieService;
-import com.pkasemer.kakebeshoplira.Models.Product;
+import com.pkasemer.kakebeshoplira.Apis.ShopAPIBase;
+import com.pkasemer.kakebeshoplira.Apis.ShopApiEndPoints;
 import com.pkasemer.kakebeshoplira.Models.SearchCategoriee;
 import com.pkasemer.kakebeshoplira.Models.SearchHome;
-import com.pkasemer.kakebeshoplira.Models.SearchResult;
 import com.pkasemer.kakebeshoplira.R;
 import com.pkasemer.kakebeshoplira.RootActivity;
 import com.pkasemer.kakebeshoplira.SearchView;
@@ -67,7 +61,7 @@ public class Search extends Fragment implements SearchAdapterCallBack {
 
     List<SearchCategoriee> searchCategoriees;
 
-    private MovieService movieService;
+    private ShopApiEndPoints shopApiEndPoints;
 
 
     public Search() {
@@ -130,7 +124,7 @@ public class Search extends Fragment implements SearchAdapterCallBack {
         });
 
         //init service and load data
-        movieService = MovieApi.getClient(getContext()).create(MovieService.class);
+        shopApiEndPoints = ShopAPIBase.getClient(getContext()).create(ShopApiEndPoints.class);
 
         loadFirstPage();
 
@@ -234,7 +228,7 @@ public class Search extends Fragment implements SearchAdapterCallBack {
      * by @{@link PaginationScrollListener} to load next page.
      */
     private Call<SearchHome> callMostSearched() {
-        return movieService.getMostSearched(
+        return shopApiEndPoints.getMostSearched(
                 currentPage
         );
     }
