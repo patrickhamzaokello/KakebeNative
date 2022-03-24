@@ -25,7 +25,7 @@ public class OnboardingSliderAdapter extends PagerAdapter {
     }
 
     int[] images = {
-            R.drawable.plateone,
+            R.drawable.shoppingbag,
             R.drawable.healthyplate,
             R.drawable.familyshare,
             R.drawable.plateone,

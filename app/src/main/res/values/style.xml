@@ -51,6 +51,11 @@
         <item name="colorAccent">#FFFFFF</item>
     </style>
 
+    <style name="MarronBtn" parent="Theme.AppCompat.Light">
+        <item name="colorPrimary">#880B33</item>
+        <item name="colorPrimaryDark">#880B33</item>
+        <item name="colorAccent">#880B33</item>
+    </style>
 
     <style name="DialogAnimation">
         <item name="android:windowEnterAnimation">@anim/slide_in_bottom</item>

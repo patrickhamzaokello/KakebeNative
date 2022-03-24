@@ -86,7 +86,7 @@ public class OnBoarding extends AppCompatActivity {
             }
 
             if (dots.length > 0) {
-                dots[position].setTextColor(getResources().getColor(R.color.black));
+                dots[position].setTextColor(getResources().getColor(R.color.white));
             }
 
         }

@@ -53,9 +53,9 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:layout_marginBottom="20dp"
 
                 >
 
@@ -85,16 +85,14 @@
             </LinearLayout>
 
 
-
-
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnCheckout"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:backgroundTint="@color/white"
                 android:text="Complete Your Order"
                 android:textColor="@color/purple_500"
-                android:backgroundTint="@color/white"
                 android:transitionName="account_change"
                 app:layout_constraintStart_toStartOf="parent"
                 app:strokeColor="@color/white"
@@ -106,8 +104,8 @@
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Call To Order"
                 android:layout_marginTop="5dp"
+                android:text="Call To Order"
                 android:textColor="@color/white"
                 android:transitionName="account_change"
                 app:layout_constraintStart_toStartOf="parent"

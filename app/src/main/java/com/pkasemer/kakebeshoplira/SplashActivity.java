@@ -52,7 +52,6 @@ public class SplashActivity extends AppCompatActivity {
                 boolean isFirstTime = onboarding_sharedPreferences.getBoolean("firstTime", true);
 
                 if(!isFirstTime){
-
                     SharedPreferences.Editor editor = onboarding_sharedPreferences.edit();
                     editor.putBoolean("firstTime", false);
                     editor.commit();
