@@ -124,18 +124,23 @@ public class UserAddressesAdapter extends RecyclerView.Adapter<RecyclerView.View
                     movieVH.addressCard.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-
                             // convert addressmodel to json with gson
                             JSONObject obj = new JSONObject();
                             try {
+                                obj.put("id", userAddress.getId());
+                                obj.put("user_id", userAddress.getUserId());
                                 obj.put("address", userAddress.getAddress());
-                                obj.put("city", userAddress.getAddress());
-                                obj.put("country", userAddress.getAddress());
-                                obj.put("email", userAddress.getAddress());
-                                obj.put("id", userAddress.getAddress());
-                                obj.put("phone", userAddress.getAddress());
-                                obj.put("user_id", userAddress.getAddress());
-                                obj.put("username", userAddress.getAddress());
+                                obj.put("country", userAddress.getCountry());
+                                obj.put("city", userAddress.getCity());
+                                obj.put("longitude", null);
+                                obj.put("latitude", null);
+                                obj.put("postal_code", 256);
+                                obj.put("phone", userAddress.getPhone());
+                                obj.put("set_default", 1);
+                                obj.put("created_at", null);
+                                obj.put("updated_at", null);
+                                obj.put("name", userAddress.getUsername());
+                                obj.put("email", userAddress.getEmail());
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
