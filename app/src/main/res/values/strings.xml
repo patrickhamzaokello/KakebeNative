@@ -3,15 +3,15 @@
     <!--Title-->
 
     <string name="first_slide_title">Welcome!</string>
-    <string name="second_slide_title">Healthy Options</string>
-    <string name="third_slide_title">Share Meals</string>
+    <string name="second_slide_title">Home Essentials</string>
+    <string name="third_slide_title">Fresh Groceries</string>
     <string name="fourth_slide_title">Professional Service</string>
 
     <!--Descriptions-->
-    <string name="first_slide_desc">At Zodongo Foods, We are ready to offer you the best services and best food around  Town. Slide Left for more Information to get you familiar with our services. </string>
-    <string name="second_slide_desc">We have a whole category that shows all foods in this range. Try Our Assorted Category that features Food Menu that caters to your health and for your family</string>
-    <string name="third_slide_desc">We make it Easy for you to share meals with your loved ones. select a menu and share it with friends and family. Eating Together builds strong bonds between families and friends.</string>
-    <string name="fourth_slide_desc">We pride our selves in the professional Serivice that we offer from customer support to Safe and Fast Handling of Orders. Tap "Lets Get Started" button to SignUp on Zodongo Foods</string>
+    <string name="first_slide_desc">At KaKebe Shop Online, We are ready to offer you the best online shoping service around the region, We are here for you to experience the best of online shoping operating 24/7. Slide left for more information  </string>
+    <string name="second_slide_desc">We know exactly your daily needs right from the moment you wake up in the morning untill later in the morning when you get to bed to rest that is why have all the home essesntials in stock.</string>
+    <string name="third_slide_desc">Don`t worry about where you will get your groceries from because we have healthy clean fresh groceries for you. All you need to do is browse through and order for what you exactly want and we shall deliver.</string>
+    <string name="fourth_slide_desc">We do fast and speedy delivery within the same day, we also have other categories like Fashion, Electronics, Phones, Computers etc. Experience the best of online shoping. </string>
 
     <!--Buttons-->
     <string name="skip_btn">Skip</string>

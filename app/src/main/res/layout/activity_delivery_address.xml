@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:background="@color/white"
+    android:background="@color/rootbg"
     tools:context=".DeliveryAddress">
 
 
@@ -35,7 +35,7 @@
         android:text="Create a new Address"
         android:textColor="@color/changeaddress"
         android:textSize="15sp"
-        android:layout_marginBottom="30dp"
+        android:layout_marginBottom="20dp"
         android:transitionName="logo_text"
         android:layout_marginHorizontal="20dp"
 

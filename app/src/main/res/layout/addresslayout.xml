@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    app:cardBackgroundColor="@color/changeaddress"
-    android:layout_marginStart="10dp"
-    android:layout_marginEnd="10dp"
-    android:layout_marginTop="20dp"
-    app:cardCornerRadius="5dp"
-    app:cardElevation="1dp"
-    android:id="@+id/addressCard"
-    >
+    <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="#00000000"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="20dp"
+        app:cardCornerRadius="5dp"
+        app:cardElevation="1dp"
+        android:id="@+id/addressCard"
 
+        >
 
 
     <LinearLayout
@@ -22,7 +22,6 @@
         android:layout_gravity="bottom"
         android:background="@color/white"
         android:orientation="vertical"
-        android:layout_margin="2dp"
         android:padding="20dp"
         >
 
