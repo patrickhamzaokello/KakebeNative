@@ -14,34 +14,13 @@
       },
       "oauth_client": [
         {
-          "client_id": "587787462511-pq1l0399kge5n4r0jvn9tq6ptjfepp5a.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyDlyu12Irp9Ewr1-bgXWsebiA8mtH2wKgY"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "587787462511-pq1l0399kge5n4r0jvn9tq6ptjfepp5a.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:587787462511:android:10558f993e61e6b84d2a9a",
-        "android_client_info": {
-          "package_name": "com.pkasemer.kakebeshoplira"
-        }
-      },
-      "oauth_client": [
+          "client_id": "587787462511-6isk3vmaufp80btd0hu43n6hfruh6qtb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.pkasemer.kakebeshoplira",
+            "certificate_hash": "f4abab3a35683ab347bd1981cae9addb0219937e"
+          }
+        },
         {
           "client_id": "587787462511-pq1l0399kge5n4r0jvn9tq6ptjfepp5a.apps.googleusercontent.com",
           "client_type": 3
