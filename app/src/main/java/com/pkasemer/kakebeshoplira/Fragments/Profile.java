@@ -40,9 +40,11 @@ import com.pkasemer.kakebeshoplira.Models.CreateAddress;
 import com.pkasemer.kakebeshoplira.Models.CreateAddressResponse;
 import com.pkasemer.kakebeshoplira.Models.User;
 import com.pkasemer.kakebeshoplira.Models.UserAddress;
+import com.pkasemer.kakebeshoplira.PlaceOrder;
 import com.pkasemer.kakebeshoplira.R;
 import com.pkasemer.kakebeshoplira.RootActivity;
 import com.pkasemer.kakebeshoplira.Utils.PaginationScrollListener;
+import com.pkasemer.kakebeshoplira.localDatabase.SenseDBHelper;
 
 import java.util.List;
 import java.util.concurrent.TimeoutException;
@@ -87,6 +89,7 @@ public class Profile extends Fragment implements com.pkasemer.kakebeshoplira.Uti
 
     private ShopApiEndPoints shopApiEndPoints;
     private Object PaginationAdapterCallback;
+    private SenseDBHelper db;
 
 
     public Profile() {
@@ -129,6 +132,7 @@ public class Profile extends Fragment implements com.pkasemer.kakebeshoplira.Uti
 
         //getting the current user
         User user = SharedPrefManager.getInstance(getContext()).getUser();
+        db = new SenseDBHelper(getContext());
 //        userModel.getId();
 
         //setting the values to the textviews
@@ -146,6 +150,7 @@ public class Profile extends Fragment implements com.pkasemer.kakebeshoplira.Uti
             @Override
             public void onClick(View view) {
                 SharedPrefManager.getInstance(getContext()).logout();
+                db.clearCart();
 
             }
         });

@@ -29,7 +29,27 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="-60dp"
                 android:layout_marginRight="-200dp"
-                android:src="@drawable/ic_component_1__2_" />
+                android:src="@drawable/ic_component_2__1_" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/bigcirclebottom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            >
+
+            <ImageView
+                android:id="@+id/splashimage2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="-200dp"
+                android:layout_marginBottom="-60dp"
+                android:src="@drawable/ic_component_2__1_" />
 
         </RelativeLayout>
 
@@ -51,7 +71,7 @@
                     android:id="@+id/logo"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
-                    android:src="@drawable/custom_cart_btn_done"
+                    android:src="@drawable/ic_kakebe_svg"
                     android:theme="@style/WhiteBtn">
 
                 </ImageView>
@@ -62,11 +82,11 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/splashimage"
                     android:layout_marginHorizontal="20dp"
-                    android:layout_marginTop="30dp"
+                    android:layout_marginTop="10dp"
                     android:fontFamily="@font/montserrat_bold"
                     android:gravity="center"
                     android:includeFontPadding="false"
-                    android:text="Kakebe Shop Online"
+                    android:text="Kakebe Shop"
                     android:textColor="@color/white"
                     android:textSize="30sp" />
 

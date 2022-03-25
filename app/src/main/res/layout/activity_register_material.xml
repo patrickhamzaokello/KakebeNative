@@ -14,11 +14,33 @@
 
         >
 
+        <RelativeLayout
+            android:id="@+id/bigcirclebottom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="-190dp"
+            android:layout_marginTop="-60dp"
+            >
+
+            <ImageView
+                android:id="@+id/splashimage2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/ic_component_2__1_" />
+
+        </RelativeLayout>
+
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:paddingHorizontal="20dp">
+            android:paddingTop="50dp"
+            android:paddingHorizontal="15dp">
 
             <TextView
                 android:id="@+id/register_welcomeback"
@@ -26,9 +48,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:fontFamily="@font/montserrat_bold"
-                android:text="Welcome"
+                android:text="Create Account"
                 android:textColor="#000"
-                android:textSize="40sp"
+                android:textSize="30sp"
                 android:includeFontPadding="false"
                 android:transitionName="logo_text"
 
@@ -41,7 +63,7 @@
                 android:fontFamily="@font/montserrat"
                 android:includeFontPadding="false"
                 android:textColor="@color/light_black"
-                android:text="Create An Account to Continue"
+                android:text="Join millions of other users who use kakebe shop everyday."
                 android:textSize="18sp"
                 android:transitionName="logo_desc" />
 
