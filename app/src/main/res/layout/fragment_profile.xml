@@ -226,7 +226,7 @@
                 android:fontFamily="@font/montserrat"
 
                 android:includeFontPadding="false"
-                android:text="Manage all your address here"
+                android:text="You can add multiple delivery addresses"
                 android:textColor="@color/light_grey"
                 android:textSize="14sp" />
 
@@ -244,40 +244,6 @@
 
         </RelativeLayout>
 
-
-
-
-
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-                android:id="@+id/main_swiperefresh"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/main_recycler"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:clipToPadding="false"
-                    android:paddingBottom="@dimen/activity_margin_content" />
-
-            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
-            <ProgressBar
-                android:id="@+id/main_progress"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center" />
-
-            <include layout="@layout/error_layout" />
-
-            <include layout="@layout/create_address_layout" />
-
-
-        </FrameLayout>
 
     </LinearLayout>
 

@@ -29,6 +29,7 @@ import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.transition.DrawableCrossFadeFactory;
+import com.pkasemer.kakebeshoplira.DeliveryAddress;
 import com.pkasemer.kakebeshoplira.Models.SelectedCategoryMenuItemResult;
 import com.pkasemer.kakebeshoplira.Models.SelectedProduct;
 import com.pkasemer.kakebeshoplira.MyMenuDetail;
@@ -246,7 +247,7 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
                             updatecartCount();
 
 
-                            Intent i = new Intent(context.getApplicationContext(), PlaceOrder.class);
+                            Intent i = new Intent(context.getApplicationContext(), DeliveryAddress.class);
                             //PACK DATA
                             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                             context.startActivity(i);

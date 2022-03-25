@@ -32,6 +32,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.pkasemer.kakebeshoplira.Adapters.UserAddressesAdapter;
 import com.pkasemer.kakebeshoplira.Apis.ShopAPIBase;
 import com.pkasemer.kakebeshoplira.Apis.ShopApiEndPoints;
+import com.pkasemer.kakebeshoplira.DeliveryAddress;
 import com.pkasemer.kakebeshoplira.HelperClasses.SharedPrefManager;
 import com.pkasemer.kakebeshoplira.LoginMaterial;
 import com.pkasemer.kakebeshoplira.ManageOrders;
@@ -54,7 +55,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class Profile extends Fragment implements com.pkasemer.kakebeshoplira.Utils.PaginationAdapterCallback {
+public class Profile extends Fragment  {
 
 
     TextView textViewUsername, textViewEmail, full_name_text, card_email_text, card_phone_text;
@@ -63,18 +64,9 @@ public class Profile extends Fragment implements com.pkasemer.kakebeshoplira.Uti
     MaterialCardView manageOrders;
 
 
-    private static final String TAG = "profile";
 
-    UserAddressesAdapter adapter;
-    LinearLayoutManager linearLayoutManager;
-
-    RecyclerView rv;
-    ProgressBar progressBar,addressprogressBar;
-    LinearLayout errorLayout, add_address_layout;
-    Button btnRetry, add_address_btn, addNewAddress;
-    TextView txtError;
-    SwipeRefreshLayout swipeRefreshLayout;
-
+    Button  addNewAddress;
+    ProgressBar addressprogressBar;
     private static final int PAGE_START = 1;
     CreateAddress createAddress = new CreateAddress();
 
@@ -85,10 +77,8 @@ public class Profile extends Fragment implements com.pkasemer.kakebeshoplira.Uti
     private int currentPage = PAGE_START;
     private int userId;
 
-    List<UserAddress> userAddresses;
 
     private ShopApiEndPoints shopApiEndPoints;
-    private Object PaginationAdapterCallback;
     private SenseDBHelper db;
 
 
@@ -130,6 +120,7 @@ public class Profile extends Fragment implements com.pkasemer.kakebeshoplira.Uti
 
         addNewAddress = view.findViewById(R.id.addnewAddress);
 
+
         //getting the current user
         User user = SharedPrefManager.getInstance(getContext()).getUser();
         db = new SenseDBHelper(getContext());
@@ -166,65 +157,10 @@ public class Profile extends Fragment implements com.pkasemer.kakebeshoplira.Uti
         });
 
 
-        rv = view.findViewById(R.id.main_recycler);
-        progressBar = view.findViewById(R.id.main_progress);
-        errorLayout = view.findViewById(R.id.error_layout);
-        btnRetry = view.findViewById(R.id.error_btn_retry);
-        txtError = view.findViewById(R.id.error_txt_cause);
 
-
-        add_address_layout = view.findViewById(R.id.add_address_layout);
-        add_address_btn = view.findViewById(R.id.add_address_btn);
-
-        swipeRefreshLayout = view.findViewById(R.id.main_swiperefresh);
-
-
-        adapter = new UserAddressesAdapter(getContext(), this);
-
-        linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
-
-        rv.setHasFixedSize(true);
-        rv.setNestedScrollingEnabled(false);
-        rv.setLayoutManager(linearLayoutManager);
-        rv.setItemAnimator(new DefaultItemAnimator());
-
-        rv.setAdapter(adapter);
-
-        rv.addOnScrollListener(new PaginationScrollListener(linearLayoutManager) {
-            @Override
-            protected void loadMoreItems() {
-                isLoading = true;
-                currentPage += 1;
-
-                loadNextPage();
-            }
-
-            @Override
-            public int getTotalPageCount() {
-                return TOTAL_PAGES;
-            }
-
-            @Override
-            public boolean isLastPage() {
-                return isLastPage;
-            }
-
-            @Override
-            public boolean isLoading() {
-                return isLoading;
-            }
-        });
-
-        //init service and load data
+        addNewAddress.setOnClickListener(v -> createNewAddress());
         shopApiEndPoints = ShopAPIBase.getClient(getContext()).create(ShopApiEndPoints.class);
 
-        loadFirstPage();
-
-        btnRetry.setOnClickListener(v -> loadFirstPage());
-        add_address_btn.setOnClickListener(v -> createNewAddress());
-        addNewAddress.setOnClickListener(v -> createNewAddress());
-
-        swipeRefreshLayout.setOnRefreshListener(this::doRefresh);
 
         return view;
     }
@@ -321,9 +257,6 @@ public class Profile extends Fragment implements com.pkasemer.kakebeshoplira.Uti
                         Toast.makeText(getContext(), "Address Saved", Toast.LENGTH_SHORT).show();
                         dialog.hide();
 
-                        //refresh adapter
-                        doRefresh();
-
                     } else {
                         Log.i("Ress", "message: " + (createAddressResponse.getMessage()));
                         Log.i("et", "error false: " + (createAddressResponse.getError()));
@@ -371,222 +304,6 @@ public class Profile extends Fragment implements com.pkasemer.kakebeshoplira.Uti
     }
 
 
-    private void doRefresh() {
-        progressBar.setVisibility(View.VISIBLE);
-        if (callUserAddresses().isExecuted())
-            callUserAddresses().cancel();
 
-        // TODO: Check if data is stale.
-        //  Execute network request if cache is expired; otherwise do not update data.
-        adapter.getMovies().clear();
-        adapter.notifyDataSetChanged();
-        loadFirstPage();
-        swipeRefreshLayout.setRefreshing(false);
-    }
-
-    private void loadFirstPage() {
-        Log.d(TAG, "loadFirstPage: ");
-
-        // To ensure list is visible when retry button in error view is clicked
-        hideErrorView();
-        currentPage = PAGE_START;
-
-        callUserAddresses().enqueue(new Callback<Address>() {
-            @Override
-            public void onResponse(Call<Address> call, Response<Address> response) {
-                hideErrorView();
-
-//                Log.i(TAG, "onResponse: " + (response.raw().cacheResponse() != null ? "Cache" : "Network"));
-
-                // Got data. Send it to adapter
-                userAddresses = fetchResults(response);
-
-
-                if (userAddresses != null) {
-                    Log.i("userAddresses", "not null " + String.valueOf(userAddresses));
-
-                    progressBar.setVisibility(View.GONE);
-                    if (userAddresses.isEmpty()) {
-                        showCategoryErrorView();
-                        return;
-                    } else {
-                        adapter.addAll(userAddresses);
-                    }
-
-                    if (currentPage < TOTAL_PAGES) adapter.addLoadingFooter();
-                    else isLastPage = true;
-                } else {
-                    Log.i("userAddresses", String.valueOf(userAddresses));
-
-                    progressBar.setVisibility(View.GONE);
-                    add_address_layout.setVisibility(View.VISIBLE);
-                    errorLayout.setVisibility(View.GONE);
-
-                }
-
-
-            }
-
-            @Override
-            public void onFailure(Call<Address> call, Throwable t) {
-                t.printStackTrace();
-                showErrorView(t);
-            }
-        });
-    }
-
-
-    private List<UserAddress> fetchResults(Response<Address> response) {
-        Address address = response.body();
-        TOTAL_PAGES = address.getTotalPages();
-
-        int total_results = address.getTotalResults();
-        if (total_results > 0) {
-            return address.getUserAddress();
-        } else {
-            return null;
-        }
-
-    }
-
-    private void loadNextPage() {
-        Log.d(TAG, "loadNextPage: " + currentPage);
-
-        callUserAddresses().enqueue(new Callback<Address>() {
-            @Override
-            public void onResponse(Call<Address> call, Response<Address> response) {
-                Log.i(TAG, "onResponse: " + currentPage
-                        + (response.raw().cacheResponse() != null ? "Cache" : "Network"));
-
-                adapter.removeLoadingFooter();
-                isLoading = false;
-
-                userAddresses = fetchResults(response);
-                adapter.addAll(userAddresses);
-
-                if (currentPage != TOTAL_PAGES) adapter.addLoadingFooter();
-                else isLastPage = true;
-            }
-
-            @Override
-            public void onFailure(Call<Address> call, Throwable t) {
-                t.printStackTrace();
-                adapter.showRetry(true, fetchErrorMessage(t));
-            }
-        });
-    }
-
-
-    /**
-     * Performs a Retrofit call to the top rated movies API.
-     * Same API call for Pagination.
-     * As {@link #currentPage} will be incremented automatically
-     * by @{@link PaginationScrollListener} to load next page.
-     */
-    private Call<Address> callUserAddresses() {
-        return shopApiEndPoints.getAddresses(
-                userId,
-                currentPage
-        );
-    }
-
-    @Override
-    public void retryPageLoad() {
-        loadNextPage();
-    }
-
-    @Override
-    public void requestfailed() {
-
-    }
-
-
-    /**
-     * @param throwable required for {@link #fetchErrorMessage(Throwable)}
-     * @return
-     */
-    private void showErrorView(Throwable throwable) {
-
-        if (errorLayout.getVisibility() == View.GONE) {
-            errorLayout.setVisibility(View.VISIBLE);
-            add_address_layout.setVisibility(View.GONE);
-            progressBar.setVisibility(View.GONE);
-
-            txtError.setText(fetchErrorMessage(throwable));
-        }
-    }
-
-    private void showCategoryErrorView() {
-
-        progressBar.setVisibility(View.GONE);
-        add_address_layout.setVisibility(View.GONE);
-
-
-        AlertDialog.Builder android = new AlertDialog.Builder(getContext());
-        android.setTitle("Coming Soon");
-        android.setIcon(R.drawable.africanwoman);
-        android.setMessage("This Menu Category will be updated with great tastes soon, Stay Alert for Updates.")
-                .setCancelable(false)
-
-                .setPositiveButton("Home", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        //go to activity
-                        Intent intent = new Intent(getActivity(), RootActivity.class);
-                        startActivity(intent);
-                    }
-                });
-        android.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                //go to activity
-                Intent intent = new Intent(getActivity(), RootActivity.class);
-                startActivity(intent);
-            }
-        });
-        android.create().show();
-
-    }
-
-
-    /**
-     * @param throwable to identify the type of error
-     * @return appropriate error message
-     */
-    private String fetchErrorMessage(Throwable throwable) {
-        String errorMsg = getResources().getString(R.string.error_msg_unknown);
-
-        if (!isNetworkConnected()) {
-            errorMsg = getResources().getString(R.string.error_msg_no_internet);
-        } else if (throwable instanceof TimeoutException) {
-            errorMsg = getResources().getString(R.string.error_msg_timeout);
-        }
-
-        return errorMsg;
-    }
-
-    // Helpers -------------------------------------------------------------------------------------
-
-
-    private void hideErrorView() {
-        if (errorLayout.getVisibility() == View.VISIBLE) {
-            errorLayout.setVisibility(View.GONE);
-            progressBar.setVisibility(View.VISIBLE);
-        }
-
-        if( add_address_layout.getVisibility() == View.VISIBLE){
-            add_address_layout.setVisibility(View.GONE);
-        }
-    }
-
-    /**
-     * Remember to add android.permission.ACCESS_NETWORK_STATE permission.
-     *
-     * @return
-     */
-    private boolean isNetworkConnected() {
-        ConnectivityManager cm = (ConnectivityManager) getContext().getSystemService(getContext().CONNECTIVITY_SERVICE);
-        return cm.getActiveNetworkInfo() != null;
-    }
 
 }
