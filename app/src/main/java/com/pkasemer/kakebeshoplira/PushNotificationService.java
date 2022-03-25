@@ -3,6 +3,7 @@ package com.pkasemer.kakebeshoplira;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.os.Build;
 
 import androidx.core.app.NotificationManagerCompat;
 
@@ -20,8 +21,7 @@ public class PushNotificationService extends FirebaseMessagingService {
 
         final String CHANNEL_ID = "HEADS_UP_NOTIFICATION";
 
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel channel = new NotificationChannel(
                     CHANNEL_ID,
                     "Heads Up Notification",
@@ -35,18 +35,11 @@ public class PushNotificationService extends FirebaseMessagingService {
                             .setSmallIcon(R.drawable.kakebelogo)
                             .setAutoCancel(true);
 
-
-            NotificationManager mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-
-            mNotificationManager.notify(1, notification.build());
-            mNotificationManager.createNotificationChannel(channel);
+            NotificationManagerCompat.from(this).notify(1, notification.build());
 
         }
-
-
-
-
         super.onMessageReceived(remoteMessage);
+
 
     }
 }
