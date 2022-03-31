@@ -30,6 +30,7 @@
             android:layout_height="wrap_content"
             android:textColor="@color/black"
             android:gravity="center"
+            android:fontFamily="@font/montserrat"
             android:layout_marginTop="10dp"
             android:text="Order Complete, We are Processing it Now. you will recieve a phone call from one of our employess to verify your order"/>
 
@@ -39,6 +40,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/light_grey"
+            android:fontFamily="@font/montserrat"
             android:layout_gravity="center"
             android:layout_marginTop="8dp"
             android:text="From Kakebe Shop Online Team"/>
@@ -54,7 +56,7 @@
             android:layout_marginTop="10dp"
             android:fontFamily="@font/montserrat_bold"
             android:gravity="center"
-            android:text="Top Categories"
+            android:text="Track Order"
             app:iconSize="18dp"
             app:iconGravity="textStart"
             app:iconTint="@color/white"
@@ -69,7 +71,7 @@
             style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Go Home"
+            android:text="Home"
             android:layout_marginHorizontal="10dp"
             android:textColor="@color/purple_500"
             android:transitionName="account_change"

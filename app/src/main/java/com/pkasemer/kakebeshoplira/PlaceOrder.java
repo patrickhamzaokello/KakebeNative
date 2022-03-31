@@ -126,7 +126,7 @@ public class PlaceOrder extends AppCompatActivity implements ChangeLocation.Noti
         btnTodaysMEnu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(PlaceOrder.this, RootActivity.class);
+                Intent i = new Intent(PlaceOrder.this, ManageOrders.class);
                 startActivity(i);
             }
         });

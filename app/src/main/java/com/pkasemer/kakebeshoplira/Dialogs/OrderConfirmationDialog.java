@@ -49,17 +49,9 @@ public class OrderConfirmationDialog extends DialogFragment {
 
         View view = inflater.inflate(R.layout.dialog_order_confirmation, null);
 
-        builder.setView(view)
-                .setCancelable(false)
-        // Add action buttons
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int id) {
-                // sign in the user ...
-                listener.onOrderDialogPositiveClick(OrderConfirmationDialog.this);
+        builder.setView(view);
+        builder.setCancelable(false);
 
-            }
-        });
 
         return builder.create();
     }
