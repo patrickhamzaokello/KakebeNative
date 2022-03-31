@@ -53,10 +53,10 @@
             android:ellipsize="end"
             android:fontFamily="@font/montserrat"
             android:gravity="left"
-            android:maxLines="2"
+            android:maxLines="1"
             android:text="Home Essentials"
             android:textColor="@color/black"
-            android:textSize="10sp" />
+            android:textSize="12sp" />
 
 
 

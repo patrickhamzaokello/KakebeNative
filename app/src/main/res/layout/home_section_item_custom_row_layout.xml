@@ -76,6 +76,7 @@
             android:layout_below="@+id/item_rating"
             android:layout_marginTop="10dp"
             android:layout_toLeftOf="@+id/home_addToCart"
+            android:fontFamily="@font/montserrat_bold"
             android:gravity="left"
             android:text="Ugx 3,800"
             android:textColor="@color/black"

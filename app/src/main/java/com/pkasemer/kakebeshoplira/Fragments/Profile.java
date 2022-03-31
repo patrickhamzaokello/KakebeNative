@@ -50,6 +50,7 @@ import com.pkasemer.kakebeshoplira.localDatabase.SenseDBHelper;
 import java.util.List;
 import java.util.concurrent.TimeoutException;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -140,8 +141,22 @@ public class Profile extends Fragment  {
         view.findViewById(R.id.buttonLogout).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SharedPrefManager.getInstance(getContext()).logout();
-                db.clearCart();
+
+
+                new SweetAlertDialog(getContext(), SweetAlertDialog.WARNING_TYPE)
+                        .setTitleText("Logout!")
+                        .setContentText("You will be required to Sign in next time")
+                        .setConfirmText("OK")
+                        .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                            @Override
+                            public void onClick(SweetAlertDialog sDialog) {
+
+                                sDialog.dismissWithAnimation();
+
+                                SharedPrefManager.getInstance(getContext()).logout();
+                                db.clearCart();
+                            }
+                        }).show();
 
             }
         });

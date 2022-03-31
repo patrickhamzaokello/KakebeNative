@@ -64,6 +64,7 @@
         <entry key="..\:/Users/jamsp/AndroidStudioProjects/KakebeShop/app/src/main/res/layout/activity_manage_orders.xml" value="0.18819655521783182" />
         <entry key="..\:/Users/jamsp/AndroidStudioProjects/KakebeShop/app/src/main/res/layout/activity_my_menu_detail.xml" value="0.1" />
         <entry key="..\:/Users/jamsp/AndroidStudioProjects/KakebeShop/app/src/main/res/layout/activity_on_boarding.xml" value="0.18819655521783182" />
+        <entry key="..\:/Users/jamsp/AndroidStudioProjects/KakebeShop/app/src/main/res/layout/activity_place_order.xml" value="0.1" />
         <entry key="..\:/Users/jamsp/AndroidStudioProjects/KakebeShop/app/src/main/res/layout/activity_register_material.xml" value="0.16203703703703703" />
         <entry key="..\:/Users/jamsp/AndroidStudioProjects/KakebeShop/app/src/main/res/layout/activity_root_activity.xml" value="0.1" />
         <entry key="..\:/Users/jamsp/AndroidStudioProjects/KakebeShop/app/src/main/res/layout/activity_splash_activity.xml" value="0.25" />
@@ -79,7 +80,7 @@
         <entry key="..\:/Users/jamsp/AndroidStudioProjects/KakebeShop/app/src/main/res/layout/fragment_show_round_dialog.xml" value="0.14673913043478262" />
         <entry key="..\:/Users/jamsp/AndroidStudioProjects/KakebeShop/app/src/main/res/layout/home_category_recycler.xml" value="0.16168478260869565" />
         <entry key="..\:/Users/jamsp/AndroidStudioProjects/KakebeShop/app/src/main/res/layout/home_hero_layout.xml" value="0.25" />
-        <entry key="..\:/Users/jamsp/AndroidStudioProjects/KakebeShop/app/src/main/res/layout/home_menu_category_design.xml" value="0.18819655521783182" />
+        <entry key="..\:/Users/jamsp/AndroidStudioProjects/KakebeShop/app/src/main/res/layout/home_menu_category_design.xml" value="0.5880829015544041" />
         <entry key="..\:/Users/jamsp/AndroidStudioProjects/KakebeShop/app/src/main/res/layout/home_section_custom_row_layout.xml" value="0.33" />
         <entry key="..\:/Users/jamsp/AndroidStudioProjects/KakebeShop/app/src/main/res/layout/home_section_item_custom_row_layout.xml" value="0.33" />
         <entry key="..\:/Users/jamsp/AndroidStudioProjects/KakebeShop/app/src/main/res/layout/home_slider_layout.xml" value="0.16168478260869565" />
