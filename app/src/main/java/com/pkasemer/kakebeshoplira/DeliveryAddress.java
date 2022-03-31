@@ -32,6 +32,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.pkasemer.kakebeshoplira.Adapters.UserAddressesAdapter;
 import com.pkasemer.kakebeshoplira.Apis.ShopAPIBase;
 import com.pkasemer.kakebeshoplira.Apis.ShopApiEndPoints;
+import com.pkasemer.kakebeshoplira.Utils.SelectedAddressListener;
 import com.pkasemer.kakebeshoplira.HelperClasses.SharedPrefManager;
 import com.pkasemer.kakebeshoplira.Models.Address;
 import com.pkasemer.kakebeshoplira.Models.CreateAddress;
@@ -40,6 +41,9 @@ import com.pkasemer.kakebeshoplira.Models.User;
 import com.pkasemer.kakebeshoplira.Models.UserAddress;
 import com.pkasemer.kakebeshoplira.Utils.PaginationScrollListener;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.List;
 import java.util.concurrent.TimeoutException;
 
@@ -47,7 +51,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class DeliveryAddress extends AppCompatActivity implements  com.pkasemer.kakebeshoplira.Utils.PaginationAdapterCallback {
+public class DeliveryAddress extends AppCompatActivity implements SelectedAddressListener {
 
     ActionBar actionBar;
 
@@ -63,7 +67,7 @@ public class DeliveryAddress extends AppCompatActivity implements  com.pkasemer.
     LinearLayoutManager linearLayoutManager;
 
     RecyclerView rv;
-    ProgressBar progressBar,addressprogressBar;
+    ProgressBar progressBar, addressprogressBar;
     LinearLayout errorLayout, add_address_layout;
     Button btnRetry, add_address_btn, addNewAddress;
     TextView txtError;
@@ -85,7 +89,6 @@ public class DeliveryAddress extends AppCompatActivity implements  com.pkasemer.
     private Object PaginationAdapterCallback;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,7 +97,7 @@ public class DeliveryAddress extends AppCompatActivity implements  com.pkasemer.
         actionBar = getSupportActionBar(); // or getActionBar();
         actionBar.setTitle("Delivery Address");
         // add back arrow to toolbar
-        if (getSupportActionBar() != null){
+        if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
@@ -190,7 +193,7 @@ public class DeliveryAddress extends AppCompatActivity implements  com.pkasemer.
 
         addressprogressBar = dialog.findViewById(R.id.addressprogressBar);
 
-        save_address.setOnClickListener(v -> AddUserAddress(save_address,dialog, user_phone, user_location, user_district));
+        save_address.setOnClickListener(v -> AddUserAddress(save_address, dialog, user_phone, user_location, user_district));
 
 
         dialog.show();
@@ -516,7 +519,7 @@ public class DeliveryAddress extends AppCompatActivity implements  com.pkasemer.
             progressBar.setVisibility(View.VISIBLE);
         }
 
-        if( add_address_layout.getVisibility() == View.VISIBLE){
+        if (add_address_layout.getVisibility() == View.VISIBLE) {
             add_address_layout.setVisibility(View.GONE);
         }
     }
@@ -529,6 +532,44 @@ public class DeliveryAddress extends AppCompatActivity implements  com.pkasemer.
     private boolean isNetworkConnected() {
         ConnectivityManager cm = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
         return cm.getActiveNetworkInfo() != null;
+    }
+
+
+    @Override
+    public void selectedAddress(UserAddress userAddress) {
+        // convert addressmodel to json with gson
+        JSONObject obj = new JSONObject();
+        try {
+            obj.put("id", userAddress.getId());
+            obj.put("user_id", userAddress.getUserId());
+            obj.put("address", userAddress.getAddress());
+            obj.put("country", userAddress.getCountry());
+            obj.put("city", userAddress.getCity());
+            obj.put("longitude", null);
+            obj.put("latitude", null);
+            obj.put("postal_code", 256);
+            obj.put("phone", userAddress.getPhone());
+            obj.put("set_default", 1);
+            obj.put("created_at", null);
+            obj.put("updated_at", null);
+            obj.put("name", userAddress.getUsername());
+            obj.put("email", userAddress.getEmail());
+        } catch (
+                JSONException e) {
+            e.printStackTrace();
+        }
+
+
+        final String addressJson = obj.toString(); // <-- JSON string
+        Log.i("addressString", addressJson);
+
+        Intent i = new Intent(DeliveryAddress.this, PlaceOrder.class);
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+
+        //PACK DATA
+        i.putExtra("SELECTED_ADDRESS", "PlaceOrder");
+        i.putExtra("selected_address_json", addressJson);
+        startActivity(i);
     }
 
 

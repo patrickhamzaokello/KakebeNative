@@ -36,6 +36,7 @@ import com.pkasemer.kakebeshoplira.PlaceOrder;
 import com.pkasemer.kakebeshoplira.R;
 import com.pkasemer.kakebeshoplira.RootActivity;
 import com.pkasemer.kakebeshoplira.Utils.PaginationAdapterCallback;
+import com.pkasemer.kakebeshoplira.Utils.SelectedAddressListener;
 import com.pkasemer.kakebeshoplira.localDatabase.SenseDBHelper;
 import com.smarteist.autoimageslider.SliderView;
 
@@ -62,10 +63,10 @@ public class UserAddressesAdapter extends RecyclerView.Adapter<RecyclerView.View
     private boolean retryPageLoad = false;
 
 
-    private final PaginationAdapterCallback mCallback;
+    private final SelectedAddressListener mCallback;
     private String errorMsg;
 
-    public UserAddressesAdapter(Context context, PaginationAdapterCallback callback) {
+    public UserAddressesAdapter(Context context, SelectedAddressListener callback) {
         this.context = context;
         this.mCallback = callback;
         userAddresses = new ArrayList<>();
@@ -124,41 +125,7 @@ public class UserAddressesAdapter extends RecyclerView.Adapter<RecyclerView.View
                     movieVH.addressCard.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            // convert addressmodel to json with gson
-                            JSONObject obj = new JSONObject();
-                            try {
-                                obj.put("id", userAddress.getId());
-                                obj.put("user_id", userAddress.getUserId());
-                                obj.put("address", userAddress.getAddress());
-                                obj.put("country", userAddress.getCountry());
-                                obj.put("city", userAddress.getCity());
-                                obj.put("longitude", null);
-                                obj.put("latitude", null);
-                                obj.put("postal_code", 256);
-                                obj.put("phone", userAddress.getPhone());
-                                obj.put("set_default", 1);
-                                obj.put("created_at", null);
-                                obj.put("updated_at", null);
-                                obj.put("name", userAddress.getUsername());
-                                obj.put("email", userAddress.getEmail());
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-
-
-                            final String addressJson = obj.toString(); // <-- JSON string
-                            Log.i("addressString",addressJson );
-
-
-                            Intent i = new Intent(context.getApplicationContext(), PlaceOrder.class);
-                            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-
-                            //PACK DATA
-                            i.putExtra("SELECTED_ADDRESS", "PlaceOrder");
-                            i.putExtra("selected_address_json", addressJson);
-                            context.startActivity(i);
-
-
+                            mCallback.selectedAddress(userAddress);
                         }
                     });
 
