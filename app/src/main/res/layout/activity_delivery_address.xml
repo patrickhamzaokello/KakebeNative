@@ -4,44 +4,48 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
     android:background="@color/rootbg"
+    android:orientation="vertical"
     tools:context=".DeliveryAddress">
-
-
 
 
     <TextView
         android:id="@+id/choose"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="20dp"
         android:fontFamily="@font/montserrat_bold"
         android:includeFontPadding="false"
         android:text="Choose Delivery Address"
-        android:layout_marginTop="20dp"
         android:textColor="@color/black"
         android:textSize="20sp"
         android:transitionName="logo_text"
-        android:layout_marginHorizontal="20dp"
 
 
         />
+
     <TextView
         android:id="@+id/createnewtext"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginBottom="20dp"
         android:fontFamily="@font/montserrat"
         android:includeFontPadding="false"
         android:text="Create a new Address"
         android:textColor="@color/changeaddress"
         android:textSize="15sp"
-        android:layout_marginBottom="20dp"
         android:transitionName="logo_text"
-        android:layout_marginHorizontal="20dp"
 
 
         />
 
+    <com.google.android.gms.maps.MapView
+        android:layout_alignParentTop="true"
+        android:id="@+id/mapView"
+        android:layout_width="match_parent"
+        android:layout_height="150dp" />
 
 
     <FrameLayout
