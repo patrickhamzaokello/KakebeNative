@@ -81,8 +81,8 @@
                                             <option name="values">
                                               <map>
                                                 <entry key="color" value="000000" />
-                                                <entry key="imagePath" value="C:\Users\jamsp\Downloads\Group 101 (1).svg" />
-                                                <entry key="scalingPercent" value="80" />
+                                                <entry key="imagePath" value="C:\Users\jamsp\Downloads\Group (2).svg" />
+                                                <entry key="scalingPercent" value="83" />
                                                 <entry key="trimmed" value="true" />
                                               </map>
                                             </option>
@@ -118,7 +118,7 @@
                                   <option name="values">
                                     <map>
                                       <entry key="backgroundAssetType" value="COLOR" />
-                                      <entry key="backgroundColor" value="dd0000" />
+                                      <entry key="backgroundColor" value="e60549" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -309,8 +309,8 @@
                           <map>
                             <entry key="assetSourceType" value="FILE" />
                             <entry key="color" value="ffffff" />
-                            <entry key="outputName" value="kakebelogo" />
-                            <entry key="sourceFile" value="C:\Users\jamsp\Downloads\Group (1).svg" />
+                            <entry key="outputName" value="ic_kakebelogo" />
+                            <entry key="sourceFile" value="C:\Users\jamsp\Downloads\kakebelogo.svg" />
                           </map>
                         </option>
                       </PersistentState>

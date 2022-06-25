@@ -29,7 +29,7 @@
             android:fontFamily="@font/montserrat_bold"
             android:textSize="20dp"
             android:gravity="center"
-            android:text="Your cart is empty. tap on products you like and add them to your cart."/>
+            android:text="Your cart is empty."/>
 
 
 

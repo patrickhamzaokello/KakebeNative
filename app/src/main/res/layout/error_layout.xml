@@ -27,7 +27,7 @@
             android:fontFamily="@font/montserrat_bold"
             android:gravity="center"
             android:textColor="@color/black"
-            android:text="You can't access Kakebe Shop Online Right now due to Poor Internet Connection, Try again"/>
+            android:text="No internet connection"/>
 
         <TextView
             android:id="@+id/error_txt_cause"
@@ -47,7 +47,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="@dimen/activity_margin_content"
             android:background="@color/purple_500"
-            android:text="Try Again"
+            android:text="Retry"
             android:textColor="@color/white"/>
 
     </LinearLayout>

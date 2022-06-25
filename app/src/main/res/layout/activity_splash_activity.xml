@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/onboardingBG"
+    android:background="@color/white"
     android:orientation="vertical"
     tools:context=".SplashActivity">
 
@@ -71,7 +71,7 @@
                     android:id="@+id/logo"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
-                    android:src="@drawable/kakebelogo"
+                    android:src="@drawable/ic_kakebelogo"
                     android:theme="@style/WhiteBtn">
 
                 </ImageView>
@@ -87,7 +87,7 @@
                     android:gravity="center"
                     android:includeFontPadding="false"
                     android:text="Kakebe Shop"
-                    android:textColor="@color/white"
+                    android:textColor="@color/onboardingBG"
                     android:textSize="30sp" />
 
                 <TextView
@@ -100,7 +100,7 @@
                     android:gravity="center"
                     android:includeFontPadding="false"
                     android:text="You Order, We Deliver"
-                    android:textColor="@color/white"
+                    android:textColor="@color/onboardingBG"
                     android:textSize="18sp" />
 
 

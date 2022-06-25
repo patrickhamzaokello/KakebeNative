@@ -1,5 +1,5 @@
-
 package com.pkasemer.kakebeshoplira.Models;
+
 
 import javax.annotation.Generated;
 import com.google.gson.annotations.Expose;
