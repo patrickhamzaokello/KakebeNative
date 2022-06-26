@@ -39,14 +39,13 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:paddingTop="50dp"
+            android:paddingTop="20dp"
             android:paddingHorizontal="15dp">
 
             <TextView
                 android:id="@+id/register_welcomeback"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
                 android:fontFamily="@font/montserrat_bold"
                 android:text="Create Account"
                 android:textColor="#000"
@@ -65,6 +64,7 @@
                 android:textColor="@color/light_black"
                 android:text="Join millions of other users who use kakebe shop everyday."
                 android:textSize="18sp"
+                android:layout_marginTop="5dp"
                 android:transitionName="logo_desc" />
 
 

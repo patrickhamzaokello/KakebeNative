@@ -184,8 +184,7 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
                     heroVh.btnAddtoCart.setTextColor(ContextCompat.getColor(context, R.color.white));
                     heroVh.itemQuanEt.setText("1");
 
-                    heroVh.menu_detail_st_cartbtn.setBackground(context.getResources().getDrawable(R.drawable.custom_cart_btn));
-                    heroVh.menu_detail_st_likebtn.setBackground(context.getResources().getDrawable(R.drawable.custom_cart_like_btn));
+
 
 
                 } else {
@@ -197,8 +196,7 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
 
                     display(minteger, heroVh, selectedProduct);
 
-                    heroVh.menu_detail_st_cartbtn.setBackground(context.getResources().getDrawable(R.drawable.custom_cart_btn_done));
-                    heroVh.menu_detail_st_likebtn.setBackground(context.getResources().getDrawable(R.drawable.custom_cart_like_btn_done));
+
 
 
                 }
@@ -286,8 +284,6 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
                             heroVh.btnAddtoCart.setBackgroundColor(ContextCompat.getColor(v.getContext(), R.color.buttonGreen));
                             heroVh.btnAddtoCart.setTextColor(ContextCompat.getColor(v.getContext(), R.color.white));
 
-                            heroVh.menu_detail_st_cartbtn.setBackground(context.getResources().getDrawable(R.drawable.custom_cart_btn_done));
-                            heroVh.menu_detail_st_likebtn.setBackground(context.getResources().getDrawable(R.drawable.custom_cart_like_btn_done));
 
 
                             updatecartCount();
@@ -301,108 +297,12 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
                             heroVh.btnAddtoCart.setTextColor(ContextCompat.getColor(context, R.color.white));
 
 
-                            heroVh.menu_detail_st_cartbtn.setBackground(context.getResources().getDrawable(R.drawable.custom_cart_btn));
-                            heroVh.menu_detail_st_likebtn.setBackground(context.getResources().getDrawable(R.drawable.custom_cart_like_btn));
-
                             updatecartCount();
 
                         }
                     }
                 });
 
-
-                heroVh.menu_detail_st_cartbtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        food_db_itemchecker = db.checktweetindb(String.valueOf(selectedProduct.getId()));
-
-
-                        if (food_db_itemchecker) {
-                            db.addTweet(
-                                    selectedProduct.getId(),
-                                    selectedProduct.getName(),
-                                    selectedProduct.getUnitPrice(),
-                                    selectedProduct.getCategoryId(),
-                                    selectedProduct.getThumbnailImg(),
-                                    minteger,
-                                    MENU_NOT_SYNCED_WITH_SERVER
-                            );
-
-
-                            heroVh.btnAddtoCart.setText("Remove");
-                            heroVh.btnAddtoCart.setBackgroundColor(ContextCompat.getColor(v.getContext(), R.color.buttonGreen));
-                            heroVh.btnAddtoCart.setTextColor(ContextCompat.getColor(v.getContext(), R.color.white));
-
-                            heroVh.menu_detail_st_cartbtn.setBackground(context.getResources().getDrawable(R.drawable.custom_cart_btn_done));
-                            heroVh.menu_detail_st_likebtn.setBackground(context.getResources().getDrawable(R.drawable.custom_cart_like_btn_done));
-
-                            updatecartCount();
-
-
-                        } else {
-                            db.deleteTweet(String.valueOf(selectedProduct.getId()));
-
-                            heroVh.btnAddtoCart.setText("Add to Cart");
-                            heroVh.btnAddtoCart.setBackgroundColor(ContextCompat.getColor(context, R.color.purple_200));
-                            heroVh.btnAddtoCart.setTextColor(ContextCompat.getColor(context, R.color.white));
-
-
-                            heroVh.menu_detail_st_cartbtn.setBackground(context.getResources().getDrawable(R.drawable.custom_cart_btn));
-                            heroVh.menu_detail_st_likebtn.setBackground(context.getResources().getDrawable(R.drawable.custom_cart_like_btn));
-
-
-                            updatecartCount();
-
-                        }
-                    }
-                });
-
-
-                heroVh.menu_detail_st_likebtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        food_db_itemchecker = db.checktweetindb(String.valueOf(selectedProduct.getId()));
-
-
-                        if (food_db_itemchecker) {
-                            db.addTweet(
-                                    selectedProduct.getId(),
-                                    selectedProduct.getName(),
-                                    selectedProduct.getUnitPrice(),
-                                    selectedProduct.getCategoryId(),
-                                    selectedProduct.getThumbnailImg(),
-                                    minteger,
-                                    MENU_NOT_SYNCED_WITH_SERVER
-                            );
-
-
-                            heroVh.btnAddtoCart.setText("Remove");
-                            heroVh.btnAddtoCart.setBackgroundColor(ContextCompat.getColor(v.getContext(), R.color.buttonGreen));
-                            heroVh.btnAddtoCart.setTextColor(ContextCompat.getColor(v.getContext(), R.color.white));
-
-                            heroVh.menu_detail_st_cartbtn.setBackground(context.getResources().getDrawable(R.drawable.custom_cart_btn_done));
-                            heroVh.menu_detail_st_likebtn.setBackground(context.getResources().getDrawable(R.drawable.custom_cart_like_btn_done));
-
-                            updatecartCount();
-
-
-                        } else {
-                            db.deleteTweet(String.valueOf(selectedProduct.getId()));
-
-                            heroVh.btnAddtoCart.setText("Add to Cart");
-                            heroVh.btnAddtoCart.setBackgroundColor(ContextCompat.getColor(context, R.color.purple_200));
-                            heroVh.btnAddtoCart.setTextColor(ContextCompat.getColor(context, R.color.white));
-
-
-                            heroVh.menu_detail_st_cartbtn.setBackground(context.getResources().getDrawable(R.drawable.custom_cart_btn));
-                            heroVh.menu_detail_st_likebtn.setBackground(context.getResources().getDrawable(R.drawable.custom_cart_like_btn));
-
-
-                            updatecartCount();
-
-                        }
-                    }
-                });
 
 
                 break;
@@ -591,7 +491,6 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
     protected class HeroVH extends RecyclerView.ViewHolder {
         private final ImageView menu_image;
         private final TextView menu_name;
-        private final TextView menu_shortinfo;
         private final TextView menu_description;
         private final TextView menu_price;
         private final TextView menu_qtn;
@@ -601,8 +500,6 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
         private final Button decreaseQtn;
         private final Button btnAddtoCart;
         private final Button btnOrderNow;
-        private final Button menu_detail_st_cartbtn;
-        private final Button menu_detail_st_likebtn;
         private final ProgressBar mProgress;
 
         private final LinearLayout descriptionlayout, relatedProductslayout;
@@ -613,7 +510,6 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
             // init views
             menu_image = itemView.findViewById(R.id.menu_image);
             menu_name = itemView.findViewById(R.id.menu_name);
-            menu_shortinfo = itemView.findViewById(R.id.menu_shortinfo);
             menu_description = itemView.findViewById(R.id.menu_description);
             menu_price = itemView.findViewById(R.id.menu_price);
             menu_qtn = itemView.findViewById(R.id.menu_qtn);
@@ -624,8 +520,6 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
             btnAddtoCart = itemView.findViewById(R.id.btnAddtoCart);
             btnOrderNow = itemView.findViewById(R.id.btnOrderNow);
 
-            menu_detail_st_cartbtn = itemView.findViewById(R.id.menu_detail_st_cartbtn);
-            menu_detail_st_likebtn = itemView.findViewById(R.id.menu_detail_st_likebtn);
 
             mProgress = itemView.findViewById(R.id.product_detail_image_progress);
             descriptionlayout = itemView.findViewById(R.id.descriptionlayout);
