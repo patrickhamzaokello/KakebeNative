@@ -118,7 +118,7 @@
             android:gravity="center"
             android:includeFontPadding="false"
             android:text="Choose from over one million products available to be delivered to your desired location / address"
-            android:textColor="@color/white"
+            android:textColor="@color/purple_500"
             android:textSize="10sp" />
 
 

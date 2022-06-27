@@ -85,22 +85,8 @@ public class Cart extends Fragment implements CartItemHandlerListener {
         LinearLayoutManager layoutManager = new LinearLayoutManager(view.getContext());
         layoutManager.setOrientation(RecyclerView.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
-//        recyclerView.setHasFixedSize(true);
         db = new SenseDBHelper(view.getContext());
-        cartitemlist = db.listTweetsBD();
-
-        if (cartitemlist.size() > 0) {
-            progressBar.setVisibility(View.GONE);
-            recyclerView.setVisibility(View.VISIBLE);
-            cartAdapter = new CartAdapter(getContext(), cartitemlist, this);
-            recyclerView.setAdapter(cartAdapter);
-            cartAdapter.notifyDataSetChanged();
-            grandtotalvalue();
-        } else {
-            recyclerView.setVisibility(View.GONE);
-            emptycartwarning();
-        }
-
+        grandtotalvalue();
         btnCheckout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -162,6 +148,25 @@ public class Cart extends Fragment implements CartItemHandlerListener {
         }
         grandtotalvalue();
 //
+    }
+
+    @Override
+    public void onResume() {
+        //        recyclerView.setHasFixedSize(true);
+        super.onResume();
+        cartitemlist = db.listTweetsBD();
+
+        if (cartitemlist.size() > 0) {
+            progressBar.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.VISIBLE);
+            cartAdapter = new CartAdapter(getContext(), cartitemlist, this);
+            recyclerView.setAdapter(cartAdapter);
+            cartAdapter.notifyDataSetChanged();
+            grandtotalvalue();
+        } else {
+            recyclerView.setVisibility(View.GONE);
+            emptycartwarning();
+        }
     }
 
     @Override

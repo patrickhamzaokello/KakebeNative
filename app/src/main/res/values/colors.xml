@@ -2,7 +2,7 @@
 <resources>
     <color name="purple_200">#e12e39</color>
     <color name="purple_500">#e12e39</color>
-    <color name="purple_700">#e12e39</color>
+    <color name="purple_700">#000000</color>
     <color name="teal_200">#e12e39</color>
     <color name="teal_700">#262626</color>
     <color name="texton_green">#DEFFDD</color>
@@ -40,6 +40,7 @@
     <color name="niceGreen">#15950D</color>
     <color name="niceBlue">#0075D3</color>
     <color name="pendingstatus">#D59F00</color>
+    <color name="removeitem">#8C8C8C</color>
     <color name="accountcolors">#FFFFFF</color>
     <color name="profilecardtext">#ECECEC</color>
     <color name="changeaddress">#717171</color>

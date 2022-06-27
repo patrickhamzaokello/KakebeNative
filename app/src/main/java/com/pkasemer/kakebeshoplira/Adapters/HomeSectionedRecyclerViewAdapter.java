@@ -45,6 +45,7 @@ public class HomeSectionedRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
     private static final int ITEM = 0;
     private static final int LOADING = 1;
     private static final int HERO = 2;
+    private static final int HOMECATEGORY = 4;
     private static final int CATEGORY = 3;
 
     //    private static final String BASE_URL_IMG = "https://image.tmdb.org/t/p/w150";
@@ -91,6 +92,10 @@ public class HomeSectionedRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
             case CATEGORY:
                 View viewCategory = inflater.inflate(R.layout.home_category_recycler, parent, false);
                 viewHolder = new CategoryVH(viewCategory);
+                break;
+            case HOMECATEGORY:
+                View viewHOMECATEGORY = inflater.inflate(R.layout.home_top_section_custom_row_layout, parent, false);
+                viewHolder = new HOMECATEGORYVH(viewHOMECATEGORY);
                 break;
             case ITEM:
                 viewHolder = getViewHolder(parent, inflater);
@@ -177,6 +182,29 @@ public class HomeSectionedRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
 
                 break;
 
+            case HOMECATEGORY:
+                final HOMECATEGORYVH homecategoryvh = (HOMECATEGORYVH) holder;
+                homecategoryvh.sectionLabel.setText(category.getName());
+//                homecategoryvh.sectionLabel.setText(category.getMetaTitle());
+
+                //recycler view for items
+                homecategoryvh.itemRecyclerView.setHasFixedSize(true);
+                homecategoryvh.itemRecyclerView.setNestedScrollingEnabled(false);
+
+                /* set layout manager on basis of recyclerview enum type */
+                GridLayoutManager gridhometopLayoutManager = new GridLayoutManager(context, 3);
+                homecategoryvh.itemRecyclerView.setLayoutManager(gridhometopLayoutManager);
+
+
+                HomeSectionedRecyclerViewItemAdapter adapterTop = new HomeSectionedRecyclerViewItemAdapter(context, category.getProducts());
+                homecategoryvh.itemRecyclerView.setAdapter(adapterTop);
+
+
+
+
+
+                break;
+
             case LOADING:
 //                Do nothing
                 LoadingVH loadingVH = (LoadingVH) holder;
@@ -211,6 +239,8 @@ public class HomeSectionedRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
             return HERO;
         } else if(position == 1){
             return CATEGORY;
+        } else if (position == 2 || position == 3 || position == 4){
+            return HOMECATEGORY;
         }
         else {
             return (position == categories.size() - 1 && isLoadingAdded) ?
@@ -341,14 +371,28 @@ public class HomeSectionedRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
     }
 
     protected class MovieVH extends RecyclerView.ViewHolder {
-        private TextView sectionLabel, showAllButton;
+        private TextView sectionLabel;
+                private Button showAllButton;
         private RecyclerView itemRecyclerView;
 
         public MovieVH(View itemView) {
             super(itemView);
 
             sectionLabel = (TextView) itemView.findViewById(R.id.section_label);
-            showAllButton = (TextView) itemView.findViewById(R.id.section_show_all_button);
+            showAllButton = (Button) itemView.findViewById(R.id.section_show_all_button);
+            itemRecyclerView = (RecyclerView) itemView.findViewById(R.id.item_recycler_view);
+        }
+    }
+
+    protected class HOMECATEGORYVH extends RecyclerView.ViewHolder {
+        private TextView sectionLabel, section_label_desc;
+        private RecyclerView itemRecyclerView;
+
+        public HOMECATEGORYVH(View itemView) {
+            super(itemView);
+
+            sectionLabel = (TextView) itemView.findViewById(R.id.section_label);
+            section_label_desc = (TextView) itemView.findViewById(R.id.section_label_desc);
             itemRecyclerView = (RecyclerView) itemView.findViewById(R.id.item_recycler_view);
         }
     }

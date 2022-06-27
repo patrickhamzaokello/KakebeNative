@@ -54,10 +54,10 @@ public class Category {
     private String slug;
     @SerializedName("meta_title")
     @Expose
-    private Object metaTitle;
+    private String metaTitle;
     @SerializedName("meta_description")
     @Expose
-    private Object metaDescription;
+    private String metaDescription;
     @SerializedName("created_at")
     @Expose
     private String createdAt;
@@ -180,19 +180,19 @@ public class Category {
         this.slug = slug;
     }
 
-    public Object getMetaTitle() {
+    public String getMetaTitle() {
         return metaTitle;
     }
 
-    public void setMetaTitle(Object metaTitle) {
+    public void setMetaTitle(String metaTitle) {
         this.metaTitle = metaTitle;
     }
 
-    public Object getMetaDescription() {
+    public String getMetaDescription() {
         return metaDescription;
     }
 
-    public void setMetaDescription(Object metaDescription) {
+    public void setMetaDescription(String metaDescription) {
         this.metaDescription = metaDescription;
     }
 

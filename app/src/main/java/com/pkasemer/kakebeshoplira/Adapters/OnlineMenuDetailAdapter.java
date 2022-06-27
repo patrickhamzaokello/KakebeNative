@@ -47,6 +47,8 @@ import java.util.Locale;
 
 import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;
 
+import org.jsoup.Jsoup;
+
 /**
  * Created by Suleiman on 19/10/16.
  */
@@ -141,7 +143,7 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
 
                 if ((selectedProduct.getMetaDescription()).length() >= 20) {
                     heroVh.descriptionlayout.setVisibility(View.VISIBLE);
-                    heroVh.menu_description.setText(selectedProduct.getMetaDescription());
+                    heroVh.menu_description.setText(html2text(selectedProduct.getMetaDescription()));
                 } else {
                     heroVh.descriptionlayout.setVisibility(View.GONE);
                 }
@@ -171,7 +173,6 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
 
 
                 heroVh.menu_price.setText(NumberFormat.getNumberInstance(Locale.US).format(selectedProduct.getUnitPrice()));
-                heroVh.menu_qtn.setText("1");
                 heroVh.menu_total_price.setText(NumberFormat.getNumberInstance(Locale.US).format(selectedProduct.getUnitPrice()));
 
                 food_db_itemchecker = db.checktweetindb(String.valueOf(selectedProduct.getId()));
@@ -188,8 +189,8 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
 
 
                 } else {
-                    heroVh.btnAddtoCart.setText("Remove");
-                    heroVh.btnAddtoCart.setBackgroundColor(ContextCompat.getColor(context, R.color.buttonGreen));
+                    heroVh.btnAddtoCart.setText("Remove Item");
+                    heroVh.btnAddtoCart.setBackgroundColor(ContextCompat.getColor(context, R.color.removeitem));
                     heroVh.btnAddtoCart.setTextColor(ContextCompat.getColor(context, R.color.white));
 
                     minteger = db.getMenuQtn(String.valueOf(selectedProduct.getId()));
@@ -253,7 +254,7 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
 
                         } else {
                             updatecartCount();
-                            Intent i = new Intent(context.getApplicationContext(), PlaceOrder.class);
+                            Intent i = new Intent(context.getApplicationContext(), DeliveryAddress.class);
                             //PACK DATA
                             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                             context.startActivity(i);
@@ -280,8 +281,8 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
                             );
 
 
-                            heroVh.btnAddtoCart.setText("Remove");
-                            heroVh.btnAddtoCart.setBackgroundColor(ContextCompat.getColor(v.getContext(), R.color.buttonGreen));
+                            heroVh.btnAddtoCart.setText("Remove Item");
+                            heroVh.btnAddtoCart.setBackgroundColor(ContextCompat.getColor(v.getContext(), R.color.removeitem));
                             heroVh.btnAddtoCart.setTextColor(ContextCompat.getColor(v.getContext(), R.color.white));
 
 
@@ -346,6 +347,10 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
                 break;
         }
 
+    }
+
+    public static String html2text(String html) {
+        return Jsoup.parse(html).text();
     }
 
     @Override
@@ -493,7 +498,6 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
         private final TextView menu_name;
         private final TextView menu_description;
         private final TextView menu_price;
-        private final TextView menu_qtn;
         private final TextView itemQuanEt;
         private final TextView menu_total_price;
         private final Button incrementQtn;
@@ -502,7 +506,7 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
         private final Button btnOrderNow;
         private final ProgressBar mProgress;
 
-        private final LinearLayout descriptionlayout, relatedProductslayout;
+        private final LinearLayout descriptionlayout;
 
 
         public HeroVH(View itemView) {
@@ -512,7 +516,6 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
             menu_name = itemView.findViewById(R.id.menu_name);
             menu_description = itemView.findViewById(R.id.menu_description);
             menu_price = itemView.findViewById(R.id.menu_price);
-            menu_qtn = itemView.findViewById(R.id.menu_qtn);
             itemQuanEt = itemView.findViewById(R.id.itemQuanEt);
             menu_total_price = itemView.findViewById(R.id.menu_total_price);
             incrementQtn = itemView.findViewById(R.id.addBtn);
@@ -523,7 +526,7 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
 
             mProgress = itemView.findViewById(R.id.product_detail_image_progress);
             descriptionlayout = itemView.findViewById(R.id.descriptionlayout);
-            relatedProductslayout = itemView.findViewById(R.id.relatedProductslayout);
+
 
 
         }
