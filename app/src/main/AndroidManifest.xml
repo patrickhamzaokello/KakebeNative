@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.pkasemer.kakebeshoplira">
+    package="com.shop.kakebe.KaKebe">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -20,35 +20,35 @@
         android:usesCleartextTraffic="true"
         tools:replace="android:icon">
         <activity
-            android:name=".DeliveryAddress"
+            android:name="com.shop.kakebe.KaKebe.DeliveryAddress"
             android:exported="false" />
         <activity
-            android:name=".SearchView"
+            android:name="com.shop.kakebe.KaKebe.SearchView"
             android:exported="false" />
-        <activity android:name=".ManageOrders" />
+        <activity android:name="com.shop.kakebe.KaKebe.ManageOrders" />
         <activity
-            android:name=".PlaceOrder"
+            android:name="com.shop.kakebe.KaKebe.PlaceOrder"
             android:exported="true" />
         <activity
-            android:name=".MyMenuDetail"
+            android:name="com.shop.kakebe.KaKebe.MyMenuDetail"
             android:exported="true" />
         <activity
-            android:name=".MySelectedCategory"
+            android:name="com.shop.kakebe.KaKebe.MySelectedCategory"
             android:exported="true" />
         <activity
-            android:name=".RootActivity"
+            android:name="com.shop.kakebe.KaKebe.RootActivity"
             android:exported="true" />
         <activity
-            android:name=".RegisterMaterial"
+            android:name="com.shop.kakebe.KaKebe.RegisterMaterial"
             android:exported="true" />
         <activity
-            android:name=".LoginMaterial"
+            android:name="com.shop.kakebe.KaKebe.LoginMaterial"
             android:exported="true" />
         <activity
-            android:name=".OnBoarding"
+            android:name="com.shop.kakebe.KaKebe.OnBoarding"
             android:exported="true" />
         <activity
-            android:name=".SplashActivity"
+            android:name="com.shop.kakebe.KaKebe.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -58,7 +58,7 @@
         </activity>
 
         <service
-            android:name=".PushNotificationService"
+            android:name="com.shop.kakebe.KaKebe.PushNotificationService"
             android:exported="false">
             <intent-filter>
                 <action

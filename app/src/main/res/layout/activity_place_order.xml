@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".PlaceOrder">
+    tools:context=".KaKebe.PlaceOrder">
 
     <RelativeLayout
         android:id="@+id/placeorde_relative_layout"

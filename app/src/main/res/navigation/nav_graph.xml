@@ -8,26 +8,26 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.pkasemer.kakebeshoplira.Fragments.Home"
+        android:name="com.shop.kakebe.KaKebe.Fragments.Home"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home" >
     </fragment>
 
     <fragment
         android:id="@+id/navigation_cart"
-        android:name="com.pkasemer.kakebeshoplira.Fragments.Cart"
+        android:name="com.shop.kakebe.KaKebe.Fragments.Cart"
         android:label="@string/title_Cart"
         tools:layout="@layout/fragment_cart" />
 
     <fragment
         android:id="@+id/navigation_search"
-        android:name="com.pkasemer.kakebeshoplira.Fragments.Search"
+        android:name="com.shop.kakebe.KaKebe.Fragments.Search"
         android:label="@string/title_search"
         tools:layout="@layout/fragment_search" />
 
     <fragment
         android:id="@+id/navigation_profile"
-        android:name="com.pkasemer.kakebeshoplira.Fragments.Profile"
+        android:name="com.shop.kakebe.KaKebe.Fragments.Profile"
         android:label="@string/title_profile"
         tools:layout="@layout/fragment_profile" />
 

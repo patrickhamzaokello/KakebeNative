@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/rootbg"
-    tools:context=".Fragments.Multiview">
+    tools:context=".KaKebe.Fragments.Multiview">
 
 
     <androidx.recyclerview.widget.RecyclerView

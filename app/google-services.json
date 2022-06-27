@@ -7,20 +7,12 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:587787462511:android:ca1ecd412df87f964d2a9a",
+        "mobilesdk_app_id": "1:587787462511:android:6aec0d5aec37acc44d2a9a",
         "android_client_info": {
-          "package_name": "com.pkasemer.kakebeshoplira"
+          "package_name": "com.shop.kakebe.KaKebe"
         }
       },
       "oauth_client": [
-        {
-          "client_id": "587787462511-6isk3vmaufp80btd0hu43n6hfruh6qtb.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.pkasemer.kakebeshoplira",
-            "certificate_hash": "f4abab3a35683ab347bd1981cae9addb0219937e"
-          }
-        },
         {
           "client_id": "587787462511-pq1l0399kge5n4r0jvn9tq6ptjfepp5a.apps.googleusercontent.com",
           "client_type": 3

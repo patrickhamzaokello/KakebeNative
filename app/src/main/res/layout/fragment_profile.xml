@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@color/rootbg"
     android:orientation="vertical"
-    tools:context=".Fragments.Profile">
+    tools:context=".KaKebe.Fragments.Profile">
 
 
     <LinearLayout

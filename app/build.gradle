@@ -7,11 +7,11 @@ android {
     compileSdk 31
 
     defaultConfig {
-        applicationId "com.pkasemer.kakebeshoplira"
+        applicationId "com.shop.kakebe.KaKebe"
         minSdk 21
         targetSdk 31
-        versionCode 1
-        versionName "1.0"
+        versionCode 13
+        versionName "1.0[13]"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
