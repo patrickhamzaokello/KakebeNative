@@ -195,7 +195,8 @@ public class Home extends Fragment implements PaginationAdapterCallback {
     private List<Category> fetchResults(Response<HomeCategories> response) {
         HomeCategories homeCategories = response.body();
         TOTAL_PAGES = homeCategories.getTotalPages();
-        System.out.println("total pages" + TOTAL_PAGES);
+        System.out.println("total pages" + homeCategories.getVersion());
+        Log.w("version", (homeCategories.getVersion()).toString());
 
         return homeCategories.getCategories();
     }

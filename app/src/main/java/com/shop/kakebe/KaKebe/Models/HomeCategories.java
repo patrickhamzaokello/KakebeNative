@@ -9,6 +9,9 @@ import com.google.gson.annotations.SerializedName;
 @Generated("jsonschema2pojo")
 public class HomeCategories {
 
+    @SerializedName("version")
+    @Expose
+    private Integer version;
     @SerializedName("page")
     @Expose
     private Integer page;
@@ -21,6 +24,14 @@ public class HomeCategories {
     @SerializedName("total_results")
     @Expose
     private Integer totalResults;
+
+    public Integer getVersion() {
+        return version;
+    }
+
+    public void setVersion(Integer version) {
+        this.version = version;
+    }
 
     public Integer getPage() {
         return page;

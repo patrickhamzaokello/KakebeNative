@@ -10,6 +10,9 @@ import com.google.gson.annotations.SerializedName;
 @Generated("jsonschema2pojo")
 public class Category {
 
+    @SerializedName("header_ad")
+    @Expose
+    private String header_ad;
     @SerializedName("sliderBanners")
     @Expose
     private List<SliderBanner> sliderBanners = null;
@@ -67,6 +70,13 @@ public class Category {
     @SerializedName("products")
     @Expose
     private List<Product> products = null;
+
+    public String getHeader_ad() {
+        return header_ad;
+    }
+    public void getHeader_ad(String header_ad) {
+        this.header_ad = header_ad;
+    }
 
     public List<SliderBanner> getSliderBanners() {
         return sliderBanners;

@@ -121,6 +121,11 @@ public class HomeSectionedRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
         switch (getItemViewType(position)) {
             case HERO:
                 final HeroVH heroVh = (HeroVH) holder;
+
+                Glide.with(context)
+                        .load(category.getHeader_ad())
+                        .into(heroVh.headertopslider);
+
                 heroVh.sliderView.setAutoCycleDirection(SliderView.LAYOUT_DIRECTION_LTR);
                 heroVh.sliderView.setScrollTimeInSec(3);
                 heroVh.sliderView.setAutoCycle(true);
@@ -345,11 +350,6 @@ public class HomeSectionedRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
             // init views
             sliderView = itemView.findViewById(R.id.home_slider);
             headertopslider  = itemView.findViewById(R.id.headertopslider);
-
-
-            Glide.with(itemView)
-                    .load("https://d2t03bblpoql2z.cloudfront.net/uploads/all/LrSQZup5egNb4kdjN8qYxtJ7YT5WmLrjWk3EUwV2.gif")
-                    .into(headertopslider);
 
 
         }
