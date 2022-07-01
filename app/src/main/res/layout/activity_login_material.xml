@@ -9,7 +9,7 @@
     android:layout_centerInParent="true"
     android:background="@color/accountcolors"
     android:scaleType="fitXY"
-    tools:context=".KaKebe.LoginMaterial">
+    tools:context=".LoginMaterial">
 
     <RelativeLayout
         android:layout_width="match_parent"

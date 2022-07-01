@@ -87,6 +87,7 @@ public class Cart extends Fragment implements CartItemHandlerListener {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(getContext(), DeliveryAddress.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(i);
             }
         });
@@ -204,7 +205,7 @@ public class Cart extends Fragment implements CartItemHandlerListener {
 
 
     public void grandtotalvalue() {
-        grandtotalvalue.setText("" + NumberFormat.getNumberInstance(Locale.US).format(db.sumPriceCartItems()));
+        grandtotalvalue.setText("" + NumberFormat.getNumberInstance(Locale.US).format(db.sumPriceCartItems()) + " UGX");
 
         if (db.sumPriceCartItems() == 0) {
             emptycartwarning();

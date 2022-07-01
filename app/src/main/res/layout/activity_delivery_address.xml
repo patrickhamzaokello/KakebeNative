@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:background="@color/rootbg"
     android:orientation="vertical"
-    tools:context=".KaKebe.DeliveryAddress">
+    tools:context=".DeliveryAddress">
 
 
     <TextView
@@ -17,9 +17,10 @@
         android:layout_marginTop="20dp"
         android:fontFamily="@font/montserrat_bold"
         android:includeFontPadding="false"
-        android:text="Choose Delivery Address"
+        android:layout_gravity="center"
+        android:text="Select Delivery Address"
         android:textColor="@color/black"
-        android:textSize="20sp"
+        android:textSize="25sp"
         android:transitionName="logo_text"
 
 
@@ -33,7 +34,8 @@
         android:layout_marginBottom="20dp"
         android:fontFamily="@font/montserrat"
         android:includeFontPadding="false"
-        android:text="Create a new Address"
+        android:layout_gravity="center"
+        android:text="where your products will be delivered."
         android:textColor="@color/changeaddress"
         android:textSize="15sp"
         android:transitionName="logo_text"
@@ -41,11 +43,19 @@
 
         />
 
-    <com.google.android.gms.maps.MapView
-        android:layout_alignParentTop="true"
-        android:id="@+id/mapView"
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/heading_create_address"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:layout_width="match_parent"
-        android:layout_height="150dp" />
+        android:layout_height="wrap_content"
+        android:text="New delivery address"
+        android:layout_marginHorizontal="20dp"
+        android:textColor="#9F9F9F"
+        android:transitionName="account_change"
+        android:textAllCaps="false"
+        app:layout_constraintStart_toStartOf="parent"
+        app:strokeColor="#9F9F9F"
+        app:strokeWidth="1dp" />
 
 
     <FrameLayout

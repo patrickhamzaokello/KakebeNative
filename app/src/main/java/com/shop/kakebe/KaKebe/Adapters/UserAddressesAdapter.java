@@ -99,7 +99,7 @@ public class UserAddressesAdapter extends RecyclerView.Adapter<RecyclerView.View
                     movieVH.phone.setText(userAddress.getPhone());
                     movieVH.city.setText(userAddress.getCountry() + " , " + userAddress.getCity() + " , " + userAddress.getAddress());
 
-                    movieVH.addressCard.setOnClickListener(new View.OnClickListener() {
+                    movieVH.itemView.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
                             mCallback.selectedAddress(userAddress);
@@ -238,7 +238,6 @@ public class UserAddressesAdapter extends RecyclerView.Adapter<RecyclerView.View
 
     protected class MovieVH extends RecyclerView.ViewHolder {
         private TextView email, phone, city;
-        private MaterialCardView addressCard;
 
         public MovieVH(View itemView) {
             super(itemView);
@@ -246,8 +245,6 @@ public class UserAddressesAdapter extends RecyclerView.Adapter<RecyclerView.View
             email = (TextView) itemView.findViewById(R.id.email);
             phone = (TextView) itemView.findViewById(R.id.phone);
             city = (TextView) itemView.findViewById(R.id.city);
-            addressCard = (MaterialCardView) itemView.findViewById(R.id.addressCard);
-
 
         }
     }

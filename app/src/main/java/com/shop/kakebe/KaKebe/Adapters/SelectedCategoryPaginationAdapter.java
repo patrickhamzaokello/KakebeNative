@@ -155,7 +155,12 @@ public class SelectedCategoryPaginationAdapter extends RecyclerView.Adapter<Recy
 
                 movieVH.mMovieTitle.setText(selectedCategoryResult.getName());
 
-                movieVH.mMoviePrice.setText("Ugx " + NumberFormat.getNumberInstance(Locale.US).format(selectedCategoryResult.getUnitPrice()));
+                if((selectedCategoryResult.getUnitPrice()) != null){
+                    movieVH.mMoviePrice.setText("Ugx " + NumberFormat.getNumberInstance(Locale.US).format(selectedCategoryResult.getUnitPrice()));
+                } else {
+                    movieVH.mMoviePrice.setText("Null");
+                }
+
 
 
 

@@ -11,8 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="10dp"
-        android:background="@color/white"
-
+        android:background="#F6F6F6"
         >
 
         <RelativeLayout
@@ -33,7 +32,6 @@
                     android:scaleType="fitXY"
                     android:background="#E8E8E8"
                     android:src="@drawable/africanwoman"></ImageView>
-
 
                 <ProgressBar
                     android:id="@+id/cart_progress"

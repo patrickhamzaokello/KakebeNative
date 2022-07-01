@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#FBFBFB"
+    android:background="@color/white"
     android:clipToPadding="false"
     android:padding="10dp">
 
@@ -21,7 +21,7 @@
             android:layout_height="match_parent"
             android:background="#f2f2f2"
             android:scaleType="fitXY"
-            android:src="@drawable/beefstew"></ImageView>
+            android:src="@drawable/beefstew" />
 
         <ProgressBar
             android:id="@+id/home_product_image_progress"
@@ -84,7 +84,7 @@
 
     </LinearLayout>
 
-    <androidx.cardview.widget.CardView
+    <com.google.android.material.card.MaterialCardView
         android:id="@+id/home_addToCart"
         android:layout_width="30dp"
         android:layout_height="30dp"
@@ -93,7 +93,7 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
         app:cardBackgroundColor="@color/purple_200"
-        app:cardCornerRadius="100dp">
+        app:cardCornerRadius="15dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -113,7 +113,7 @@
         </RelativeLayout>
 
 
-    </androidx.cardview.widget.CardView>
+    </com.google.android.material.card.MaterialCardView>
 
 
 </RelativeLayout>

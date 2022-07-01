@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#f2f2f2"
+    android:background="@color/white"
     android:orientation="vertical"
-    tools:context=".KaKebe.Fragments.Cart">
+    tools:context=".Fragments.Cart">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -43,46 +43,43 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:background="@color/black"
+            android:background="@color/white"
             android:orientation="vertical"
             android:padding="20dp"
 
             >
 
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
                 android:gravity="center_vertical"
-                android:orientation="horizontal"
+                android:orientation="vertical">
 
-                >
+                <TextView
+                    android:id="@+id/grandtotalvalue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:fontFamily="@font/montserrat_bold"
+                    android:text="46,000"
+                    android:textColor="@color/black"
+                    android:textSize="20dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/montserrat_bold"
-                    android:text="Grand Total (Ugx)"
-                    android:textColor="@color/white" />
+                    android:layout_below="@+id/grandtotalvalue"
+                    android:layout_centerHorizontal="true"
+                    android:fontFamily="@font/montserrat"
+                    android:paddingTop="5dp"
+                    android:text="Grand Total"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textSize="15dp" />
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:id="@+id/grandtotalvalue"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:fontFamily="@font/montserrat_bold"
-                        android:text="46,000"
-                        android:textColor="@color/white"
-                        android:textSize="20dp" />
-                </RelativeLayout>
-
-
-            </LinearLayout>
+            </RelativeLayout>
 
 
             <com.google.android.material.button.MaterialButton
@@ -91,7 +88,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/purple_500"
-                android:text="Complete Your Order"
+                android:paddingVertical="20dp"
+                android:text="Checkout"
+                android:textAllCaps="false"
                 android:textColor="@color/white"
                 android:transitionName="account_change"
                 app:layout_constraintStart_toStartOf="parent"
@@ -106,10 +105,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:text="Call To Order"
-                android:textColor="@color/white"
+                android:textAllCaps="false"
+                android:textColor="@color/purple_500"
                 android:transitionName="account_change"
                 app:layout_constraintStart_toStartOf="parent"
-                app:strokeColor="@color/white"
+                app:strokeColor="@color/purple_500"
                 app:strokeWidth="1dp" />
 
         </LinearLayout>

@@ -4,8 +4,11 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -17,6 +20,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
+import com.shop.kakebe.KaKebe.Adapters.CartAdapter;
+import com.shop.kakebe.KaKebe.Adapters.PlaceOrderCartAdapter;
 import com.shop.kakebe.KaKebe.Apis.ShopAPIBase;
 import com.shop.kakebe.KaKebe.Apis.ShopApiEndPoints;
 import com.shop.kakebe.KaKebe.Dialogs.ChangeLocation;
@@ -28,8 +33,8 @@ import com.shop.kakebe.KaKebe.Models.FoodDBModel;
 import com.shop.kakebe.KaKebe.Models.OrderRequest;
 import com.shop.kakebe.KaKebe.Models.OrderResponse;
 import com.shop.kakebe.KaKebe.Models.User;
+import com.shop.kakebe.KaKebe.Models.UserAddress;
 import com.shop.kakebe.KaKebe.localDatabase.SenseDBHelper;
-import com.shop.kakebe.KaKebe.R;
 
 import java.text.NumberFormat;
 import java.util.List;
@@ -39,7 +44,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class PlaceOrder extends AppCompatActivity implements ChangeLocation.NoticeDialogListener, OrderConfirmationDialog.OrderConfirmLister {
+public class PlaceOrder extends AppCompatActivity implements OrderConfirmationDialog.OrderConfirmLister {
 
     ActionBar actionBar;
     private ShopApiEndPoints shopApiEndPoints;
@@ -49,12 +54,19 @@ public class PlaceOrder extends AppCompatActivity implements ChangeLocation.Noti
 
     ProgressBar placeorder_main_progress;
     OrderRequest orderRequest = new OrderRequest();
-    TextView btn_change_location, moneyChangeButton, grandsubvalue, grandshipvalue, grandtotalvalue, location_address_view, order_page_fullname, order_page_phoneno, order_page_username;
+    TextView btn_change_location, grandsubvalue, grandshipvalue, grandtotalvalue, location_address_view, order_page_fullname, order_page_phoneno, order_page_username;
 
     RelativeLayout placeorde_relative_layout;
     LinearLayout orderRecommendLayout;
     Button btnCheckout,btnTodaysMEnu,btnGoHOme;
     String selected_address_json;
+    String address, city, phone,email,name;
+
+
+    private Cursor cursor;
+    private ProgressBar progressBar;
+    PlaceOrderCartAdapter placeOrderCartAdapter;
+    RecyclerView recyclerView;
 
 
     @Override
@@ -68,16 +80,22 @@ public class PlaceOrder extends AppCompatActivity implements ChangeLocation.Noti
         }
 
         actionBar = getSupportActionBar(); // or getActionBar();
-        actionBar.setTitle("Place Order");
+        actionBar.setTitle("Checkout");
+
+        // add back arrow to toolbar
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
+
 
 
         shopApiEndPoints = ShopAPIBase.getClient(PlaceOrder.this).create(ShopApiEndPoints.class);
         db = new SenseDBHelper(PlaceOrder.this);
-        cartitemlist = db.listTweetsBD();
+
 
 
         btn_change_location = findViewById(R.id.btn_change_location);
-        moneyChangeButton = findViewById(R.id.moneyChangeButton);
         btnCheckout = findViewById(R.id.btnCheckout);
         grandsubvalue = findViewById(R.id.grandsubvalue);
         grandshipvalue = findViewById(R.id.grandshipvalue);
@@ -86,10 +104,10 @@ public class PlaceOrder extends AppCompatActivity implements ChangeLocation.Noti
 
         order_page_fullname = findViewById(R.id.order_page_fullname);
         order_page_phoneno = findViewById(R.id.order_page_phoneno);
-        order_page_username = findViewById(R.id.order_page_username);
 
         placeorde_relative_layout = findViewById(R.id.placeorde_relative_layout);
-
+        recyclerView = findViewById(R.id.place_order_main_recycler);
+        progressBar = findViewById(R.id.place_order_main_progress);
         placeorder_main_progress = findViewById(R.id.placeorder_main_progress);
         placeorder_main_progress.setVisibility(View.GONE);
         orderRecommendLayout = findViewById(R.id.order_recommend_layout);
@@ -101,28 +119,21 @@ public class PlaceOrder extends AppCompatActivity implements ChangeLocation.Noti
 
         User user = SharedPrefManager.getInstance(PlaceOrder.this).getUser();
 
-        order_page_fullname.setText(user.getFullname());
-//        order_page_username.setText(user.getUsername());
-        order_page_phoneno.setText(user.getPhone());
-//        location_address_view.setText(user.getAddress());
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager.setOrientation(RecyclerView.VERTICAL);
+        recyclerView.setLayoutManager(layoutManager);
 
 
 
         btn_change_location.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ChangeLocation changeLocation = new ChangeLocation();
-                changeLocation.show(getSupportFragmentManager(), "change Location");
+                Intent i = new Intent(PlaceOrder.this, DeliveryAddress.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS );
+                startActivity(i);
             }
         });
 
-        moneyChangeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ChangePaymentMethod changePaymentMethod = new ChangePaymentMethod();
-                changePaymentMethod.show(getSupportFragmentManager(), "change payment method");
-            }
-        });
 
         btnTodaysMEnu.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -147,7 +158,7 @@ public class PlaceOrder extends AppCompatActivity implements ChangeLocation.Noti
 
                 Log.i("addressStringxs",selected_address_json );
 
-                orderRequest.setOrderAddressID(selected_address_json);
+                orderRequest.setOrderAddress(selected_address_json);
                 orderRequest.setCustomerId(String.valueOf(user.getId()));
                 orderRequest.setTotalAmount(String.valueOf(db.sumPriceCartItems()));
                 orderRequest.setOrderStatus("pending");
@@ -229,6 +240,11 @@ public class PlaceOrder extends AppCompatActivity implements ChangeLocation.Noti
     }
 
 
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
 
 
     private Call<OrderResponse> postAllCartItems() {
@@ -240,6 +256,10 @@ public class PlaceOrder extends AppCompatActivity implements ChangeLocation.Noti
         grandsubvalue.setText("" + NumberFormat.getNumberInstance(Locale.US).format(db.sumPriceCartItems()));
         grandshipvalue.setText("2000");
         grandtotalvalue.setText("" + NumberFormat.getNumberInstance(Locale.US).format(db.sumPriceCartItems() + 2000));
+        order_page_fullname.setText(name);
+        order_page_phoneno.setText(phone);
+        location_address_view.setText(address + ", "+city);
+
     }
 
     private void updatecartCount() {
@@ -254,34 +274,8 @@ public class PlaceOrder extends AppCompatActivity implements ChangeLocation.Noti
         orderFailed.show(getSupportFragmentManager(), "Order Failed Dialog");
     }
 
-    private void updatelocationView(String location) {
-        location_address_view.setText(location);
-        orderRequest.setOrderAddressID(location);
-    }
 
 
-    @Override
-    public void onDialogPositiveClick(DialogFragment dialog, TextInputEditText inputUserNewLocation, TextInputEditText inputUserNewPhone) {
-
-        String location_name = inputUserNewLocation.getText().toString();
-        String phone = inputUserNewPhone.getText().toString();
-
-        if(location_name != null && !location_name.isEmpty() && phone != null && !phone.isEmpty()){
-            Log.i("dialog", "Positive Method2: " + location_name + " - " + phone);
-            order_page_phoneno.setText(phone);
-            updatelocationView(location_name + "-" + phone);
-
-        } else {
-            Toast.makeText(getApplicationContext(), "Location and Phone not Changed", Toast.LENGTH_SHORT);
-        }
-
-
-    }
-
-    @Override
-    public void onDialogNegativeClick(DialogFragment dialog) {
-        Log.i("dialog", "Negative: ");
-    }
 
     @Override
     public void onOrderDialogPositiveClick(DialogFragment dialog) {
@@ -302,6 +296,18 @@ public class PlaceOrder extends AppCompatActivity implements ChangeLocation.Noti
         {
             this.receiveData();
         }
+        cartitemlist = db.listTweetsBD();
+
+        if (cartitemlist.size() > 0) {
+            progressBar.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.VISIBLE);
+            placeOrderCartAdapter = new PlaceOrderCartAdapter(this, cartitemlist);
+            recyclerView.setAdapter(placeOrderCartAdapter);
+            placeOrderCartAdapter.notifyDataSetChanged();
+        } else {
+            recyclerView.setVisibility(View.GONE);
+//            emptycartwarning();
+        }
     }
 
 
@@ -310,8 +316,14 @@ public class PlaceOrder extends AppCompatActivity implements ChangeLocation.Noti
         //RECEIVE DATA VIA INTENT
         Intent i = getIntent();
         selected_address_json = i.getStringExtra("selected_address_json");
+        address = i.getStringExtra("address");
+        city = i.getStringExtra("city");
+        phone = i.getStringExtra("phone");
+        email = i.getStringExtra("email");
+        name = i.getStringExtra("name");
 
-        Log.i("addressStrings",selected_address_json );
+        Log.i("recieve", address +city +phone+ email +name);
+
         //SET DATA
         OrderTotalling();
 

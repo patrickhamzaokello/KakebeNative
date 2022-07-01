@@ -138,7 +138,7 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
 
                 heroVh.menu_name.setText(selectedProduct.getName());
 
-                if ((selectedProduct.getMetaDescription()).length() >= 20) {
+                if ((selectedProduct.getMetaDescription()) != null && (selectedProduct.getMetaDescription()).length() >= 20) {
                     heroVh.descriptionlayout.setVisibility(View.VISIBLE);
                     heroVh.menu_description.setText(html2text(selectedProduct.getMetaDescription()));
                 } else {
