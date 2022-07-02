@@ -607,6 +607,7 @@ public class DeliveryAddress extends AppCompatActivity implements SelectedAddres
         i.putExtra("email",userAddress.getEmail());
         i.putExtra("name",userAddress.getUsername());
         startActivity(i);
+        finish();
     }
 
 

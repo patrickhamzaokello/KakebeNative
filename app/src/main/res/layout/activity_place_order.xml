@@ -308,7 +308,7 @@
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/place_order_main_recycler"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:clipToPadding="false"
                             android:paddingTop="10dp"
                             android:paddingBottom="@dimen/activity_margin_content" />
@@ -322,9 +322,6 @@
 
                         <include layout="@layout/error_layout" />
                     </LinearLayout>
-
-
-
 
 
 
@@ -400,7 +397,6 @@
 
 
     </RelativeLayout>
-    <include layout="@layout/order_recommend_layout" />
 
 
 

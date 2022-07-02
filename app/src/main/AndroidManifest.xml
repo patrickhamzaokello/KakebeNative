@@ -20,35 +20,38 @@
         android:usesCleartextTraffic="true"
         tools:replace="android:icon">
         <activity
-            android:name="com.shop.kakebe.KaKebe.DeliveryAddress"
+            android:name=".OrderCompleted"
             android:exported="false" />
         <activity
-            android:name="com.shop.kakebe.KaKebe.SearchView"
+            android:name=".DeliveryAddress"
             android:exported="false" />
-        <activity android:name="com.shop.kakebe.KaKebe.ManageOrders" />
         <activity
-            android:name="com.shop.kakebe.KaKebe.PlaceOrder"
+            android:name=".SearchView"
+            android:exported="false" />
+        <activity android:name=".ManageOrders" />
+        <activity
+            android:name=".PlaceOrder"
             android:exported="true" />
         <activity
-            android:name="com.shop.kakebe.KaKebe.MyMenuDetail"
+            android:name=".MyMenuDetail"
             android:exported="true" />
         <activity
-            android:name="com.shop.kakebe.KaKebe.MySelectedCategory"
+            android:name=".MySelectedCategory"
             android:exported="true" />
         <activity
-            android:name="com.shop.kakebe.KaKebe.RootActivity"
+            android:name=".RootActivity"
             android:exported="true" />
         <activity
-            android:name="com.shop.kakebe.KaKebe.RegisterMaterial"
+            android:name=".RegisterMaterial"
             android:exported="true" />
         <activity
-            android:name="com.shop.kakebe.KaKebe.LoginMaterial"
+            android:name=".LoginMaterial"
             android:exported="true" />
         <activity
-            android:name="com.shop.kakebe.KaKebe.OnBoarding"
+            android:name=".OnBoarding"
             android:exported="true" />
         <activity
-            android:name="com.shop.kakebe.KaKebe.SplashActivity"
+            android:name=".SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -58,12 +61,10 @@
         </activity>
 
         <service
-            android:name="com.shop.kakebe.KaKebe.PushNotificationService"
+            android:name=".PushNotificationService"
             android:exported="false">
             <intent-filter>
-                <action
-                    android:name="com.google.firebase.MESSAGING_EVENT">
-                </action>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"></action>
             </intent-filter>
         </service>
 
@@ -79,7 +80,6 @@
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/purple_200" />
-
     </application>
 
 </manifest>

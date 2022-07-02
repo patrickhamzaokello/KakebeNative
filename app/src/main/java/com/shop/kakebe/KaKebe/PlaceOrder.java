@@ -2,13 +2,16 @@ package com.shop.kakebe.KaKebe;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+
 import androidx.fragment.app.DialogFragment;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+
 import android.content.Intent;
 import android.database.Cursor;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -19,21 +22,15 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.material.textfield.TextInputEditText;
-import com.shop.kakebe.KaKebe.Adapters.CartAdapter;
 import com.shop.kakebe.KaKebe.Adapters.PlaceOrderCartAdapter;
 import com.shop.kakebe.KaKebe.Apis.ShopAPIBase;
 import com.shop.kakebe.KaKebe.Apis.ShopApiEndPoints;
-import com.shop.kakebe.KaKebe.Dialogs.ChangeLocation;
-import com.shop.kakebe.KaKebe.Dialogs.ChangePaymentMethod;
-import com.shop.kakebe.KaKebe.Dialogs.OrderConfirmationDialog;
 import com.shop.kakebe.KaKebe.Dialogs.OrderFailed;
 import com.shop.kakebe.KaKebe.HelperClasses.SharedPrefManager;
 import com.shop.kakebe.KaKebe.Models.FoodDBModel;
 import com.shop.kakebe.KaKebe.Models.OrderRequest;
 import com.shop.kakebe.KaKebe.Models.OrderResponse;
 import com.shop.kakebe.KaKebe.Models.User;
-import com.shop.kakebe.KaKebe.Models.UserAddress;
 import com.shop.kakebe.KaKebe.localDatabase.SenseDBHelper;
 
 import java.text.NumberFormat;
@@ -44,26 +41,20 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class PlaceOrder extends AppCompatActivity implements OrderConfirmationDialog.OrderConfirmLister {
+public class PlaceOrder extends AppCompatActivity {
 
     ActionBar actionBar;
     private ShopApiEndPoints shopApiEndPoints;
     private SenseDBHelper db;
-    boolean food_db_itemchecker;
     List<FoodDBModel> cartitemlist;
 
     ProgressBar placeorder_main_progress;
     OrderRequest orderRequest = new OrderRequest();
     TextView btn_change_location, grandsubvalue, grandshipvalue, grandtotalvalue, location_address_view, order_page_fullname, order_page_phoneno, order_page_username;
-
-    RelativeLayout placeorde_relative_layout;
-    LinearLayout orderRecommendLayout;
-    Button btnCheckout,btnTodaysMEnu,btnGoHOme;
+    Button btnCheckout;
     String selected_address_json;
     String address, city, phone,email,name;
 
-
-    private Cursor cursor;
     private ProgressBar progressBar;
     PlaceOrderCartAdapter placeOrderCartAdapter;
     RecyclerView recyclerView;
@@ -78,7 +69,6 @@ public class PlaceOrder extends AppCompatActivity implements OrderConfirmationDi
 //            finish();
             startActivity(new Intent(PlaceOrder.this, LoginMaterial.class));
         }
-
         actionBar = getSupportActionBar(); // or getActionBar();
         actionBar.setTitle("Checkout");
 
@@ -105,14 +95,11 @@ public class PlaceOrder extends AppCompatActivity implements OrderConfirmationDi
         order_page_fullname = findViewById(R.id.order_page_fullname);
         order_page_phoneno = findViewById(R.id.order_page_phoneno);
 
-        placeorde_relative_layout = findViewById(R.id.placeorde_relative_layout);
         recyclerView = findViewById(R.id.place_order_main_recycler);
         progressBar = findViewById(R.id.place_order_main_progress);
         placeorder_main_progress = findViewById(R.id.placeorder_main_progress);
         placeorder_main_progress.setVisibility(View.GONE);
-        orderRecommendLayout = findViewById(R.id.order_recommend_layout);
-        btnTodaysMEnu = findViewById(R.id.order_btn_todayMenu);
-        btnGoHOme = findViewById(R.id.btnGoHOme);
+
 
 
         OrderTotalling();
@@ -135,26 +122,9 @@ public class PlaceOrder extends AppCompatActivity implements OrderConfirmationDi
         });
 
 
-        btnTodaysMEnu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(PlaceOrder.this, ManageOrders.class);
-                startActivity(i);
-            }
-        });
-
-        btnGoHOme.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(PlaceOrder.this, RootActivity.class);
-                startActivity(i);
-            }
-        });
-
         btnCheckout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
 
                 Log.i("addressStringxs",selected_address_json );
 
@@ -178,31 +148,28 @@ public class PlaceOrder extends AppCompatActivity implements OrderConfirmationDi
                         OrderResponse orderResponses = response.body();
                         placeorder_main_progress.setVisibility(View.GONE);
 
-
                         //if orderResponses is not null
                         if (orderResponses != null) {
 
                             //if no error- that is error = false
                             if (!orderResponses.getError()) {
 
-                                placeorde_relative_layout.setVisibility(View.GONE);
-
 
                                 Log.i("Order Success", orderResponses.getMessage() + orderResponses.getError() );
                                 db.clearCart();
                                 updatecartCount();
                                 OrderTotalling();
-                                OrderConfirmationDialog orderConfirmationDialog = new OrderConfirmationDialog();
-                                orderConfirmationDialog.show(getSupportFragmentManager(), "Order Confirmation Dialog");
 
-                                orderRecommendLayout.setVisibility(View.VISIBLE);
+                                Intent i = new Intent(PlaceOrder.this, OrderCompleted.class);
+                                startActivity(i);
+                                finish();
+
 
                             } else {
                                 Log.i("Ress", "message: " + (orderResponses.getMessage()));
                                 Log.i("et", "error false: " + (orderResponses.getError()));
                                 btnCheckout.setEnabled(true);
                                 btnCheckout.setClickable(true);
-
                                 ShowOrderFailed();
 
                             }
@@ -214,8 +181,6 @@ public class PlaceOrder extends AppCompatActivity implements OrderConfirmationDi
                             btnCheckout.setClickable(true);
 
                             ShowOrderFailed();
-
-                            return;
 
                         }
 
@@ -238,6 +203,8 @@ public class PlaceOrder extends AppCompatActivity implements OrderConfirmationDi
 
 
     }
+
+
 
 
     @Override
@@ -277,11 +244,7 @@ public class PlaceOrder extends AppCompatActivity implements OrderConfirmationDi
 
 
 
-    @Override
-    public void onOrderDialogPositiveClick(DialogFragment dialog) {
-        Intent i = new Intent(PlaceOrder.this, RootActivity.class);
-        startActivity(i);
-    }
+
 
     @Override
     protected void onResume() {

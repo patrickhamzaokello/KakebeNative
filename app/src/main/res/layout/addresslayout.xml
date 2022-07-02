@@ -8,7 +8,7 @@
     android:layout_marginStart="10dp"
     android:layout_marginTop="20dp"
     android:layout_marginEnd="10dp"
-    android:background="#F6F6F6"
+    android:background="#F2F2FF"
     app:cardBackgroundColor="#00000000"
     app:cardCornerRadius="5dp"
     app:cardElevation="1dp"
@@ -25,23 +25,22 @@
 
         <Button
             android:id="@+id/addBtn"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:layout_centerVertical="true"
-            android:background="@drawable/custom_btn_select"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="right"
+            android:background="@drawable/custom_btn_select"
             android:backgroundTint="@color/black"
             android:clickable="false"
-            android:layout_gravity="right"
-            android:theme="@style/GreenBtn" />
+            android:theme="@style/MyREDbtn" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
             android:layout_marginRight="10dp"
             android:layout_toLeftOf="@+id/addBtn"
-            >
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/city"
@@ -52,6 +51,7 @@
                 android:maxLines="2"
                 android:text="Uganda, Lira City, Obote Avenue"
                 android:textColor="@color/black" />
+
             <TextView
                 android:id="@+id/email"
                 android:layout_width="match_parent"
@@ -72,8 +72,6 @@
                 android:text="078782901"
                 android:textColor="#787878" />
         </LinearLayout>
-
-
 
 
     </RelativeLayout>
