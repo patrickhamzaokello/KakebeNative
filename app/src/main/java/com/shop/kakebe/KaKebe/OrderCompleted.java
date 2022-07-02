@@ -14,7 +14,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-
+import com.shop.kakebe.KaKebe.HelperClasses.SharedPrefManager;
+import com.shop.kakebe.KaKebe.Models.User;
 
 
 public class OrderCompleted extends AppCompatActivity  {
@@ -75,13 +76,14 @@ public class OrderCompleted extends AppCompatActivity  {
         Intent intent = new Intent(this, ManageOrders.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
+        User user = SharedPrefManager.getInstance(OrderCompleted.this).getUser();
 
         NotificationCompat.Builder  builder = new NotificationCompat.Builder(this, CHANNEL_ID)
                 .setSmallIcon(R.drawable.kakebelogo)
                 .setContentTitle("Order Placed 🎉🎊🙌 💯")
-                .setContentText(getString(R.string.placed_order_message))
+                .setContentText(user.getFullname()+ getString(R.string.placed_order_message))
                 .setStyle(new NotificationCompat.BigTextStyle()
-                        .bigText(getString(R.string.placed_order_message)))
+                        .bigText(user.getFullname()+ getString(R.string.placed_order_message)))
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 // Set the intent that will fire when the user taps the notification
                 .setContentIntent(pendingIntent)
