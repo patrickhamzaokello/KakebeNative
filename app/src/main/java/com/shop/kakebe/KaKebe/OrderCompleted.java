@@ -9,8 +9,10 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 
@@ -27,6 +29,7 @@ public class OrderCompleted extends AppCompatActivity  {
     Notification notification;
     Button btnTodaysMEnu,btnGoHOme;
     ActionBar actionBar;
+    private static final int ORDERNOTE = 1000;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,7 +38,6 @@ public class OrderCompleted extends AppCompatActivity  {
         actionBar.setTitle(R.string.OrderTitle);
 
         initNotification();
-        notificationManagerCompat.notify(NOTIFICATIONID, notification);
 
         btnTodaysMEnu = findViewById(R.id.order_btn_todayMenu);
         btnGoHOme = findViewById(R.id.btnGoHOme);
@@ -56,6 +58,13 @@ public class OrderCompleted extends AppCompatActivity  {
                 startActivity(i);
             }
         });
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                notificationManagerCompat.notify(NOTIFICATIONID, notification);
+            }
+        }, ORDERNOTE);
 
 
 
