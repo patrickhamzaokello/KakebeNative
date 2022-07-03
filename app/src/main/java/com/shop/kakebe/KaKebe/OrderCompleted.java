@@ -29,7 +29,7 @@ public class OrderCompleted extends AppCompatActivity  {
     Notification notification;
     Button btnTodaysMEnu,btnGoHOme;
     ActionBar actionBar;
-    private static final int ORDERNOTE = 1000;
+    private static final int ORDERNOTEDELAY = 1000;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,7 +64,7 @@ public class OrderCompleted extends AppCompatActivity  {
             public void run() {
                 notificationManagerCompat.notify(NOTIFICATIONID, notification);
             }
-        }, ORDERNOTE);
+        }, ORDERNOTEDELAY);
 
 
 

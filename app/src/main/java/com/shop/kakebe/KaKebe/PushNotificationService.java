@@ -5,10 +5,13 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.os.Build;
 
+import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
+import com.shop.kakebe.KaKebe.HelperClasses.SharedPrefManager;
+import com.shop.kakebe.KaKebe.Models.User;
 import com.shop.kakebe.KaKebe.R;
 
 public class PushNotificationService extends FirebaseMessagingService {
@@ -30,11 +33,14 @@ public class PushNotificationService extends FirebaseMessagingService {
             );
 
             getSystemService(NotificationManager.class).createNotificationChannel(channel);
+            User user = SharedPrefManager.getInstance(this).getUser();
 
             Notification.Builder notification =
                     new Notification.Builder(this, CHANNEL_ID)
                             .setContentTitle(title)
-                            .setContentText(text)
+                            .setContentText(user.getFullname()+", "+ text)
+                            .setStyle(new Notification.BigTextStyle()
+                                    .bigText(user.getFullname()+ ", "+ text))
                             .setSmallIcon(R.drawable.kakebelogo)
                             .setAutoCancel(true);
 

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".PlaceOrder">
 
     <RelativeLayout
@@ -12,321 +13,312 @@
         android:layout_height="match_parent">
 
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/procceed_checkout_layout">
 
-            <RelativeLayout
+            <LinearLayout
+                android:id="@+id/delivery_info_layout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_above="@+id/procceed_checkout_layout"
-                >
+                android:layout_height="wrap_content"
+                android:background="#FAFFFFFF"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_marginBottom="10dp"
+
+                    android:fontFamily="@font/montserrat_bold"
+                    android:includeFontPadding="false"
+                    android:text="Delivery Info"
+                    android:textColor="@color/black"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/order_page_fullname"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:fontFamily="@font/montserrat"
+
+                    android:includeFontPadding="false"
+                    android:text="Patrick Hamza Okello"
+                    android:textColor="@color/black"
+                    android:textSize="15sp" />
+
+
+                <TextView
+                    android:id="@+id/order_page_phoneno"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_marginBottom="20dp"
+
+                    android:fontFamily="@font/montserrat"
+                    android:includeFontPadding="false"
+                    android:text="+256-787 250196"
+                    android:textColor="@color/light_grey"
+                    android:textSize="14sp" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/PlaceOrdericon"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_truck" />
+
                     <LinearLayout
-                        android:id="@+id/delivery_info_layout"
-                        android:padding="20dp"
+                        android:id="@+id/AddressLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="#FAFFFFFF"
+                        android:layout_marginHorizontal="20dp"
+                        android:layout_toLeftOf="@id/btn_change_location"
+                        android:layout_toRightOf="@+id/PlaceOrdericon"
                         android:orientation="vertical">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="left"
-                            android:fontFamily="@font/montserrat_bold"
-
-                            android:layout_marginBottom="10dp"
-                            android:includeFontPadding="false"
-                            android:text="Delivery Info"
-                            android:textColor="@color/black"
-                            android:textSize="20sp" />
 
                         <TextView
-                            android:id="@+id/order_page_fullname"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="left"
                             android:fontFamily="@font/montserrat"
-
                             android:includeFontPadding="false"
-                            android:text="Patrick Hamza Okello"
-                            android:textColor="@color/black"
-                            android:textSize="15sp" />
-
-
-
-
-                        <TextView
-                            android:id="@+id/order_page_phoneno"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="left"
-                            android:fontFamily="@font/montserrat"
-
-                            android:includeFontPadding="false"
-                            android:text="+256-787 250196"
-                            android:layout_marginBottom="20dp"
+                            android:text="DELIVERY ADDRESS"
                             android:textColor="@color/light_grey"
-                            android:textSize="14sp" />
+                            android:textSize="12sp" />
 
-                        <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
-
-                            <ImageView
-                                android:id="@+id/PlaceOrdericon"
-                                android:layout_width="24dp"
-                                android:layout_height="24dp"
-                                android:src="@drawable/ic_truck" />
-
-                            <LinearLayout
-                                android:id="@+id/AddressLayout"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginHorizontal="20dp"
-                                android:layout_toLeftOf="@id/btn_change_location"
-                                android:layout_toRightOf="@+id/PlaceOrdericon"
-                                android:orientation="vertical">
-
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="left"
-                                    android:includeFontPadding="false"
-                                    android:fontFamily="@font/montserrat"
-                                    android:text="DELIVERY ADDRESS"
-                                    android:textColor="@color/light_grey"
-                                    android:textSize="12sp" />
-
-                                <TextView
-                                    android:id="@+id/location_address_view"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="left"
-                                    android:fontFamily="@font/montserrat"
-                                    android:includeFontPadding="false"
-                                    android:text="Obote Avenue, 3rd Drive Road"
-                                    android:textColor="@color/order_locationcolor"
-                                    android:textSize="13sp" />
-
-
-                            </LinearLayout>
-
-
-                            <TextView
-                                android:id="@+id/btn_change_location"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentRight="true"
-                                android:layout_centerVertical="true"
-                                android:fontFamily="@font/montserrat"
-                                android:text="CHANGE"
-                                android:textColor="@color/changebtn"
-                                android:textSize="12sp" />
-
-
-                        </RelativeLayout>
-
-
-
-                        <RelativeLayout
-                            android:layout_marginTop="10dp"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
-
-                            <ImageView
-                                android:id="@+id/moneyPlaceOrdericon"
-                                android:layout_width="24dp"
-                                android:layout_height="24dp"
-                                android:src="@drawable/ic_credit" />
-
-                            <LinearLayout
-                                android:id="@+id/MoneyLayout"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginHorizontal="20dp"
-                                android:layout_toRightOf="@+id/moneyPlaceOrdericon"
-                                android:orientation="vertical">
-
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="left"
-                                    android:includeFontPadding="false"
-                                    android:text="PAYMENT METHOD"
-                                    android:fontFamily="@font/montserrat"
-                                    android:textColor="@color/light_grey"
-                                    android:textSize="12sp" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="left"
-                                    android:includeFontPadding="false"
-                                    android:text="Cash on Delivery"
-                                    android:fontFamily="@font/montserrat"
-                                    android:textColor="@color/black"
-                                    android:textSize="13sp" />
-
-
-                            </LinearLayout>
-
-
-
-
-
-                        </RelativeLayout>
-
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
+                        <TextView
+                            android:id="@+id/location_address_view"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal"
-                            android:layout_marginTop="20dp"
-                            >
+                            android:layout_gravity="left"
+                            android:fontFamily="@font/montserrat"
+                            android:includeFontPadding="false"
+                            android:text="Obote Avenue, 3rd Drive Road"
+                            android:textColor="@color/order_locationcolor"
+                            android:textSize="13sp" />
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/montserrat"
-                                android:text="Sub Total (Ugx)"
-                                android:includeFontPadding="false"
-                                android:textColor="@color/light_grey"
-                                android:textSize="15dp" />
-
-                            <RelativeLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content">
-
-                                <TextView
-                                    android:id="@+id/grandsubvalue"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_alignParentEnd="true"
-                                    android:text="26,000"
-                                    android:includeFontPadding="false"
-
-                                    android:textColor="@color/light_grey"
-                                    android:textSize="15dp" />
-                            </RelativeLayout>
-
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginVertical="5dp"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/montserrat"
-                                android:text="Shipping Fee (Ugx)"
-                                android:includeFontPadding="false"
-                                android:textColor="@color/light_grey"
-                                android:textSize="15dp" />
-
-                            <RelativeLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content">
-
-                                <TextView
-                                    android:id="@+id/grandshipvalue"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_alignParentEnd="true"
-                                    android:includeFontPadding="false"
-                                    android:text="2,000"
-
-                                    android:textColor="@color/light_grey"
-                                    android:textSize="15dp" />
-                            </RelativeLayout>
-
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal"
-
-                            >
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/montserrat_bold"
-                                android:includeFontPadding="false"
-                                android:text="Grand Total (Ugx)"
-                                android:textColor="@color/light_black" />
-
-                            <RelativeLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content">
-
-                                <TextView
-                                    android:id="@+id/grandtotalvalue"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_alignParentEnd="true"
-                                    android:fontFamily="@font/montserrat_bold"
-                                    android:includeFontPadding="false"
-                                    android:text="28,000"
-                                    android:textColor="@color/black"
-                                    android:textSize="20dp" />
-                            </RelativeLayout>
-
-
-                        </LinearLayout>
 
                     </LinearLayout>
+
+
+                    <TextView
+                        android:id="@+id/btn_change_location"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:fontFamily="@font/montserrat"
+                        android:text="CHANGE"
+                        android:textColor="@color/changebtn"
+                        android:textSize="12sp" />
+
+
+                </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp">
+
+                    <ImageView
+                        android:id="@+id/moneyPlaceOrdericon"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_credit" />
 
                     <LinearLayout
-                        android:id="@+id/cart_items_layout"
+                        android:id="@+id/MoneyLayout"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="20dp"
-                        android:layout_below="@+id/delivery_info_layout"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="20dp"
+                        android:layout_toRightOf="@+id/moneyPlaceOrdericon"
                         android:orientation="vertical">
+
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="left"
-                            android:fontFamily="@font/montserrat_bold"
-                            android:layout_marginBottom="10dp"
+                            android:fontFamily="@font/montserrat"
                             android:includeFontPadding="false"
-                            android:layout_marginHorizontal="20dp"
-                            android:text="Cart Items"
-                            android:textColor="@color/black"
-                            android:textSize="20sp" />
+                            android:text="PAYMENT METHOD"
+                            android:textColor="@color/light_grey"
+                            android:textSize="12sp" />
 
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/place_order_main_recycler"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:clipToPadding="false"
-                            android:paddingTop="10dp"
-                            android:paddingBottom="@dimen/activity_margin_content" />
-
-
-                        <ProgressBar
-                            android:id="@+id/place_order_main_progress"
+                        <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center" />
+                            android:layout_gravity="left"
+                            android:fontFamily="@font/montserrat"
+                            android:includeFontPadding="false"
+                            android:text="Cash on Delivery"
+                            android:textColor="@color/black"
+                            android:textSize="13sp" />
 
-                        <include layout="@layout/error_layout" />
+
                     </LinearLayout>
 
 
+                </RelativeLayout>
 
 
-            </RelativeLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/montserrat"
+                        android:includeFontPadding="false"
+                        android:text="Sub Total (Ugx)"
+                        android:textColor="@color/light_grey"
+                        android:textSize="15dp" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/grandsubvalue"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:includeFontPadding="false"
+                            android:text="26,000"
+
+                            android:textColor="@color/light_grey"
+                            android:textSize="15dp" />
+                    </RelativeLayout>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="5dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/montserrat"
+                        android:includeFontPadding="false"
+                        android:text="Shipping Fee (Ugx)"
+                        android:textColor="@color/light_grey"
+                        android:textSize="15dp" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/grandshipvalue"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:includeFontPadding="false"
+                            android:text="2,000"
+
+                            android:textColor="@color/light_grey"
+                            android:textSize="15dp" />
+                    </RelativeLayout>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+
+                    >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/montserrat_bold"
+                        android:includeFontPadding="false"
+                        android:text="Grand Total (Ugx)"
+                        android:textColor="@color/light_black" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/grandtotalvalue"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:fontFamily="@font/montserrat_bold"
+                            android:includeFontPadding="false"
+                            android:text="28,000"
+                            android:textColor="@color/black"
+                            android:textSize="20dp" />
+                    </RelativeLayout>
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/cart_items_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/delivery_info_layout"
+                android:layout_marginTop="20dp"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:fontFamily="@font/montserrat_bold"
+                    android:includeFontPadding="false"
+                    android:text="Cart Items"
+                    android:textColor="@color/black"
+                    android:textSize="20sp" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/place_order_main_recycler"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:clipToPadding="false"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="@dimen/activity_margin_content" />
+
+
+                <ProgressBar
+                    android:id="@+id/place_order_main_progress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center" />
+
+                <include layout="@layout/error_layout" />
+            </LinearLayout>
+
+
+        </RelativeLayout>
 
 
 

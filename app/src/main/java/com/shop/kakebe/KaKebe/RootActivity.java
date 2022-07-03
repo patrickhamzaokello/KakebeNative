@@ -58,7 +58,10 @@ public class RootActivity extends AppCompatActivity implements CartItemHandlerLi
         //Initialize NavController.
         NavController navController = Navigation.findNavController(this, R.id.navHostFragment);
         NavigationUI.setupWithNavController(navView, navController);
-        navView.getOrCreateBadge(R.id.navigation_cart).setBackgroundColor(getResources().getColor(R.color.sweetRed));
+        navView.getOrCreateBadge(R.id.navigation_cart)
+                .setBackgroundColor(getResources().getColor(R.color.sweetRed));
+        navView.getOrCreateBadge(R.id.navigation_cart).setBadgeTextColor(getResources().getColor(R.color.white));
+
 
         //updating cart counts
         updatecartCount();
