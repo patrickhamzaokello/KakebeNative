@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/white"
+    android:background="@color/rootbg"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -14,8 +14,10 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="400dp"
                 android:id="@+id/productImage"
+                android:background="@color/white"
+                android:layout_margin="10dp"
                 >
 
 
@@ -35,12 +37,11 @@
 
                 <ImageView
                     android:id="@+id/menu_image"
-                    android:layout_width="200dp"
-                    android:layout_height="200dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:contentDescription="@string/app_name"
-                    android:scaleType="center"
                     android:padding="10dp"
+                    android:scaleType="fitCenter"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -51,41 +52,40 @@
 
 
 
-
-
-
-        <TextView
-            android:id="@+id/menu_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="10dp"
-            android:textAlignment="center"
-            android:fontFamily="@font/montserrat_bold"
-            android:includeFontPadding="false"
-            android:text="Non stick frying pan"
-            android:textColor="#000000"
-            android:textSize="22sp" />
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
             android:layout_toRightOf="@+id/productImage"
             android:layout_alignBottom="@+id/productImage"
-            android:gravity="center"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:background="@color/white"
+            >
+
+            <TextView
+                android:id="@+id/menu_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="10dp"
+                android:fontFamily="@font/montserrat_bold"
+                android:includeFontPadding="false"
+                android:text="Non stick frying pan"
+                android:textColor="#000000"
+                android:textSize="22sp" />
+
 
             <TextView
                 android:id="@+id/menu_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
                 android:fontFamily="@font/montserrat"
                 android:includeFontPadding="false"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginTop="10dp"
                 android:text="20,400"
-                android:textColor="@color/black"
+                android:textColor="#5C5C5C"
                 android:textSize="18sp" />
 
 
@@ -94,12 +94,20 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/wallet_label"
-                android:layout_centerInParent="true"
                 android:fontFamily="@font/montserrat"
                 android:includeFontPadding="false"
                 android:text="Unit Price (UGX)"
-                android:textColor="@color/black"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:textColor="#5C5C5C"
                 android:textSize="15sp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/selected_product_attribute_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:paddingVertical="20dp" />
 
         </LinearLayout>
 
@@ -108,30 +116,26 @@
             android:layout_height="wrap_content"
             android:background="#18161E"
             android:orientation="vertical"
-            android:gravity="center_horizontal"
-            android:layout_marginHorizontal="10dp"
-            android:paddingVertical="14dp"
+            android:paddingVertical="20dp"
             android:layout_marginTop="10dp"
+            android:paddingHorizontal="10dp"
             >
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="10dp"
                 android:layout_marginBottom="10dp"
                 android:orientation="horizontal">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
                     android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/menu_total_price"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
                         android:fontFamily="@font/montserrat"
                         android:includeFontPadding="false"
                         android:text="20,400"
@@ -210,11 +214,23 @@
                 android:orientation="horizontal">
 
                 <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnOrderNow"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Order Now"
+                    android:textColor="@color/white"
+                    android:layout_marginRight="20dp"
+
+                    android:transitionName="account_change"
+                    app:strokeColor="@color/white"
+                    app:strokeWidth="1dp" />
+
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnAddtoCart"
                     style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="10dp"
                     android:fontFamily="@font/montserrat_bold"
                     android:gravity="center"
                     android:text="Add to Cart"
@@ -222,24 +238,13 @@
                     app:iconGravity="textStart"
                     android:backgroundTint="@color/purple_500"
                     app:iconSize="18dp"
-                    app:layout_constraintStart_toStartOf="parent"
                     />
 
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnOrderNow"
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="10dp"
-                    android:text="Order Now"
-                    android:textColor="@color/white"
-                    android:transitionName="account_change"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:strokeColor="@color/white"
-                    app:strokeWidth="1dp" />
+
 
             </LinearLayout>
+
         </LinearLayout>
 
 
@@ -248,15 +253,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
+            android:paddingVertical="20dp"
+            android:background="@color/white"
             >
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/selected_product_attribute_recycler_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:paddingBottom="20dp" />
-
 
             <TextView
                 android:id="@+id/menu_description_heading"
@@ -296,12 +296,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/relatedProductslayout"
+            android:layout_marginTop="20dp"
+            android:background="@color/white"
             android:orientation="vertical">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="40dp"
                 android:layout_marginEnd="10dp"
                 android:fontFamily="@font/montserrat_bold"
                 android:includeFontPadding="false"
@@ -309,7 +311,7 @@
                 android:shadowColor="@android:color/black"
                 android:text="Related Products"
                 android:textColor="@android:color/black"
-                android:textSize="18sp"
+                android:textSize="22sp"
 
                 />
 
@@ -318,7 +320,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="5dp"
-                android:layout_marginBottom="10dp"
+                android:layout_marginBottom="30dp"
                 android:layout_marginEnd="10dp"
                 android:ellipsize="end"
                 android:fontFamily="@font/montserrat"

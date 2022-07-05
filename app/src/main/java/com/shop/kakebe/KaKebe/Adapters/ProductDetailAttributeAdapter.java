@@ -105,17 +105,12 @@ public class ProductDetailAttributeAdapter extends RecyclerView.Adapter<Recycler
                 final MovieVH movieVH = (MovieVH) holder;
 
                 movieVH.attribute_lable.setText(choiceOption.getAttributeId());
-                int mNoOfColumns = Utility.calculateNoOfColumns(context, 280);
 
-
-                /* set layout manager on basis of recyclerview enum type */
-                GridLayoutManager gridLayoutManager = new GridLayoutManager(context, mNoOfColumns);
-                movieVH.attribute_value_recycler.setLayoutManager(gridLayoutManager);
-
-
-                ProductAttributeValueAdapter adapter = new ProductAttributeValueAdapter(context, choiceOption.getValues());
-                movieVH.attribute_value_recycler.setAdapter(adapter);
-
+                ProductAttributeValueAdapter productAttributeValueAdapter = new ProductAttributeValueAdapter(context, choiceOption.getValues());
+                StaggeredGridLayoutManager previous_search_staggeredGridLayoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL);
+                movieVH.attribute_value_recycler.setLayoutManager(previous_search_staggeredGridLayoutManager);
+                movieVH.attribute_value_recycler.setItemAnimator(new DefaultItemAnimator());
+                movieVH.attribute_value_recycler.setAdapter(productAttributeValueAdapter);
 
 
                 break;

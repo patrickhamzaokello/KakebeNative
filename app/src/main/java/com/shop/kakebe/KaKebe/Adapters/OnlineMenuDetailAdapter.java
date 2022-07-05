@@ -36,7 +36,6 @@ import com.shop.kakebe.KaKebe.DeliveryAddress;
 import com.shop.kakebe.KaKebe.Models.SelectedProduct;
 import com.shop.kakebe.KaKebe.R;
 import com.shop.kakebe.KaKebe.RootActivity;
-import com.shop.kakebe.KaKebe.Utils.GlideApp;
 import com.shop.kakebe.KaKebe.Utils.MenuDetailListener;
 import com.shop.kakebe.KaKebe.localDatabase.SenseDBHelper;
 
@@ -393,13 +392,6 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
    _________________________________________________________________________________________________
     */
 
-
-    private RequestBuilder<Drawable> loadImage(@NonNull String posterPath) {
-        return GlideApp
-                .with(context)
-                .load(BASE_URL_IMG + posterPath)
-                .centerCrop();
-    }
 
     public void add(SelectedProduct r) {
         selectedProducts.add(r);
