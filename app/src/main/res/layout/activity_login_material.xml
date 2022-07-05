@@ -44,8 +44,8 @@
             android:layout_height="match_parent"
             android:gravity="center_vertical"
             android:orientation="vertical"
-            android:paddingTop="100dp"
-            android:paddingHorizontal="15dp">
+            android:paddingHorizontal="15dp"
+            android:paddingTop="100dp">
 
             <TextView
                 android:id="@+id/login_welcomeback"
@@ -63,9 +63,9 @@
                 android:id="@+id/login_subtext"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:fontFamily="@font/montserrat"
                 android:includeFontPadding="false"
-                android:layout_marginTop="10dp"
                 android:text="Sign into your account to continue with Kakebe Shop Online"
                 android:textColor="@color/light_black"
                 android:textSize="18sp"

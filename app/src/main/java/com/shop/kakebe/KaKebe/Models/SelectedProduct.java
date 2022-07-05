@@ -48,6 +48,12 @@ public class SelectedProduct {
     @SerializedName("published")
     @Expose
     private Integer published;
+    @SerializedName("attributes")
+    @Expose
+    private String attributes;
+    @SerializedName("choice_options")
+    @Expose
+    private List<ChoiceOption> choiceOptions = null;
     @SerializedName("similarProducts")
     @Expose
     private List<SimilarProduct> similarProducts = null;
@@ -154,6 +160,22 @@ public class SelectedProduct {
 
     public void setPublished(Integer published) {
         this.published = published;
+    }
+
+    public String getAttributes() {
+        return attributes;
+    }
+
+    public void setAttributes(String attributes) {
+        this.attributes = attributes;
+    }
+
+    public List<ChoiceOption> getChoiceOptions() {
+        return choiceOptions;
+    }
+
+    public void setChoiceOptions(List<ChoiceOption> choiceOptions) {
+        this.choiceOptions = choiceOptions;
     }
 
     public List<SimilarProduct> getSimilarProducts() {

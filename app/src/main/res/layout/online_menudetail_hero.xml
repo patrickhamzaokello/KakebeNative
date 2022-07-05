@@ -250,6 +250,14 @@
             android:orientation="vertical"
             android:layout_marginTop="20dp"
             >
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/selected_product_attribute_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:paddingBottom="20dp" />
+
+
             <TextView
                 android:id="@+id/menu_description_heading"
                 android:layout_width="match_parent"

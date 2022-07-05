@@ -18,8 +18,11 @@ import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestBuilder;
@@ -301,6 +304,12 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
                     }
                 });
 
+                ProductDetailAttributeAdapter productDetailAttributeAdapter = new ProductDetailAttributeAdapter(context);
+                LinearLayoutManager layoutManager = new LinearLayoutManager(context);
+                layoutManager.setOrientation(RecyclerView.VERTICAL);
+                heroVh.selected_product_attribute_recycler_view.setLayoutManager(layoutManager);
+                heroVh.selected_product_attribute_recycler_view.setAdapter(productDetailAttributeAdapter);
+                productDetailAttributeAdapter.addAll(selectedProduct.getChoiceOptions());
 
 
                 break;
@@ -502,8 +511,8 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
         private final Button btnAddtoCart;
         private final Button btnOrderNow;
         private final ProgressBar mProgress;
-
         private final LinearLayout descriptionlayout;
+        private final RecyclerView selected_product_attribute_recycler_view;
 
 
         public HeroVH(View itemView) {
@@ -520,7 +529,7 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
             btnAddtoCart = itemView.findViewById(R.id.btnAddtoCart);
             btnOrderNow = itemView.findViewById(R.id.btnOrderNow);
 
-
+            selected_product_attribute_recycler_view = itemView.findViewById(R.id.selected_product_attribute_recycler_view);
             mProgress = itemView.findViewById(R.id.product_detail_image_progress);
             descriptionlayout = itemView.findViewById(R.id.descriptionlayout);
 

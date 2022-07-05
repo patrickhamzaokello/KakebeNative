@@ -58,6 +58,7 @@
         <entry key="..\:/Users/jamsp/AndroidStudioProjects/KakebeShop/app/src/main/res/drawable/custom_btn_select.xml" value="0.1905" />
         <entry key="..\:/Users/jamsp/AndroidStudioProjects/KakebeShop/app/src/main/res/drawable/custom_plus_btn.xml" value="0.1655" />
         <entry key="..\:/Users/jamsp/AndroidStudioProjects/KakebeShop/app/src/main/res/drawable/custom_rightarrow_btn.xml" value="0.1655" />
+        <entry key="..\:/Users/jamsp/AndroidStudioProjects/KakebeShop/app/src/main/res/drawable/ic_component_2__1_.xml" value="0.2545" />
         <entry key="..\:/Users/jamsp/AndroidStudioProjects/KakebeShop/app/src/main/res/drawable/ic_truck.xml" value="0.1655" />
         <entry key="..\:/Users/jamsp/AndroidStudioProjects/KakebeShop/app/src/main/res/drawable/kakebelogo.xml" value="0.2545" />
         <entry key="..\:/Users/jamsp/AndroidStudioProjects/KakebeShop/app/src/main/res/drawable/rectangle.xml" value="0.1655" />
@@ -71,6 +72,7 @@
         <entry key="..\:/Users/jamsp/AndroidStudioProjects/KakebeShop/app/src/main/res/layout/activity_place_order.xml" value="0.18" />
         <entry key="..\:/Users/jamsp/AndroidStudioProjects/KakebeShop/app/src/main/res/layout/activity_register_material.xml" value="0.16203703703703703" />
         <entry key="..\:/Users/jamsp/AndroidStudioProjects/KakebeShop/app/src/main/res/layout/activity_root_activity.xml" value="0.1" />
+        <entry key="..\:/Users/jamsp/AndroidStudioProjects/KakebeShop/app/src/main/res/layout/activity_search_view.xml" value="0.1762917933130699" />
         <entry key="..\:/Users/jamsp/AndroidStudioProjects/KakebeShop/app/src/main/res/layout/activity_splash_activity.xml" value="0.25" />
         <entry key="..\:/Users/jamsp/AndroidStudioProjects/KakebeShop/app/src/main/res/layout/addresslayout.xml" value="0.33" />
         <entry key="..\:/Users/jamsp/AndroidStudioProjects/KakebeShop/app/src/main/res/layout/cart_item_design.xml" value="0.33" />
@@ -102,8 +104,12 @@
         <entry key="..\:/Users/jamsp/AndroidStudioProjects/KakebeShop/app/src/main/res/layout/order_layout.xml" value="0.4833091436865022" />
         <entry key="..\:/Users/jamsp/AndroidStudioProjects/KakebeShop/app/src/main/res/layout/order_recommend_layout.xml" value="0.18819655521783182" />
         <entry key="..\:/Users/jamsp/AndroidStudioProjects/KakebeShop/app/src/main/res/layout/place_order_cart_item_design.xml" value="0.33" />
+        <entry key="..\:/Users/jamsp/AndroidStudioProjects/KakebeShop/app/src/main/res/layout/previous_searches_custom_iteem_layout.xml" value="0.1762917933130699" />
+        <entry key="..\:/Users/jamsp/AndroidStudioProjects/KakebeShop/app/src/main/res/layout/previous_searches_custom_row_layout.xml" value="0.18" />
+        <entry key="..\:/Users/jamsp/AndroidStudioProjects/KakebeShop/app/src/main/res/layout/product_attribute_row_layout.xml" value="0.22" />
+        <entry key="..\:/Users/jamsp/AndroidStudioProjects/KakebeShop/app/src/main/res/layout/product_attribute_value.xml" value="0.1762917933130699" />
         <entry key="..\:/Users/jamsp/AndroidStudioProjects/KakebeShop/app/src/main/res/layout/search_featured_category_item_design.xml" value="0.18642350557244175" />
-        <entry key="..\:/Users/jamsp/AndroidStudioProjects/KakebeShop/app/src/main/res/layout/search_hero_layout.xml" value="0.16168478260869565" />
+        <entry key="..\:/Users/jamsp/AndroidStudioProjects/KakebeShop/app/src/main/res/layout/search_hero_layout.xml" value="0.33" />
         <entry key="..\:/Users/jamsp/AndroidStudioProjects/KakebeShop/app/src/main/res/layout/selected_category_hero_design.xml" value="0.1" />
         <entry key="..\:/Users/jamsp/AndroidStudioProjects/KakebeShop/app/src/main/res/layout/selected_category_pagination_item_list.xml" value="0.22" />
         <entry key="..\:/Users/jamsp/AndroidStudioProjects/KakebeShop/app/src/main/res/menu/bottom_nav_menu.xml" value="0.1" />

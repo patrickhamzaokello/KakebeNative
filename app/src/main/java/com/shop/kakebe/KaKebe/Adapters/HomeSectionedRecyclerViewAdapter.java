@@ -23,6 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.transition.DrawableCrossFadeFactory;
+import com.shop.kakebe.KaKebe.HelperClasses.Utility;
 import com.shop.kakebe.KaKebe.Models.Category;
 import com.shop.kakebe.KaKebe.MySelectedCategory;
 import com.shop.kakebe.KaKebe.R;
@@ -137,10 +138,9 @@ public class HomeSectionedRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
             case CATEGORY:
                 final CategoryVH categoryVH = (CategoryVH) holder;
                 HomeMenuCategoryAdapter homeMenuCategoryAdapter = new HomeMenuCategoryAdapter(context);
-//                StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.HORIZONTAL);
-//                categoryVH.category_recycler_view.setLayoutManager(staggeredGridLayoutManager);
+                int mNoOfColumns = Utility.calculateNoOfColumns(context, 160);
 
-                GridLayoutManager catgridLayoutManager = new GridLayoutManager(context, 3);
+                GridLayoutManager catgridLayoutManager = new GridLayoutManager(context, mNoOfColumns);
                 categoryVH.category_recycler_view.setLayoutManager(catgridLayoutManager);
 
                 categoryVH.category_recycler_view.setItemAnimator(new DefaultItemAnimator());
@@ -156,9 +156,10 @@ public class HomeSectionedRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
                 //recycler view for items
                 movieVH.itemRecyclerView.setHasFixedSize(true);
                 movieVH.itemRecyclerView.setNestedScrollingEnabled(false);
+                int mNo_OfColumns = Utility.calculateNoOfColumns(context, 152);
 
                 /* set layout manager on basis of recyclerview enum type */
-                GridLayoutManager gridLayoutManager = new GridLayoutManager(context, 3);
+                GridLayoutManager gridLayoutManager = new GridLayoutManager(context, mNo_OfColumns);
                 movieVH.itemRecyclerView.setLayoutManager(gridLayoutManager);
 
 
@@ -192,9 +193,10 @@ public class HomeSectionedRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
                 //recycler view for items
                 homecategoryvh.itemRecyclerView.setHasFixedSize(true);
                 homecategoryvh.itemRecyclerView.setNestedScrollingEnabled(false);
+                int mN_o_OfColumns = Utility.calculateNoOfColumns(context, 152);
 
                 /* set layout manager on basis of recyclerview enum type */
-                GridLayoutManager gridhometopLayoutManager = new GridLayoutManager(context, 3);
+                GridLayoutManager gridhometopLayoutManager = new GridLayoutManager(context, mN_o_OfColumns);
                 homecategoryvh.itemRecyclerView.setLayoutManager(gridhometopLayoutManager);
 
 
