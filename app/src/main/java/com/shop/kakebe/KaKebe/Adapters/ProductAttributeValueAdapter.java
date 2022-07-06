@@ -3,6 +3,7 @@ package com.shop.kakebe.KaKebe.Adapters;
 
 import android.content.Context;
 
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,12 +13,14 @@ import android.widget.TextView;
 
 
 import androidx.fragment.app.Fragment;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.google.android.material.card.MaterialCardView;
 import com.shop.kakebe.KaKebe.R;
 import com.shop.kakebe.KaKebe.RootActivity;
+import com.shop.kakebe.KaKebe.localDatabase.SenseDBHelper;
 
 
 import java.util.ArrayList;
@@ -68,6 +71,7 @@ public class ProductAttributeValueAdapter extends RecyclerView.Adapter<ProductAt
             holder.attribute_card.setBackground(context.getResources().getDrawable(R.drawable.attribute_selected));
         }
 
+
         holder.item_name.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -76,14 +80,15 @@ public class ProductAttributeValueAdapter extends RecyclerView.Adapter<ProductAt
                 if (!(val_list.contains(product))) {
                     val_list.clear();
                     val_list.add(product);
-//                    holder.attribute_card.setCardBackgroundColor(context.getResources().getColor(R.color.purple_200));
                     holder.attribute_card.setBackground(context.getResources().getDrawable(R.drawable.attribute_selected));
+
                 } else {
-//                    holder.attribute_card.setCardBackgroundColor(context.getResources().getColor(R.color.attribute_color_default));
                     holder.attribute_card.setBackground(context.getResources().getDrawable(R.drawable.attribute_not_selected));
                     val_list.remove(product);
+
                 }
-                Log.w("attri", String.valueOf(val_list));
+
+                updateAttributeCount(product);
                 notifyDataSetChanged();
 
             }
@@ -99,6 +104,13 @@ public class ProductAttributeValueAdapter extends RecyclerView.Adapter<ProductAt
             mainActivity.switchContent(id, frag, "MenuDetails");
         }
 
+    }
+
+    private void updateAttributeCount(String product ) {
+        String attributeList = String.valueOf(product);
+        Intent intent = new Intent(context.getString(R.string.prod_attrib_action));
+        intent.putExtra(context.getString(R.string.prod_attrib), attributeList);
+        LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
     }
 
     @Override

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,6 +24,7 @@ import com.shop.kakebe.KaKebe.Models.FoodDBModel;
 import com.shop.kakebe.KaKebe.localDatabase.SenseDBHelper;
 import com.shop.kakebe.KaKebe.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class RootActivity extends AppCompatActivity implements CartItemHandlerListener {
@@ -31,6 +33,8 @@ public class RootActivity extends AppCompatActivity implements CartItemHandlerLi
     SenseDBHelper db;
     List<FoodDBModel> cartitemlist;
     CartAdapter cartAdapter;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +51,7 @@ public class RootActivity extends AppCompatActivity implements CartItemHandlerLi
         //Initialize Bottom Navigation View.
         navView = findViewById(R.id.bottomNav_view);
         LocalBroadcastManager.getInstance(this).registerReceiver(mMasage,new IntentFilter(getString(R.string.cartcoutAction)));
+        LocalBroadcastManager.getInstance(this).registerReceiver(attMessage,new IntentFilter(getString(R.string.prod_attrib_action)));
 
         db = new SenseDBHelper(this);
 
@@ -82,6 +87,7 @@ public class RootActivity extends AppCompatActivity implements CartItemHandlerLi
         public void onReceive(Context context, Intent intent) {
             String cartcount=intent.getStringExtra(getString(R.string.cartCount));
 
+
             if((Integer.parseInt(cartcount)) != 0){
                 navView.getOrCreateBadge(R.id.navigation_cart).setNumber(Integer.parseInt(cartcount));
                 navView.getOrCreateBadge(R.id.navigation_cart).setVisible(true);
@@ -91,6 +97,26 @@ public class RootActivity extends AppCompatActivity implements CartItemHandlerLi
                 navView.getOrCreateBadge(R.id.navigation_cart).setVisible(false);
 
             }
+        }
+    };
+
+
+    List<String> val_list = new ArrayList<>(2);
+
+    public BroadcastReceiver attMessage=new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String cartcount=intent.getStringExtra(getString(R.string.prod_attrib));
+
+            if (!(val_list.contains(cartcount))) {
+                val_list.add(cartcount);
+            }
+            else {
+                val_list.remove(cartcount);
+            }
+
+            Log.w("afroBar", String.valueOf(val_list));
+
         }
     };
 

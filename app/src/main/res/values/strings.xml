@@ -40,6 +40,10 @@
 
     <string name="cartcoutAction">cartmsg</string>
     <string name="cartCount">cartcount</string>
+
+    <string name="prod_attrib_action">productAttributeMSG</string>
+    <string name="prod_attrib">productAttribute</string>
+
     <string name="google_maps_key">AIzaSyB9MxxJBmzLHdfsMEZSdV0vORR_MRwirPI</string>
     <string name="i_am_here">I am Here</string>
     <string name="provider_failed">Provider Failed</string>
