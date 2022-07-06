@@ -148,7 +148,7 @@ public class SearchView extends AppCompatActivity implements SearchAdapterCallBa
         // TODO: Check if data is stale.
         //  Execute network request if cache is expired; otherwise do not update data.
         searchQueryAdapter.getMovies().clear();
-//        searchQueryAdapter.notifyDataSetChanged();
+        searchQueryAdapter.notifyDataSetChanged();
         loadFirstPage();
         swipeRefreshLayout.setRefreshing(false);
     }
