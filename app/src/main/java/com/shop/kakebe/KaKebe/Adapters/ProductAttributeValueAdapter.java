@@ -4,6 +4,7 @@ package com.shop.kakebe.KaKebe.Adapters;
 import android.content.Context;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.google.android.material.card.MaterialCardView;
+import com.shop.kakebe.KaKebe.Models.ProAttribute;
 import com.shop.kakebe.KaKebe.R;
 import com.shop.kakebe.KaKebe.RootActivity;
 import com.shop.kakebe.KaKebe.localDatabase.SenseDBHelper;
@@ -29,14 +31,15 @@ import java.util.List;
 
 public class ProductAttributeValueAdapter extends RecyclerView.Adapter<ProductAttributeValueAdapter.ItemViewHolder> {
 
-    List<String> val_list = new ArrayList<>();
 
     class ItemViewHolder extends RecyclerView.ViewHolder {
         private final TextView item_name;
         private final MaterialCardView attribute_card;
+        private View view;
 
         public ItemViewHolder(View itemView) {
             super(itemView);
+            view = itemView;
             item_name = itemView.findViewById(R.id.item_name);
             attribute_card = itemView.findViewById(R.id.attribute_card);
         }
@@ -46,9 +49,13 @@ public class ProductAttributeValueAdapter extends RecyclerView.Adapter<ProductAt
     private final List<String> products;
 
 
-    public ProductAttributeValueAdapter(Context context, List<String> products) {
+    private List<ProAttribute> mModelList;
+    private int lastSelectedPosition = -1;
+
+    public ProductAttributeValueAdapter(Context context, List<String> products, List<ProAttribute> modelList) {
         this.context = context;
         this.products = products;
+        this.mModelList = modelList;
     }
 
     @Override
@@ -60,35 +67,28 @@ public class ProductAttributeValueAdapter extends RecyclerView.Adapter<ProductAt
     @Override
     public void onBindViewHolder(ItemViewHolder holder, int position) {
         final String product = products.get(position);
+        final ProAttribute proAttribute = mModelList.get(position);
         holder.item_name.setText(product);
 
-
-        if (!(val_list.contains(product))) {
-//            holder.attribute_card.setCardBackgroundColor(context.getResources().getColor(R.color.attribute_color_default));
-            holder.attribute_card.setBackground(context.getResources().getDrawable(R.drawable.attribute_not_selected));
-        } else {
-//            holder.attribute_card.setCardBackgroundColor(context.getResources().getColor(R.color.purple_200));
-            holder.attribute_card.setBackground(context.getResources().getDrawable(R.drawable.attribute_selected));
-        }
+        holder.attribute_card.setBackground(proAttribute.isSelected() ? context.getResources().getDrawable(R.drawable.attribute_selected) : context.getResources().getDrawable(R.drawable.attribute_not_selected));
 
 
         holder.item_name.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                val_list.clear();
 
-                if (!(val_list.contains(product))) {
-                    val_list.clear();
-                    val_list.add(product);
-                    holder.attribute_card.setBackground(context.getResources().getDrawable(R.drawable.attribute_selected));
+                // check whether you selected an item
 
-                } else {
-                    holder.attribute_card.setBackground(context.getResources().getDrawable(R.drawable.attribute_not_selected));
-                    val_list.remove(product);
-
+                if(lastSelectedPosition >= 0) {
+                    mModelList.get(lastSelectedPosition).setSelected(false);
                 }
 
-                updateAttributeCount(product);
+                proAttribute.setSelected(!proAttribute.isSelected());
+                holder.attribute_card.setBackground(proAttribute.isSelected() ? context.getResources().getDrawable(R.drawable.attribute_selected) : context.getResources().getDrawable(R.drawable.attribute_not_selected));
+
+
+                // store last selected item position
+                lastSelectedPosition = holder.getAbsoluteAdapterPosition();
                 notifyDataSetChanged();
 
             }

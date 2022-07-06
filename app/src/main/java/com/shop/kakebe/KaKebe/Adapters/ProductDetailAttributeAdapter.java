@@ -25,6 +25,7 @@ import com.google.android.material.card.MaterialCardView;
 import com.shop.kakebe.KaKebe.HelperClasses.Utility;
 import com.shop.kakebe.KaKebe.Models.ChoiceOption;
 import com.shop.kakebe.KaKebe.Models.PopularSearch;
+import com.shop.kakebe.KaKebe.Models.ProAttribute;
 import com.shop.kakebe.KaKebe.R;
 import com.shop.kakebe.KaKebe.RootActivity;
 import com.shop.kakebe.KaKebe.Utils.SearchPopularTagAdapterCallBack;
@@ -43,6 +44,7 @@ public class ProductDetailAttributeAdapter extends RecyclerView.Adapter<Recycler
 
     //    private static final String BASE_URL_IMG = "https://image.tmdb.org/t/p/w150";
     private static final String BASE_URL_IMG = "";
+    private List<ProAttribute> mModelList;
 
 
     private List<ChoiceOption> featuredCategories;
@@ -87,6 +89,8 @@ public class ProductDetailAttributeAdapter extends RecyclerView.Adapter<Recycler
         return viewHolder;
     }
 
+
+
     @NonNull
     private RecyclerView.ViewHolder getViewHolder(ViewGroup parent, LayoutInflater inflater) {
         RecyclerView.ViewHolder viewHolder;
@@ -99,6 +103,10 @@ public class ProductDetailAttributeAdapter extends RecyclerView.Adapter<Recycler
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
         ChoiceOption choiceOption = featuredCategories.get(position); // Movie
+        mModelList = new ArrayList<>();
+        for (int i = 1; i <= 25; i++) {
+            mModelList.add(new ProAttribute((choiceOption.getValues())));
+        }
 
         switch (getItemViewType(position)) {
             case ITEM:
@@ -106,7 +114,7 @@ public class ProductDetailAttributeAdapter extends RecyclerView.Adapter<Recycler
 
                 movieVH.attribute_lable.setText(choiceOption.getAttributeId());
 
-                ProductAttributeValueAdapter productAttributeValueAdapter = new ProductAttributeValueAdapter(context, choiceOption.getValues());
+                ProductAttributeValueAdapter productAttributeValueAdapter = new ProductAttributeValueAdapter(context, choiceOption.getValues(),mModelList);
                 StaggeredGridLayoutManager previous_search_staggeredGridLayoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL);
                 movieVH.attribute_value_recycler.setLayoutManager(previous_search_staggeredGridLayoutManager);
                 movieVH.attribute_value_recycler.setItemAnimator(new DefaultItemAnimator());
@@ -135,7 +143,6 @@ public class ProductDetailAttributeAdapter extends RecyclerView.Adapter<Recycler
 
                 break;
         }
-
     }
 
     @Override

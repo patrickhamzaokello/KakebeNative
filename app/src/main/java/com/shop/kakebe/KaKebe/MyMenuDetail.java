@@ -25,6 +25,7 @@ import com.shop.kakebe.KaKebe.Adapters.OnlineMenuDetailAdapter;
 import com.shop.kakebe.KaKebe.Apis.ShopAPIBase;
 import com.shop.kakebe.KaKebe.Apis.ShopApiEndPoints;
 import com.shop.kakebe.KaKebe.Models.FoodDBModel;
+import com.shop.kakebe.KaKebe.Models.ProAttribute;
 import com.shop.kakebe.KaKebe.Models.ProductDetail;
 import com.shop.kakebe.KaKebe.Models.SelectedCategoryMenuItemResult;
 import com.shop.kakebe.KaKebe.Models.SelectedProduct;
@@ -170,7 +171,6 @@ public class MyMenuDetail extends AppCompatActivity implements MenuDetailListene
 
     @Override
     public void incrementqtn(int qty, FoodDBModel foodDBModel) {
-
     }
 
     @Override
