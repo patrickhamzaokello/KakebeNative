@@ -67,7 +67,7 @@ public class SearchView extends AppCompatActivity implements SearchAdapterCallBa
         actionBar = getSupportActionBar(); // or getActionBar();
         actionBar.setTitle("Search Result");
         // add back arrow to toolbar
-        if (getSupportActionBar() != null){
+        if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
@@ -82,14 +82,9 @@ public class SearchView extends AppCompatActivity implements SearchAdapterCallBa
         swipeRefreshLayout = findViewById(R.id.main_swiperefresh);
 
         searchQueryAdapter = new SearchQueryAdapter(SearchView.this, this);
-        searchQueryAdapter.getMovies().clear();
-        searchQueryAdapter.notifyDataSetChanged();
-
-       gridLayoutManager = new GridLayoutManager(SearchView.this, 3);
+        gridLayoutManager = new GridLayoutManager(SearchView.this, 3);
         rv.setLayoutManager(gridLayoutManager);
         rv.setItemAnimator(new DefaultItemAnimator());
-
-        rv.setAdapter(searchQueryAdapter);
 
         rv.addOnScrollListener(new PaginationScrollListener(gridLayoutManager) {
             @Override
@@ -119,7 +114,6 @@ public class SearchView extends AppCompatActivity implements SearchAdapterCallBa
         shopApiEndPoints = ShopAPIBase.getClient(SearchView.this).create(ShopApiEndPoints.class);
 
 
-
         btnRetry.setOnClickListener(v -> loadFirstPage());
 
         swipeRefreshLayout.setOnRefreshListener(this::doRefresh);
@@ -137,11 +131,10 @@ public class SearchView extends AppCompatActivity implements SearchAdapterCallBa
         super.onResume();
 
         //DETERMINE WHO STARTED THIS ACTIVITY
-        final String sender=this.getIntent().getExtras().getString("SENDER_KEY");
+        final String sender = this.getIntent().getExtras().getString("SENDER_KEY");
 
         //IF ITS THE FRAGMENT THEN RECEIVE DATA
-        if(sender != null)
-        {
+        if (sender != null) {
             this.receiveData();
         }
     }
@@ -155,7 +148,7 @@ public class SearchView extends AppCompatActivity implements SearchAdapterCallBa
         // TODO: Check if data is stale.
         //  Execute network request if cache is expired; otherwise do not update data.
         searchQueryAdapter.getMovies().clear();
-        searchQueryAdapter.notifyDataSetChanged();
+//        searchQueryAdapter.notifyDataSetChanged();
         loadFirstPage();
         swipeRefreshLayout.setRefreshing(false);
     }
@@ -231,7 +224,7 @@ public class SearchView extends AppCompatActivity implements SearchAdapterCallBa
 
     private List<Product> fetchqueryResults(Response<SearchResult> response) {
         SearchResult searchResult = response.body();
-        TOTAL_PAGES = searchResult.getTotalPages();
+        TOTAL_PAGES = searchResult != null ? searchResult.getTotalPages() : null;
         System.out.println("total pages" + TOTAL_PAGES);
 
         return searchResult.getProducts();
@@ -256,10 +249,7 @@ public class SearchView extends AppCompatActivity implements SearchAdapterCallBa
     }
 
 
-    /**
-     * @param throwable required for {@link #fetchErrorMessage(Throwable)}
-     * @return
-     */
+
     private void showErrorView(Throwable throwable) {
 
         if (errorLayout.getVisibility() == View.GONE) {
@@ -309,22 +299,21 @@ public class SearchView extends AppCompatActivity implements SearchAdapterCallBa
         }
     }
 
-    /**
-     * Remember to add android.permission.ACCESS_NETWORK_STATE permission.
-     *
-     * @return
-     */
+
     private boolean isNetworkConnected() {
         ConnectivityManager cm = (ConnectivityManager) SearchView.this.getSystemService(SearchView.this.CONNECTIVITY_SERVICE);
         return cm.getActiveNetworkInfo() != null;
     }
 
-    private void receiveData()
-    {
+    private void receiveData() {
         //RECEIVE DATA VIA INTENT
         Intent i = getIntent();
         queryString = i.getStringExtra("queryString");
+
+        rv.setAdapter(searchQueryAdapter);
+        searchQueryAdapter.getMovies().clear();
         loadFirstPage();
+
 
     }
 
