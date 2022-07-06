@@ -22,6 +22,7 @@ import com.google.android.material.card.MaterialCardView;
 import com.shop.kakebe.KaKebe.Models.ProAttribute;
 import com.shop.kakebe.KaKebe.R;
 import com.shop.kakebe.KaKebe.RootActivity;
+import com.shop.kakebe.KaKebe.Utils.ProductAttributeListener;
 import com.shop.kakebe.KaKebe.localDatabase.SenseDBHelper;
 
 
@@ -52,10 +53,13 @@ public class ProductAttributeValueAdapter extends RecyclerView.Adapter<ProductAt
     private List<ProAttribute> mModelList;
     private int lastSelectedPosition = -1;
 
-    public ProductAttributeValueAdapter(Context context, List<String> products, List<ProAttribute> modelList) {
+    private final ProductAttributeListener mproductAttributeListener;
+
+    public ProductAttributeValueAdapter(Context context, List<String> products, List<ProAttribute> modelList, ProductAttributeListener productAttributeListener) {
         this.context = context;
         this.products = products;
         this.mModelList = modelList;
+        this.mproductAttributeListener = productAttributeListener;
     }
 
     @Override
@@ -79,7 +83,7 @@ public class ProductAttributeValueAdapter extends RecyclerView.Adapter<ProductAt
 
                 // check whether you selected an item
 
-                if(lastSelectedPosition >= 0) {
+                if (lastSelectedPosition >= 0) {
                     mModelList.get(lastSelectedPosition).setSelected(false);
                 }
 
@@ -89,6 +93,9 @@ public class ProductAttributeValueAdapter extends RecyclerView.Adapter<ProductAt
 
                 // store last selected item position
                 lastSelectedPosition = holder.getAbsoluteAdapterPosition();
+                mproductAttributeListener.selectedAttribute(product);
+
+//                notifyDataSetChanged();
                 notifyDataSetChanged();
 
             }
@@ -106,7 +113,7 @@ public class ProductAttributeValueAdapter extends RecyclerView.Adapter<ProductAt
 
     }
 
-    private void updateAttributeCount(String product ) {
+    private void updateAttributeCount(String product) {
         String attributeList = String.valueOf(product);
         Intent intent = new Intent(context.getString(R.string.prod_attrib_action));
         intent.putExtra(context.getString(R.string.prod_attrib), attributeList);

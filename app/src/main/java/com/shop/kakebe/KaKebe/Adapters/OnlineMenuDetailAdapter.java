@@ -3,6 +3,8 @@ package com.shop.kakebe.KaKebe.Adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,14 +20,11 @@ import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.RequestBuilder;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.engine.GlideException;
@@ -37,12 +36,15 @@ import com.shop.kakebe.KaKebe.Models.SelectedProduct;
 import com.shop.kakebe.KaKebe.R;
 import com.shop.kakebe.KaKebe.RootActivity;
 import com.shop.kakebe.KaKebe.Utils.MenuDetailListener;
+import com.shop.kakebe.KaKebe.Utils.ProductAttributeListener;
 import com.shop.kakebe.KaKebe.localDatabase.SenseDBHelper;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;
 
@@ -52,7 +54,7 @@ import org.jsoup.Jsoup;
  * Created by Suleiman on 19/10/16.
  */
 
-public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements ProductAttributeListener {
 
     private static final int ITEM = 0;
     private static final int LOADING = 1;
@@ -303,7 +305,7 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
                     }
                 });
 
-                ProductDetailAttributeAdapter productDetailAttributeAdapter = new ProductDetailAttributeAdapter(context);
+                ProductDetailAttributeAdapter productDetailAttributeAdapter = new ProductDetailAttributeAdapter(context, this::selectedAttribute);
                 LinearLayoutManager layoutManager = new LinearLayoutManager(context);
                 layoutManager.setOrientation(RecyclerView.VERTICAL);
                 heroVh.selected_product_attribute_recycler_view.setLayoutManager(layoutManager);
@@ -479,6 +481,13 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
             //item exists
 
         }
+    }
+
+
+    @Override
+    public void selectedAttribute(String feature) {
+        Log.w("selected", String.valueOf(feature));
+
     }
 
 

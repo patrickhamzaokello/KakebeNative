@@ -35,7 +35,6 @@ public class RootActivity extends AppCompatActivity implements CartItemHandlerLi
     CartAdapter cartAdapter;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,7 +50,6 @@ public class RootActivity extends AppCompatActivity implements CartItemHandlerLi
         //Initialize Bottom Navigation View.
         navView = findViewById(R.id.bottomNav_view);
         LocalBroadcastManager.getInstance(this).registerReceiver(mMasage,new IntentFilter(getString(R.string.cartcoutAction)));
-        LocalBroadcastManager.getInstance(this).registerReceiver(attMessage,new IntentFilter(getString(R.string.prod_attrib_action)));
 
         db = new SenseDBHelper(this);
 
@@ -101,24 +99,6 @@ public class RootActivity extends AppCompatActivity implements CartItemHandlerLi
     };
 
 
-    List<String> val_list = new ArrayList<>(2);
-
-    public BroadcastReceiver attMessage=new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            String cartcount=intent.getStringExtra(getString(R.string.prod_attrib));
-
-            if (!(val_list.contains(cartcount))) {
-                val_list.add(cartcount);
-            }
-            else {
-                val_list.remove(cartcount);
-            }
-
-            Log.w("afroBar", String.valueOf(val_list));
-
-        }
-    };
 
     private void updatecartCount() {
         int mycartcount = db.countCart();

@@ -3,6 +3,7 @@ package com.shop.kakebe.KaKebe.Adapters;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +29,7 @@ import com.shop.kakebe.KaKebe.Models.PopularSearch;
 import com.shop.kakebe.KaKebe.Models.ProAttribute;
 import com.shop.kakebe.KaKebe.R;
 import com.shop.kakebe.KaKebe.RootActivity;
+import com.shop.kakebe.KaKebe.Utils.ProductAttributeListener;
 import com.shop.kakebe.KaKebe.Utils.SearchPopularTagAdapterCallBack;
 
 import java.util.ArrayList;
@@ -37,7 +39,7 @@ import java.util.List;
  * Created by Suleiman on 19/10/16.
  */
 
-public class ProductDetailAttributeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class ProductDetailAttributeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements ProductAttributeListener {
 
     private static final int ITEM = 0;
     private static final int LOADING = 1;
@@ -52,6 +54,7 @@ public class ProductDetailAttributeAdapter extends RecyclerView.Adapter<Recycler
 
     private boolean isLoadingAdded = false;
     private boolean retryPageLoad = false;
+    private final ProductAttributeListener mproductAttributeListener;
 
 
     DrawableCrossFadeFactory factory =
@@ -59,9 +62,12 @@ public class ProductDetailAttributeAdapter extends RecyclerView.Adapter<Recycler
 
     private String errorMsg;
 
-    public ProductDetailAttributeAdapter(Context context) {
+
+    public ProductDetailAttributeAdapter(Context context, ProductAttributeListener productAttributeListener) {
         this.context = context;
         featuredCategories = new ArrayList<>();
+        this.mproductAttributeListener = productAttributeListener;
+
     }
 
     public List<ChoiceOption> getMovies() {
@@ -99,6 +105,7 @@ public class ProductDetailAttributeAdapter extends RecyclerView.Adapter<Recycler
         return viewHolder;
     }
 
+
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
@@ -114,7 +121,7 @@ public class ProductDetailAttributeAdapter extends RecyclerView.Adapter<Recycler
 
                 movieVH.attribute_lable.setText(choiceOption.getAttributeId());
 
-                ProductAttributeValueAdapter productAttributeValueAdapter = new ProductAttributeValueAdapter(context, choiceOption.getValues(),mModelList);
+                ProductAttributeValueAdapter productAttributeValueAdapter = new ProductAttributeValueAdapter(context, choiceOption.getValues(),mModelList,this);
                 StaggeredGridLayoutManager previous_search_staggeredGridLayoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL);
                 movieVH.attribute_value_recycler.setLayoutManager(previous_search_staggeredGridLayoutManager);
                 movieVH.attribute_value_recycler.setItemAnimator(new DefaultItemAnimator());
@@ -237,6 +244,12 @@ public class ProductDetailAttributeAdapter extends RecyclerView.Adapter<Recycler
 
     public ChoiceOption getItem(int position) {
         return featuredCategories.get(position);
+    }
+
+
+    @Override
+    public void selectedAttribute(String feature) {
+        mproductAttributeListener.selectedAttribute(feature);
     }
 
 
