@@ -2,64 +2,68 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/rootbg"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@color/rootbg">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-      >
+        android:orientation="vertical">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
+            android:id="@+id/productImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@color/white"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="400dp"
-                android:id="@+id/productImage"
-                android:background="@color/white"
-                android:layout_margin="10dp"
+                android:layout_height="match_parent"
+
                 >
-
-
-                <ProgressBar
-                    android:id="@+id/product_detail_image_progress"
-                    style="@style/Widget.AppCompat.ProgressBar"
-                    android:layout_width="@dimen/activity_margin"
-                    android:layout_height="@dimen/activity_margin"
-                    android:layout_gravity="center"
-                    android:theme="@style/CircularProgress"
-                    app:layout_constraintBottom_toBottomOf="@id/menu_image"
-                    app:layout_constraintEnd_toEndOf="@+id/menu_image"
-                    app:layout_constraintStart_toStartOf="@+id/menu_image"
-                    app:layout_constraintTop_toTopOf="@id/menu_image" />
-
 
 
                 <ImageView
                     android:id="@+id/menu_image"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
                     android:contentDescription="@string/app_name"
                     android:padding="10dp"
                     android:scaleType="fitCenter"
-                    app:layout_constraintStart_toStartOf="parent"
+                    android:src="@drawable/organicfood"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:src="@drawable/organicfood" />
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ProgressBar
+                    android:id="@+id/product_detail_image_progress"
+                    style="@style/Widget.AppCompat.ProgressBar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="100dp"
+                    android:layout_centerInParent="true"
+                    android:theme="@style/CircularProgress" />
+            </RelativeLayout>
 
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
+        </LinearLayout>
 
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/productImage"
             android:layout_alignBottom="@+id/productImage"
-            android:orientation="vertical"
+            android:layout_toRightOf="@+id/productImage"
+            android:layout_marginHorizontal="10dp"
             android:background="@color/white"
-            >
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/menu_name"
@@ -79,26 +83,25 @@
                 android:id="@+id/menu_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
                 android:fontFamily="@font/montserrat"
                 android:includeFontPadding="false"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginTop="10dp"
                 android:text="20,400"
                 android:textColor="#5C5C5C"
                 android:textSize="18sp" />
-
 
             <TextView
                 android:id="@+id/wallet_desc"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/wallet_label"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
                 android:fontFamily="@font/montserrat"
                 android:includeFontPadding="false"
                 android:text="Unit Price (UGX)"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
                 android:textColor="#5C5C5C"
                 android:textSize="15sp" />
 
@@ -114,12 +117,12 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:background="#18161E"
             android:orientation="vertical"
-            android:paddingVertical="20dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginHorizontal="10dp"
             android:paddingHorizontal="10dp"
-            >
+            android:paddingVertical="20dp">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -150,8 +153,8 @@
                         android:layout_below="@+id/wallet_label"
                         android:layout_centerInParent="true"
                         android:fontFamily="@font/montserrat_bold"
-                        android:textColor="@color/white"
                         android:text="Total Price (UGX)"
+                        android:textColor="@color/white"
                         android:textSize="15sp" />
 
 
@@ -184,10 +187,10 @@
                         android:inputType="number"
                         android:maxLength="4"
                         android:minEms="1"
-                        android:textColor="@color/white"
                         android:text="1"
                         android:textAlignment="center"
                         android:textAllCaps="false"
+                        android:textColor="@color/white"
                         android:textFontWeight="500"
                         android:textSize="20sp" />
 
@@ -206,8 +209,6 @@
             </LinearLayout>
 
 
-
-
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -218,9 +219,9 @@
                     style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginRight="20dp"
                     android:text="Order Now"
                     android:textColor="@color/white"
-                    android:layout_marginRight="20dp"
 
                     android:transitionName="account_change"
                     app:strokeColor="@color/white"
@@ -231,16 +232,13 @@
                     style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:backgroundTint="@color/purple_500"
                     android:fontFamily="@font/montserrat_bold"
                     android:gravity="center"
                     android:text="Add to Cart"
                     android:textColor="@color/white"
                     app:iconGravity="textStart"
-                    android:backgroundTint="@color/purple_500"
-                    app:iconSize="18dp"
-                    />
-
-
+                    app:iconSize="18dp" />
 
 
             </LinearLayout>
@@ -252,11 +250,11 @@
             android:id="@+id/descriptionlayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
+            android:layout_marginHorizontal="10dp"
             android:layout_marginTop="10dp"
-            android:paddingVertical="20dp"
             android:background="@color/white"
-            >
+            android:orientation="vertical"
+            android:paddingVertical="20dp">
 
             <TextView
                 android:id="@+id/menu_description_heading"
@@ -293,12 +291,13 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/relatedProductslayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/relatedProductslayout"
             android:layout_marginTop="20dp"
             android:background="@color/white"
             android:orientation="vertical">
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -320,8 +319,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="5dp"
-                android:layout_marginBottom="30dp"
                 android:layout_marginEnd="10dp"
+                android:layout_marginBottom="30dp"
                 android:ellipsize="end"
                 android:fontFamily="@font/montserrat"
                 android:includeFontPadding="false"
@@ -336,8 +335,6 @@
         </LinearLayout>
 
     </LinearLayout>
-
-
 
 
 </LinearLayout>
