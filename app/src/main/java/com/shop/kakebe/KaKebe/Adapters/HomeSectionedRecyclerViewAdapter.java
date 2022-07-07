@@ -387,14 +387,14 @@ public class HomeSectionedRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
 
     protected class MovieVH extends RecyclerView.ViewHolder {
         private TextView sectionLabel;
-                private Button showAllButton;
+        private TextView showAllButton;
         private RecyclerView itemRecyclerView;
 
         public MovieVH(View itemView) {
             super(itemView);
 
             sectionLabel = (TextView) itemView.findViewById(R.id.section_label);
-            showAllButton = (Button) itemView.findViewById(R.id.section_show_all_button);
+            showAllButton = (TextView) itemView.findViewById(R.id.section_show_all_button);
             itemRecyclerView = (RecyclerView) itemView.findViewById(R.id.item_recycler_view);
         }
     }

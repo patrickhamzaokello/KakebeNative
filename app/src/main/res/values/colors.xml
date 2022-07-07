@@ -45,6 +45,11 @@
     <color name="profilecardtext">#ECECEC</color>
     <color name="changeaddress">#717171</color>
     <color name="attribute_color_default">#f2f2f2</color>
+    <color name="sectioncolor">#000000</color>
+    <color name="sectionheadingcolor">#EDEDED</color>
+    <color name="sectionsubheadingcolor">#707070</color>
+    <color name="buttonshowmore">#FFEB3B</color>
+
 
 
 </resources>

@@ -4,69 +4,57 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/white"
+    android:paddingTop="40dp"
     android:clipToPadding="false">
 
 
-    <TextView
-        android:id="@+id/flash_main_name"
+
+    <RelativeLayout
+        android:id="@+id/flash_heading"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="20dp"
-        android:ellipsize="end"
+        android:layout_marginBottom="10dp"
+        android:background="@color/purple_500"
         android:paddingHorizontal="10dp"
-        android:fontFamily="@font/montserrat_bold"
-        android:gravity="left"
-        android:maxLines="1"
-        android:text="Flash Deals"
-        android:textColor="@color/black"
-        android:textSize="20sp" />
+        android:paddingVertical="20dp">
 
-    <TextView
-        android:id="@+id/flash_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/flash_main_name"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="20dp"
-        android:ellipsize="end"
-        android:fontFamily="@font/montserrat"
-        android:gravity="left"
-        android:paddingHorizontal="10dp"
+        <TextView
+            android:id="@+id/flash_main_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:layout_toRightOf="@+id/section_show_all_button"
+            android:fontFamily="@font/montserrat_bold"
+            android:includeFontPadding="false"
+            android:text="Section Name"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
 
-        android:maxLines="1"
-        android:text="Electronics"
-        android:textColor="#4A4A4A"
-        android:textSize="18sp" />
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/image_card_view"
-        android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:scaleType="fitXY"
-        app:cardCornerRadius="5dp"
-        android:layout_below="@+id/flash_name"
-        app:cardElevation="0dp">
+        <TextView
+            android:id="@+id/flash_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/flash_main_name"
+            android:layout_marginRight="10dp"
+            android:layout_toRightOf="@+id/section_show_all_button"
+            android:fontFamily="@font/montserrat"
+            android:includeFontPadding="false"
+            android:text="Kakebe Shop Online"
+            android:textColor="#FFEB3B"
+            android:textSize="14sp" />
+
 
         <ImageView
-            android:id="@+id/category_product_imageview"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#f2f2f2"
-            android:paddingHorizontal="10dp"
-            android:scaleType="fitXY"
-            android:src="@drawable/beefstew"></ImageView>
-
-        <ProgressBar
-            android:id="@+id/cat_product_image_progress"
-            style="@style/Widget.AppCompat.ProgressBar"
-            android:layout_width="@dimen/activity_margin"
-            android:layout_height="@dimen/activity_margin"
-            android:layout_gravity="center"
-            android:theme="@style/CircularProgress" />
+            android:id="@+id/section_show_all_button"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentLeft="true"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/ic_icomoon_free_price_tags" />
 
 
-    </androidx.cardview.widget.CardView>
+    </RelativeLayout>
 
 
     <!--  recycler view for items -->
@@ -74,7 +62,7 @@
         android:id="@+id/flash_product_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/image_card_view"
+        android:layout_below="@+id/flash_heading"
 
         />
 

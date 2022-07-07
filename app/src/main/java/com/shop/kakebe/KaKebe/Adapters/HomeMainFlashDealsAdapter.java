@@ -118,37 +118,11 @@ public class HomeMainFlashDealsAdapter extends RecyclerView.Adapter<RecyclerView
                 movieVH.flash_main_name.setText(featuredCategory.getName());
                 movieVH.flash_name.setText("Expires in "+ featuredCategory.getTimeleft());
 
-
-                Glide
-                        .with(context)
-                        .load(BASE_URL_IMG + featuredCategory.getBanner())
-                        .listener(new RequestListener<Drawable>() {
-                            @Override
-                            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-                                movieVH.mProgress.setVisibility(View.VISIBLE);
-                                return false;
-                            }
-
-                            @Override
-                            public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-                                movieVH.mProgress.setVisibility(View.GONE);
-                                return false;
-                            }
-
-                        })
-                        .diskCacheStrategy(DiskCacheStrategy.ALL)   // cache both original & resized image
-                        .centerCrop()
-                        .transition(withCrossFade(factory))
-                        .into(movieVH.mPosterImg);
-
-
                 LinearLayoutManager HorizontalLayout = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
                 movieVH.flash_product_recycler_view.setLayoutManager(HorizontalLayout);
-
 //              movieVH.flash_product_recycler_view.setBackgroundColor(Color.parseColor(featuredCategory.getBackgroundColor()));
                 HomeFlashDealItemAdapter adapter = new HomeFlashDealItemAdapter(context, featuredCategory.getFlashProducts());
                 movieVH.flash_product_recycler_view.setAdapter(adapter);
-
 
                 break;
 
@@ -298,14 +272,12 @@ public class HomeMainFlashDealsAdapter extends RecyclerView.Adapter<RecyclerView
 
     protected class MovieVH extends RecyclerView.ViewHolder {
 
-        private final ImageView mPosterImg;
         private final ProgressBar mProgress;
         private  final  TextView flash_main_name,flash_name;
         private  final  RecyclerView flash_product_recycler_view;
 
         public MovieVH(View itemView) {
             super(itemView);
-            mPosterImg = itemView.findViewById(R.id.category_product_imageview);
             mProgress = itemView.findViewById(R.id.cat_product_image_progress);
             flash_main_name = itemView.findViewById(R.id.flash_main_name);
             flash_name = itemView.findViewById(R.id.flash_name);

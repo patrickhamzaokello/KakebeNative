@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
-        android:background="@color/black"
+        android:background="@color/sectioncolor"
         android:paddingHorizontal="10dp"
         android:paddingVertical="20dp">
 
@@ -26,7 +26,7 @@
             android:fontFamily="@font/montserrat_bold"
             android:includeFontPadding="false"
             android:text="Section Name"
-            android:textColor="@color/white"
+            android:textColor="@color/sectionheadingcolor"
             android:textSize="18sp" />
 
 
@@ -41,18 +41,20 @@
             android:fontFamily="@font/montserrat"
             android:includeFontPadding="false"
             android:text="Kakebe Shop Online"
-            android:textColor="#A1A1A1"
+            android:textColor="@color/sectionsubheadingcolor"
             android:textSize="14sp" />
 
 
-        <Button
+        <TextView
             android:id="@+id/section_show_all_button"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:background="@drawable/custom_rightarrow_btn"
-            android:backgroundTint="@color/white"
-            android:theme="@style/WhiteBtn" />
+            android:text="See All"
+            android:layout_centerVertical="true"
+            android:fontFamily="@font/montserrat_bold"
+            android:textAllCaps="true"
+            android:textColor="@color/buttonshowmore" />
 
 
     </RelativeLayout>
