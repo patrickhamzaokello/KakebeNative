@@ -23,7 +23,7 @@
             android:includeFontPadding="false"
             android:text="Featured Categories"
             android:textColor="@color/black"
-            android:textSize="18sp" />
+            android:textSize="20sp" />
 
 
         <TextView

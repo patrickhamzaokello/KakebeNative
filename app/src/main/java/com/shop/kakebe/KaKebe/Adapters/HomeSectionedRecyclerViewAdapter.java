@@ -19,6 +19,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -93,7 +94,7 @@ public class HomeSectionedRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
                 viewHolder = new CategoryVH(viewCategory);
                 break;
             case FLASHDEAL:
-                View viewFLASHDEAL = inflater.inflate(R.layout.home_category_recycler, parent, false);
+                View viewFLASHDEAL = inflater.inflate(R.layout.home_flashdeals_recycler, parent, false);
                 viewHolder = new FLASHDEALSVH(viewFLASHDEAL);
                 break;
             case HOMECATEGORY:
@@ -214,22 +215,10 @@ public class HomeSectionedRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
 
             case FLASHDEAL:
                 final FLASHDEALSVH flashdealsvh = (FLASHDEALSVH) holder;
-                flashdealsvh.sectionLabel.setText("Flash Deals");
-//
-//                //recycler view for items
-//                flashdealsvh.itemRecyclerView.setHasFixedSize(true);
-//                flashdealsvh.itemRecyclerView.setNestedScrollingEnabled(false);
-//                int flashdealsvh_mN_o_OfColumns = Utility.calculateNoOfColumns(context, 152);
-//
-//                /* set layout manager on basis of recyclerview enum type */
-//                GridLayoutManager flashdealsvhgridhometopLayoutManager = new GridLayoutManager(context, flashdealsvh_mN_o_OfColumns);
-//                flashdealsvh.itemRecyclerView.setLayoutManager(flashdealsvhgridhometopLayoutManager);
-//
-//
-//                HomeSectionedRecyclerViewItemAdapter flashdealsvhadapterTop = new HomeSectionedRecyclerViewItemAdapter(context, category.getProducts());
-//                flashdealsvh.itemRecyclerView.setAdapter(flashdealsvhadapterTop);
-//
-
+                flashdealsvh.itemRecyclerView.setLayoutManager(new LinearLayoutManager(context));
+                HomeMainFlashDealsAdapter homeMainFlashDealsAdapter = new HomeMainFlashDealsAdapter(context);
+                flashdealsvh.itemRecyclerView.setAdapter(homeMainFlashDealsAdapter);
+                homeMainFlashDealsAdapter.addAll(category.getFlashDeals());
 
                 break;
 
@@ -424,15 +413,11 @@ public class HomeSectionedRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
     }
 
     protected class FLASHDEALSVH extends RecyclerView.ViewHolder {
-        private TextView sectionLabel, section_label_desc;
         private RecyclerView itemRecyclerView;
 
         public FLASHDEALSVH(View itemView) {
             super(itemView);
-
-            sectionLabel = (TextView) itemView.findViewById(R.id.section_label);
-            section_label_desc = (TextView) itemView.findViewById(R.id.section_label_desc);
-            itemRecyclerView = (RecyclerView) itemView.findViewById(R.id.item_recycler_view);
+            itemRecyclerView = (RecyclerView) itemView.findViewById(R.id.main_flash_deals_recycler);
         }
     }
 

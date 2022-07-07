@@ -156,7 +156,7 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
                         .listener(new RequestListener<Drawable>() {
                             @Override
                             public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-                                heroVh.mProgress.setVisibility(View.GONE);
+//                                heroVh.mProgress.setVisibility(View.GONE);
                                 return false;
                             }
 

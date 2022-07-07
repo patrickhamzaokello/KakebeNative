@@ -89,6 +89,8 @@ public class OrderCompleted extends AppCompatActivity  {
 
         NotificationCompat.Builder  builder = new NotificationCompat.Builder(this, CHANNEL_ID)
                 .setSmallIcon(R.drawable.kakebelogo)
+                .setColorized(true)
+                .setColor(getResources().getColor(R.color.purple_200))
                 .setContentTitle("Order Placed 🎉🎊🙌 💯")
                 .setContentText(user.getFullname()+ getString(R.string.placed_order_message))
                 .setStyle(new NotificationCompat.BigTextStyle()
