@@ -130,7 +130,6 @@ public class HomeSectionedRecyclerViewItemAdapter extends RecyclerView.Adapter<H
             holder.item_rating.setPaintFlags(holder.item_rating.getPaintFlags() & ~Paint.STRIKE_THRU_TEXT_FLAG);
             holder.discount_card.setVisibility(View.GONE);
         } else {
-            // if the text is not having strike then set strike else vice versa
             holder.discount_card.setVisibility(View.VISIBLE);
             holder.discoutpercent.setText(cal_percentage(product.getDiscount(), product.getUnitPrice()));
             holder.item_rating.setPaintFlags(holder.item_rating.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
