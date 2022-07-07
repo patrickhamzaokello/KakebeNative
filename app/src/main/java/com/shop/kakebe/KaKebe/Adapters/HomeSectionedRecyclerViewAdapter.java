@@ -196,7 +196,6 @@ public class HomeSectionedRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
             case HOMECATEGORY:
                 final HOMECATEGORYVH homecategoryvh = (HOMECATEGORYVH) holder;
                 homecategoryvh.sectionLabel.setText(category.getName());
-//                homecategoryvh.sectionLabel.setText(category.getMetaTitle());
 
                 //recycler view for items
                 homecategoryvh.itemRecyclerView.setHasFixedSize(true);

@@ -65,6 +65,7 @@
             android:layout_toLeftOf="@+id/home_addToCart"
             android:gravity="left"
             android:includeFontPadding="false"
+
             android:text="Rating 4|5"
             android:textColor="@color/mygreen"
             android:textSize="8sp" />
@@ -96,6 +97,38 @@
         android:layout_marginLeft="10dp"
         android:background="@drawable/custom_plus_btn"
         android:backgroundTint="@color/white" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="wrap_content"
+        android:id="@+id/discount_card"
+        android:layout_height="wrap_content"
+        android:clipToPadding="false"
+        android:layout_margin="10dp"
+        android:layout_alignParentRight="true"
+        app:cardBackgroundColor="#FFDDE8"
+        app:cardCornerRadius="10dp">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="5dp"
+            >
+
+            <TextView
+                android:id="@+id/discoutpercent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="-20%"
+                android:textSize="14sp"
+                android:fontFamily="@font/montserrat_bold"
+                android:textColor="@color/purple_500" />
+
+        </RelativeLayout>
+
+
+    </com.google.android.material.card.MaterialCardView>
 
 
 

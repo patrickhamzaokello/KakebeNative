@@ -131,9 +131,9 @@ public class HomeFlashDealItemAdapter extends RecyclerView.Adapter<HomeFlashDeal
     }
 
     public String cal_percentage(int discount, int unit_price){
-        double val = (100.0 * discount / unit_price);
+        int val = (100 * discount / unit_price);
+        val = Math.round(val - 0.5f);
         val = val - 100;
-        val = Math.round(val + 0.5f);
         String per_discount = val +"%";
         return per_discount;
     }

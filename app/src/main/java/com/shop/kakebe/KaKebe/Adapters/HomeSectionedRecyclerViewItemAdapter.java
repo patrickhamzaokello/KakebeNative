@@ -4,6 +4,7 @@ import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOption
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,6 +28,7 @@ import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.transition.DrawableCrossFadeFactory;
+import com.google.android.material.card.MaterialCardView;
 import com.shop.kakebe.KaKebe.Models.Product;
 import com.shop.kakebe.KaKebe.MyMenuDetail;
 import com.shop.kakebe.KaKebe.R;
@@ -44,8 +46,11 @@ public class HomeSectionedRecyclerViewItemAdapter extends RecyclerView.Adapter<H
         private final TextView item_name;
         private final TextView item_price;
         private final TextView item_rating;
+        private final TextView discoutpercent;
         private final ImageView itemimage;
         private final ProgressBar mProgress;
+
+        private final MaterialCardView discount_card;
 
         Button home_st_carttn;
 
@@ -56,8 +61,10 @@ public class HomeSectionedRecyclerViewItemAdapter extends RecyclerView.Adapter<H
             item_rating = itemView.findViewById(R.id.item_rating);
             item_price = itemView.findViewById(R.id.item_price);
             mProgress = itemView.findViewById(R.id.home_product_image_progress);
-
+            discoutpercent = itemView.findViewById(R.id.discoutpercent);
             home_st_carttn = itemView.findViewById(R.id.home_st_carttn);
+            discount_card = (MaterialCardView) itemView.findViewById(R.id.discount_card);
+
 
 
         }
@@ -117,8 +124,18 @@ public class HomeSectionedRecyclerViewItemAdapter extends RecyclerView.Adapter<H
 
 
         holder.item_name.setText(product.getName());
-        holder.item_rating.setText("Rating " + product.getDiscount() + " | " + "5");
-        holder.item_price.setText("Ugx " + NumberFormat.getNumberInstance(Locale.US).format(product.getUnitPrice()));
+        holder.item_rating.setText("Ugx " + NumberFormat.getNumberInstance(Locale.US).format(product.getUnitPrice()));
+
+        if(compare_values(product.getUnitPrice(),product.getDiscount())){
+            holder.item_rating.setPaintFlags(holder.item_rating.getPaintFlags() & ~Paint.STRIKE_THRU_TEXT_FLAG);
+            holder.discount_card.setVisibility(View.GONE);
+        } else {
+            // if the text is not having strike then set strike else vice versa
+            holder.discount_card.setVisibility(View.VISIBLE);
+            holder.discoutpercent.setText(cal_percentage(product.getDiscount(), product.getUnitPrice()));
+            holder.item_rating.setPaintFlags(holder.item_rating.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+        }
+        holder.item_price.setText("Ugx " + NumberFormat.getNumberInstance(Locale.US).format(product.getDiscount()));
 
         Glide
                 .with(context)
@@ -205,11 +222,29 @@ public class HomeSectionedRecyclerViewItemAdapter extends RecyclerView.Adapter<H
 
     }
 
+    private boolean compare_values(int unitprice, int discount){
+        boolean val;
+        if(unitprice == discount){
+            val = true;
+        } else {
+            val = false;
+        }
+        return val;
+    }
+
     private RequestBuilder<Drawable> loadImage(@NonNull String posterPath) {
         return GlideApp
                 .with(context)
                 .load(BASE_URL_IMG + posterPath)
                 .centerCrop();
+    }
+
+    public String cal_percentage(int discount, int unit_price){
+        int val = (100 * discount / unit_price);
+        val = Math.round(val - 0.5f);
+        val = val - 100;
+        String per_discount = val +"%";
+        return per_discount;
     }
 
     private void updatecartCount() {
