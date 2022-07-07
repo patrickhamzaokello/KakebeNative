@@ -43,8 +43,9 @@ public class HomeSectionedRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
     private static final int ITEM = 0;
     private static final int LOADING = 1;
     private static final int HERO = 2;
-    private static final int HOMECATEGORY = 4;
+    private static final int HOMECATEGORY = 5;
     private static final int CATEGORY = 3;
+    private static final int FLASHDEAL = 4;
 
     //    private static final String BASE_URL_IMG = "https://image.tmdb.org/t/p/w150";
     private static final String BASE_URL_IMG = "";
@@ -90,6 +91,10 @@ public class HomeSectionedRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
             case CATEGORY:
                 View viewCategory = inflater.inflate(R.layout.home_category_recycler, parent, false);
                 viewHolder = new CategoryVH(viewCategory);
+                break;
+            case FLASHDEAL:
+                View viewFLASHDEAL = inflater.inflate(R.layout.home_category_recycler, parent, false);
+                viewHolder = new FLASHDEALSVH(viewFLASHDEAL);
                 break;
             case HOMECATEGORY:
                 View viewHOMECATEGORY = inflater.inflate(R.layout.home_top_section_custom_row_layout, parent, false);
@@ -174,7 +179,9 @@ public class HomeSectionedRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
                         Intent i = new Intent(context.getApplicationContext(), MySelectedCategory.class);
                         //PACK DATA
                         i.putExtra("SENDER_KEY", "MyFragment");
-                        i.putExtra("category_selected_key", category.getParentId());
+//                        i.putExtra("category_selected_key", category.getParentId());
+                        i.putExtra("category_selected_key", category.getId());
+
                         context.startActivity(i);
 
 //                        Toast.makeText(v.getContext(), category.getName(), Toast.LENGTH_SHORT).show();
@@ -203,8 +210,25 @@ public class HomeSectionedRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
                 HomeSectionedRecyclerViewItemAdapter adapterTop = new HomeSectionedRecyclerViewItemAdapter(context, category.getProducts());
                 homecategoryvh.itemRecyclerView.setAdapter(adapterTop);
 
+                break;
 
-
+            case FLASHDEAL:
+                final FLASHDEALSVH flashdealsvh = (FLASHDEALSVH) holder;
+                flashdealsvh.sectionLabel.setText("Flash Deals");
+//
+//                //recycler view for items
+//                flashdealsvh.itemRecyclerView.setHasFixedSize(true);
+//                flashdealsvh.itemRecyclerView.setNestedScrollingEnabled(false);
+//                int flashdealsvh_mN_o_OfColumns = Utility.calculateNoOfColumns(context, 152);
+//
+//                /* set layout manager on basis of recyclerview enum type */
+//                GridLayoutManager flashdealsvhgridhometopLayoutManager = new GridLayoutManager(context, flashdealsvh_mN_o_OfColumns);
+//                flashdealsvh.itemRecyclerView.setLayoutManager(flashdealsvhgridhometopLayoutManager);
+//
+//
+//                HomeSectionedRecyclerViewItemAdapter flashdealsvhadapterTop = new HomeSectionedRecyclerViewItemAdapter(context, category.getProducts());
+//                flashdealsvh.itemRecyclerView.setAdapter(flashdealsvhadapterTop);
+//
 
 
                 break;
@@ -243,7 +267,9 @@ public class HomeSectionedRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
             return HERO;
         } else if(position == 1){
             return CATEGORY;
-        } else if (position == 2 || position == 3 || position == 4){
+        }else if(position == 2){
+            return FLASHDEAL;
+        } else if (position == 3 || position == 4 || position == 5){
             return HOMECATEGORY;
         }
         else {
@@ -369,6 +395,7 @@ public class HomeSectionedRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
         }
     }
 
+
     protected class MovieVH extends RecyclerView.ViewHolder {
         private TextView sectionLabel;
                 private Button showAllButton;
@@ -388,6 +415,19 @@ public class HomeSectionedRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
         private RecyclerView itemRecyclerView;
 
         public HOMECATEGORYVH(View itemView) {
+            super(itemView);
+
+            sectionLabel = (TextView) itemView.findViewById(R.id.section_label);
+            section_label_desc = (TextView) itemView.findViewById(R.id.section_label_desc);
+            itemRecyclerView = (RecyclerView) itemView.findViewById(R.id.item_recycler_view);
+        }
+    }
+
+    protected class FLASHDEALSVH extends RecyclerView.ViewHolder {
+        private TextView sectionLabel, section_label_desc;
+        private RecyclerView itemRecyclerView;
+
+        public FLASHDEALSVH(View itemView) {
             super(itemView);
 
             sectionLabel = (TextView) itemView.findViewById(R.id.section_label);

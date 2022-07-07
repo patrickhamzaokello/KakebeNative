@@ -22,7 +22,7 @@ public class SplashActivity extends AppCompatActivity {
 
     Animation topAnim, bottomAnim;
     ImageView image;
-    TextView logo, slogan;
+    TextView introtext, secondintrotext,endfootertext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,10 +40,14 @@ public class SplashActivity extends AppCompatActivity {
         bottomAnim = AnimationUtils.loadAnimation(this, R.anim.splashbottom_animation);
 
         image = findViewById(R.id.splashimage);
+        introtext = findViewById(R.id.introtext);
+        secondintrotext = findViewById(R.id.secondintrotext);
+        endfootertext= findViewById(R.id.endfootertext);
 
         image.setAnimation(topAnim);
-
-
+        introtext.setAnimation(bottomAnim);
+        secondintrotext.setAnimation(bottomAnim);
+        endfootertext.setAnimation(bottomAnim);
 
 
         new Handler().postDelayed(new Runnable() {
@@ -62,14 +66,6 @@ public class SplashActivity extends AppCompatActivity {
                 } else {
                     Intent intent = new Intent(SplashActivity.this, LoginMaterial.class);
                     startActivity(intent);
-
-//                    Pair[] pairs = new Pair[3];
-//                    pairs[0] = new Pair<View, String>(image,"logo_image");
-//                    pairs[1] = new Pair<View, String>(logo,"logo_text");
-//                    pairs[2] = new Pair<View, String>(slogan,"logo_desc");
-//
-//                    ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(SplashActivity.this, pairs);
-//                    startActivity(intent, options.toBundle());
                 }
                 finish();
 

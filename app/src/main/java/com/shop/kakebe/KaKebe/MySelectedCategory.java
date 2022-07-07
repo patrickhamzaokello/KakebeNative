@@ -40,7 +40,7 @@ import retrofit2.Response;
 public class MySelectedCategory extends AppCompatActivity implements PaginationAdapterCallback {
 
 
-    private static final String TAG = "MainActivity";
+    private static final String TAG = "MySelectedCategory";
 
     SelectedCategoryPaginationAdapter adapter;
     private final static int NUM_GRIDS = 3;
@@ -99,7 +99,6 @@ public class MySelectedCategory extends AppCompatActivity implements PaginationA
         rv.setLayoutManager(catgridLayoutManager);
         rv.setItemAnimator(new DefaultItemAnimator());
 
-        rv.setAdapter(adapter);
 
         rv.addOnScrollListener(new GridPaginationScrollListener(catgridLayoutManager) {
             @Override
@@ -361,6 +360,10 @@ public class MySelectedCategory extends AppCompatActivity implements PaginationA
         System.out.println("category_selected_key "+category_selected_key);
         //SET DATA TO TEXTVIEWS
         selectCategoryId = category_selected_key;
+
+
+        rv.setAdapter(adapter);
+        adapter.getMovies().clear();
         loadFirstPage();
 
     }

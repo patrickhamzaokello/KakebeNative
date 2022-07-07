@@ -16,6 +16,9 @@ public class Category {
     @SerializedName("sliderBanners")
     @Expose
     private List<SliderBanner> sliderBanners = null;
+    @SerializedName("FlashDeals")
+    @Expose
+    private List<FlashDeal> flashDeals = null;
     @SerializedName("featuredCategories")
     @Expose
     private List<FeaturedCategory> featuredCategories = null;
@@ -84,6 +87,14 @@ public class Category {
 
     public void setSliderBanners(List<SliderBanner> sliderBanners) {
         this.sliderBanners = sliderBanners;
+    }
+
+    public List<FlashDeal> getFlashDeals() {
+        return flashDeals;
+    }
+
+    public void setFlashDeals(List<FlashDeal> flashDeals) {
+        this.flashDeals = flashDeals;
     }
 
     public List<FeaturedCategory> getFeaturedCategories() {

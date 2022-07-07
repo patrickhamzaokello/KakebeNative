@@ -21,7 +21,7 @@
             >
 
             <ImageView
-                android:id="@+id/splashimage"
+                android:id="@+id/upercircle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
@@ -58,53 +58,46 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_above="@+id/endfootertext"
-            android:gravity="center_vertical">
+            android:gravity="center_vertical"
+            android:orientation="vertical">
 
+            <ImageView
+                android:id="@+id/splashimage"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/ic_kakebelogo"
+                android:theme="@style/WhiteBtn">
 
-            <LinearLayout
+            </ImageView>
+
+            <TextView
+                android:id="@+id/introtext"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:orientation="vertical">
+                android:layout_below="@+id/splashimage"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/montserrat_bold"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:text="Kakebe Shop"
+                android:textColor="@color/onboardingBG"
+                android:textSize="30sp" />
 
-                <ImageView
-                    android:id="@+id/logo"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:src="@drawable/ic_kakebelogo"
-                    android:theme="@style/WhiteBtn">
+            <TextView
+                android:id="@+id/secondintrotext"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/introtext"
+                android:layout_marginHorizontal="20dp"
+                android:fontFamily="@font/montserrat"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:text="You Order, We Deliver"
+                android:textColor="@color/onboardingBG"
+                android:textSize="18sp" />
 
-                </ImageView>
-
-                <TextView
-                    android:id="@+id/introtext"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/splashimage"
-                    android:layout_marginHorizontal="20dp"
-                    android:layout_marginTop="10dp"
-                    android:fontFamily="@font/montserrat_bold"
-                    android:gravity="center"
-                    android:includeFontPadding="false"
-                    android:text="Kakebe Shop"
-                    android:textColor="@color/onboardingBG"
-                    android:textSize="30sp" />
-
-                <TextView
-                    android:id="@+id/secondintrotext"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/introtext"
-                    android:layout_marginHorizontal="20dp"
-                    android:fontFamily="@font/montserrat"
-                    android:gravity="center"
-                    android:includeFontPadding="false"
-                    android:text="You Order, We Deliver"
-                    android:textColor="@color/onboardingBG"
-                    android:textSize="18sp" />
-
-
-            </LinearLayout>
 
         </LinearLayout>
 
