@@ -4,6 +4,7 @@ import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOption
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,6 +28,7 @@ import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.transition.DrawableCrossFadeFactory;
+import com.google.android.material.card.MaterialCardView;
 import com.shop.kakebe.KaKebe.Models.FlashProduct;
 import com.shop.kakebe.KaKebe.Models.Product;
 import com.shop.kakebe.KaKebe.MyMenuDetail;
@@ -42,10 +44,10 @@ import java.util.Locale;
 public class HomeFlashDealItemAdapter extends RecyclerView.Adapter<HomeFlashDealItemAdapter.ItemViewHolder> {
 
     class ItemViewHolder extends RecyclerView.ViewHolder {
-        private final TextView item_name,item_price,discoutpercent;
+        private final TextView item_name,item_price,discoutpercent,original_price;
         private final ImageView itemimage;
         private final ProgressBar mProgress;
-
+        private final MaterialCardView discount_card;
 
         public ItemViewHolder(View itemView) {
             super(itemView);
@@ -54,7 +56,10 @@ public class HomeFlashDealItemAdapter extends RecyclerView.Adapter<HomeFlashDeal
             item_price = itemView.findViewById(R.id.item_price);
             mProgress = itemView.findViewById(R.id.home_product_image_progress);
             discoutpercent = itemView.findViewById(R.id.discoutpercent);
+            original_price = itemView.findViewById(R.id.original_price);
+            discount_card = itemView.findViewById(R.id.discount_card);
 
+            original_price.setVisibility(View.GONE);
 
         }
     }
@@ -87,7 +92,17 @@ public class HomeFlashDealItemAdapter extends RecyclerView.Adapter<HomeFlashDeal
 
         holder.item_name.setText(product.getName());
         holder.item_price.setText("Ugx " + NumberFormat.getNumberInstance(Locale.US).format(product.getDiscount()));
-        holder.discoutpercent.setText(cal_percentage(product.getDiscount(), product.getUnitPrice()));
+
+        if(compare_values(product.getUnitPrice(),product.getDiscount())){
+            holder.original_price.setPaintFlags(holder.original_price.getPaintFlags() & ~Paint.STRIKE_THRU_TEXT_FLAG);
+            holder.discount_card.setVisibility(View.GONE);
+        } else {
+            holder.discount_card.setVisibility(View.VISIBLE);
+            holder.original_price.setVisibility(View.VISIBLE);
+            holder.discoutpercent.setText(cal_percentage(product.getDiscount(), product.getUnitPrice()));
+            holder.original_price.setPaintFlags(holder.original_price.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+            holder.original_price.setText("Ugx " + NumberFormat.getNumberInstance(Locale.US).format(product.getUnitPrice()));
+        }
 
         Glide
                 .with(context)
@@ -136,6 +151,16 @@ public class HomeFlashDealItemAdapter extends RecyclerView.Adapter<HomeFlashDeal
         val = val - 100;
         String per_discount = val +"%";
         return per_discount;
+    }
+
+    private boolean compare_values(int unitprice, int discount){
+        boolean val;
+        if(unitprice == discount){
+            val = true;
+        } else {
+            val = false;
+        }
+        return val;
     }
 
     public void switchContent(int id, Fragment fragment) {

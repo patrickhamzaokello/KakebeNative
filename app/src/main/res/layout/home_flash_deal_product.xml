@@ -64,12 +64,26 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/item_rating"
             android:layout_toLeftOf="@+id/home_addToCart"
-            android:fontFamily="@font/montserrat_bold"
+            android:fontFamily="@font/yantramanav_black"
             android:includeFontPadding="false"
             android:gravity="left"
+            android:textAllCaps="true"
             android:text="Ugx 3,800"
             android:textColor="@color/black"
-            android:textSize="17sp" />
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/original_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/yantramanav_regular"
+            android:layout_gravity="center_vertical"
+            android:includeFontPadding="false"
+            android:text="UGX 2"
+            android:textAllCaps="true"
+            android:textColor="#CD6161"
+            android:textSize="15sp" />
+
 
 
     </LinearLayout>
@@ -77,6 +91,7 @@
 
 
     <com.google.android.material.card.MaterialCardView
+        android:id="@+id/discount_card"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clipToPadding="false"
