@@ -32,7 +32,7 @@ public class SelectedCategoryResult {
     private Integer unitPrice;
     @SerializedName("discount")
     @Expose
-    private Double discount;
+    private Integer discount;
     @SerializedName("purchase_price")
     @Expose
     private Integer purchasePrice;
@@ -108,11 +108,11 @@ public class SelectedCategoryResult {
         this.unitPrice = unitPrice;
     }
 
-    public Double  getDiscount() {
+    public int getDiscount() {
         return discount;
     }
 
-    public void setDiscount(Double  discount) {
+    public void setDiscount(int  discount) {
         this.discount = discount;
     }
 

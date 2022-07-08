@@ -68,13 +68,12 @@
                 android:id="@+id/item_price"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
                 android:layout_toLeftOf="@+id/home_addToCart"
                 android:fontFamily="@font/montserrat_bold"
                 android:gravity="left"
                 android:text="Ugx 3,800"
                 android:textColor="@color/black"
-                android:textSize="10sp" />
+                android:textSize="13sp" />
             <TextView
                 android:id="@+id/item_rating"
                 android:layout_width="match_parent"
@@ -83,10 +82,9 @@
                 android:layout_toLeftOf="@+id/home_addToCart"
                 android:gravity="left"
                 android:includeFontPadding="false"
-
                 android:text="Rating 4|5"
                 android:textColor="@color/mygreen"
-                android:textSize="8sp" />
+                android:textSize="10sp" />
 
 
 

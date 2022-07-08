@@ -30,17 +30,12 @@ import java.util.List;
 public class SelectedCategoryInfoAdapter extends RecyclerView.Adapter<SelectedCategoryInfoAdapter.ItemViewHolder> {
 
     class ItemViewHolder extends RecyclerView.ViewHolder {
-        private final ImageView selected_cat_poster;
         private final TextView section_label;
-//        private final ProgressBar mProgress;
 
-        Button home_st_carttn;
 
         public ItemViewHolder(View itemView) {
             super(itemView);
-            selected_cat_poster = itemView.findViewById(R.id.selected_cat_poster);
             section_label = itemView.findViewById(R.id.section_label);
-//            mProgress = itemView.findViewById(R.id.home_product_image_progress);
 
 
         }
@@ -71,30 +66,7 @@ public class SelectedCategoryInfoAdapter extends RecyclerView.Adapter<SelectedCa
         final CategoryInfo categoryInfo = categoryInfos.get(position);
 
 
-//        holder.item_name.setText(categoryInfo.getName());
         holder.section_label.setText(categoryInfo.getName());
-
-        Glide
-                .with(context)
-                .load(BASE_URL_IMG + categoryInfo.getBanner())
-                .listener(new RequestListener<Drawable>() {
-                    @Override
-                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-//                        holder.mProgress.setVisibility(View.VISIBLE);
-                        return false;
-                    }
-
-                    @Override
-                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-//                        holder.mProgress.setVisibility(View.GONE);
-                        return false;
-                    }
-
-                })
-                .diskCacheStrategy(DiskCacheStrategy.ALL)   // cache both original & resized image
-                .centerCrop()
-                .transition(withCrossFade(factory))
-                .into(holder.selected_cat_poster);
 
 
     }
