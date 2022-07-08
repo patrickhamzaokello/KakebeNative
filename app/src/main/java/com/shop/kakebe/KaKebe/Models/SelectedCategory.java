@@ -12,9 +12,9 @@ public class SelectedCategory {
     @SerializedName("page")
     @Expose
     private Integer page;
-    @SerializedName("selected_category")
+    @SerializedName("SelectedCategoryResult")
     @Expose
-    private List<SelectedCategoryResult> selectedCategory = null;
+    private List<SelectedCategoryResult> selectedCategoryResult = null;
     @SerializedName("total_pages")
     @Expose
     private Integer totalPages;
@@ -30,12 +30,12 @@ public class SelectedCategory {
         this.page = page;
     }
 
-    public List<SelectedCategoryResult> getSelectedCategory() {
-        return selectedCategory;
+    public List<SelectedCategoryResult> getSelectedCategoryResult() {
+        return selectedCategoryResult;
     }
 
-    public void setSelectedCategory(List<SelectedCategoryResult> selectedCategory) {
-        this.selectedCategory = selectedCategory;
+    public void setSelectedCategoryResult(List<SelectedCategoryResult> selectedCategoryResult) {
+        this.selectedCategoryResult = selectedCategoryResult;
     }
 
     public Integer getTotalPages() {

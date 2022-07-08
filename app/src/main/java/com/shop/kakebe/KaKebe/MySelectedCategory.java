@@ -15,20 +15,17 @@ import android.widget.TextView;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.shop.kakebe.KaKebe.Adapters.SelectedCategoryPaginationAdapter;
+import com.shop.kakebe.KaKebe.Adapters.SelectedCategoryMainAdapter;
 import com.shop.kakebe.KaKebe.Apis.ShopAPIBase;
 import com.shop.kakebe.KaKebe.Apis.ShopApiEndPoints;
 import com.shop.kakebe.KaKebe.Models.SelectedCategory;
-import com.shop.kakebe.KaKebe.Models.SelectedCategoryMenuItemResult;
 import com.shop.kakebe.KaKebe.Models.SelectedCategoryResult;
-import com.shop.kakebe.KaKebe.Utils.GridPaginationScrollListener;
 import com.shop.kakebe.KaKebe.Utils.PaginationAdapterCallback;
 import com.shop.kakebe.KaKebe.Utils.PaginationScrollListener;
-import com.shop.kakebe.KaKebe.R;
 
 import java.util.List;
 import java.util.concurrent.TimeoutException;
@@ -42,9 +39,8 @@ public class MySelectedCategory extends AppCompatActivity implements PaginationA
 
     private static final String TAG = "MySelectedCategory";
 
-    SelectedCategoryPaginationAdapter adapter;
-    private final static int NUM_GRIDS = 3;
-
+    SelectedCategoryMainAdapter adapter;
+    LinearLayoutManager linearLayoutManager;
     RecyclerView rv;
     ProgressBar progressBar;
     LinearLayout errorLayout;
@@ -63,6 +59,7 @@ public class MySelectedCategory extends AppCompatActivity implements PaginationA
 
     private ShopApiEndPoints shopApiEndPoints;
     private Object PaginationAdapterCallback;
+    List<SelectedCategoryResult> selectedCategoryResultList;
 
 
     @Override
@@ -70,7 +67,7 @@ public class MySelectedCategory extends AppCompatActivity implements PaginationA
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_selected_category);
         ActionBar actionBar = getSupportActionBar(); // or getActionBar();
-        actionBar.setTitle("Category");
+        actionBar.setTitle("Menu Category");
 
         // add back arrow to toolbar
         if (getSupportActionBar() != null){
@@ -85,22 +82,15 @@ public class MySelectedCategory extends AppCompatActivity implements PaginationA
         txtError = findViewById(R.id.error_txt_cause);
         swipeRefreshLayout = findViewById(R.id.main_swiperefresh);
 
-        adapter = new SelectedCategoryPaginationAdapter(MySelectedCategory.this,  this);
+        adapter = new SelectedCategoryMainAdapter(MySelectedCategory.this,  this);
 
-        GridLayoutManager catgridLayoutManager = new GridLayoutManager(MySelectedCategory.this, NUM_GRIDS);
-        catgridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup()
-        {
-            @Override
-            public int getSpanSize(int position)
-            {
-                return position == 0 ? 3 : 1;
-            }
-        });
-        rv.setLayoutManager(catgridLayoutManager);
+        linearLayoutManager = new LinearLayoutManager(MySelectedCategory.this, LinearLayoutManager.VERTICAL, false);
+        rv.setLayoutManager(linearLayoutManager);
         rv.setItemAnimator(new DefaultItemAnimator());
+        rv.setAdapter(adapter);
 
 
-        rv.addOnScrollListener(new GridPaginationScrollListener(catgridLayoutManager) {
+        rv.addOnScrollListener(new  PaginationScrollListener(linearLayoutManager)  {
             @Override
             protected void loadMoreItems() {
                 isLoading = true;
@@ -181,16 +171,14 @@ public class MySelectedCategory extends AppCompatActivity implements PaginationA
             public void onResponse(Call<SelectedCategory> call, Response<SelectedCategory> response) {
                 hideErrorView();
 
-//                Log.i(TAG, "onResponse: " + (response.raw().cacheResponse() != null ? "Cache" : "Network"));
-
                 // Got data. Send it to adapter
-                List<SelectedCategoryResult> selectedCategoryResults = fetchResults(response);
+                selectedCategoryResultList = fetchResults(response);
                 progressBar.setVisibility(View.GONE);
-                if(selectedCategoryResults.isEmpty()){
+                if(selectedCategoryResultList.isEmpty()){
                     showCategoryErrorView();
                     return;
                 } else {
-                    adapter.addAll(selectedCategoryResults);
+                    adapter.addAll(selectedCategoryResultList);
                 }
 
                 if (currentPage < TOTAL_PAGES) adapter.addLoadingFooter();
@@ -205,15 +193,12 @@ public class MySelectedCategory extends AppCompatActivity implements PaginationA
         });
     }
 
-    /**
-     * @param response extracts List<{@link SelectedCategoryMenuItemResult >} from response
-     * @return
-     */
+
     private List<SelectedCategoryResult> fetchResults(Response<SelectedCategory> response) {
         SelectedCategory selectedCategory = response.body();
         TOTAL_PAGES = selectedCategory.getTotalPages();
         System.out.println("total pages" + TOTAL_PAGES);
-        return selectedCategory.getSelectedCategory();
+        return selectedCategory.getSelectedCategoryResult();
     }
 
     private void loadNextPage() {
@@ -228,8 +213,8 @@ public class MySelectedCategory extends AppCompatActivity implements PaginationA
                 adapter.removeLoadingFooter();
                 isLoading = false;
 
-                List<SelectedCategoryResult> selectedCategoryResults = fetchResults(response);
-                adapter.addAll(selectedCategoryResults);
+                selectedCategoryResultList = fetchResults(response);
+                adapter.addAll(selectedCategoryResultList);
 
                 if (currentPage != TOTAL_PAGES) adapter.addLoadingFooter();
                 else isLastPage = true;
@@ -356,14 +341,8 @@ public class MySelectedCategory extends AppCompatActivity implements PaginationA
         //RECEIVE DATA VIA INTENT
         Intent i = getIntent();
         int category_selected_key = i.getIntExtra("category_selected_key",0);
-
-        System.out.println("category_selected_key "+category_selected_key);
         //SET DATA TO TEXTVIEWS
         selectCategoryId = category_selected_key;
-
-
-        rv.setAdapter(adapter);
-        adapter.getMovies().clear();
         loadFirstPage();
 
     }

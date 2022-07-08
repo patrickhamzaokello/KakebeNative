@@ -9,64 +9,24 @@ import com.google.gson.annotations.SerializedName;
 @Generated("jsonschema2pojo")
 public class SelectedCategoryResult {
 
-    @SerializedName("category_info")
-    @Expose
-    private List<CategoryInfo> categoryInfo = null;
-    @SerializedName("id")
-    @Expose
-    private Integer id;
     @SerializedName("name")
     @Expose
     private String name;
-    @SerializedName("category_id")
-    @Expose
-    private Integer categoryId;
-    @SerializedName("photos")
-    @Expose
-    private String photos;
-    @SerializedName("thumbnail_img")
-    @Expose
-    private String thumbnailImg;
-    @SerializedName("unit_price")
-    @Expose
-    private Integer unitPrice;
-    @SerializedName("discount")
-    @Expose
-    private Integer discount;
-    @SerializedName("purchase_price")
-    @Expose
-    private Integer purchasePrice;
-    @SerializedName("meta_title")
-    @Expose
-    private String metaTitle;
     @SerializedName("meta_description")
     @Expose
     private String metaDescription;
-    @SerializedName("meta_img")
+    @SerializedName("banner")
     @Expose
-    private String metaImg;
-    @SerializedName("min_qtn")
+    private String banner;
+    @SerializedName("order_level")
     @Expose
-    private Integer minQtn;
-    @SerializedName("published")
+    private Integer orderLevel;
+    @SerializedName("created")
     @Expose
-    private Integer published;
-
-    public List<CategoryInfo> getCategoryInfo() {
-        return categoryInfo;
-    }
-
-    public void setCategoryInfo(List<CategoryInfo> categoryInfo) {
-        this.categoryInfo = categoryInfo;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
+    private String created;
+    @SerializedName("category_products")
+    @Expose
+    private List<CategoryProduct> categoryProducts = null;
 
     public String getName() {
         return name;
@@ -76,63 +36,7 @@ public class SelectedCategoryResult {
         this.name = name;
     }
 
-    public Integer getCategoryId() {
-        return categoryId;
-    }
-
-    public void setCategoryId(Integer categoryId) {
-        this.categoryId = categoryId;
-    }
-
-    public String getPhotos() {
-        return photos;
-    }
-
-    public void setPhotos(String photos) {
-        this.photos = photos;
-    }
-
-    public String getThumbnailImg() {
-        return thumbnailImg;
-    }
-
-    public void setThumbnailImg(String thumbnailImg) {
-        this.thumbnailImg = thumbnailImg;
-    }
-
-    public Integer getUnitPrice() {
-        return unitPrice;
-    }
-
-    public void setUnitPrice(Integer unitPrice) {
-        this.unitPrice = unitPrice;
-    }
-
-    public int getDiscount() {
-        return discount;
-    }
-
-    public void setDiscount(int  discount) {
-        this.discount = discount;
-    }
-
-    public Integer getPurchasePrice() {
-        return purchasePrice;
-    }
-
-    public void setPurchasePrice(Integer purchasePrice) {
-        this.purchasePrice = purchasePrice;
-    }
-
-    public String getMetaTitle() {
-        return metaTitle;
-    }
-
-    public void setMetaTitle(String metaTitle) {
-        this.metaTitle = metaTitle;
-    }
-
-    public String getMetaDescription() {
+    public Object getMetaDescription() {
         return metaDescription;
     }
 
@@ -140,28 +44,36 @@ public class SelectedCategoryResult {
         this.metaDescription = metaDescription;
     }
 
-    public String getMetaImg() {
-        return metaImg;
+    public String getBanner() {
+        return banner;
     }
 
-    public void setMetaImg(String metaImg) {
-        this.metaImg = metaImg;
+    public void setBanner(String banner) {
+        this.banner = banner;
     }
 
-    public Integer getMinQtn() {
-        return minQtn;
+    public Integer getOrderLevel() {
+        return orderLevel;
     }
 
-    public void setMinQtn(Integer minQtn) {
-        this.minQtn = minQtn;
+    public void setOrderLevel(Integer orderLevel) {
+        this.orderLevel = orderLevel;
     }
 
-    public Integer getPublished() {
-        return published;
+    public String getCreated() {
+        return created;
     }
 
-    public void setPublished(Integer published) {
-        this.published = published;
+    public void setCreated(String created) {
+        this.created = created;
+    }
+
+    public List<CategoryProduct> getCategoryProducts() {
+        return categoryProducts;
+    }
+
+    public void setCategoryProducts(List<CategoryProduct> categoryProducts) {
+        this.categoryProducts = categoryProducts;
     }
 
 }
