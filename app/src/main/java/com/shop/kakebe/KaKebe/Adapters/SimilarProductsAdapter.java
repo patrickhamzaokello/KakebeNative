@@ -4,6 +4,7 @@ import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOption
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,6 +28,7 @@ import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.transition.DrawableCrossFadeFactory;
+import com.google.android.material.card.MaterialCardView;
 import com.shop.kakebe.KaKebe.Models.SimilarProduct;
 import com.shop.kakebe.KaKebe.MyMenuDetail;
 import com.shop.kakebe.KaKebe.R;
@@ -44,10 +46,14 @@ public class SimilarProductsAdapter extends RecyclerView.Adapter<SimilarProducts
         private final TextView item_name;
         private final TextView item_price;
         private final TextView item_rating;
+        private final TextView discoutpercent;
         private final ImageView itemimage;
         private final ProgressBar mProgress;
 
-        Button home_st_carttn;
+        private final MaterialCardView discount_card,home_addToCart_card;
+
+        Button home_cart_state;
+        View view;
 
         public ItemViewHolder(View itemView) {
             super(itemView);
@@ -56,8 +62,12 @@ public class SimilarProductsAdapter extends RecyclerView.Adapter<SimilarProducts
             item_rating = itemView.findViewById(R.id.item_rating);
             item_price = itemView.findViewById(R.id.item_price);
             mProgress = itemView.findViewById(R.id.home_product_image_progress);
-
-            home_st_carttn = itemView.findViewById(R.id.home_st_carttn);
+            discoutpercent = itemView.findViewById(R.id.discoutpercent);
+            home_cart_state = itemView.findViewById(R.id.home_st_carttn);
+            discount_card = (MaterialCardView) itemView.findViewById(R.id.discount_card);
+            home_addToCart_card = (MaterialCardView) itemView.findViewById(R.id.home_addToCart);
+            view = itemView;
+            item_rating.setVisibility(View.GONE);
 
 
         }
@@ -102,23 +112,28 @@ public class SimilarProductsAdapter extends RecyclerView.Adapter<SimilarProducts
         updatecartCount();
 
         if (food_db_itemchecker) {
-
-
-            holder.home_st_carttn.setBackground(context.getResources().getDrawable(R.drawable.custom_plus_btn));
-
+            holder.home_cart_state.setBackground(context.getResources().getDrawable(R.drawable.custom_plus_btn));
+            holder.home_addToCart_card.setCardBackgroundColor(context.getResources().getColor(R.color.black));
 
         } else {
-
-
-            holder.home_st_carttn.setBackground(context.getResources().getDrawable(R.drawable.custom_check_btn));
-
+            holder.home_cart_state.setBackground(context.getResources().getDrawable(R.drawable.custom_check_btn));
+            holder.home_addToCart_card.setCardBackgroundColor(context.getResources().getColor(R.color.purple_200));
 
         }
 
 
         holder.item_name.setText(product.getName());
-        holder.item_rating.setText( "Rating "+ product.getDiscount() + " | "+ "5");
-        holder.item_price.setText("Ugx " + NumberFormat.getNumberInstance(Locale.US).format(product.getUnitPrice()));
+        holder.item_rating.setText("Ugx " + NumberFormat.getNumberInstance(Locale.US).format(product.getUnitPrice()));
+
+        if(compare_values(product.getUnitPrice(),product.getDiscount())){
+            holder.item_rating.setPaintFlags(holder.item_rating.getPaintFlags() & ~Paint.STRIKE_THRU_TEXT_FLAG);
+            holder.discount_card.setVisibility(View.GONE);
+        } else {
+            holder.discount_card.setVisibility(View.VISIBLE);
+            holder.discoutpercent.setText(cal_percentage(product.getDiscount(), product.getUnitPrice()));
+            holder.item_rating.setPaintFlags(holder.item_rating.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+        }
+        holder.item_price.setText("Ugx " + NumberFormat.getNumberInstance(Locale.US).format(product.getDiscount()));
 
         Glide
                 .with(context)
@@ -142,7 +157,7 @@ public class SimilarProductsAdapter extends RecyclerView.Adapter<SimilarProducts
                 .transition(withCrossFade(factory))
                 .into(holder.itemimage);
 
-        holder.home_st_carttn.setOnClickListener(new View.OnClickListener() {
+        holder.view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 food_db_itemchecker = db.checktweetindb(String.valueOf(product.getId()));
@@ -161,7 +176,8 @@ public class SimilarProductsAdapter extends RecyclerView.Adapter<SimilarProducts
 
 
 
-                    holder.home_st_carttn.setBackground(context.getResources().getDrawable(R.drawable.custom_check_btn));
+                    holder.home_cart_state.setBackground(context.getResources().getDrawable(R.drawable.custom_check_btn));
+                    holder.home_addToCart_card.setCardBackgroundColor(context.getResources().getColor(R.color.purple_200));
 
                     updatecartCount();
 
@@ -169,9 +185,8 @@ public class SimilarProductsAdapter extends RecyclerView.Adapter<SimilarProducts
                 } else {
                     db.deleteTweet(String.valueOf(product.getId()));
 
-                    holder.home_st_carttn.setBackground(context.getResources().getDrawable(R.drawable.custom_plus_btn));
-
-
+                    holder.home_cart_state.setBackground(context.getResources().getDrawable(R.drawable.custom_plus_btn));
+                    holder.home_addToCart_card.setCardBackgroundColor(context.getResources().getColor(R.color.black));
                     updatecartCount();
 
                 }
@@ -194,6 +209,26 @@ public class SimilarProductsAdapter extends RecyclerView.Adapter<SimilarProducts
             }
         });
     }
+
+    private boolean compare_values(int unitprice, int discount){
+        boolean val;
+        if(unitprice == discount){
+            val = true;
+        } else {
+            val = false;
+        }
+        return val;
+    }
+
+
+    public String cal_percentage(int discount, int unit_price){
+        int val = (100 * discount / unit_price);
+        val = Math.round(val - 0.5f);
+        val = val - 100;
+        String per_discount = val +"%";
+        return per_discount;
+    }
+
 
     public void switchContent(int id, Fragment fragment) {
         if (context == null)

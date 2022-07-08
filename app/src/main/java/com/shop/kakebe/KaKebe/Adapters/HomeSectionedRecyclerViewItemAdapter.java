@@ -235,12 +235,6 @@ public class HomeSectionedRecyclerViewItemAdapter extends RecyclerView.Adapter<H
         return val;
     }
 
-    private RequestBuilder<Drawable> loadImage(@NonNull String posterPath) {
-        return GlideApp
-                .with(context)
-                .load(BASE_URL_IMG + posterPath)
-                .centerCrop();
-    }
 
     public String cal_percentage(int discount, int unit_price){
         int val = (100 * discount / unit_price);
@@ -248,6 +242,14 @@ public class HomeSectionedRecyclerViewItemAdapter extends RecyclerView.Adapter<H
         val = val - 100;
         String per_discount = val +"%";
         return per_discount;
+    }
+
+
+    private RequestBuilder<Drawable> loadImage(@NonNull String posterPath) {
+        return GlideApp
+                .with(context)
+                .load(BASE_URL_IMG + posterPath)
+                .centerCrop();
     }
 
     private void updatecartCount() {

@@ -66,13 +66,30 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/wallet_desc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/wallet_label"
+                android:background="@color/purple_200"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="10dp"
+                android:paddingVertical="2dp"
+                android:paddingHorizontal="5dp"
+                android:layout_marginEnd="10dp"
+                android:fontFamily="@font/montserrat"
+                android:includeFontPadding="false"
+                android:text="Kakebe Shop"
+                android:textColor="#FFFFFF"
+                android:textSize="12sp" />
+
+            <TextView
                 android:id="@+id/menu_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:layout_marginTop="20dp"
                 android:layout_marginEnd="10dp"
-                android:fontFamily="@font/montserrat_bold"
+                android:fontFamily="@font/montserrat"
+                android:layout_marginTop="5dp"
                 android:includeFontPadding="false"
                 android:text="Non stick frying pan"
                 android:textColor="#000000"
@@ -84,33 +101,84 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
                 android:layout_marginEnd="10dp"
-                android:fontFamily="@font/montserrat"
+                android:layout_marginTop="10dp"
+                android:textAllCaps="true"
+                android:fontFamily="@font/yantramanav_black"
                 android:includeFontPadding="false"
                 android:text="20,400"
-                android:textColor="#5C5C5C"
-                android:textSize="18sp" />
+                android:textColor="#000000"
+                android:textSize="22sp" />
 
-            <TextView
-                android:id="@+id/wallet_desc"
+
+
+
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/wallet_label"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
-                android:fontFamily="@font/montserrat"
-                android:includeFontPadding="false"
-                android:text="Unit Price (UGX)"
-                android:textColor="#5C5C5C"
-                android:textSize="15sp" />
+                android:orientation="horizontal"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginBottom="10dp"
+                >
+
+
+                <TextView
+                    android:id="@+id/discount_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/yantramanav_regular"
+                    android:layout_gravity="center_vertical"
+                    android:includeFontPadding="false"
+                    android:text="UGX 8000"
+                    android:textAllCaps="true"
+                    android:textColor="#CD6161"
+                    android:textSize="20sp" />
+
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="wrap_content"
+                    android:id="@+id/discount_card"
+                    android:layout_height="wrap_content"
+                    android:clipToPadding="false"
+                    android:layout_marginStart="10dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_alignParentRight="true"
+                    app:cardBackgroundColor="#FFDDE8"
+                    app:cardCornerRadius="10dp">
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingHorizontal="10dp"
+                        android:paddingVertical="5dp"
+                        >
+
+                        <TextView
+                            android:id="@+id/discoutpercent"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:includeFontPadding="false"
+                            android:fontFamily="@font/yantramanav_regular"
+                            android:text="-20%"
+                            android:textColor="@color/purple_500"
+                            android:textSize="14sp" />
+
+                    </RelativeLayout>
+
+
+                </com.google.android.material.card.MaterialCardView>
+            </LinearLayout>
+
+
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/selected_product_attribute_recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
-                android:paddingVertical="20dp" />
+                android:layout_marginBottom="5dp"
+                />
 
         </LinearLayout>
 
@@ -121,7 +189,7 @@
             android:background="#18161E"
             android:orientation="vertical"
             android:layout_marginHorizontal="10dp"
-            android:paddingHorizontal="10dp"
+            android:paddingHorizontal="20dp"
             android:paddingVertical="20dp">
 
             <LinearLayout
@@ -139,11 +207,11 @@
                         android:id="@+id/menu_total_price"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/montserrat"
+                        android:fontFamily="@font/yantramanav_black"
                         android:includeFontPadding="false"
                         android:text="20,400"
                         android:textColor="@color/white"
-                        android:textSize="18sp" />
+                        android:textSize="22sp" />
 
 
                     <TextView
@@ -152,10 +220,10 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/wallet_label"
                         android:layout_centerInParent="true"
-                        android:fontFamily="@font/montserrat_bold"
+                        android:fontFamily="@font/yantramanav_regular"
                         android:text="Total Price (UGX)"
-                        android:textColor="@color/white"
-                        android:textSize="15sp" />
+                        android:textColor="@color/btnLight"
+                        android:textSize="14sp" />
 
 
                 </LinearLayout>
@@ -165,13 +233,30 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="40dp">
 
+                    <TextView
+                        android:id="@+id/itemQuanLABEL"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerInParent="true"
+                        android:layout_marginRight="10dp"
+                        android:fontFamily="@font/montserrat_bold"
+                        android:maxLength="4"
+                        android:minEms="1"
+                        android:text="QTY"
+                        android:textAlignment="center"
+                        android:textAllCaps="false"
+                        android:textColor="@color/btnLight"
+                        android:textFontWeight="500"
+                        android:textSize="15sp" />
+
                     <Button
                         android:id="@+id/removeBtn"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
-                        android:layout_alignParentStart="true"
                         android:layout_centerVertical="true"
                         android:layout_marginRight="5dp"
+                        android:layout_toRightOf="@+id/itemQuanLABEL"
                         android:layout_marginBottom="20dp"
                         android:background="@drawable/custom_btn_remove"
                         android:backgroundTint="@color/black"
@@ -183,7 +268,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
                         android:layout_toRightOf="@+id/removeBtn"
-                        android:fontFamily="sans-serif-black"
+                        android:fontFamily="@font/yantramanav_black"
                         android:inputType="number"
                         android:maxLength="4"
                         android:minEms="1"

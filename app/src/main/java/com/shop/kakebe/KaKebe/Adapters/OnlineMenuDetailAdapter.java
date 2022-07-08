@@ -2,6 +2,7 @@ package com.shop.kakebe.KaKebe.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.util.Log;
@@ -31,6 +32,7 @@ import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.transition.DrawableCrossFadeFactory;
+import com.google.android.material.card.MaterialCardView;
 import com.shop.kakebe.KaKebe.DeliveryAddress;
 import com.shop.kakebe.KaKebe.Models.SelectedProduct;
 import com.shop.kakebe.KaKebe.R;
@@ -173,8 +175,21 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
                         .into(heroVh.menu_image);
 
 
-                heroVh.menu_price.setText(NumberFormat.getNumberInstance(Locale.US).format(selectedProduct.getUnitPrice()));
-                heroVh.menu_total_price.setText(NumberFormat.getNumberInstance(Locale.US).format(selectedProduct.getUnitPrice()));
+                heroVh.menu_price.setText("Ugx " + NumberFormat.getNumberInstance(Locale.US).format(selectedProduct.getDiscount()));
+                heroVh.menu_total_price.setText(NumberFormat.getNumberInstance(Locale.US).format(selectedProduct.getDiscount()));
+
+                heroVh.discount_price.setText("Ugx " + NumberFormat.getNumberInstance(Locale.US).format(selectedProduct.getUnitPrice()));
+
+
+                if(compare_values(selectedProduct.getUnitPrice(),selectedProduct.getDiscount())){
+                    heroVh.discount_price.setPaintFlags(heroVh.discount_price.getPaintFlags() & ~Paint.STRIKE_THRU_TEXT_FLAG);
+                    heroVh.discount_card.setVisibility(View.GONE);
+                    heroVh.discount_price.setVisibility(View.GONE);
+                } else {
+                    heroVh.discount_card.setVisibility(View.VISIBLE);
+                    heroVh.discoutpercent.setText(cal_percentage(selectedProduct.getDiscount(), selectedProduct.getUnitPrice()));
+                    heroVh.discount_price.setPaintFlags(heroVh.discount_price.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                }
 
                 food_db_itemchecker = db.checktweetindb(String.valueOf(selectedProduct.getId()));
 
@@ -236,7 +251,7 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
                             db.addTweet(
                                     selectedProduct.getId(),
                                     selectedProduct.getName(),
-                                    selectedProduct.getUnitPrice(),
+                                    selectedProduct.getDiscount(),
                                     selectedProduct.getCategoryId(),
                                     selectedProduct.getThumbnailImg(),
                                     minteger,
@@ -274,7 +289,7 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
                             db.addTweet(
                                     selectedProduct.getId(),
                                     selectedProduct.getName(),
-                                    selectedProduct.getUnitPrice(),
+                                    selectedProduct.getDiscount(),
                                     selectedProduct.getCategoryId(),
                                     selectedProduct.getThumbnailImg(),
                                     minteger,
@@ -312,6 +327,9 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
                 heroVh.selected_product_attribute_recycler_view.setAdapter(productDetailAttributeAdapter);
                 productDetailAttributeAdapter.addAll(selectedProduct.getChoiceOptions());
 
+                if(selectedProduct.getChoiceOptions() != null){
+                    heroVh.selected_product_attribute_recycler_view.setVisibility(View.VISIBLE);
+                }
 
                 break;
             case ITEM:
@@ -387,6 +405,25 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
     }
 
 
+
+    private boolean compare_values(int unitprice, int discount){
+        boolean val;
+        if(unitprice == discount){
+            val = true;
+        } else {
+            val = false;
+        }
+        return val;
+    }
+
+
+    public String cal_percentage(int discount, int unit_price){
+        int val = (100 * discount / unit_price);
+        val = Math.round(val - 0.5f);
+        val = val - 100;
+        String per_discount = val +"%";
+        return per_discount;
+    }
 
 
     /*
@@ -466,7 +503,7 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
 
     private void display(int number, HeroVH heroVh, SelectedProduct selectedProduct) {
 
-        totalPrice = number * (selectedProduct.getUnitPrice());
+        totalPrice = number * (selectedProduct.getDiscount());
 
         heroVh.itemQuanEt.setText("" + number);
         heroVh.menu_total_price.setText(NumberFormat.getNumberInstance(Locale.US).format(totalPrice));
@@ -514,6 +551,8 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
         private final ProgressBar mProgress;
         private final LinearLayout descriptionlayout;
         private final RecyclerView selected_product_attribute_recycler_view;
+        private final MaterialCardView discount_card;
+        private final TextView discount_price,discoutpercent;
 
 
         public HeroVH(View itemView) {
@@ -529,13 +568,14 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
             decreaseQtn = itemView.findViewById(R.id.removeBtn);
             btnAddtoCart = itemView.findViewById(R.id.btnAddtoCart);
             btnOrderNow = itemView.findViewById(R.id.btnOrderNow);
-
+            discount_card = itemView.findViewById(R.id.discount_card);
+            discount_price = itemView.findViewById(R.id.discount_price);
+            discoutpercent = itemView.findViewById(R.id.discoutpercent);
             selected_product_attribute_recycler_view = itemView.findViewById(R.id.selected_product_attribute_recycler_view);
             mProgress = itemView.findViewById(R.id.product_detail_image_progress);
             descriptionlayout = itemView.findViewById(R.id.descriptionlayout);
 
-
-
+            selected_product_attribute_recycler_view.setVisibility(View.GONE);
         }
     }
 
