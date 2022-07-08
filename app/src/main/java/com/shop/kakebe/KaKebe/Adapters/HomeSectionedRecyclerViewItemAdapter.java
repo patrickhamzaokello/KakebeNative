@@ -53,6 +53,7 @@ public class HomeSectionedRecyclerViewItemAdapter extends RecyclerView.Adapter<H
         private final MaterialCardView discount_card,home_addToCart_card;
 
         Button home_cart_state;
+        View view;
 
 
         public ItemViewHolder(View itemView) {
@@ -66,6 +67,7 @@ public class HomeSectionedRecyclerViewItemAdapter extends RecyclerView.Adapter<H
             home_cart_state = itemView.findViewById(R.id.home_st_carttn);
             discount_card = (MaterialCardView) itemView.findViewById(R.id.discount_card);
             home_addToCart_card = (MaterialCardView) itemView.findViewById(R.id.home_addToCart);
+            view = itemView;
             item_rating.setVisibility(View.GONE);
 
 
@@ -114,13 +116,13 @@ public class HomeSectionedRecyclerViewItemAdapter extends RecyclerView.Adapter<H
 
 
             holder.home_cart_state.setBackground(context.getResources().getDrawable(R.drawable.custom_plus_btn));
-            holder.home_addToCart_card.setCardBackgroundColor(context.getResources().getColor(R.color.purple_200));
+            holder.home_addToCart_card.setCardBackgroundColor(context.getResources().getColor(R.color.black));
 
         } else {
 
 
             holder.home_cart_state.setBackground(context.getResources().getDrawable(R.drawable.custom_check_btn));
-            holder.home_addToCart_card.setCardBackgroundColor(context.getResources().getColor(R.color.changebtn));
+            holder.home_addToCart_card.setCardBackgroundColor(context.getResources().getColor(R.color.purple_200));
 
         }
 
@@ -160,7 +162,7 @@ public class HomeSectionedRecyclerViewItemAdapter extends RecyclerView.Adapter<H
                 .transition(withCrossFade(factory))
                 .into(holder.itemimage);
 
-        holder.home_addToCart_card.setOnClickListener(new View.OnClickListener() {
+        holder.view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 food_db_itemchecker = db.checktweetindb(String.valueOf(product.getId()));
@@ -179,7 +181,7 @@ public class HomeSectionedRecyclerViewItemAdapter extends RecyclerView.Adapter<H
 
 
                     holder.home_cart_state.setBackground(context.getResources().getDrawable(R.drawable.custom_check_btn));
-                    holder.home_addToCart_card.setCardBackgroundColor(context.getResources().getColor(R.color.changebtn));
+                    holder.home_addToCart_card.setCardBackgroundColor(context.getResources().getColor(R.color.purple_200));
                     updatecartCount();
 
 
@@ -187,7 +189,7 @@ public class HomeSectionedRecyclerViewItemAdapter extends RecyclerView.Adapter<H
                     db.deleteTweet(String.valueOf(product.getId()));
 
                     holder.home_cart_state.setBackground(context.getResources().getDrawable(R.drawable.custom_plus_btn));
-                    holder.home_addToCart_card.setCardBackgroundColor(context.getResources().getColor(R.color.purple_200));
+                    holder.home_addToCart_card.setCardBackgroundColor(context.getResources().getColor(R.color.black));
 
                     updatecartCount();
 
