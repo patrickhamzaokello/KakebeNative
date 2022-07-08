@@ -53,10 +53,22 @@
             android:fontFamily="@font/montserrat"
             android:gravity="left"
             android:maxLines="1"
+            android:includeFontPadding="false"
             android:text="Otigo Lwaka"
             android:textColor="@color/black"
-            android:textSize="10sp" />
+            android:textSize="13sp" />
 
+        <TextView
+            android:id="@+id/item_price"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_toLeftOf="@+id/home_addToCart"
+            android:fontFamily="@font/montserrat_bold"
+            android:gravity="left"
+            android:text="Ugx 3,800"
+            android:textColor="@color/black"
+            android:textSize="10sp" />
         <TextView
             android:id="@+id/item_rating"
             android:layout_width="match_parent"
@@ -70,33 +82,44 @@
             android:textColor="@color/mygreen"
             android:textSize="8sp" />
 
-        <TextView
-            android:id="@+id/item_price"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/item_rating"
-            android:layout_marginTop="10dp"
-            android:layout_toLeftOf="@+id/home_addToCart"
-            android:fontFamily="@font/montserrat_bold"
-            android:gravity="left"
-            android:text="Ugx 3,800"
-            android:textColor="@color/black"
-            android:textSize="10sp" />
+
 
 
     </LinearLayout>
 
-
-    <Button
-        android:id="@+id/home_st_carttn"
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/home_addToCart"
         android:layout_width="30dp"
         android:layout_height="30dp"
+        android:clipToPadding="false"
+        android:layout_marginLeft="10dp"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginLeft="10dp"
-        android:background="@drawable/custom_plus_btn"
-        android:backgroundTint="@color/white" />
+        app:cardBackgroundColor="@color/purple_200"
+        app:cardCornerRadius="15dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="5dp">
+
+            <Button
+                android:id="@+id/home_st_carttn"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/custom_plus_btn"
+                android:backgroundTint="@color/white"
+                android:theme="@style/WhiteBtn" />
+
+
+        </RelativeLayout>
+
+
+    </com.google.android.material.card.MaterialCardView>
+
+
+
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="wrap_content"

@@ -50,9 +50,10 @@ public class HomeSectionedRecyclerViewItemAdapter extends RecyclerView.Adapter<H
         private final ImageView itemimage;
         private final ProgressBar mProgress;
 
-        private final MaterialCardView discount_card;
+        private final MaterialCardView discount_card,home_addToCart_card;
 
-        Button home_st_carttn;
+        Button home_cart_state;
+
 
         public ItemViewHolder(View itemView) {
             super(itemView);
@@ -62,9 +63,10 @@ public class HomeSectionedRecyclerViewItemAdapter extends RecyclerView.Adapter<H
             item_price = itemView.findViewById(R.id.item_price);
             mProgress = itemView.findViewById(R.id.home_product_image_progress);
             discoutpercent = itemView.findViewById(R.id.discoutpercent);
-            home_st_carttn = itemView.findViewById(R.id.home_st_carttn);
+            home_cart_state = itemView.findViewById(R.id.home_st_carttn);
             discount_card = (MaterialCardView) itemView.findViewById(R.id.discount_card);
-
+            home_addToCart_card = (MaterialCardView) itemView.findViewById(R.id.home_addToCart);
+            item_rating.setVisibility(View.GONE);
 
 
         }
@@ -111,14 +113,14 @@ public class HomeSectionedRecyclerViewItemAdapter extends RecyclerView.Adapter<H
         if (food_db_itemchecker) {
 
 
-            holder.home_st_carttn.setBackground(context.getResources().getDrawable(R.drawable.custom_plus_btn));
-
+            holder.home_cart_state.setBackground(context.getResources().getDrawable(R.drawable.custom_plus_btn));
+            holder.home_addToCart_card.setCardBackgroundColor(context.getResources().getColor(R.color.purple_200));
 
         } else {
 
 
-            holder.home_st_carttn.setBackground(context.getResources().getDrawable(R.drawable.custom_check_btn));
-
+            holder.home_cart_state.setBackground(context.getResources().getDrawable(R.drawable.custom_check_btn));
+            holder.home_addToCart_card.setCardBackgroundColor(context.getResources().getColor(R.color.changebtn));
 
         }
 
@@ -158,7 +160,7 @@ public class HomeSectionedRecyclerViewItemAdapter extends RecyclerView.Adapter<H
                 .transition(withCrossFade(factory))
                 .into(holder.itemimage);
 
-        holder.home_st_carttn.setOnClickListener(new View.OnClickListener() {
+        holder.home_addToCart_card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 food_db_itemchecker = db.checktweetindb(String.valueOf(product.getId()));
@@ -176,16 +178,16 @@ public class HomeSectionedRecyclerViewItemAdapter extends RecyclerView.Adapter<H
                     );
 
 
-                    holder.home_st_carttn.setBackground(context.getResources().getDrawable(R.drawable.custom_check_btn));
-
+                    holder.home_cart_state.setBackground(context.getResources().getDrawable(R.drawable.custom_check_btn));
+                    holder.home_addToCart_card.setCardBackgroundColor(context.getResources().getColor(R.color.changebtn));
                     updatecartCount();
 
 
                 } else {
                     db.deleteTweet(String.valueOf(product.getId()));
 
-                    holder.home_st_carttn.setBackground(context.getResources().getDrawable(R.drawable.custom_plus_btn));
-
+                    holder.home_cart_state.setBackground(context.getResources().getDrawable(R.drawable.custom_plus_btn));
+                    holder.home_addToCart_card.setCardBackgroundColor(context.getResources().getColor(R.color.purple_200));
 
                     updatecartCount();
 
