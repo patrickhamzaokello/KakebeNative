@@ -50,44 +50,4 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/categorytitle" />
 
-
-    <RelativeLayout
-        android:id="@+id/ad_card_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/category_recycler_view"
-        android:layout_marginTop="40dp"
-        android:background="#0E8513"
-        android:padding="10dp">
-
-        <TextView
-            android:id="@+id/hello_usertext"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:fontFamily="@font/montserrat_bold"
-            android:includeFontPadding="false"
-            android:maxLines="2"
-            android:text="Top Products"
-            android:textColor="@color/white"
-            android:textSize="25sp"
-            android:transitionName="logo_text"
-
-            />
-
-        <TextView
-            android:id="@+id/what_they_eat"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/hello_usertext"
-            android:layout_marginTop="5dp"
-            android:fontFamily="@font/montserrat"
-            android:includeFontPadding="false"
-            android:text="Top products and Items in Kakebe Shop Online grouped by their categories."
-            android:textColor="@color/white"
-            android:textSize="14sp"
-            android:transitionName="logo_desc" />
-
-
-    </RelativeLayout>
 </RelativeLayout>

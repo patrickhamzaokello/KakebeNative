@@ -1,11 +1,11 @@
 
 package com.shop.kakebe.KaKebe.Models;
 
-
-import java.util.List;
 import javax.annotation.Generated;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
+import java.util.List;
 
 @Generated("jsonschema2pojo")
 public class FeaturedCategory {
@@ -158,7 +158,7 @@ public class FeaturedCategory {
         this.slug = slug;
     }
 
-    public String getMetaTitle() {
+    public Object getMetaTitle() {
         return metaTitle;
     }
 

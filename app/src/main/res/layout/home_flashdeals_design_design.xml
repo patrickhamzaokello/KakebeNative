@@ -8,7 +8,6 @@
     android:clipToPadding="false">
 
 
-
     <RelativeLayout
         android:id="@+id/flash_heading"
         android:layout_width="match_parent"

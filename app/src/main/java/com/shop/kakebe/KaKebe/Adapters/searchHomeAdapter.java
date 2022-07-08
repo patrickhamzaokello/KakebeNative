@@ -36,10 +36,9 @@ import java.util.List;
 
 public class searchHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements SearchPopularTagAdapterCallBack {
 
-    private static final int ITEM = 0;
-    private static final int LOADING = 1;
-    private static final int HERO = 2;
-    private static final int CATEGORY = 3;
+    private static final int LOADING = 0;
+    private static final int HERO = 1;
+    private static final int CATEGORY = 2;
 
     //    private static final String BASE_URL_IMG = "https://image.tmdb.org/t/p/w150";
     private static final String BASE_URL_IMG = "";
@@ -83,10 +82,6 @@ public class searchHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 viewHolder = new HeroVH(viewHero);
                 break;
             case CATEGORY:
-                View viewCategory = inflater.inflate(R.layout.search_featured_category_recycler, parent, false);
-                viewHolder = new CategoryVH(viewCategory);
-                break;
-            case ITEM:
                 viewHolder = getViewHolder(parent, inflater);
                 break;
             case LOADING:
@@ -100,8 +95,8 @@ public class searchHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     @NonNull
     private RecyclerView.ViewHolder getViewHolder(ViewGroup parent, LayoutInflater inflater) {
         RecyclerView.ViewHolder viewHolder;
-        View v1 = inflater.inflate(R.layout.search_featured_product_row_layout, parent, false);
-        viewHolder = new MovieVH(v1);
+        View v1 = inflater.inflate(R.layout.search_featured_category_recycler, parent, false);
+        viewHolder = new CategoryVH(v1);
         return viewHolder;
     }
 
@@ -131,42 +126,6 @@ public class searchHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 categoryVH.category_recycler_view.setItemAnimator(new DefaultItemAnimator());
                 categoryVH.category_recycler_view.setAdapter(searchFeaturedCategoryAdapter);
                 searchFeaturedCategoryAdapter.addAll(searchCategoriee.getFeaturedCategories());
-
-
-                break;
-            case ITEM:
-                final MovieVH movieVH = (MovieVH) holder;
-                movieVH.sectionLabel.setText(searchCategoriee.getName());
-
-                //recycler view for items
-                movieVH.itemRecyclerView.setHasFixedSize(true);
-                movieVH.itemRecyclerView.setNestedScrollingEnabled(false);
-
-                /* set layout manager on basis of recyclerview enum type */
-                GridLayoutManager gridLayoutManager = new GridLayoutManager(context, 3);
-                movieVH.itemRecyclerView.setLayoutManager(gridLayoutManager);
-
-
-                searchFeaturedCategoryProductedAdapter adapter = new searchFeaturedCategoryProductedAdapter(context, searchCategoriee.getProducts());
-                movieVH.itemRecyclerView.setAdapter(adapter);
-
-
-                //show toast on click of show all button
-                movieVH.showAllButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-
-                        Intent i = new Intent(context.getApplicationContext(), MySelectedCategory.class);
-                        //PACK DATA
-                        i.putExtra("SENDER_KEY", "MyFragment");
-                        i.putExtra("category_selected_key", searchCategoriee.getId());
-                        context.startActivity(i);
-
-
-
-                    }
-                });
 
 
                 break;
@@ -202,11 +161,9 @@ public class searchHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     public int getItemViewType(int position) {
         if (position == 0) {
             return HERO;
-        } else if (position == 1) {
-            return CATEGORY;
         } else {
             return (position == searchCategoriees.size() - 1 && isLoadingAdded) ?
-                    LOADING : ITEM;
+                    LOADING : CATEGORY;
         }
     }
 
@@ -359,18 +316,6 @@ public class searchHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         }
     }
 
-    protected class MovieVH extends RecyclerView.ViewHolder {
-        private TextView sectionLabel, showAllButton;
-        private RecyclerView itemRecyclerView;
-
-        public MovieVH(View itemView) {
-            super(itemView);
-
-            sectionLabel = (TextView) itemView.findViewById(R.id.section_label);
-            showAllButton = (TextView) itemView.findViewById(R.id.section_show_all_button);
-            itemRecyclerView = (RecyclerView) itemView.findViewById(R.id.item_recycler_view);
-        }
-    }
 
 
     protected class LoadingVH extends RecyclerView.ViewHolder implements View.OnClickListener {

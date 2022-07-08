@@ -15,6 +15,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -115,8 +116,11 @@ public class HomeMainFlashDealsAdapter extends RecyclerView.Adapter<RecyclerView
             case ITEM:
                 final MovieVH movieVH = (MovieVH) holder;
 
-                movieVH.flash_main_name.setText(featuredCategory.getName());
+//                movieVH.flash_main_name.setText(featuredCategory.getName());
+                movieVH.flash_main_name.setText(featuredCategory.getTitle());
                 movieVH.flash_name.setText("Expires in "+ featuredCategory.getTimeleft());
+
+                movieVH.flash_heading.setBackgroundColor(Color.parseColor(featuredCategory.getBackgroundColor()));
 
                 LinearLayoutManager HorizontalLayout = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
                 movieVH.flash_product_recycler_view.setLayoutManager(HorizontalLayout);
@@ -275,12 +279,14 @@ public class HomeMainFlashDealsAdapter extends RecyclerView.Adapter<RecyclerView
         private final ProgressBar mProgress;
         private  final  TextView flash_main_name,flash_name;
         private  final  RecyclerView flash_product_recycler_view;
+        private final RelativeLayout flash_heading;
 
         public MovieVH(View itemView) {
             super(itemView);
             mProgress = itemView.findViewById(R.id.cat_product_image_progress);
             flash_main_name = itemView.findViewById(R.id.flash_main_name);
             flash_name = itemView.findViewById(R.id.flash_name);
+            flash_heading = itemView.findViewById(R.id.flash_heading);
             flash_product_recycler_view = itemView.findViewById(R.id.flash_product_recycler_view);
         }
     }
