@@ -55,12 +55,12 @@ public class MySelectedCategory extends AppCompatActivity implements PaginationA
     // limiting to 5 for this tutorial, since total pages in actual API is very large. Feel free to modify.
     private static int TOTAL_PAGES = 5;
     private int currentPage = PAGE_START;
-    private int selectCategoryId;
+    public int selectCategoryId;
 
     private ShopApiEndPoints shopApiEndPoints;
     private Object PaginationAdapterCallback;
     List<SelectedCategoryResult> selectedCategoryResultList;
-
+    Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +74,11 @@ public class MySelectedCategory extends AppCompatActivity implements PaginationA
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
+
+        //RECEIVE DATA VIA INTENT
+        intent = getIntent();
+        selectCategoryId = intent.getIntExtra("category_selected_key",0);
+        //SET DATA TO TEXTVIEWS
 
         rv = findViewById(R.id.main_recycler);
         progressBar = findViewById(R.id.main_progress);
@@ -120,6 +125,9 @@ public class MySelectedCategory extends AppCompatActivity implements PaginationA
         btnRetry.setOnClickListener(v -> loadFirstPage());
         swipeRefreshLayout.setOnRefreshListener(this::doRefresh);
 
+        loadFirstPage();
+
+
     }
 
     @Override
@@ -132,14 +140,6 @@ public class MySelectedCategory extends AppCompatActivity implements PaginationA
     protected void onResume() {
         super.onResume();
 
-        //DETERMINE WHO STARTED THIS ACTIVITY
-        final String sender=this.getIntent().getExtras().getString("SENDER_KEY");
-
-        //IF ITS THE FRAGMENT THEN RECEIVE DATA
-        if(sender != null)
-        {
-            this.receiveData();
-        }
     }
 
 
@@ -336,15 +336,6 @@ public class MySelectedCategory extends AppCompatActivity implements PaginationA
         return cm.getActiveNetworkInfo() != null;
     }
 
-    private void receiveData()
-    {
-        //RECEIVE DATA VIA INTENT
-        Intent i = getIntent();
-        int category_selected_key = i.getIntExtra("category_selected_key",0);
-        //SET DATA TO TEXTVIEWS
-        selectCategoryId = category_selected_key;
-        loadFirstPage();
 
-    }
 
 }

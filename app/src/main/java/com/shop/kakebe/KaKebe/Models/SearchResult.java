@@ -15,6 +15,9 @@ public class SearchResult {
     @SerializedName("searchTerm")
     @Expose
     private String searchTerm;
+    @SerializedName("algorithm")
+    @Expose
+    private String algorithm;
     @SerializedName("products")
     @Expose
     private List<Product> products = null;
@@ -39,6 +42,14 @@ public class SearchResult {
 
     public void setSearchTerm(String searchTerm) {
         this.searchTerm = searchTerm;
+    }
+
+    public String getAlgorithm() {
+        return algorithm;
+    }
+
+    public void setAlgorithm(String algorithm) {
+        this.algorithm = algorithm;
     }
 
     public List<Product> getProducts() {
