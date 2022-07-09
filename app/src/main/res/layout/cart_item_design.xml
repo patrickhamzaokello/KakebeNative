@@ -6,12 +6,11 @@
     android:layout_marginBottom="10dp"
     android:orientation="vertical"
     >
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="10dp"
-        android:background="#F6F6F6"
+        android:background="#FFFFFF"
         >
 
         <RelativeLayout
@@ -41,11 +40,11 @@
                     android:layout_gravity="center"
                     android:theme="@style/CircularProgress" />
 
-
             </androidx.cardview.widget.CardView>
         </RelativeLayout>
 
         <LinearLayout
+            android:id="@+id/cart_details_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
@@ -95,6 +94,8 @@
                 android:layout_marginTop="10dp"
                 android:includeFontPadding="false"
                 android:maxLines="2"
+                android:textAllCaps="true"
+                android:fontFamily="@font/yantramanav_regular"
                 android:text="UGX 8,400"
                 android:textColor="@color/black"
                 android:textSize="13sp" />
@@ -102,14 +103,14 @@
 
         </LinearLayout>
 
-
-
         <LinearLayout
             android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/cart_product_image_layout"
             android:layout_centerInParent="true"
+            android:layout_marginLeft="10dp"
+            android:layout_below="@+id/cart_details_layout"
+            android:layout_toRightOf="@+id/cart_product_image_layout"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
@@ -129,6 +130,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Ugx 450000"
+                android:fontFamily="@font/yantramanav_bold"
+                android:textAllCaps="true"
                 />
 
             <RelativeLayout
@@ -154,7 +157,7 @@
                     android:layout_centerInParent="true"
                     android:layout_marginHorizontal="5dp"
                     android:layout_toLeftOf="@+id/cart_addBtn"
-                    android:fontFamily="sans-serif-black"
+                    android:fontFamily="@font/yantramanav_black"
                     android:inputType="number"
                     android:maxLength="4"
                     android:minEms="1"

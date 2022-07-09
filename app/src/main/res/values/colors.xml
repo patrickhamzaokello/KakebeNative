@@ -45,11 +45,16 @@
     <color name="profilecardtext">#ECECEC</color>
     <color name="changeaddress">#717171</color>
     <color name="attribute_color_default">#f2f2f2</color>
-    <color name="sectioncolor">#353535</color>
-    <color name="sectionheadingcolor">#E6E6E6</color>
-    <color name="sectionsubheadingcolor">#C5C5C5</color>
+
+    <color name="sectioncolor">#A4193D</color>
+    <color name="sectionheadingcolor">#FFFBF6</color>
+    <color name="sectionsubheadingcolor">#FFDFB9</color>
+<!--    <color name="sectioncolor">#2C5F2D</color>-->
+<!--    <color name="sectionheadingcolor">#E4FFBD</color>-->
+<!--    <color name="sectionsubheadingcolor">#97BC62</color>-->
     <color name="buttonshowmore">#FFEB3B</color>
-    <color name="recycler_bg_color">#F6F6F6</color>
+<!--    <color name="recycler_bg_color">#F6F6F6</color>-->
+    <color name="recycler_bg_color">#FEFEFE</color>
 
 
 </resources>

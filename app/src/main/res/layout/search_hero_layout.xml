@@ -16,18 +16,19 @@
         android:paddingHorizontal="10dp"
         android:paddingVertical="20dp">
 
-        <SearchView
+        <androidx.appcompat.widget.SearchView
             android:id="@+id/search_bar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:layout_marginBottom="35dp"
             android:background="#f2f2f2"
             android:iconifiedByDefault="false"
+            app:queryHint="Search Here"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-        </SearchView>
+        </androidx.appcompat.widget.SearchView>
 
         <TextView
             android:id="@+id/section_label"
