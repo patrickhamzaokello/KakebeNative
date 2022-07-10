@@ -1,7 +1,7 @@
 package com.shop.kakebe.KaKebe.Apis;
 
 import com.shop.kakebe.KaKebe.Models.Address;
-import com.shop.kakebe.KaKebe.Models.CreateAddress;
+import com.shop.kakebe.KaKebe.Models.CreateAddressModel;
 import com.shop.kakebe.KaKebe.Models.CreateAddressResponse;
 import com.shop.kakebe.KaKebe.Models.HomeCategories;
 import com.shop.kakebe.KaKebe.Models.OrderRequest;
@@ -88,7 +88,7 @@ public interface ShopApiEndPoints {
     @POST("Address/create_address.php")
     @Headers("Cache-Control: no-cache")
     Call<CreateAddressResponse> postCreateAddress(
-            @Body CreateAddress createAddress
+            @Body CreateAddressModel createAddressModel
     );
 
 

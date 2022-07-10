@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:fontFamily="@font/montserrat_bold"
-            android:text="New Address"
+            android:text="Create New delivery address"
             android:textColor="#000"
             android:textSize="20sp"
             android:includeFontPadding="false"
@@ -32,13 +32,12 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/montserrat"
             android:includeFontPadding="false"
-            android:textColor="@color/light_black"
-            android:text="Create delivery address"
+            android:textColor="#707070"
+            android:text="Your address is where your order will be delivered"
             android:textSize="18sp"
             android:transitionName="logo_desc"
             android:layout_marginBottom="20dp"
             />
-
 
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"

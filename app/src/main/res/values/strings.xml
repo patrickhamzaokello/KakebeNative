@@ -52,4 +52,5 @@
     <string name="order_complete_desc">Order Complete, We are Processing it Now. you will recieve a phone call from one of our employess to verify your order</string>
     <string name="order_complete_Desc">Your order has been placed successfully. We are currently processing it and you will get a call to confirm your order.</string>
     <string name="OrderTitle">Order Complete</string>
+    <string name="select">Select Area</string>
 </resources>

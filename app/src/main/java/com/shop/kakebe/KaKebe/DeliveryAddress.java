@@ -2,25 +2,17 @@ package com.shop.kakebe.KaKebe;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import android.Manifest;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -35,13 +27,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapView;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.shop.kakebe.KaKebe.Adapters.UserAddressesAdapter;
@@ -50,12 +35,11 @@ import com.shop.kakebe.KaKebe.Apis.ShopApiEndPoints;
 import com.shop.kakebe.KaKebe.Utils.SelectedAddressListener;
 import com.shop.kakebe.KaKebe.HelperClasses.SharedPrefManager;
 import com.shop.kakebe.KaKebe.Models.Address;
-import com.shop.kakebe.KaKebe.Models.CreateAddress;
+import com.shop.kakebe.KaKebe.Models.CreateAddressModel;
 import com.shop.kakebe.KaKebe.Models.CreateAddressResponse;
 import com.shop.kakebe.KaKebe.Models.User;
 import com.shop.kakebe.KaKebe.Models.UserAddress;
 import com.shop.kakebe.KaKebe.Utils.PaginationScrollListener;
-import com.shop.kakebe.KaKebe.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -78,7 +62,7 @@ public class DeliveryAddress extends AppCompatActivity implements SelectedAddres
     LinearLayoutManager linearLayoutManager;
 
     RecyclerView rv;
-    ProgressBar progressBar, addressprogressBar;
+    ProgressBar progressBar;
     LinearLayout errorLayout, add_address_layout;
     Button btnRetry, add_address_btn;
     MaterialButton heading_create_address;
@@ -86,7 +70,7 @@ public class DeliveryAddress extends AppCompatActivity implements SelectedAddres
     SwipeRefreshLayout swipeRefreshLayout;
 
     private static final int PAGE_START = 1;
-    CreateAddress createAddress = new CreateAddress();
+    CreateAddressModel createAddressModel = new CreateAddressModel();
 
     private boolean isLoading = false;
     private boolean isLastPage = false;
@@ -178,7 +162,6 @@ public class DeliveryAddress extends AppCompatActivity implements SelectedAddres
         add_address_btn.setOnClickListener(v -> createNewAddress());
         heading_create_address.setOnClickListener(v -> createNewAddress());
         createnewtext.setOnClickListener(v -> createNewAddress());
-
         swipeRefreshLayout.setOnRefreshListener(this::doRefresh);
 
     }
@@ -211,138 +194,8 @@ public class DeliveryAddress extends AppCompatActivity implements SelectedAddres
 
 
     private void createNewAddress() {
-        final Dialog dialog = new Dialog(DeliveryAddress.this);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.fragment_add_address_round_dialog);
-
-        TextInputEditText user_phone, user_location, user_district;
-        Button save_address;
-
-
-        user_phone = dialog.findViewById(R.id.user_phone);
-        user_location = dialog.findViewById(R.id.user_location);
-        user_district = dialog.findViewById(R.id.user_district);
-        save_address = dialog.findViewById(R.id.save_address);
-
-        addressprogressBar = dialog.findViewById(R.id.addressprogressBar);
-
-        save_address.setOnClickListener(v -> AddUserAddress(save_address, dialog, user_phone, user_location, user_district));
-
-
-        dialog.show();
-        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
-        dialog.getWindow().setGravity(Gravity.BOTTOM);
-    }
-
-    private void AddUserAddress(Button save_address, Dialog dialog, TextInputEditText user_phone, TextInputEditText user_location, TextInputEditText user_district) {
-        final String phone = user_phone.getText().toString().trim();
-        final String location = user_location.getText().toString().trim();
-        final String district = user_district.getText().toString().trim();
-        addressprogressBar.setVisibility(View.VISIBLE);
-
-        createAddress.setUserId(String.valueOf(userId));
-        createAddress.setPhone(phone);
-        createAddress.setLocation(location);
-        createAddress.setDistrict(district);
-
-        if (TextUtils.isEmpty(district)) {
-            user_district.setError("Specify your District");
-            user_district.requestFocus();
-            addressprogressBar.setVisibility(View.GONE);
-            return;
-        }
-
-
-        if (TextUtils.isEmpty(location)) {
-            user_location.setError("Provide your location");
-            user_location.requestFocus();
-            addressprogressBar.setVisibility(View.GONE);
-            return;
-        }
-
-        if (phone.length() < 9) {
-            user_phone.setError("Invalid Phone number");
-            user_phone.requestFocus();
-            addressprogressBar.setVisibility(View.GONE);
-            return;
-        }
-
-        if (phone.length() > 10) {
-            user_phone.setError("Use format 07xxxxxxxx ");
-            user_phone.requestFocus();
-            addressprogressBar.setVisibility(View.GONE);
-            return;
-        }
-
-        postCreateUserAddress().enqueue(new Callback<CreateAddressResponse>() {
-            @Override
-            public void onResponse(Call<CreateAddressResponse> call, Response<CreateAddressResponse> response) {
-
-                //set response body to match OrderResponse Model
-                CreateAddressResponse createAddressResponse = response.body();
-                addressprogressBar.setVisibility(View.VISIBLE);
-
-
-                //if orderResponses is not null
-                if (createAddressResponse != null) {
-
-                    //if no error- that is error = false
-                    if (!createAddressResponse.getError()) {
-
-                        Log.i("Address Success", createAddressResponse.getMessage() + createAddressResponse.getError());
-                        addressprogressBar.setVisibility(View.GONE);
-                        dialog.hide();
-
-                        Toast.makeText(DeliveryAddress.this, "Address Saved", Toast.LENGTH_SHORT).show();
-
-                        //refresh adapter
-                        doRefresh();
-
-                    } else {
-                        Log.i("Ress", "message: " + (createAddressResponse.getMessage()));
-                        Log.i("et", "error false: " + (createAddressResponse.getError()));
-                        save_address.setEnabled(true);
-                        save_address.setClickable(true);
-                        addressprogressBar.setVisibility(View.GONE);
-                        Toast.makeText(DeliveryAddress.this, "Adding Address Failed", Toast.LENGTH_SHORT).show();
-
-
-//                        ShowOrderFailed();
-
-                    }
-
-
-                } else {
-                    Log.i("Address Response null", "Address is null Try Again: " + createAddressResponse);
-                    Toast.makeText(DeliveryAddress.this, "Adding Address Failed", Toast.LENGTH_SHORT).show();
-                    addressprogressBar.setVisibility(View.GONE);
-                    save_address.setEnabled(true);
-                    save_address.setClickable(true);
-                    return;
-
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<CreateAddressResponse> call, Throwable t) {
-                addressprogressBar.setVisibility(View.GONE);
-                Toast.makeText(getApplicationContext(), "Address Can't be Added now, Try again!", Toast.LENGTH_SHORT).show();
-
-                save_address.setEnabled(true);
-                save_address.setClickable(true);
-                t.printStackTrace();
-            }
-        });
-
-
-    }
-
-
-    private Call<CreateAddressResponse> postCreateUserAddress() {
-        return shopApiEndPoints.postCreateAddress(createAddress);
+        Intent i = new Intent(DeliveryAddress.this, CreateAddress.class);
+        startActivity(i);
     }
 
 
@@ -472,8 +325,7 @@ public class DeliveryAddress extends AppCompatActivity implements SelectedAddres
 
     @Override
     public void requestfailed() {
-//        OrderNotFound orderNotFound = new OrderNotFound();
-//        orderNotFound.show(getSupportFragmentManager(), "Order Not Found");
+
 
     }
 
