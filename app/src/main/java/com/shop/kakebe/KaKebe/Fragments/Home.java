@@ -14,15 +14,20 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.google.android.material.textfield.TextInputEditText;
 import com.shop.kakebe.KaKebe.Adapters.HomeSectionedRecyclerViewAdapter;
 import com.shop.kakebe.KaKebe.Apis.ShopAPIBase;
 import com.shop.kakebe.KaKebe.Apis.ShopApiEndPoints;
+import com.shop.kakebe.KaKebe.BuildConfig;
+import com.shop.kakebe.KaKebe.Dialogs.OrderFailed;
+import com.shop.kakebe.KaKebe.Dialogs.UpdateApp;
 import com.shop.kakebe.KaKebe.Models.Category;
 import com.shop.kakebe.KaKebe.Models.HomeCategories;
 import com.shop.kakebe.KaKebe.R;
@@ -197,8 +202,22 @@ public class Home extends Fragment implements PaginationAdapterCallback {
         TOTAL_PAGES = homeCategories.getTotalPages();
         System.out.println("total pages" + homeCategories.getVersion());
         Log.w("version", (homeCategories.getVersion()).toString());
+        showAppUpdate(homeCategories.getVersion());
+
 
         return homeCategories.getCategories();
+    }
+
+    private void showAppUpdate(int apiversion){
+        int versionCode = BuildConfig.VERSION_CODE;
+        Log.w("showAppUpdate: ","versionCode: " + versionCode + ", apiversion: " + apiversion );
+
+        if(versionCode != apiversion){
+            UpdateApp updateApp = new UpdateApp();
+            updateApp.setCancelable(false);
+            updateApp.show(getChildFragmentManager(),"Update App Dialog");
+        }
+
     }
 
     private void loadNextPage() {
@@ -334,4 +353,4 @@ public class Home extends Fragment implements PaginationAdapterCallback {
         return cm.getActiveNetworkInfo() != null;
     }
 
-}
+   }

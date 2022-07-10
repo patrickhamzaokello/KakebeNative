@@ -338,8 +338,6 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
                 //recycler view for grid items products
 
                 //recycler view for items
-                movieVH.itemRecyclerView.setHasFixedSize(true);
-                movieVH.itemRecyclerView.setNestedScrollingEnabled(false);
 
                 /* set layout manager on basis of recyclerview enum type */
                 GridLayoutManager gridLayoutManager = new GridLayoutManager(context, 3);

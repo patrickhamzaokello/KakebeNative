@@ -160,8 +160,8 @@ public class HomeSectionedRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
                 movieVH.sectionLabel.setText(category.getName());
 
                 //recycler view for items
-                movieVH.itemRecyclerView.setHasFixedSize(true);
-                movieVH.itemRecyclerView.setNestedScrollingEnabled(false);
+//                movieVH.itemRecyclerView.setHasFixedSize(true);
+//                movieVH.itemRecyclerView.setNestedScrollingEnabled(false);
                 int mNo_OfColumns = Utility.calculateNoOfColumns(context, 152);
 
                 /* set layout manager on basis of recyclerview enum type */
@@ -198,8 +198,6 @@ public class HomeSectionedRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
                 homecategoryvh.sectionLabel.setText(category.getName());
 
                 //recycler view for items
-                homecategoryvh.itemRecyclerView.setHasFixedSize(true);
-                homecategoryvh.itemRecyclerView.setNestedScrollingEnabled(false);
                 int mN_o_OfColumns = Utility.calculateNoOfColumns(context, 152);
 
                 /* set layout manager on basis of recyclerview enum type */

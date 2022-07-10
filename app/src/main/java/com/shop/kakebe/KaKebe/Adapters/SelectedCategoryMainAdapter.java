@@ -109,8 +109,6 @@ public class SelectedCategoryMainAdapter extends RecyclerView.Adapter<RecyclerVi
                 final MovieVH movieVH = (MovieVH) holder;
 
                 //recycler view for items
-                movieVH.itemRecyclerView.setHasFixedSize(true);
-                movieVH.itemRecyclerView.setNestedScrollingEnabled(false);
                 int mNo_OfColumns = Utility.calculateNoOfColumns(context, 152);
 
                 /* set layout manager on basis of recyclerview enum type */
