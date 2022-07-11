@@ -129,6 +129,18 @@
 
             />
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/create_cancel_btn"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Cancel"
+            android:textColor="@color/purple_500"
+            android:transitionName="account_change"
+            app:layout_constraintStart_toStartOf="parent"
+            app:strokeColor="@color/purple_500"
+            app:strokeWidth="1dp" />
+
     </LinearLayout>
 
 

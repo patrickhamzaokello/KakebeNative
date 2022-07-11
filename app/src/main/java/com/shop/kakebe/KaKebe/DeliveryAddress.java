@@ -1,5 +1,9 @@
 package com.shop.kakebe.KaKebe;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -85,7 +89,16 @@ public class DeliveryAddress extends AppCompatActivity implements SelectedAddres
     private Object PaginationAdapterCallback;
 
 
-
+    ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    Log.d(TAG, "onActivityResult: ");
+                    doRefresh();
+                }
+            }
+    );
 
 
     @Override
@@ -194,8 +207,8 @@ public class DeliveryAddress extends AppCompatActivity implements SelectedAddres
 
 
     private void createNewAddress() {
-        Intent i = new Intent(DeliveryAddress.this, CreateAddress.class);
-        startActivity(i);
+        Intent intent = new Intent(DeliveryAddress.this, CreateAddress.class);
+        activityResultLauncher.launch(intent);
     }
 
 
@@ -203,7 +216,6 @@ public class DeliveryAddress extends AppCompatActivity implements SelectedAddres
         progressBar.setVisibility(View.VISIBLE);
         if (callUserAddresses().isExecuted())
             callUserAddresses().cancel();
-
         // TODO: Check if data is stale.
         //  Execute network request if cache is expired; otherwise do not update data.
         adapter.getMovies().clear();

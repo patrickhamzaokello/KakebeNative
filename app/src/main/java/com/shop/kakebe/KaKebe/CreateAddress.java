@@ -1,5 +1,6 @@
 package com.shop.kakebe.KaKebe;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
@@ -18,6 +19,7 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.shop.kakebe.KaKebe.Apis.ShopAPIBase;
 import com.shop.kakebe.KaKebe.Apis.ShopApiEndPoints;
@@ -57,17 +59,29 @@ public class CreateAddress extends AppCompatActivity {
     TextInputEditText user_phone, user_location;
     Button save_address;
     String Area;
-
+    ActionBar actionBar;
+    MaterialButton create_cancel_btn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_address);
+
+        actionBar = getSupportActionBar(); // or getActionBar();
+        actionBar.setTitle("New Delivery Address");
+        // add back arrow to toolbar
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
+
+
         autoCompleteTextView = findViewById(R.id.auto_complete_txt);
         user_phone = findViewById(R.id.user_phone);
         user_location = findViewById(R.id.user_location);
         addressprogressBar = findViewById(R.id.main_progress);
         save_address = findViewById(R.id.save_address);
+        create_cancel_btn = findViewById(R.id.create_cancel_btn);
 
         addressprogressBar.setVisibility(View.GONE);
         User user = SharedPrefManager.getInstance(CreateAddress.this).getUser();
@@ -88,7 +102,16 @@ public class CreateAddress extends AppCompatActivity {
             }
         });
 
+        create_cancel_btn.setOnClickListener(view -> finish());
+
     }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
+
 
     private void AddUserAddress(String area, TextInputEditText user_location, TextInputEditText user_phone) {
 
@@ -154,6 +177,7 @@ public class CreateAddress extends AppCompatActivity {
                         Log.i("Address Success", createAddressResponse.getMessage() + createAddressResponse.getError());
                         addressprogressBar.setVisibility(View.GONE);
                         Toast.makeText(getApplicationContext(), "Address Saved", Toast.LENGTH_SHORT).show();
+                        finish();
 
                     } else {
                         Log.i("Ress", "message: " + (createAddressResponse.getMessage()));
