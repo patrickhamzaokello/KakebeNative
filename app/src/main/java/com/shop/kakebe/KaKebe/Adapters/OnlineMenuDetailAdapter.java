@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,7 +32,7 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.transition.DrawableCrossFadeFactory;
 import com.google.android.material.card.MaterialCardView;
-import com.shop.kakebe.KaKebe.DeliveryAddress;
+import com.shop.kakebe.KaKebe.SelectDeliveryAddress;
 import com.shop.kakebe.KaKebe.Models.SelectedProduct;
 import com.shop.kakebe.KaKebe.R;
 import com.shop.kakebe.KaKebe.RootActivity;
@@ -43,10 +42,8 @@ import com.shop.kakebe.KaKebe.localDatabase.SenseDBHelper;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;
 
@@ -262,7 +259,7 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
                             updatecartCount();
 
 
-                            Intent i = new Intent(context.getApplicationContext(), DeliveryAddress.class);
+                            Intent i = new Intent(context.getApplicationContext(), SelectDeliveryAddress.class);
                             //PACK DATA
                             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                             context.startActivity(i);
@@ -270,7 +267,7 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
 
                         } else {
                             updatecartCount();
-                            Intent i = new Intent(context.getApplicationContext(), DeliveryAddress.class);
+                            Intent i = new Intent(context.getApplicationContext(), SelectDeliveryAddress.class);
                             //PACK DATA
                             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                             context.startActivity(i);

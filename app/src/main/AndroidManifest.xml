@@ -26,7 +26,10 @@
             android:name=".OrderCompleted"
             android:exported="false" />
         <activity
-            android:name=".DeliveryAddress"
+            android:name=".SelectDeliveryAddress"
+            android:exported="false" />
+        <activity
+            android:name=".ViewDeliveryAddress"
             android:exported="false" />
         <activity
             android:name=".SearchView"

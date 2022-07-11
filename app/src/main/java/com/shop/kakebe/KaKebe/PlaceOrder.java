@@ -3,24 +3,18 @@ package com.shop.kakebe.KaKebe;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
-import androidx.fragment.app.DialogFragment;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
 import android.content.Intent;
-import android.database.Cursor;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.shop.kakebe.KaKebe.Adapters.PlaceOrderCartAdapter;
 import com.shop.kakebe.KaKebe.Apis.ShopAPIBase;
@@ -117,7 +111,7 @@ public class PlaceOrder extends AppCompatActivity {
         btn_change_location.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(PlaceOrder.this, DeliveryAddress.class);
+                Intent i = new Intent(PlaceOrder.this, SelectDeliveryAddress.class);
                 i.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS );
                 startActivity(i);
             }

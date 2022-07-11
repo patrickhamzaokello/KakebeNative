@@ -28,7 +28,7 @@
     <color name="mygreen">#064025</color>
     <color name="buttonGreen">#175313</color>
 
-    <color name="profilecards">#EC0F43</color>
+    <color name="profilecards">#FFFFFF</color>
 
     <color name="sweetRed">#FF0012</color>
     <color name="buttonRed">#CE2630</color>
@@ -42,19 +42,19 @@
     <color name="pendingstatus">#D59F00</color>
     <color name="removeitem">#8C8C8C</color>
     <color name="accountcolors">#FFFFFF</color>
-    <color name="profilecardtext">#ECECEC</color>
+    <color name="profilecardtext">#171717</color>
     <color name="changeaddress">#717171</color>
     <color name="attribute_color_default">#f2f2f2</color>
 
-    <color name="sectioncolor">#A4193D</color>
-    <color name="sectionheadingcolor">#FFFBF6</color>
-    <color name="sectionsubheadingcolor">#FFDFB9</color>
-<!--    <color name="sectioncolor">#2C5F2D</color>-->
-<!--    <color name="sectionheadingcolor">#E4FFBD</color>-->
-<!--    <color name="sectionsubheadingcolor">#97BC62</color>-->
+<!--    <color name="sectioncolor">#A4193D</color>-->
+<!--    <color name="sectionheadingcolor">#FFFBF6</color>-->
+<!--    <color name="sectionsubheadingcolor">#FFDFB9</color>-->
+    <color name="sectioncolor">#2C5F2D</color>
+    <color name="sectionheadingcolor">#E4FFBD</color>
+    <color name="sectionsubheadingcolor">#97BC62</color>
     <color name="buttonshowmore">#FFEB3B</color>
-<!--    <color name="recycler_bg_color">#F6F6F6</color>-->
     <color name="recycler_bg_color">#FEFEFE</color>
+    <color name="profileCards">#FCFCFC</color>
 
 
 </resources>

@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.textfield.TextInputEditText;
 import com.shop.kakebe.KaKebe.Apis.ShopAPIBase;
@@ -27,6 +28,7 @@ import com.shop.kakebe.KaKebe.Models.CreateAddressModel;
 import com.shop.kakebe.KaKebe.Models.CreateAddressResponse;
 import com.shop.kakebe.KaKebe.Models.User;
 import com.shop.kakebe.KaKebe.R;
+import com.shop.kakebe.KaKebe.ViewDeliveryAddress;
 import com.shop.kakebe.KaKebe.localDatabase.SenseDBHelper;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
@@ -38,8 +40,7 @@ import retrofit2.Response;
 public class Profile extends Fragment {
 
     TextView textViewUsername, textViewEmail, full_name_text, card_email_text, card_phone_text;
-    MaterialCardView manageOrders;
-    Button addNewAddress;
+    MaterialButton manageOrders,addNewAddress,view_address;
     private SenseDBHelper db;
     private int userId;
 
@@ -80,7 +81,8 @@ public class Profile extends Fragment {
         card_phone_text = view.findViewById(R.id.card_phone_text);
         manageOrders = view.findViewById(R.id.manageOrders);
 
-        addNewAddress = view.findViewById(R.id.addnewAddress);
+        addNewAddress = view.findViewById(R.id.addNewAddress);
+        view_address = view.findViewById(R.id.view_address);
 
 
         //getting the current user
@@ -133,7 +135,13 @@ public class Profile extends Fragment {
 
 
         addNewAddress.setOnClickListener(v -> createNewAddress());
-
+        view_address.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getContext(), ViewDeliveryAddress.class);
+                startActivity(i);
+            }
+        });
 
         return view;
     }

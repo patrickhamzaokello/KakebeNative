@@ -33,10 +33,10 @@
 
 
 
-    <style name="MyREDbtn" parent="Theme.AppCompat.Light">
-        <item name="colorPrimary">@color/niceBlue</item>
-        <item name="colorPrimaryDark">@color/niceBlue</item>
-        <item name="colorAccent">@color/niceBlue</item>
+    <style name="greenBtn" parent="Theme.AppCompat.Light">
+        <item name="colorPrimary">#2C5F2D</item>
+        <item name="colorPrimaryDark">#2C5F2D</item>
+        <item name="colorAccent">#2C5F2D</item>
     </style>
 
     <style name="LightBTN" parent="Theme.AppCompat.Light">

@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:background="@color/rootbg"
     android:orientation="vertical"
-    tools:context=".DeliveryAddress">
+    tools:context=".SelectDeliveryAddress">
 
 
     <TextView

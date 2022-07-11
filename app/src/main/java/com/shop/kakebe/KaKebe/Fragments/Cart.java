@@ -17,7 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.shop.kakebe.KaKebe.Adapters.CartAdapter;
-import com.shop.kakebe.KaKebe.DeliveryAddress;
+import com.shop.kakebe.KaKebe.SelectDeliveryAddress;
 import com.shop.kakebe.KaKebe.HelperClasses.CartItemHandlerListener;
 import com.shop.kakebe.KaKebe.Models.FoodDBModel;
 import com.shop.kakebe.KaKebe.R;
@@ -86,7 +86,7 @@ public class Cart extends Fragment implements CartItemHandlerListener {
         btnCheckout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(getContext(), DeliveryAddress.class);
+                Intent i = new Intent(getContext(), SelectDeliveryAddress.class);
                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(i);
             }

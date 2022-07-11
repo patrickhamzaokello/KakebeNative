@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/rootbg"
+    android:orientation="vertical"
+    tools:context=".SelectDeliveryAddress">
+
+
+    <TextView
+        android:id="@+id/choose"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/montserrat_bold"
+        android:includeFontPadding="false"
+        android:text="Delivery Address"
+        android:textColor="@color/black"
+        android:textSize="25sp"
+        android:transitionName="logo_text"
+
+
+        />
+
+    <TextView
+        android:id="@+id/createnewtext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginBottom="20dp"
+        android:fontFamily="@font/montserrat"
+        android:includeFontPadding="false"
+        android:text="This is where your order will be delivered."
+        android:textColor="@color/changeaddress"
+        android:textSize="15sp"
+        android:transitionName="logo_text"
+
+
+        />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/heading_create_address"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New delivery address"
+        android:layout_marginHorizontal="16dp"
+        android:textColor="#9F9F9F"
+        android:transitionName="account_change"
+        android:textAllCaps="false"
+        app:layout_constraintStart_toStartOf="parent"
+        app:strokeColor="#9F9F9F"
+        app:strokeWidth="1dp" />
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/main_swiperefresh"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/main_recycler"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipToPadding="false"
+                android:paddingBottom="@dimen/activity_margin_content" />
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+
+        <ProgressBar
+            android:id="@+id/main_progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
+
+        <include layout="@layout/error_layout" />
+
+        <include layout="@layout/create_address_layout" />
+
+
+    </FrameLayout>
+
+</LinearLayout>
+
