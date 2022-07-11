@@ -18,6 +18,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -173,7 +174,7 @@ public class CartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     public void onClick(View v) {
                         mCartListener.increment(foodDBModel.getQuantity()+1, foodDBModel);
                         updateFood(foodDBModel);
-
+                        updatecartCount();
                     }
                 });
 
@@ -182,7 +183,7 @@ public class CartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     public void onClick(View v) {
                             mCartListener.decrement(foodDBModel.getQuantity()-1, foodDBModel);
                         updateFood(foodDBModel);
-
+                        updatecartCount();
                     }
                 });
 
@@ -240,7 +241,13 @@ public class CartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     }
 
-
+    private void updatecartCount() {
+        db = new SenseDBHelper(context);
+        String mycartcount = String.valueOf(db.countCart());
+        Intent intent = new Intent(context.getString(R.string.cartcoutAction));
+        intent.putExtra(context.getString(R.string.cartCount), mycartcount);
+        LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+    }
 
 
     public void remove(FoodDBModel r) {

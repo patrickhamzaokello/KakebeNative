@@ -210,6 +210,7 @@ public class Cart extends Fragment implements CartItemHandlerListener {
         if (db.sumPriceCartItems() == 0) {
             emptycartwarning();
         }
+        updatecartCount();
     }
 
     private void updatecartCount() {

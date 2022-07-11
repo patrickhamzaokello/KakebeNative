@@ -159,7 +159,8 @@ public class SenseDBHelper extends SQLiteOpenHelper {
 
     public int countCart() {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor mCount = db.rawQuery("select count(*) from " + TABLE_NAME, null);
+        Cursor mCount = db.rawQuery("select sum("+COLUMN_quantity+" ) from " + TABLE_NAME, null);
+//        Cursor mCount = db.rawQuery("select count(*) from " + TABLE_NAME, null);
         mCount.moveToFirst();
         int count = mCount.getInt(0);
         mCount.close();

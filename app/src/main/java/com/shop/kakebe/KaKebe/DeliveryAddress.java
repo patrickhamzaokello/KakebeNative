@@ -470,6 +470,7 @@ public class DeliveryAddress extends AppCompatActivity implements SelectedAddres
         i.putExtra("phone",userAddress.getPhone());
         i.putExtra("email",userAddress.getEmail());
         i.putExtra("name",userAddress.getUsername());
+        i.putExtra("shipping_fee",String.valueOf(userAddress.getShippingCost()));
         startActivity(i);
         finish();
     }

@@ -183,7 +183,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/montserrat"
                         android:includeFontPadding="false"
-                        android:text="Sub Total (Ugx)"
+                        android:text="Sub Total"
                         android:textColor="@color/light_grey"
                         android:textSize="15dp" />
 
@@ -218,7 +218,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/montserrat"
                         android:includeFontPadding="false"
-                        android:text="Shipping Fee (Ugx)"
+                        android:text="Shipping Fee"
                         android:textColor="@color/light_grey"
                         android:textSize="15dp" />
 

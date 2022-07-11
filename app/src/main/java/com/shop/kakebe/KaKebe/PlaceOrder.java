@@ -53,11 +53,13 @@ public class PlaceOrder extends AppCompatActivity {
     TextView btn_change_location, grandsubvalue, grandshipvalue, grandtotalvalue, location_address_view, order_page_fullname, order_page_phoneno, order_page_username;
     Button btnCheckout;
     String selected_address_json;
-    String address, city, phone,email,name;
+    String address, city, phone,email,name,shipping_fee;
 
     private ProgressBar progressBar;
     PlaceOrderCartAdapter placeOrderCartAdapter;
     RecyclerView recyclerView;
+
+    Integer GRAND_TOTAL;
 
 
     @Override
@@ -130,7 +132,7 @@ public class PlaceOrder extends AppCompatActivity {
 
                 orderRequest.setOrderAddress(selected_address_json);
                 orderRequest.setCustomerId(String.valueOf(user.getId()));
-                orderRequest.setTotalAmount(String.valueOf(db.sumPriceCartItems()));
+                orderRequest.setTotalAmount(String.valueOf(GRAND_TOTAL));
                 orderRequest.setOrderStatus("pending");
                 orderRequest.setProcessedBy("1");
                 orderRequest.setOrderItemList(cartitemlist);
@@ -220,9 +222,17 @@ public class PlaceOrder extends AppCompatActivity {
 
 
     public void OrderTotalling() {
-        grandsubvalue.setText("" + NumberFormat.getNumberInstance(Locale.US).format(db.sumPriceCartItems()));
-        grandshipvalue.setText("2000");
-        grandtotalvalue.setText("" + NumberFormat.getNumberInstance(Locale.US).format(db.sumPriceCartItems() + 2000));
+        grandsubvalue.setText("UGX " + NumberFormat.getNumberInstance(Locale.US).format(db.sumPriceCartItems()));
+
+        try{
+            int delivery_fee = Integer.parseInt(shipping_fee);
+            grandshipvalue.setText("UGX " + NumberFormat.getNumberInstance(Locale.US).format(delivery_fee));
+            grandtotalvalue.setText("UGX " + NumberFormat.getNumberInstance(Locale.US).format(db.sumPriceCartItems() + delivery_fee));
+            GRAND_TOTAL = db.sumPriceCartItems() + delivery_fee;
+        }
+        catch (NumberFormatException ex){
+            ex.printStackTrace();
+        }
         order_page_fullname.setText(name);
         order_page_phoneno.setText(phone);
         location_address_view.setText(address + ", "+city);
@@ -284,8 +294,9 @@ public class PlaceOrder extends AppCompatActivity {
         phone = i.getStringExtra("phone");
         email = i.getStringExtra("email");
         name = i.getStringExtra("name");
+        shipping_fee = i.getStringExtra("shipping_fee");
 
-        Log.i("recieve", address +city +phone+ email +name);
+        Log.d("recieve", address +city +phone+ email +name + shipping_fee);
 
         //SET DATA
         OrderTotalling();
