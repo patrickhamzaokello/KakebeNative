@@ -32,6 +32,27 @@ public class UserAddress {
     @SerializedName("phone")
     @Expose
     private String phone;
+    @SerializedName("set_default")
+    @Expose
+    private Integer setDefault;
+    @SerializedName("created_at")
+    @Expose
+    private String createdAt;
+    @SerializedName("updated_at")
+    @Expose
+    private String updatedAt;
+    @SerializedName("longitude")
+    @Expose
+    private String longitude;
+    @SerializedName("latitude")
+    @Expose
+    private String latitude;
+    @SerializedName("postal_code")
+    @Expose
+    private String postalCode;
+    @SerializedName("shipping_cost")
+    @Expose
+    private Integer shippingCost;
 
     public Integer getId() {
         return id;
@@ -95,6 +116,62 @@ public class UserAddress {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public Integer getSetDefault() {
+        return setDefault;
+    }
+
+    public void setSetDefault(Integer setDefault) {
+        this.setDefault = setDefault;
+    }
+
+    public String getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public String getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(String updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public String getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
+    }
+
+    public String getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
+    }
+
+    public String getPostalCode() {
+        return postalCode;
+    }
+
+    public void setPostalCode(String postalCode) {
+        this.postalCode = postalCode;
+    }
+
+    public Integer getShippingCost() {
+        return shippingCost;
+    }
+
+    public void setShippingCost(Integer shippingCost) {
+        this.shippingCost = shippingCost;
     }
 
 }

@@ -92,4 +92,9 @@ public interface ShopApiEndPoints {
     );
 
 
+    //http://localhost:8080/projects/KakebeAPI/Requests/City/cities.php
+    @GET("City/cities.php")
+    Call<String[]> getCities();
+
+
 }

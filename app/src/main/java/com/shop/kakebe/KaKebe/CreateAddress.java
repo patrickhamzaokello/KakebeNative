@@ -2,7 +2,11 @@ package com.shop.kakebe.KaKebe;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -18,10 +22,15 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.shop.kakebe.KaKebe.Apis.ShopAPIBase;
 import com.shop.kakebe.KaKebe.Apis.ShopApiEndPoints;
 import com.shop.kakebe.KaKebe.HelperClasses.SharedPrefManager;
+import com.shop.kakebe.KaKebe.Models.Address;
 import com.shop.kakebe.KaKebe.Models.CreateAddressModel;
 import com.shop.kakebe.KaKebe.Models.CreateAddressResponse;
 import com.shop.kakebe.KaKebe.Models.User;
+import com.shop.kakebe.KaKebe.Models.UserAddress;
 import com.shop.kakebe.KaKebe.localDatabase.SenseDBHelper;
+
+import java.util.List;
+import java.util.concurrent.TimeoutException;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -30,7 +39,7 @@ import retrofit2.Response;
 public class CreateAddress extends AppCompatActivity {
 
     String[] items = {"Material", "Design", "Components", "Andorid", "5.0 Lollipop", "Components", "Andorid", "5.0 Lollipop", "Components", "Andorid", "5.0 Lollipop"};
-
+    String[] cities;
     AutoCompleteTextView autoCompleteTextView;
     ArrayAdapter<String> adapterItems;
     ProgressBar addressprogressBar;
@@ -64,27 +73,29 @@ public class CreateAddress extends AppCompatActivity {
         User user = SharedPrefManager.getInstance(CreateAddress.this).getUser();
         userId = user.getId();
 
-        adapterItems = new ArrayAdapter<String>(this, R.layout.list_item, items);
-        autoCompleteTextView.setAdapter(adapterItems);
+
+        shopApiEndPoints = ShopAPIBase.getClient(getApplicationContext()).create(ShopApiEndPoints.class);
+
+
+        save_address.setOnClickListener(view -> AddUserAddress(Area, user_location, user_phone));
+
+        loadFirstPage();
+
         autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Area = parent.getItemAtPosition(position).toString();
             }
         });
-        shopApiEndPoints = ShopAPIBase.getClient(getApplicationContext()).create(ShopApiEndPoints.class);
-
-
-        save_address.setOnClickListener(view -> AddUserAddress(Area, user_location,user_phone));
 
     }
 
-    private void AddUserAddress(String area,TextInputEditText  user_location, TextInputEditText user_phone) {
+    private void AddUserAddress(String area, TextInputEditText user_location, TextInputEditText user_phone) {
 
         String location = user_location.getText().toString().trim();
         String phone = user_phone.getText().toString().trim();
 
-        Log.w("AddUserAddress", area  + location +phone);
+        Log.w("AddUserAddress", area + location + phone);
 
         addressprogressBar.setVisibility(View.VISIBLE);
 
@@ -94,7 +105,7 @@ public class CreateAddress extends AppCompatActivity {
         createAddressModel.setDistrict(area);
 
 
-        if(TextUtils.isEmpty(area)){
+        if (TextUtils.isEmpty(area)) {
             autoCompleteTextView.setError("Choose Version");
             autoCompleteTextView.requestFocus();
             addressprogressBar.setVisibility(View.GONE);
@@ -180,10 +191,80 @@ public class CreateAddress extends AppCompatActivity {
 
     }
 
+    private void loadFirstPage() {
+
+        // To ensure list is visible when retry button in error view is clicked
+
+        getCities().enqueue(new Callback<String[]>() {
+            @Override
+            public void onResponse(Call<String[]> call, Response<String[]> response) {
+
+                // Got data. Send it to adapter
+                cities = fetchCitiesResults(response);
+
+                if (cities != null) {
+                    adapterItems = new ArrayAdapter<String>(getApplicationContext(), R.layout.list_item, cities);
+                    autoCompleteTextView.setAdapter(adapterItems);
+                } else {
+//                    showErrorView(t);
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(Call<String[]> call, Throwable t) {
+                t.printStackTrace();
+                showErrorView(t);
+            }
+        });
+    }
+
+
+    private String[] fetchCitiesResults(Response<String[]> response) {
+        String[] cities = response.body();
+        return cities;
+    }
+
 
     private Call<CreateAddressResponse> postCreateUserAddress() {
         return shopApiEndPoints.postCreateAddress(createAddressModel);
     }
 
+
+    private Call<String[]> getCities() {
+        return shopApiEndPoints.getCities();
+    }
+
+
+    private void showErrorView(Throwable throwable) {
+
+//        if (errorLayout.getVisibility() == View.GONE) {
+//            errorLayout.setVisibility(View.VISIBLE);
+//            add_address_layout.setVisibility(View.GONE);
+//            progressBar.setVisibility(View.GONE);
+//
+//            txtError.setText(fetchErrorMessage(throwable));
+//        }
+    }
+
+
+    private boolean isNetworkConnected() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
+        return cm.getActiveNetworkInfo() != null;
+    }
+
+
+    private String fetchErrorMessage(Throwable throwable) {
+        String errorMsg = getResources().getString(R.string.error_msg_unknown);
+
+        if (!isNetworkConnected()) {
+            errorMsg = getResources().getString(R.string.error_msg_no_internet);
+        } else if (throwable instanceof TimeoutException) {
+            errorMsg = getResources().getString(R.string.error_msg_timeout);
+        }
+
+        return errorMsg;
+    }
 
 }

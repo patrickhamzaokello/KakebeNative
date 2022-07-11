@@ -20,8 +20,10 @@ import com.shop.kakebe.KaKebe.R;
 import com.shop.kakebe.KaKebe.RootActivity;
 import com.shop.kakebe.KaKebe.Utils.SelectedAddressListener;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by Suleiman on 19/10/16.
@@ -93,11 +95,10 @@ public class UserAddressesAdapter extends RecyclerView.Adapter<RecyclerView.View
             case ITEM:
                 final MovieVH movieVH = (MovieVH) holder;
                 if (userAddress != null) {
-
-
-                    movieVH.email.setText(userAddress.getEmail());
+                    movieVH.email.setText(userAddress.getUsername() + ", "+ userAddress.getEmail());
                     movieVH.phone.setText(userAddress.getPhone());
-                    movieVH.city.setText(userAddress.getCountry() + " , " + userAddress.getCity() + " , " + userAddress.getAddress());
+                    movieVH.city.setText( userAddress.getCity() + " , " + userAddress.getAddress()+ " , " +userAddress.getCountry() );
+                    movieVH.shipping_cost.setText("Ugx " + NumberFormat.getNumberInstance(Locale.US).format(userAddress.getShippingCost()));
 
                     movieVH.itemView.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -237,7 +238,7 @@ public class UserAddressesAdapter extends RecyclerView.Adapter<RecyclerView.View
 
 
     protected class MovieVH extends RecyclerView.ViewHolder {
-        private TextView email, phone, city;
+        private TextView email, phone, city,shipping_cost;
 
         public MovieVH(View itemView) {
             super(itemView);
@@ -245,6 +246,7 @@ public class UserAddressesAdapter extends RecyclerView.Adapter<RecyclerView.View
             email = (TextView) itemView.findViewById(R.id.email);
             phone = (TextView) itemView.findViewById(R.id.phone);
             city = (TextView) itemView.findViewById(R.id.city);
+            shipping_cost = (TextView) itemView.findViewById(R.id.shipping_cost);
 
         }
     }
