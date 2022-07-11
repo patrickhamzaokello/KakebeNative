@@ -144,7 +144,7 @@ public class HomeSectionedRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
             case CATEGORY:
                 final CategoryVH categoryVH = (CategoryVH) holder;
                 HomeMenuCategoryAdapter homeMenuCategoryAdapter = new HomeMenuCategoryAdapter(context);
-                int mNoOfColumns = Utility.calculateNoOfColumns(context, 160);
+                int mNoOfColumns = Utility.calculateNoOfColumns(context, 152);
 
                 GridLayoutManager catgridLayoutManager = new GridLayoutManager(context, mNoOfColumns);
                 categoryVH.category_recycler_view.setLayoutManager(catgridLayoutManager);

@@ -3,6 +3,7 @@ package com.shop.kakebe.KaKebe.Fragments;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,6 +15,8 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -136,6 +139,14 @@ public class Home extends Fragment implements PaginationAdapterCallback {
 
         //init service and load data
         shopApiEndPoints = ShopAPIBase.getClient(getContext()).create(ShopApiEndPoints.class);
+
+        try {
+            if (ContextCompat.checkSelfPermission(getContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED ) {
+                ActivityCompat.requestPermissions(getActivity(), new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, 300);
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+        }
 
         loadFirstPage();
 

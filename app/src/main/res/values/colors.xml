@@ -49,9 +49,13 @@
 <!--    <color name="sectioncolor">#A4193D</color>-->
 <!--    <color name="sectionheadingcolor">#FFFBF6</color>-->
 <!--    <color name="sectionsubheadingcolor">#FFDFB9</color>-->
-    <color name="sectioncolor">#2C5F2D</color>
-    <color name="sectionheadingcolor">#E4FFBD</color>
-    <color name="sectionsubheadingcolor">#97BC62</color>
+
+<!--    <color name="sectioncolor">#2C5F2D</color>-->
+<!--    <color name="sectionheadingcolor">#E4FFBD</color>-->
+<!--    <color name="sectionsubheadingcolor">#97BC62</color>-->
+    <color name="sectioncolor">#e12e39</color>
+    <color name="sectionheadingcolor">#FFFFFF</color>
+    <color name="sectionsubheadingcolor">#FFC107</color>
     <color name="buttonshowmore">#FFEB3B</color>
     <color name="recycler_bg_color">#FEFEFE</color>
     <color name="profileCards">#FCFCFC</color>

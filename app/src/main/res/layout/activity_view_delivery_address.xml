@@ -33,7 +33,7 @@
         android:layout_marginBottom="20dp"
         android:fontFamily="@font/montserrat"
         android:includeFontPadding="false"
-        android:text="This is where your order will be delivered."
+        android:text="All delivery addresses  and shipping cost."
         android:textColor="@color/changeaddress"
         android:textSize="15sp"
         android:transitionName="logo_text"

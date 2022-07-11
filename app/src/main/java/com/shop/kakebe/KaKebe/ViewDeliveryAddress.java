@@ -24,7 +24,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.material.button.MaterialButton;
-import com.shop.kakebe.KaKebe.Adapters.AddressesAdapter;
+import com.shop.kakebe.KaKebe.Adapters.ViewAddressesAdapter;
 import com.shop.kakebe.KaKebe.Apis.ShopAPIBase;
 import com.shop.kakebe.KaKebe.Apis.ShopApiEndPoints;
 import com.shop.kakebe.KaKebe.HelperClasses.SharedPrefManager;
@@ -34,9 +34,6 @@ import com.shop.kakebe.KaKebe.Models.User;
 import com.shop.kakebe.KaKebe.Models.UserAddress;
 import com.shop.kakebe.KaKebe.Utils.PaginationScrollListener;
 import com.shop.kakebe.KaKebe.Utils.SelectedAddressListener;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.List;
 import java.util.concurrent.TimeoutException;
@@ -52,7 +49,7 @@ public class ViewDeliveryAddress extends AppCompatActivity implements SelectedAd
 
     TextView createnewtext;
 
-    AddressesAdapter adapter;
+    ViewAddressesAdapter adapter;
     LinearLayoutManager linearLayoutManager;
 
     RecyclerView rv;
@@ -124,7 +121,7 @@ public class ViewDeliveryAddress extends AppCompatActivity implements SelectedAd
         swipeRefreshLayout = findViewById(R.id.main_swiperefresh);
 
 
-        adapter = new AddressesAdapter(ViewDeliveryAddress.this, this);
+        adapter = new ViewAddressesAdapter(ViewDeliveryAddress.this, this);
 
         linearLayoutManager = new LinearLayoutManager(ViewDeliveryAddress.this, LinearLayoutManager.VERTICAL, false);
         rv.setLayoutManager(linearLayoutManager);

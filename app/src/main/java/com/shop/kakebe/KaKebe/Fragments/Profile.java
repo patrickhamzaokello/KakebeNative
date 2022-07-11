@@ -2,6 +2,7 @@ package com.shop.kakebe.KaKebe.Fragments;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -13,6 +14,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.button.MaterialButton;
@@ -64,8 +67,6 @@ public class Profile extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
 
-        //if the user is not logged in
-        //starting the login activity
         if (!SharedPrefManager.getInstance(getContext()).isLoggedIn()) {
 //            finish();
             startActivity(new Intent(getContext(), LoginMaterial.class));
@@ -84,14 +85,16 @@ public class Profile extends Fragment {
         addNewAddress = view.findViewById(R.id.addNewAddress);
         view_address = view.findViewById(R.id.view_address);
 
-
-        //getting the current user
         User user = SharedPrefManager.getInstance(getContext()).getUser();
         db = new SenseDBHelper(getContext());
-//        userModel.getId();
 
-        //setting the values to the textviews
-
+        try {
+            if (ContextCompat.checkSelfPermission(getContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED ) {
+                ActivityCompat.requestPermissions(getActivity(), new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, 101);
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+        }
 
         full_name_text.setText(user.getFullname());
         card_email_text.setText(user.getEmail());
@@ -99,12 +102,9 @@ public class Profile extends Fragment {
         userId = user.getId();
 
 
-        //when the user presses logout button
-        //calling the logout method
         view.findViewById(R.id.buttonLogout).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
 
                 new SweetAlertDialog(getContext(), SweetAlertDialog.WARNING_TYPE)
                         .setTitleText("Logout!")
@@ -150,6 +150,4 @@ public class Profile extends Fragment {
         Intent i = new Intent(getContext(), CreateAddress.class);
         startActivity(i);
     }
-
-
 }

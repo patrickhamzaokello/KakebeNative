@@ -5,7 +5,8 @@
     android:layout_height="wrap_content"
     android:ellipsize="end"
     android:maxLines="1"
-    android:padding="14dp"
+    android:background="@color/white"
+    android:padding="16dp"
     android:fontFamily="@font/montserrat"
     android:text="Uganda">
 

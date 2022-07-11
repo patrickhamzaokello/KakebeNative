@@ -148,6 +148,7 @@
                     android:layout_toLeftOf="@+id/itemQuanEt"
                     android:background="@drawable/custom_btn_remove"
                     android:theme="@style/LightBTN"
+                    android:textColor="#FFD600"
                     />
 
                 <TextView
@@ -162,6 +163,7 @@
                     android:maxLength="4"
                     android:minEms="1"
                     android:text="0"
+                    android:textColor="@color/purple_200"
                     android:textAlignment="center"
                     android:textAllCaps="false"
                     android:textFontWeight="500"
@@ -176,8 +178,7 @@
                     android:layout_marginEnd="0dp"
                     android:background="@drawable/custom_btn_add"
                     android:textColor="#FFD600"
-                    android:theme="@style/LightBTN"
-                    />
+                    android:theme="@style/LightBTN" />
 
 
             </RelativeLayout>

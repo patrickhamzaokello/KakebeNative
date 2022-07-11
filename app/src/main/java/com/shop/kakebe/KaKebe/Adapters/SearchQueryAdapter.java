@@ -4,6 +4,7 @@ import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOption
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,6 +32,7 @@ import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.transition.DrawableCrossFadeFactory;
+import com.google.android.material.card.MaterialCardView;
 import com.shop.kakebe.KaKebe.Models.Product;
 import com.shop.kakebe.KaKebe.MyMenuDetail;
 import com.shop.kakebe.KaKebe.R;
@@ -122,6 +124,7 @@ public class SearchQueryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
+
         Product product = products.get(position); // Movie
 
         db = new SenseDBHelper(context);
@@ -132,16 +135,36 @@ public class SearchQueryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
 
 
-
         switch (getItemViewType(position)) {
             case ITEM:
                 final MovieVH movieVH = (MovieVH) holder;
+                if (food_db_itemchecker) {
 
-                movieVH.mMovieTitle.setText(product.getName());
 
-                movieVH.mMoviePrice.setText("Ugx " + NumberFormat.getNumberInstance(Locale.US).format(product.getUnitPrice()));
+                    movieVH.home_cart_state.setBackground(context.getResources().getDrawable(R.drawable.custom_plus_btn));
+                    movieVH.home_addToCart_card.setCardBackgroundColor(context.getResources().getColor(R.color.black));
 
-                movieVH.mMovieRating.setText( "Rating "+ product.getDiscount() + " | "+ "5");
+                } else {
+
+
+                    movieVH.home_cart_state.setBackground(context.getResources().getDrawable(R.drawable.custom_check_btn));
+                    movieVH.home_addToCart_card.setCardBackgroundColor(context.getResources().getColor(R.color.purple_200));
+
+                }
+
+                movieVH.item_name.setText(product.getName());
+                movieVH.item_rating.setText("Ugx " + NumberFormat.getNumberInstance(Locale.US).format(product.getUnitPrice()));
+
+                if(compare_values(product.getUnitPrice(),product.getDiscount())){
+                    movieVH.item_rating.setPaintFlags(movieVH.item_rating.getPaintFlags() & ~Paint.STRIKE_THRU_TEXT_FLAG);
+                    movieVH.discount_card.setVisibility(View.GONE);
+                } else {
+                    movieVH.discount_card.setVisibility(View.VISIBLE);
+                    movieVH.discoutpercent.setText(cal_percentage(product.getDiscount(), product.getUnitPrice()));
+                    movieVH.item_rating.setPaintFlags(movieVH.item_rating.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                }
+                movieVH.item_price.setText("Ugx " + NumberFormat.getNumberInstance(Locale.US).format(product.getDiscount()));
+
 
                 Glide
                         .with(context)
@@ -163,40 +186,10 @@ public class SearchQueryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                         .diskCacheStrategy(DiskCacheStrategy.ALL)   // cache both original & resized image
                         .centerCrop()
                         .transition(withCrossFade(factory))
-                        .into(movieVH.mPosterImg);
+                        .into(movieVH.itemimage);
 
 
-                if (food_db_itemchecker) {
-
-
-                    movieVH.search_st_carttn.setBackground(context.getResources().getDrawable(R.drawable.custom_plus_btn));
-
-
-                } else {
-
-
-                    movieVH.search_st_carttn.setBackground(context.getResources().getDrawable(R.drawable.custom_check_btn));
-
-
-                }
-
-
-                //show toast on click of show all button
-                movieVH.mPosterImg.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent i = new Intent(context.getApplicationContext(), MyMenuDetail.class);
-                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-
-                        //PACK DATA
-                        i.putExtra("SENDER_KEY", "MenuDetails");
-                        i.putExtra("selectMenuId", product.getId());
-                        i.putExtra("category_selected_key", product.getCategoryId());
-                        context.startActivity(i);
-                    }
-                });
-
-                movieVH.search_st_carttn.setOnClickListener(new View.OnClickListener() {
+                movieVH.view.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         food_db_itemchecker = db.checktweetindb(String.valueOf(product.getId()));
@@ -214,21 +207,35 @@ public class SearchQueryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                             );
 
 
-
-                            movieVH.search_st_carttn.setBackground(context.getResources().getDrawable(R.drawable.custom_check_btn));
-
+                            movieVH.home_cart_state.setBackground(context.getResources().getDrawable(R.drawable.custom_check_btn));
+                            movieVH.home_addToCart_card.setCardBackgroundColor(context.getResources().getColor(R.color.purple_200));
                             updatecartCount();
 
 
                         } else {
                             db.deleteTweet(String.valueOf(product.getId()));
 
-                            movieVH.search_st_carttn.setBackground(context.getResources().getDrawable(R.drawable.custom_plus_btn));
-
+                            movieVH.home_cart_state.setBackground(context.getResources().getDrawable(R.drawable.custom_plus_btn));
+                            movieVH.home_addToCart_card.setCardBackgroundColor(context.getResources().getColor(R.color.black));
 
                             updatecartCount();
 
                         }
+                    }
+                });
+
+                //show toast on click of show all button
+                movieVH.itemimage.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent i = new Intent(context.getApplicationContext(), MyMenuDetail.class);
+                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+
+                        //PACK DATA
+                        i.putExtra("SENDER_KEY", "MenuDetails");
+                        i.putExtra("selectMenuId", product.getId());
+                        i.putExtra("category_selected_key", product.getCategoryId());
+                        context.startActivity(i);
                     }
                 });
 
@@ -280,6 +287,25 @@ public class SearchQueryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             mainActivity.switchContent(id, frag, "MenuDetails");
         }
 
+    }
+
+    private boolean compare_values(int unitprice, int discount){
+        boolean val;
+        if(unitprice == discount){
+            val = true;
+        } else {
+            val = false;
+        }
+        return val;
+    }
+
+
+    public String cal_percentage(int discount, int unit_price){
+        int val = (100 * discount / unit_price);
+        val = Math.round(val - 0.5f);
+        val = val - 100;
+        String per_discount = val +"%";
+        return per_discount;
     }
 
     private void updatecartCount() {
@@ -382,22 +408,33 @@ public class SearchQueryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
 
     protected class MovieVH extends RecyclerView.ViewHolder {
-        private final TextView mMovieTitle;
-        private final TextView mMovieRating;
-        private final TextView mMoviePrice;
-        private final ImageView mPosterImg;
+        private final TextView item_name;
+        private final TextView item_price;
+        private final TextView item_rating;
+        private final TextView discoutpercent;
+        private final ImageView itemimage;
         private final ProgressBar mProgress;
-        private final Button search_st_carttn;
+
+        private final MaterialCardView discount_card,home_addToCart_card;
+
+        Button home_cart_state;
+        View view;
+
 
         public MovieVH(View itemView) {
             super(itemView);
 
-            mMovieTitle = itemView.findViewById(R.id.item_name);
-            mMovieRating = itemView.findViewById(R.id.item_rating);
-            mMoviePrice = itemView.findViewById(R.id.item_price);
-            mPosterImg = itemView.findViewById(R.id.product_imageview);
-            search_st_carttn = itemView.findViewById(R.id.search_st_carttn);
-            mProgress = itemView.findViewById(R.id.search_product_image_progress);
+            itemimage = itemView.findViewById(R.id.product_imageview);
+            item_name = itemView.findViewById(R.id.item_name);
+            item_rating = itemView.findViewById(R.id.item_rating);
+            item_price = itemView.findViewById(R.id.item_price);
+            mProgress = itemView.findViewById(R.id.home_product_image_progress);
+            discoutpercent = itemView.findViewById(R.id.discoutpercent);
+            home_cart_state = itemView.findViewById(R.id.home_st_carttn);
+            discount_card = (MaterialCardView) itemView.findViewById(R.id.discount_card);
+            home_addToCart_card = (MaterialCardView) itemView.findViewById(R.id.home_addToCart);
+            view = itemView;
+            item_rating.setVisibility(View.GONE);
         }
     }
 
