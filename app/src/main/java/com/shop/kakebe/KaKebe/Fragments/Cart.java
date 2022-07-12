@@ -2,6 +2,7 @@ package com.shop.kakebe.KaKebe.Fragments;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.button.MaterialButton;
 import com.shop.kakebe.KaKebe.Adapters.CartAdapter;
 import com.shop.kakebe.KaKebe.SelectDeliveryAddress;
 import com.shop.kakebe.KaKebe.HelperClasses.CartItemHandlerListener;
@@ -43,7 +45,7 @@ public class Cart extends Fragment implements CartItemHandlerListener {
     TextView grandtotalvalue;
     LinearLayout procceed_checkout_layout,notFound_layout;
 
-    Button btnCheckout;
+    MaterialButton btnCheckout,calltoOrder;
 
 
     public Cart() {
@@ -77,6 +79,7 @@ public class Cart extends Fragment implements CartItemHandlerListener {
         procceed_checkout_layout = view.findViewById(R.id.procceed_checkout_layout);
         notFound_layout = view.findViewById(R.id.notFound_layout);
         btnCheckout = view.findViewById(R.id.btnCheckout);
+        calltoOrder = view.findViewById(R.id.calltoOrder);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(view.getContext());
         layoutManager.setOrientation(RecyclerView.VERTICAL);
@@ -91,7 +94,14 @@ public class Cart extends Fragment implements CartItemHandlerListener {
                 startActivity(i);
             }
         });
-
+        calltoOrder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                intent.setData(Uri.parse("tel:0393249845"));
+                startActivity(intent);
+            }
+        });
 
 
         return view;

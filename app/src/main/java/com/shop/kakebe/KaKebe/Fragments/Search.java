@@ -273,9 +273,9 @@ public class Search extends Fragment implements SearchAdapterCallBack {
         progressBar.setVisibility(View.GONE);
 
         AlertDialog.Builder android = new AlertDialog.Builder(getContext());
-        android.setTitle("Coming Soon");
+        android.setTitle("From Kakebe Shop");
         android.setIcon(R.drawable.demoproduct);
-        android.setMessage("This Menu Category will be updated with great tastes soon, Stay Alert for Updates.")
+        android.setMessage("We can't find what you are looking for. Please Return to home")
                 .setCancelable(false)
 
                 .setPositiveButton("Home", new DialogInterface.OnClickListener() {

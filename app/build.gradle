@@ -10,8 +10,8 @@ android {
         applicationId "com.shop.kakebe.KaKebe"
         minSdk 21
         targetSdk 31
-        versionCode 13
-        versionName "1.0[13]"
+        versionCode 14
+        versionName "MECO"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
