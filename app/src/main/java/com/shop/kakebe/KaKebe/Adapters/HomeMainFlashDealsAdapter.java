@@ -118,7 +118,7 @@ public class HomeMainFlashDealsAdapter extends RecyclerView.Adapter<RecyclerView
 
 //                movieVH.flash_main_name.setText(featuredCategory.getName());
                 movieVH.flash_main_name.setText(featuredCategory.getTitle());
-                movieVH.flash_name.setText("Expires in "+ featuredCategory.getTimeleft());
+                movieVH.flash_name.setText(featuredCategory.getTimeleft());
 
                 movieVH.flash_heading.setBackgroundColor(Color.parseColor(featuredCategory.getBackgroundColor()));
 

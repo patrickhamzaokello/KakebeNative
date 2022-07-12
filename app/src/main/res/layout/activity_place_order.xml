@@ -370,7 +370,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_gravity="center"
                 android:fontFamily="@font/montserrat_bold"
-                android:text="Call +256 787 250196"
+                android:text="Call 0393 249845"
                 android:textColor="@color/black"
                 android:textSize="15dp" />
 
