@@ -60,5 +60,6 @@
     <color name="recycler_bg_color">#FEFEFE</color>
     <color name="profileCards">#FCFCFC</color>
 
-
+    <color name="product_selected">#FF0077</color>
+    <color name="product_not_selected">#ff0000</color>
 </resources>

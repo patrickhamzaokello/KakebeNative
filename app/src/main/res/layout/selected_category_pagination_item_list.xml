@@ -99,7 +99,7 @@
             android:clipToPadding="false"
             android:layout_alignParentRight="true"
             android:layout_below="@+id/product_detail"
-            app:cardBackgroundColor="@color/black"
+            app:cardBackgroundColor="@color/product_not_selected"
             app:cardCornerRadius="15dp">
 
             <RelativeLayout

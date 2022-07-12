@@ -142,13 +142,13 @@ public class SearchQueryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
 
                     movieVH.home_cart_state.setBackground(context.getResources().getDrawable(R.drawable.custom_plus_btn));
-                    movieVH.home_addToCart_card.setCardBackgroundColor(context.getResources().getColor(R.color.black));
+                    movieVH.home_addToCart_card.setCardBackgroundColor(context.getResources().getColor(R.color.product_not_selected));
 
                 } else {
 
 
                     movieVH.home_cart_state.setBackground(context.getResources().getDrawable(R.drawable.custom_check_btn));
-                    movieVH.home_addToCart_card.setCardBackgroundColor(context.getResources().getColor(R.color.purple_200));
+                    movieVH.home_addToCart_card.setCardBackgroundColor(context.getResources().getColor(R.color.product_selected));
 
                 }
 
@@ -208,7 +208,7 @@ public class SearchQueryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
 
                             movieVH.home_cart_state.setBackground(context.getResources().getDrawable(R.drawable.custom_check_btn));
-                            movieVH.home_addToCart_card.setCardBackgroundColor(context.getResources().getColor(R.color.purple_200));
+                            movieVH.home_addToCart_card.setCardBackgroundColor(context.getResources().getColor(R.color.product_selected));
                             updatecartCount();
 
 
@@ -216,7 +216,7 @@ public class SearchQueryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                             db.deleteTweet(String.valueOf(product.getId()));
 
                             movieVH.home_cart_state.setBackground(context.getResources().getDrawable(R.drawable.custom_plus_btn));
-                            movieVH.home_addToCart_card.setCardBackgroundColor(context.getResources().getColor(R.color.black));
+                            movieVH.home_addToCart_card.setCardBackgroundColor(context.getResources().getColor(R.color.product_not_selected));
 
                             updatecartCount();
 

@@ -113,11 +113,11 @@ public class SimilarProductsAdapter extends RecyclerView.Adapter<SimilarProducts
 
         if (food_db_itemchecker) {
             holder.home_cart_state.setBackground(context.getResources().getDrawable(R.drawable.custom_plus_btn));
-            holder.home_addToCart_card.setCardBackgroundColor(context.getResources().getColor(R.color.black));
+            holder.home_addToCart_card.setCardBackgroundColor(context.getResources().getColor(R.color.product_not_selected));
 
         } else {
             holder.home_cart_state.setBackground(context.getResources().getDrawable(R.drawable.custom_check_btn));
-            holder.home_addToCart_card.setCardBackgroundColor(context.getResources().getColor(R.color.purple_200));
+            holder.home_addToCart_card.setCardBackgroundColor(context.getResources().getColor(R.color.product_selected));
 
         }
 
@@ -177,7 +177,7 @@ public class SimilarProductsAdapter extends RecyclerView.Adapter<SimilarProducts
 
 
                     holder.home_cart_state.setBackground(context.getResources().getDrawable(R.drawable.custom_check_btn));
-                    holder.home_addToCart_card.setCardBackgroundColor(context.getResources().getColor(R.color.purple_200));
+                    holder.home_addToCart_card.setCardBackgroundColor(context.getResources().getColor(R.color.product_selected));
 
                     updatecartCount();
 
@@ -186,7 +186,7 @@ public class SimilarProductsAdapter extends RecyclerView.Adapter<SimilarProducts
                     db.deleteTweet(String.valueOf(product.getId()));
 
                     holder.home_cart_state.setBackground(context.getResources().getDrawable(R.drawable.custom_plus_btn));
-                    holder.home_addToCart_card.setCardBackgroundColor(context.getResources().getColor(R.color.black));
+                    holder.home_addToCart_card.setCardBackgroundColor(context.getResources().getColor(R.color.product_not_selected));
                     updatecartCount();
 
                 }
