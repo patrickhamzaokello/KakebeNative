@@ -3,6 +3,7 @@ package com.shop.kakebe.KaKebe;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -67,8 +69,9 @@ public class MySelectedCategory extends AppCompatActivity implements PaginationA
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_selected_category);
         ActionBar actionBar = getSupportActionBar(); // or getActionBar();
-        actionBar.setTitle("Menu Category");
-
+        actionBar.setTitle("Category");
+        actionBar.setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(this, R.color.purple_200)));
+        actionBar.setElevation(0);
         // add back arrow to toolbar
         if (getSupportActionBar() != null){
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);

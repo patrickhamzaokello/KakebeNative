@@ -33,7 +33,7 @@ import com.shop.kakebe.KaKebe.Models.FoodDBModel;
 import com.shop.kakebe.KaKebe.MyMenuDetail;
 import com.shop.kakebe.KaKebe.R;
 import com.shop.kakebe.KaKebe.RootActivity;
-import com.shop.kakebe.KaKebe.localDatabase.SenseDBHelper;
+import com.shop.kakebe.KaKebe.localDatabase.CartDBManager;
 
 import java.text.NumberFormat;
 import java.util.List;
@@ -51,7 +51,7 @@ public class CartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final String BASE_URL_IMG = "";
 
     private List<FoodDBModel> foodDBModelList;
-    SenseDBHelper db;
+    CartDBManager db;
 
 
     private final Context context;
@@ -107,7 +107,7 @@ public class CartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
         FoodDBModel foodDBModel = foodDBModelList.get(position); // Food
-        db = new SenseDBHelper(holder.itemView.getContext());
+        db = new CartDBManager(holder.itemView.getContext());
 
 
 
@@ -242,7 +242,7 @@ public class CartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     private void updatecartCount() {
-        db = new SenseDBHelper(context);
+        db = new CartDBManager(context);
         String mycartcount = String.valueOf(db.countCart());
         Intent intent = new Intent(context.getString(R.string.cartcoutAction));
         intent.putExtra(context.getString(R.string.cartCount), mycartcount);
@@ -261,8 +261,8 @@ public class CartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public void updateFood(FoodDBModel r) {
         int position = foodDBModelList.indexOf(r);
         if (position > -1) {
-            db = new SenseDBHelper(context.getApplicationContext());
-            foodDBModelList = db.listTweetsBD();
+            db = new CartDBManager(context.getApplicationContext());
+            foodDBModelList = db.listProducts();
             notifyDataSetChanged();
         }
     }

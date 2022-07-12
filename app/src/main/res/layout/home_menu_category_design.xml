@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/white"
     android:clipToPadding="false"
+    android:layout_marginHorizontal="2dp"
+    android:layout_marginTop="5dp"
     android:padding="10dp">
 
 
@@ -13,6 +15,7 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:scaleType="fitXY"
+        android:layout_centerHorizontal="true"
         app:cardCornerRadius="5dp"
         app:cardElevation="0dp">
 
@@ -42,9 +45,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/image_card_view"
         android:orientation="vertical"
-        android:gravity="center_horizontal"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="5dp">
+        android:layout_marginTop="1dp">
 
 
         <TextView

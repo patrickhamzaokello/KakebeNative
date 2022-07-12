@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
-import android.util.Log;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,16 +20,14 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.shop.kakebe.KaKebe.Adapters.CartAdapter;
 import com.shop.kakebe.KaKebe.HelperClasses.CartItemHandlerListener;
 import com.shop.kakebe.KaKebe.Models.FoodDBModel;
-import com.shop.kakebe.KaKebe.localDatabase.SenseDBHelper;
-import com.shop.kakebe.KaKebe.R;
+import com.shop.kakebe.KaKebe.localDatabase.CartDBManager;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class RootActivity extends AppCompatActivity implements CartItemHandlerListener {
 
     BottomNavigationView navView;
-    SenseDBHelper db;
+    CartDBManager db;
     List<FoodDBModel> cartitemlist;
     CartAdapter cartAdapter;
 
@@ -51,7 +48,7 @@ public class RootActivity extends AppCompatActivity implements CartItemHandlerLi
         navView = findViewById(R.id.bottomNav_view);
         LocalBroadcastManager.getInstance(this).registerReceiver(mMasage,new IntentFilter(getString(R.string.cartcoutAction)));
 
-        db = new SenseDBHelper(this);
+        db = new CartDBManager(this);
 
         //Pass the ID's of Different destinations
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
@@ -119,8 +116,8 @@ public class RootActivity extends AppCompatActivity implements CartItemHandlerLi
 
     private void refreshcartPage(){
 
-        db = new SenseDBHelper(this);
-        cartitemlist = db.listTweetsBD();
+        db = new CartDBManager(this);
+        cartitemlist = db.listProducts();
 
         if (cartitemlist.size() > 0) {
             cartAdapter = new CartAdapter(this, cartitemlist, this);

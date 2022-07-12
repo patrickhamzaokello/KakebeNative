@@ -47,8 +47,6 @@ public class LoginMaterial extends AppCompatActivity {
         setContentView(R.layout.activity_login_material);
 
         ActionBar actionBar = getSupportActionBar(); // or getActionBar();
-        getSupportActionBar().setTitle("Zodongo Foods"); // set the top title
-        String title = actionBar.getTitle().toString(); // get the title
         actionBar.hide();
 
         //if the user is already logged in we will directly start the profile activity

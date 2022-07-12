@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/rootbg"
-    tools:context=".KaKebe.Fragments.Home">
+    tools:context=".Fragments.Home">
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/main_swiperefresh"

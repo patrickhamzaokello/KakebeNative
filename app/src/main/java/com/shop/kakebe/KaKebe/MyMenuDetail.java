@@ -73,7 +73,7 @@ public class MyMenuDetail extends AppCompatActivity implements MenuDetailListene
         setContentView(R.layout.activity_my_selected_category);
         actionBar = getSupportActionBar(); // or getActionBar();
         actionBar.setTitle("Details");
-        actionBar.setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(this, R.color.black)));
+        actionBar.setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(this, R.color.purple_200)));
         actionBar.setElevation(0);
         // add back arrow to toolbar
         if (getSupportActionBar() != null){

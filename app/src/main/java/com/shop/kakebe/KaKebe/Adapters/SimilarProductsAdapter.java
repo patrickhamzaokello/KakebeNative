@@ -34,7 +34,7 @@ import com.shop.kakebe.KaKebe.MyMenuDetail;
 import com.shop.kakebe.KaKebe.R;
 import com.shop.kakebe.KaKebe.RootActivity;
 import com.shop.kakebe.KaKebe.Utils.GlideApp;
-import com.shop.kakebe.KaKebe.localDatabase.SenseDBHelper;
+import com.shop.kakebe.KaKebe.localDatabase.CartDBManager;
 
 import java.text.NumberFormat;
 import java.util.List;
@@ -81,7 +81,7 @@ public class SimilarProductsAdapter extends RecyclerView.Adapter<SimilarProducts
     DrawableCrossFadeFactory factory =
             new DrawableCrossFadeFactory.Builder().setCrossFadeEnabled(true).build();
 
-    SenseDBHelper db;
+    CartDBManager db;
     boolean food_db_itemchecker;
 
     int minteger = 1;
@@ -105,9 +105,9 @@ public class SimilarProductsAdapter extends RecyclerView.Adapter<SimilarProducts
     public void onBindViewHolder(ItemViewHolder holder, int position) {
         final SimilarProduct product = products.get(position);
 
-        db = new SenseDBHelper(context);
+        db = new CartDBManager(context);
 
-        food_db_itemchecker = db.checktweetindb(String.valueOf(product.getId()));
+        food_db_itemchecker = db.checkProductID(String.valueOf(product.getId()));
 
         updatecartCount();
 
@@ -160,11 +160,11 @@ public class SimilarProductsAdapter extends RecyclerView.Adapter<SimilarProducts
         holder.view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                food_db_itemchecker = db.checktweetindb(String.valueOf(product.getId()));
+                food_db_itemchecker = db.checkProductID(String.valueOf(product.getId()));
 
 
                 if (food_db_itemchecker) {
-                    db.addTweet(
+                    db.addProduct(
                             product.getId(),
                             product.getName(),
                             product.getUnitPrice(),
@@ -183,7 +183,7 @@ public class SimilarProductsAdapter extends RecyclerView.Adapter<SimilarProducts
 
 
                 } else {
-                    db.deleteTweet(String.valueOf(product.getId()));
+                    db.deleteProduct(String.valueOf(product.getId()));
 
                     holder.home_cart_state.setBackground(context.getResources().getDrawable(R.drawable.custom_plus_btn));
                     holder.home_addToCart_card.setCardBackgroundColor(context.getResources().getColor(R.color.product_not_selected));
@@ -249,7 +249,7 @@ public class SimilarProductsAdapter extends RecyclerView.Adapter<SimilarProducts
     }
 
     private void updatecartCount() {
-        db = new SenseDBHelper(context);
+        db = new CartDBManager(context);
         String mycartcount = String.valueOf(db.countCart());
         Intent intent = new Intent(context.getString(R.string.cartcoutAction));
         intent.putExtra(context.getString(R.string.cartCount), mycartcount);

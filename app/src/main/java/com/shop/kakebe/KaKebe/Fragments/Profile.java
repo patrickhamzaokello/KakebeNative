@@ -1,50 +1,35 @@
 package com.shop.kakebe.KaKebe.Fragments;
 
-import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.button.MaterialButton;
-import com.google.android.material.card.MaterialCardView;
-import com.google.android.material.textfield.TextInputEditText;
-import com.shop.kakebe.KaKebe.Apis.ShopAPIBase;
-import com.shop.kakebe.KaKebe.Apis.ShopApiEndPoints;
 import com.shop.kakebe.KaKebe.CreateAddress;
 import com.shop.kakebe.KaKebe.HelperClasses.SharedPrefManager;
 import com.shop.kakebe.KaKebe.LoginMaterial;
 import com.shop.kakebe.KaKebe.ManageOrders;
-import com.shop.kakebe.KaKebe.Models.CreateAddressModel;
-import com.shop.kakebe.KaKebe.Models.CreateAddressResponse;
 import com.shop.kakebe.KaKebe.Models.User;
 import com.shop.kakebe.KaKebe.R;
 import com.shop.kakebe.KaKebe.ViewDeliveryAddress;
-import com.shop.kakebe.KaKebe.localDatabase.SenseDBHelper;
+import com.shop.kakebe.KaKebe.localDatabase.CartDBManager;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 
 public class Profile extends Fragment {
 
     TextView textViewUsername, textViewEmail, full_name_text, card_email_text, card_phone_text;
     MaterialButton manageOrders,addNewAddress,view_address;
-    private SenseDBHelper db;
+    private CartDBManager db;
     private int userId;
 
 
@@ -86,7 +71,7 @@ public class Profile extends Fragment {
         view_address = view.findViewById(R.id.view_address);
 
         User user = SharedPrefManager.getInstance(getContext()).getUser();
-        db = new SenseDBHelper(getContext());
+        db = new CartDBManager(getContext());
 
         try {
             if (ContextCompat.checkSelfPermission(getContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED ) {

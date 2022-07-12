@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white"
+    android:background="@color/rootbg"
     android:orientation="vertical"
     android:paddingTop="20dp">
 
@@ -11,7 +11,6 @@
         android:id="@+id/categorytitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
         android:paddingHorizontal="10dp"
         android:paddingVertical="20dp">
 
@@ -47,7 +46,9 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/category_recycler_view"
         android:layout_width="match_parent"
+        android:background="@color/rootbg"
         android:layout_height="wrap_content"
+        android:paddingBottom="4dp"
         android:layout_below="@+id/categorytitle" />
 
 </RelativeLayout>

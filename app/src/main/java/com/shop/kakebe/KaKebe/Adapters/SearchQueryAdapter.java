@@ -39,7 +39,7 @@ import com.shop.kakebe.KaKebe.R;
 import com.shop.kakebe.KaKebe.RootActivity;
 import com.shop.kakebe.KaKebe.Utils.GlideApp;
 import com.shop.kakebe.KaKebe.Utils.SearchAdapterCallBack;
-import com.shop.kakebe.KaKebe.localDatabase.SenseDBHelper;
+import com.shop.kakebe.KaKebe.localDatabase.CartDBManager;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -66,7 +66,7 @@ public class SearchQueryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     private boolean retryPageLoad = false;
 
-    SenseDBHelper db;
+    CartDBManager db;
     boolean food_db_itemchecker;
 
 
@@ -127,9 +127,9 @@ public class SearchQueryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
         Product product = products.get(position); // Movie
 
-        db = new SenseDBHelper(context);
+        db = new CartDBManager(context);
 
-        food_db_itemchecker = db.checktweetindb(String.valueOf(product.getId()));
+        food_db_itemchecker = db.checkProductID(String.valueOf(product.getId()));
 
         updatecartCount();
 
@@ -192,11 +192,11 @@ public class SearchQueryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 movieVH.view.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        food_db_itemchecker = db.checktweetindb(String.valueOf(product.getId()));
+                        food_db_itemchecker = db.checkProductID(String.valueOf(product.getId()));
 
 
                         if (food_db_itemchecker) {
-                            db.addTweet(
+                            db.addProduct(
                                     product.getId(),
                                     product.getName(),
                                     product.getUnitPrice(),
@@ -213,7 +213,7 @@ public class SearchQueryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
 
                         } else {
-                            db.deleteTweet(String.valueOf(product.getId()));
+                            db.deleteProduct(String.valueOf(product.getId()));
 
                             movieVH.home_cart_state.setBackground(context.getResources().getDrawable(R.drawable.custom_plus_btn));
                             movieVH.home_addToCart_card.setCardBackgroundColor(context.getResources().getColor(R.color.product_not_selected));
@@ -309,7 +309,7 @@ public class SearchQueryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     }
 
     private void updatecartCount() {
-        db = new SenseDBHelper(context);
+        db = new CartDBManager(context);
         String mycartcount = String.valueOf(db.countCart());
         Intent intent = new Intent(context.getString(R.string.cartcoutAction));
         intent.putExtra(context.getString(R.string.cartCount), mycartcount);

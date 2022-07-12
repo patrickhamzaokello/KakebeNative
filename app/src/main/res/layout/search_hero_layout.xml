@@ -3,25 +3,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@color/white"
+    android:background="@color/rootbg"
     android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
     android:orientation="vertical">
 
 
-    <RelativeLayout
-        android:id="@+id/categorytitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:paddingHorizontal="10dp"
-        android:paddingVertical="20dp">
+
 
         <androidx.appcompat.widget.SearchView
             android:id="@+id/search_bar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:layout_marginBottom="35dp"
-            android:background="#f2f2f2"
+            android:background="@color/white"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginBottom="30dp"
             android:iconifiedByDefault="false"
             app:queryHint="Search Here"
             app:layout_constraintEnd_toEndOf="parent"
@@ -30,33 +26,40 @@
 
         </androidx.appcompat.widget.SearchView>
 
-        <TextView
-            android:id="@+id/section_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/search_bar"
-            android:layout_alignParentLeft="true"
-            android:fontFamily="@font/montserrat"
-            android:includeFontPadding="false"
-            android:text="Trending Searches"
-            android:textColor="#0C0C0C"
-            android:textSize="18sp" />
 
 
-        <TextView
-            android:id="@+id/section_label_desc"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/section_label"
-            android:layout_alignParentLeft="true"
-            android:fontFamily="@font/montserrat"
-            android:includeFontPadding="false"
-            android:text="What people are searching for on Kakebe Shop"
-            android:textColor="#B1B1B1"
-            android:textSize="14sp" />
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_margin="10dp"
+    >
+    <TextView
+        android:id="@+id/section_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/search_bar"
+        android:layout_alignParentLeft="true"
+        android:fontFamily="@font/montserrat"
+        android:includeFontPadding="false"
+        android:text="Trending Searches"
+        android:textColor="#0C0C0C"
+        android:textSize="18sp" />
 
 
-    </RelativeLayout>
+    <TextView
+        android:id="@+id/section_label_desc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/section_label"
+        android:layout_alignParentLeft="true"
+        android:fontFamily="@font/montserrat"
+        android:layout_marginTop="5dp"
+        android:includeFontPadding="false"
+        android:text="What people are searching for on Kakebe Shop"
+        android:textColor="#B1B1B1"
+        android:textSize="14sp" />
+</LinearLayout>
 
 
     <!--  recycler view for items -->
@@ -64,7 +67,6 @@
         android:id="@+id/search_category_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
         android:paddingBottom="20dp"
         android:layout_below="@+id/categorytitle" />
 

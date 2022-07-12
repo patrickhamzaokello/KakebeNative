@@ -15,7 +15,6 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/montserrat_bold"
         android:text="@string/first_slide_title"
-        android:textAlignment="center"
         android:textColor="#292929"
         android:textSize="25sp" />
 
@@ -27,7 +26,6 @@
         android:layout_marginTop="10dp"
         android:fontFamily="@font/montserrat"
         android:text="@string/first_slide_desc"
-        android:textAlignment="center"
         android:textColor="#5C5C5C"
         android:textSize="18sp" />
 

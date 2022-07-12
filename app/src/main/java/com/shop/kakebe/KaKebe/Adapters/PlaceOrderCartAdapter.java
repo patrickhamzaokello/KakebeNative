@@ -3,36 +3,21 @@ package com.shop.kakebe.KaKebe.Adapters;
 import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;
 
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.DataSource;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.load.engine.GlideException;
-import com.bumptech.glide.request.RequestListener;
-import com.bumptech.glide.request.target.Target;
-import com.bumptech.glide.request.transition.DrawableCrossFadeFactory;
-import com.shop.kakebe.KaKebe.HelperClasses.CartItemHandlerListener;
 import com.shop.kakebe.KaKebe.Models.FoodDBModel;
-import com.shop.kakebe.KaKebe.MyMenuDetail;
 import com.shop.kakebe.KaKebe.R;
-import com.shop.kakebe.KaKebe.RootActivity;
-import com.shop.kakebe.KaKebe.localDatabase.SenseDBHelper;
+import com.shop.kakebe.KaKebe.localDatabase.CartDBManager;
 
 import java.text.NumberFormat;
 import java.util.List;
@@ -49,7 +34,7 @@ public class PlaceOrderCartAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
 
     private List<FoodDBModel> foodDBModelList;
-    SenseDBHelper db;
+    CartDBManager db;
 
 
     private final Context context;
@@ -101,7 +86,7 @@ public class PlaceOrderCartAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
         FoodDBModel foodDBModel = foodDBModelList.get(position); // Food
-        db = new SenseDBHelper(holder.itemView.getContext());
+        db = new CartDBManager(holder.itemView.getContext());
 
 
 
@@ -175,8 +160,8 @@ public class PlaceOrderCartAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     public void updateFood(FoodDBModel r) {
         int position = foodDBModelList.indexOf(r);
         if (position > -1) {
-            db = new SenseDBHelper(context.getApplicationContext());
-            foodDBModelList = db.listTweetsBD();
+            db = new CartDBManager(context.getApplicationContext());
+            foodDBModelList = db.listProducts();
             notifyDataSetChanged();
         }
     }

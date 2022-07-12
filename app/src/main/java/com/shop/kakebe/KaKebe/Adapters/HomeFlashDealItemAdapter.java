@@ -9,7 +9,6 @@ import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -17,7 +16,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -30,12 +28,10 @@ import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.transition.DrawableCrossFadeFactory;
 import com.google.android.material.card.MaterialCardView;
 import com.shop.kakebe.KaKebe.Models.FlashProduct;
-import com.shop.kakebe.KaKebe.Models.Product;
 import com.shop.kakebe.KaKebe.MyMenuDetail;
 import com.shop.kakebe.KaKebe.R;
 import com.shop.kakebe.KaKebe.RootActivity;
 import com.shop.kakebe.KaKebe.Utils.GlideApp;
-import com.shop.kakebe.KaKebe.localDatabase.SenseDBHelper;
 
 import java.text.NumberFormat;
 import java.util.List;

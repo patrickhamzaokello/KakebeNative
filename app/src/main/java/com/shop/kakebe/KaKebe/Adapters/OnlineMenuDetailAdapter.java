@@ -38,7 +38,7 @@ import com.shop.kakebe.KaKebe.R;
 import com.shop.kakebe.KaKebe.RootActivity;
 import com.shop.kakebe.KaKebe.Utils.MenuDetailListener;
 import com.shop.kakebe.KaKebe.Utils.ProductAttributeListener;
-import com.shop.kakebe.KaKebe.localDatabase.SenseDBHelper;
+import com.shop.kakebe.KaKebe.localDatabase.CartDBManager;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -82,7 +82,7 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
     int minteger = 1;
     int totalPrice;
 
-    SenseDBHelper db;
+    CartDBManager db;
     boolean food_db_itemchecker;
 
     public OnlineMenuDetailAdapter(Context context, MenuDetailListener callback) {
@@ -132,7 +132,7 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
         SelectedProduct selectedProduct = selectedProducts.get(position); // Movie
-        db = new SenseDBHelper(context);
+        db = new CartDBManager(context);
 
         switch (getItemViewType(position)) {
             case HERO:
@@ -188,7 +188,7 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
                     heroVh.discount_price.setPaintFlags(heroVh.discount_price.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
                 }
 
-                food_db_itemchecker = db.checktweetindb(String.valueOf(selectedProduct.getId()));
+                food_db_itemchecker = db.checkProductID(String.valueOf(selectedProduct.getId()));
 
                 updatecartCount();
 
@@ -241,11 +241,11 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
                     @Override
                     public void onClick(View v) {
 
-                        food_db_itemchecker = db.checktweetindb(String.valueOf(selectedProduct.getId()));
+                        food_db_itemchecker = db.checkProductID(String.valueOf(selectedProduct.getId()));
 
 
                         if (food_db_itemchecker) {
-                            db.addTweet(
+                            db.addProduct(
                                     selectedProduct.getId(),
                                     selectedProduct.getName(),
                                     selectedProduct.getDiscount(),
@@ -279,11 +279,11 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
                     @Override
                     public void onClick(View v) {
 
-                        food_db_itemchecker = db.checktweetindb(String.valueOf(selectedProduct.getId()));
+                        food_db_itemchecker = db.checkProductID(String.valueOf(selectedProduct.getId()));
 
 
                         if (food_db_itemchecker) {
-                            db.addTweet(
+                            db.addProduct(
                                     selectedProduct.getId(),
                                     selectedProduct.getName(),
                                     selectedProduct.getDiscount(),
@@ -304,7 +304,7 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
 
 
                         } else {
-                            db.deleteTweet(String.valueOf(selectedProduct.getId()));
+                            db.deleteProduct(String.valueOf(selectedProduct.getId()));
 
                             heroVh.btnAddtoCart.setText("Add to Cart");
                             heroVh.btnAddtoCart.setBackgroundColor(ContextCompat.getColor(context, R.color.purple_200));
@@ -488,7 +488,7 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
 
 
     private void updatecartCount() {
-        db = new SenseDBHelper(context);
+        db = new CartDBManager(context);
         String mycartcount = String.valueOf(db.countCart());
         Intent intent = new Intent(context.getString(R.string.cartcoutAction));
         intent.putExtra(context.getString(R.string.cartCount), mycartcount);
@@ -503,13 +503,13 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
         heroVh.itemQuanEt.setText("" + number);
         heroVh.menu_total_price.setText(NumberFormat.getNumberInstance(Locale.US).format(totalPrice));
 
-        food_db_itemchecker = db.checktweetindb(String.valueOf(selectedProduct.getId()));
+        food_db_itemchecker = db.checkProductID(String.valueOf(selectedProduct.getId()));
 
         if (food_db_itemchecker) {
             return;
             //item doesnt exist
         } else {
-            db.updateMenuCount(number, selectedProduct.getId());
+            db.updateProductCount(number, selectedProduct.getId());
             //item exists
 
         }

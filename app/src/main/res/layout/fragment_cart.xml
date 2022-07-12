@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/rootbg"
     android:orientation="vertical"
     tools:context=".Fragments.Cart">
 
@@ -22,7 +22,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/cart_main_recycler"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:clipToPadding="false"
                 android:paddingTop="10dp"
                 android:paddingBottom="@dimen/activity_margin_content" />
@@ -73,8 +73,7 @@
                     android:layout_below="@+id/grandtotalvalue"
                     android:layout_centerHorizontal="true"
                     android:fontFamily="@font/montserrat"
-                    android:paddingTop="5dp"
-                    android:text="Grand Total"
+                    android:text="Cart Total"
                     android:textAlignment="center"
                     android:textColor="@color/black"
                     android:textSize="15dp" />

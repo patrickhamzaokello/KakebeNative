@@ -4,12 +4,15 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
+import androidx.core.content.ContextCompat;
+
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -36,6 +39,8 @@ public class OrderCompleted extends AppCompatActivity  {
         setContentView(R.layout.activity_order_completed);
         actionBar = getSupportActionBar(); // or getActionBar();
         actionBar.setTitle(R.string.OrderTitle);
+        actionBar.setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(this, R.color.purple_200)));
+        actionBar.setElevation(0);
 
         initNotification();
 

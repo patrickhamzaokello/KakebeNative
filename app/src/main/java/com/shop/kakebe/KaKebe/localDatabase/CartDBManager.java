@@ -11,12 +11,11 @@ import com.shop.kakebe.KaKebe.Models.FoodDBModel;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SenseDBHelper extends SQLiteOpenHelper {
+public class CartDBManager extends SQLiteOpenHelper {
 
     private static final String DB_NAME = "kakebe";
     private static final int DB_VERSION = 7;
     private static final String TABLE_NAME = "CART";
-    private static final String TABLE_ADDRESS = "ADDRESS";
     public static final String COLUMN_id = "_id";
     public static final String COLUMN_menuId = "menuId";
     public static final String COLUMN_menuName = "menuName";
@@ -32,7 +31,7 @@ public class SenseDBHelper extends SQLiteOpenHelper {
 
     List<FoodDBModel> foodDBModelList;
 
-    public SenseDBHelper(Context context) {
+    public CartDBManager(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
     }
 
@@ -67,7 +66,7 @@ public class SenseDBHelper extends SQLiteOpenHelper {
     }
 
 
-    public List<FoodDBModel> listTweetsBD() {
+    public List<FoodDBModel> listProducts() {
         String sql = "select * from " + TABLE_NAME + " order by " + COLUMN_id + " DESC";
         SQLiteDatabase db = this.getReadableDatabase();
         foodDBModelList = new ArrayList<>();
@@ -91,7 +90,7 @@ public class SenseDBHelper extends SQLiteOpenHelper {
         return foodDBModelList;
     }
 
-    public void addTweet(
+    public void addProduct(
             int menuId,
             String menuname,
             int price,
@@ -114,7 +113,7 @@ public class SenseDBHelper extends SQLiteOpenHelper {
     }
 
 
-    public void updateMenuCount(Integer qtn, Integer menuID) {
+    public void updateProductCount(Integer qtn, Integer menuID) {
         ContentValues values = new ContentValues();
         values.put(COLUMN_quantity, qtn);
         SQLiteDatabase db = this.getWritableDatabase();
@@ -123,7 +122,7 @@ public class SenseDBHelper extends SQLiteOpenHelper {
     }
 
 
-    public void deleteTweet(String id_str) {
+    public void deleteProduct(String id_str) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_NAME, COLUMN_menuId + " = ?", new String[]{id_str});
         db.close();
@@ -136,7 +135,7 @@ public class SenseDBHelper extends SQLiteOpenHelper {
     }
 
 
-    public boolean checktweetindb(String id_str) {
+    public boolean checkProductID(String id_str) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(TABLE_NAME,
                 new String[]{COLUMN_menuId, COLUMN_menuName},
@@ -204,56 +203,7 @@ public class SenseDBHelper extends SQLiteOpenHelper {
     }
 
 
-    public Cursor getUnsyncedMenuItem() {
-        SQLiteDatabase db = this.getReadableDatabase();
-        String sql = "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_order_status + " = 0";
-        Cursor c = db.rawQuery(sql, null);
-        return c;
-    }
 
-    //    Get address
-    public void clearAddress() {
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_ADDRESS, null, null);
-        db.close();
-    }
-
-    public void deleteAddress(String id_str) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_ADDRESS, COLUMN_ADDRESS_id + " = ?", new String[]{id_str});
-        db.close();
-    }
-
-    public void addADDress(
-            int addressID
-    ) {
-        ContentValues values = new ContentValues();
-        values.put(COLUMN_ADDRESS_id, addressID);
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.insert(TABLE_ADDRESS, null, values);
-        db.close();
-    }
-
-    public boolean checkAddressinDB(String id_str) {
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.query(TABLE_ADDRESS,
-                new String[]{COLUMN_ADDRESS_id},
-                COLUMN_ADDRESS_id + " = ?",
-                new String[]{id_str},
-                null, null, null, null);
-        if (cursor.moveToFirst()) {
-            //recordexist
-            cursor.close();
-            db.close();
-            return false;
-        } else {
-            //record not existing
-            cursor.close();
-            db.close();
-
-            return true;
-        }
-    }
 
 
 }

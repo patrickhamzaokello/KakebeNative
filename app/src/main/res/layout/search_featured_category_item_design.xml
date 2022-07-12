@@ -4,6 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/white"
+    android:layout_marginHorizontal="2dp"
+    android:layout_marginTop="4dp"
     android:clipToPadding="false"
     android:padding="10dp">
 
@@ -13,6 +15,7 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:scaleType="fitXY"
+        android:layout_centerHorizontal="true"
         app:cardCornerRadius="5dp"
         app:cardElevation="0dp">
 
@@ -52,7 +55,8 @@
             android:layout_alignParentTop="true"
             android:ellipsize="end"
             android:fontFamily="@font/montserrat"
-            android:gravity="left"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal"
             android:maxLines="2"
             android:text="Home Essentials"
             android:textColor="@color/black"

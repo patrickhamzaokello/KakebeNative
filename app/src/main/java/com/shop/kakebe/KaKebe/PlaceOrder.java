@@ -3,12 +3,14 @@ package com.shop.kakebe.KaKebe;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import androidx.core.content.ContextCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -25,7 +27,7 @@ import com.shop.kakebe.KaKebe.Models.FoodDBModel;
 import com.shop.kakebe.KaKebe.Models.OrderRequest;
 import com.shop.kakebe.KaKebe.Models.OrderResponse;
 import com.shop.kakebe.KaKebe.Models.User;
-import com.shop.kakebe.KaKebe.localDatabase.SenseDBHelper;
+import com.shop.kakebe.KaKebe.localDatabase.CartDBManager;
 
 import java.text.NumberFormat;
 import java.util.List;
@@ -39,7 +41,7 @@ public class PlaceOrder extends AppCompatActivity {
 
     ActionBar actionBar;
     private ShopApiEndPoints shopApiEndPoints;
-    private SenseDBHelper db;
+    private CartDBManager db;
     List<FoodDBModel> cartitemlist;
 
     ProgressBar placeorder_main_progress;
@@ -67,6 +69,8 @@ public class PlaceOrder extends AppCompatActivity {
         }
         actionBar = getSupportActionBar(); // or getActionBar();
         actionBar.setTitle("Checkout");
+        actionBar.setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(this, R.color.purple_200)));
+        actionBar.setElevation(0);
 
         // add back arrow to toolbar
         if (getSupportActionBar() != null) {
@@ -77,7 +81,7 @@ public class PlaceOrder extends AppCompatActivity {
 
 
         shopApiEndPoints = ShopAPIBase.getClient(PlaceOrder.this).create(ShopApiEndPoints.class);
-        db = new SenseDBHelper(PlaceOrder.this);
+        db = new CartDBManager(PlaceOrder.this);
 
 
 
@@ -263,7 +267,7 @@ public class PlaceOrder extends AppCompatActivity {
         {
             this.receiveData();
         }
-        cartitemlist = db.listTweetsBD();
+        cartitemlist = db.listProducts();
 
         if (cartitemlist.size() > 0) {
             progressBar.setVisibility(View.GONE);

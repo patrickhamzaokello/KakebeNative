@@ -12,7 +12,6 @@
         android:id="@+id/flash_heading"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
         android:background="@color/purple_500"
         android:paddingHorizontal="10dp"
         android:paddingVertical="20dp">
@@ -61,6 +60,7 @@
         android:id="@+id/flash_product_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingBottom="4dp"
         android:layout_below="@+id/flash_heading"
 
         />

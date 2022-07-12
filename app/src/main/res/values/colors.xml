@@ -9,7 +9,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-    <color name="rootbg">#F6F6F6</color>
+    <color name="rootbg">#f2f2f2</color>
 
     <color name="shimmer_color">#366C6C6C</color>
     <color name="light_grey">#A6A6A6</color>
@@ -55,11 +55,11 @@
 <!--    <color name="sectionsubheadingcolor">#97BC62</color>-->
     <color name="sectioncolor">#e12e39</color>
     <color name="sectionheadingcolor">#FFFFFF</color>
-    <color name="sectionsubheadingcolor">#FFC107</color>
+    <color name="sectionsubheadingcolor">#FFFBF1</color>
     <color name="buttonshowmore">#FFEB3B</color>
     <color name="recycler_bg_color">#FEFEFE</color>
     <color name="profileCards">#FCFCFC</color>
 
-    <color name="product_selected">#FF0077</color>
+    <color name="product_selected">#4CAF50</color>
     <color name="product_not_selected">#ff0000</color>
 </resources>

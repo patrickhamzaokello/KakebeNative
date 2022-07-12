@@ -3,8 +3,8 @@
 xmlns:tools="http://schemas.android.com/tools"
 android:layout_width="match_parent"
 android:layout_height="match_parent"
-android:background="#FCFCFC"
-tools:context=".KaKebe.MySelectedCategory">
+android:background="@color/rootbg"
+tools:context=".MySelectedCategory">
 
 <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
     android:id="@+id/main_swiperefresh"

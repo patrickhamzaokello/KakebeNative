@@ -21,7 +21,7 @@ import com.shop.kakebe.KaKebe.SelectDeliveryAddress;
 import com.shop.kakebe.KaKebe.HelperClasses.CartItemHandlerListener;
 import com.shop.kakebe.KaKebe.Models.FoodDBModel;
 import com.shop.kakebe.KaKebe.R;
-import com.shop.kakebe.KaKebe.localDatabase.SenseDBHelper;
+import com.shop.kakebe.KaKebe.localDatabase.CartDBManager;
 
 import java.text.NumberFormat;
 import java.util.List;
@@ -32,7 +32,7 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class Cart extends Fragment implements CartItemHandlerListener {
 
-    private SenseDBHelper db;
+    private CartDBManager db;
     boolean food_db_itemchecker;
     private Cursor cursor;
     List<FoodDBModel> cartitemlist;
@@ -81,7 +81,7 @@ public class Cart extends Fragment implements CartItemHandlerListener {
         LinearLayoutManager layoutManager = new LinearLayoutManager(view.getContext());
         layoutManager.setOrientation(RecyclerView.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
-        db = new SenseDBHelper(view.getContext());
+        db = new CartDBManager(view.getContext());
         grandtotalvalue();
         btnCheckout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,13 +100,13 @@ public class Cart extends Fragment implements CartItemHandlerListener {
 
     @Override
     public void increment(int qty, FoodDBModel foodDBModel) {
-        food_db_itemchecker = db.checktweetindb(String.valueOf(foodDBModel.getMenuId()));
+        food_db_itemchecker = db.checkProductID(String.valueOf(foodDBModel.getMenuId()));
 
         if (food_db_itemchecker) {
             return;
             //item doesnt exist
         } else {
-            db.updateMenuCount(qty, foodDBModel.getMenuId());
+            db.updateProductCount(qty, foodDBModel.getMenuId());
             //item exists
         }
 
@@ -119,26 +119,26 @@ public class Cart extends Fragment implements CartItemHandlerListener {
     public void decrement(int qty, FoodDBModel foodDBModel) {
         if (qty <= 1) {
             qty = 1;
-            food_db_itemchecker = db.checktweetindb(String.valueOf(foodDBModel.getMenuId()));
+            food_db_itemchecker = db.checkProductID(String.valueOf(foodDBModel.getMenuId()));
 
             if (food_db_itemchecker) {
                 return;
                 //item doesnt exist
             } else {
-                db.updateMenuCount(qty, foodDBModel.getMenuId());
+                db.updateProductCount(qty, foodDBModel.getMenuId());
                 //item exists
 
             }
         } else {
 
 
-            food_db_itemchecker = db.checktweetindb(String.valueOf(foodDBModel.getMenuId()));
+            food_db_itemchecker = db.checkProductID(String.valueOf(foodDBModel.getMenuId()));
 
             if (food_db_itemchecker) {
                 return;
                 //item doesnt exist
             } else {
-                db.updateMenuCount(qty, foodDBModel.getMenuId());
+                db.updateProductCount(qty, foodDBModel.getMenuId());
                 //item exists
 
             }
@@ -151,7 +151,7 @@ public class Cart extends Fragment implements CartItemHandlerListener {
     public void onResume() {
         //        recyclerView.setHasFixedSize(true);
         super.onResume();
-        cartitemlist = db.listTweetsBD();
+        cartitemlist = db.listProducts();
 
         if (cartitemlist.size() > 0) {
             progressBar.setVisibility(View.GONE);
@@ -193,7 +193,7 @@ public class Cart extends Fragment implements CartItemHandlerListener {
                                 .setConfirmClickListener(null)
                                 .changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
 
-                        db.deleteTweet(foodModel_ID);
+                        db.deleteProduct(foodModel_ID);
                         grandtotalvalue();
                         updatecartCount();
                         cartAdapter.remove(foodDBModel);
@@ -205,7 +205,7 @@ public class Cart extends Fragment implements CartItemHandlerListener {
 
 
     public void grandtotalvalue() {
-        grandtotalvalue.setText("" + NumberFormat.getNumberInstance(Locale.US).format(db.sumPriceCartItems()) + " UGX");
+        grandtotalvalue.setText( "UGX " + NumberFormat.getNumberInstance(Locale.US).format(db.sumPriceCartItems()));
 
         if (db.sumPriceCartItems() == 0) {
             emptycartwarning();

@@ -2,12 +2,14 @@ package com.shop.kakebe.KaKebe;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.util.Log;
@@ -65,7 +67,9 @@ public class SearchView extends AppCompatActivity implements SearchAdapterCallBa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_view);
         actionBar = getSupportActionBar(); // or getActionBar();
-        actionBar.setTitle("Search Result");
+        actionBar.setTitle("Search Results");
+        actionBar.setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(this, R.color.purple_200)));
+        actionBar.setElevation(0);
         // add back arrow to toolbar
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);

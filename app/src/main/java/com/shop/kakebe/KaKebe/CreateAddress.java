@@ -1,32 +1,20 @@
 package com.shop.kakebe.KaKebe;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import android.Manifest;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.location.Address;
-import android.location.Geocoder;
 import android.net.ConnectivityManager;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButton;
@@ -37,11 +25,8 @@ import com.shop.kakebe.KaKebe.HelperClasses.SharedPrefManager;
 import com.shop.kakebe.KaKebe.Models.CreateAddressModel;
 import com.shop.kakebe.KaKebe.Models.CreateAddressResponse;
 import com.shop.kakebe.KaKebe.Models.User;
-import com.shop.kakebe.KaKebe.localDatabase.SenseDBHelper;
+import com.shop.kakebe.KaKebe.localDatabase.CartDBManager;
 
-import java.io.IOException;
-import java.util.List;
-import java.util.Locale;
 import java.util.concurrent.TimeoutException;
 
 import retrofit2.Call;
@@ -59,7 +44,7 @@ public class CreateAddress extends AppCompatActivity {
     private int userId;
 
     private ShopApiEndPoints shopApiEndPoints;
-    private SenseDBHelper db;
+    private CartDBManager db;
     TextInputEditText user_phone, user_location;
     Button save_address;
     String Area;
@@ -265,7 +250,7 @@ public class CreateAddress extends AppCompatActivity {
                 cities = fetchCitiesResults(response);
 
                 if (cities != null) {
-                    adapterItems = new ArrayAdapter<String>(getApplicationContext(), R.layout.list_item, cities);
+                    adapterItems = new ArrayAdapter<String>(getApplicationContext(), R.layout.district_list_item, cities);
                     autoCompleteTextView.setAdapter(adapterItems);
                 } else {
 //                    showErrorView(t);

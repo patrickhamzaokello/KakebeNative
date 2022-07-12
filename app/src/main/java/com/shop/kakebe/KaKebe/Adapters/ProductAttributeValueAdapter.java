@@ -4,8 +4,6 @@ package com.shop.kakebe.KaKebe.Adapters;
 import android.content.Context;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,10 +21,8 @@ import com.shop.kakebe.KaKebe.Models.ProAttribute;
 import com.shop.kakebe.KaKebe.R;
 import com.shop.kakebe.KaKebe.RootActivity;
 import com.shop.kakebe.KaKebe.Utils.ProductAttributeListener;
-import com.shop.kakebe.KaKebe.localDatabase.SenseDBHelper;
 
 
-import java.util.ArrayList;
 import java.util.List;
 
 

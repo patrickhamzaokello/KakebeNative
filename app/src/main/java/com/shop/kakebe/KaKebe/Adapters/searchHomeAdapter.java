@@ -278,7 +278,6 @@ public class searchHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             search_bar.setActivated(true);
             search_bar.onActionViewExpanded();
             search_bar.setIconified(false);
-            search_bar.clearFocus();
 
             // below line is to call set on query text listener method.
             search_bar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {

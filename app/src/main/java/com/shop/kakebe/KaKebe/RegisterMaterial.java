@@ -47,8 +47,6 @@ public class RegisterMaterial extends AppCompatActivity {
         setContentView(R.layout.activity_register_material);
 
         ActionBar actionBar = getSupportActionBar(); // or getActionBar();
-        getSupportActionBar().setTitle("My new title"); // set the top title
-        String title = actionBar.getTitle().toString(); // get the title
         actionBar.hide();
 
         //if the user is already logged in we will directly start the profile activity
