@@ -307,7 +307,7 @@ public class MyMenuDetail extends AppCompatActivity implements MenuDetailListene
 
         AlertDialog.Builder android = new AlertDialog.Builder(MyMenuDetail.this);
         android.setTitle("Coming Soon");
-        android.setIcon(R.drawable.africanwoman);
+        android.setIcon(R.drawable.demoproduct);
         android.setMessage("This Menu Category will be updated with great tastes soon, Stay Alert for Updates.")
                 .setCancelable(false)
 

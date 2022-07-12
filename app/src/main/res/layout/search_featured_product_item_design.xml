@@ -21,7 +21,7 @@ android:padding="10dp">
         android:layout_height="match_parent"
         android:background="#f2f2f2"
         android:scaleType="fitXY"
-        android:src="@drawable/beefstew"></ImageView>
+        android:src="@drawable/demoproduct"></ImageView>
 
     <ProgressBar
         android:id="@+id/home_product_image_progress"

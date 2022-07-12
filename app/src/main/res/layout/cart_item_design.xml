@@ -30,7 +30,7 @@
                     android:layout_height="match_parent"
                     android:scaleType="fitXY"
                     android:background="#E8E8E8"
-                    android:src="@drawable/africanwoman"></ImageView>
+                    android:src="@drawable/demoproduct"></ImageView>
 
                 <ProgressBar
                     android:id="@+id/cart_progress"
