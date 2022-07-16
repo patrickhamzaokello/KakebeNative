@@ -116,7 +116,7 @@ public class SearchQueryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     @NonNull
     private RecyclerView.ViewHolder getViewHolder(ViewGroup parent, LayoutInflater inflater) {
         RecyclerView.ViewHolder viewHolder;
-        View v1 = inflater.inflate(R.layout.search_pagination_item_list, parent, false);
+        View v1 = inflater.inflate(R.layout.search_query_item_list, parent, false);
         viewHolder = new MovieVH(v1);
         return viewHolder;
     }

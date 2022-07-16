@@ -67,7 +67,6 @@
         android:id="@+id/search_category_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="20dp"
         android:layout_below="@+id/categorytitle" />
 
 </LinearLayout>

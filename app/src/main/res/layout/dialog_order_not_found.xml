@@ -7,11 +7,11 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="64dp"
-        android:background="#FFFFBB33"
+        android:background="@color/purple_200"
         android:contentDescription="@string/app_name"
         android:scaleType="centerCrop"
         android:layout_marginBottom="30dp"
-        android:src="@drawable/zodongo_user_profile" />
+        android:src="@drawable/onboardthree" />
 
 
     <androidx.cardview.widget.CardView
@@ -20,7 +20,7 @@
         android:layout_height="60dp"
         android:layout_gravity="center"
         android:clipToPadding="false"
-        app:cardBackgroundColor="@color/black"
+        app:cardBackgroundColor="@color/purple_200"
         app:cardCornerRadius="100dp">
 
         <RelativeLayout

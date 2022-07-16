@@ -1,40 +1,32 @@
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/searchtag"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:clipToPadding="false"
-    android:layout_marginBottom="5dp"
-    android:paddingLeft="10dp"
-    >
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/searchtag"
+    android:layout_margin="5dp"
+    android:scaleType="fitXY"
+    app:cardBackgroundColor="#FFFFFF"
+    app:cardCornerRadius="30dp"
+    app:cardElevation="2dp">
+
+    <TextView
+        android:id="@+id/popular_search_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:scaleType="fitXY"
-        app:cardCornerRadius="50dp"
-        app:cardBackgroundColor="@color/white"
-        app:cardElevation="0dp">
-
-        <TextView
-            android:id="@+id/popular_search_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:ellipsize="end"
-            android:fontFamily="@font/montserrat"
-            android:gravity="left"
-            android:paddingHorizontal="10dp"
-            android:paddingVertical="5dp"
-            android:maxLines="1"
-            android:text="Home Essentials"
-            android:textColor="@color/light_black"
-            android:textSize="10sp" />
+        android:layout_alignParentTop="true"
+        android:ellipsize="end"
+        android:fontFamily="@font/montserrat"
+        android:gravity="left"
+        android:maxLines="1"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="5dp"
+        android:text="Home Essentials"
+        android:textColor="@color/light_black"
+        android:textSize="10sp" />
 
 
-    </com.google.android.material.card.MaterialCardView>
+</com.google.android.material.card.MaterialCardView>
 
 
 
 
-</RelativeLayout>
