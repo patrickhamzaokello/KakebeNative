@@ -4,6 +4,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="20dp"
+    android:background="@color/white"
     >
 
 
@@ -25,6 +26,7 @@
         android:layout_height="wrap_content"
         android:textAlignment="center"
         android:fontFamily="@font/montserrat"
+        android:textColor="@color/light_black"
         android:text="Enjoy Better and Improved Experience on  Kakebe Shop online" />
 
 
@@ -33,7 +35,6 @@
         android:layout_height="200dp"
         android:background="@color/white"
         android:contentDescription="@string/app_name"
-        android:layout_marginBottom="30dp"
         android:src="@drawable/updateappthree" />
 
 
@@ -44,7 +45,6 @@
         android:layout_below="@+id/section_label"
         android:layout_alignParentLeft="true"
         android:fontFamily="@font/montserrat"
-        android:layout_marginTop="8dp"
         android:includeFontPadding="false"
         android:gravity="center"
         android:text="We have added new Features to enable your app perform well. Update your App now "

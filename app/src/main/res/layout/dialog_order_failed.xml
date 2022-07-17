@@ -2,16 +2,17 @@
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_height="wrap_content"
+    android:background="@color/white"
     android:orientation="vertical">
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="64dp"
-        android:background="#FFFFBB33"
+        android:background="@color/purple_200"
         android:contentDescription="@string/app_name"
         android:scaleType="centerCrop"
         android:layout_marginBottom="30dp"
-        android:src="@drawable/zodongo_user_profile" />
+        android:src="@drawable/onboardthree" />
 
 
     <androidx.cardview.widget.CardView
@@ -52,7 +53,7 @@
         android:layout_marginTop="20dp"
         android:gravity="center"
         android:layout_marginHorizontal="20dp"
-        android:text="Error Occurred, Please Try Again"
+        android:text="Order Error Occurred, Please Try Again"
         android:textColor="#000"
         android:textSize="18sp" />
 
@@ -69,7 +70,7 @@
         android:layout_marginTop="8dp"
         android:includeFontPadding="false"
         android:gravity="center"
-        android:text="we can’t process your order now, check your network connection and try again"
+        android:text="we are unable to Complete your order now, check your network connection and try again"
         android:textColor="@color/light_black"
         android:textSize="14sp" />
 
