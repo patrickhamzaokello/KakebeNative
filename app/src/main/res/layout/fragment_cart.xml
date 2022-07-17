@@ -87,7 +87,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/purple_500"
-                android:paddingVertical="20dp"
                 android:text="Checkout"
                 android:textAllCaps="false"
                 android:textColor="@color/white"

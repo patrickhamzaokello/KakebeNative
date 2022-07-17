@@ -52,6 +52,7 @@ public class ProductDetailAttributeAdapter extends RecyclerView.Adapter<Recycler
     private List<ChoiceOption> featuredCategories;
     private final Context context;
 
+    String attributelable;
     private boolean isLoadingAdded = false;
     private boolean retryPageLoad = false;
     private final ProductAttributeListener mproductAttributeListener;
@@ -120,6 +121,7 @@ public class ProductDetailAttributeAdapter extends RecyclerView.Adapter<Recycler
                 final MovieVH movieVH = (MovieVH) holder;
 
                 movieVH.attribute_lable.setText(choiceOption.getAttributeId());
+                attributelable = choiceOption.getAttributeId();
 
                 ProductAttributeValueAdapter productAttributeValueAdapter = new ProductAttributeValueAdapter(context, choiceOption.getValues(),mModelList,this);
                 StaggeredGridLayoutManager previous_search_staggeredGridLayoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL);
@@ -249,7 +251,7 @@ public class ProductDetailAttributeAdapter extends RecyclerView.Adapter<Recycler
 
     @Override
     public void selectedAttribute(String feature) {
-        mproductAttributeListener.selectedAttribute(feature);
+        mproductAttributeListener.selectedAttribute( attributelable + " - "+ feature);
     }
 
 

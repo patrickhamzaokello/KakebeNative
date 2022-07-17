@@ -59,10 +59,8 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
     private static final int LOADING = 1;
     private static final int HERO = 2;
 
-    //    private static final String BASE_URL_IMG = "https://image.tmdb.org/t/p/w150";
     private static final String BASE_URL_IMG = "";
 
-    public static final int MENU_SYNCED_WITH_SERVER = 1;
     public static final int MENU_NOT_SYNCED_WITH_SERVER = 0;
 
 
@@ -173,7 +171,7 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
 
 
                 heroVh.menu_price.setText("Ugx " + NumberFormat.getNumberInstance(Locale.US).format(selectedProduct.getDiscount()));
-                heroVh.menu_total_price.setText(NumberFormat.getNumberInstance(Locale.US).format(selectedProduct.getDiscount()));
+                heroVh.menu_total_price.setText(NumberFormat.getNumberInstance(Locale.US).format((selectedProduct.getDiscount())* selectedProduct.getMinQtn()));
 
                 heroVh.discount_price.setText("Ugx " + NumberFormat.getNumberInstance(Locale.US).format(selectedProduct.getUnitPrice()));
 
@@ -196,8 +194,8 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
                     heroVh.btnAddtoCart.setText("Add to Cart");
                     heroVh.btnAddtoCart.setBackgroundColor(ContextCompat.getColor(context, R.color.purple_200));
                     heroVh.btnAddtoCart.setTextColor(ContextCompat.getColor(context, R.color.white));
-                    heroVh.itemQuanEt.setText("1");
-
+                    heroVh.itemQuanEt.setText(""+selectedProduct.getMinQtn());
+                    minteger = selectedProduct.getMinQtn();
 
 
 
@@ -207,6 +205,7 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
                     heroVh.btnAddtoCart.setTextColor(ContextCompat.getColor(context, R.color.white));
 
                     minteger = db.getMenuQtn(String.valueOf(selectedProduct.getId()));
+
 
                     display(minteger, heroVh, selectedProduct);
 
@@ -226,14 +225,15 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
                 heroVh.decreaseQtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        minteger = minteger - 1;
 
-                        if (minteger <= 1) {
-                            minteger = 1;
+                        if (minteger <= selectedProduct.getMinQtn()) {
+                            minteger = selectedProduct.getMinQtn();
                             display(minteger, heroVh, selectedProduct);
                         } else {
+                            minteger = minteger - 1;
                             display(minteger, heroVh, selectedProduct);
                         }
+
                     }
                 });
 

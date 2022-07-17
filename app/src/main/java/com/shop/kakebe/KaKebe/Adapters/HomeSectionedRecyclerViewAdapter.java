@@ -144,7 +144,7 @@ public class HomeSectionedRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
             case CATEGORY:
                 final CategoryVH categoryVH = (CategoryVH) holder;
                 HomeMenuCategoryAdapter homeMenuCategoryAdapter = new HomeMenuCategoryAdapter(context);
-                int mNoOfColumns = Utility.calculateNoOfColumns(context, 152);
+                int mNoOfColumns = Utility.calculateNoOfColumns(context, 128);
 
                 GridLayoutManager catgridLayoutManager = new GridLayoutManager(context, mNoOfColumns);
                 categoryVH.category_recycler_view.setLayoutManager(catgridLayoutManager);
@@ -162,7 +162,7 @@ public class HomeSectionedRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
                 //recycler view for items
 //                movieVH.itemRecyclerView.setHasFixedSize(true);
 //                movieVH.itemRecyclerView.setNestedScrollingEnabled(false);
-                int mNo_OfColumns = Utility.calculateNoOfColumns(context, 152);
+                int mNo_OfColumns = Utility.calculateNoOfColumns(context, 128);
 
                 /* set layout manager on basis of recyclerview enum type */
                 GridLayoutManager gridLayoutManager = new GridLayoutManager(context, mNo_OfColumns);
@@ -198,7 +198,7 @@ public class HomeSectionedRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
                 homecategoryvh.sectionLabel.setText(category.getName());
 
                 //recycler view for items
-                int mN_o_OfColumns = Utility.calculateNoOfColumns(context, 152);
+                int mN_o_OfColumns = Utility.calculateNoOfColumns(context, 128);
 
                 /* set layout manager on basis of recyclerview enum type */
                 GridLayoutManager gridhometopLayoutManager = new GridLayoutManager(context, mN_o_OfColumns);

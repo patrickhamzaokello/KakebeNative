@@ -43,20 +43,20 @@
            android:paddingBottom="20dp"
            android:gravity="center_horizontal"
            >
-           <androidx.cardview.widget.CardView
+           <com.google.android.material.card.MaterialCardView
                android:id="@+id/image_profile_card_view"
                android:layout_width="70dp"
                android:layout_height="70dp"
                android:layout_centerVertical="true"
                android:scaleType="fitXY"
-               app:cardCornerRadius="100dp">
+               app:cardCornerRadius="35dp">
 
                <ImageView
                    android:id="@+id/profile_image"
                    android:layout_width="match_parent"
                    android:layout_height="match_parent"
                    android:src="@drawable/zodongo_user_profile" />
-           </androidx.cardview.widget.CardView>
+           </com.google.android.material.card.MaterialCardView>
 
            <TextView
                android:id="@+id/full_name_text"
