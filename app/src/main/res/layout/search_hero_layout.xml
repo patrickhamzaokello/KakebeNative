@@ -1,72 +1,79 @@
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@color/rootbg"
     android:layout_height="wrap_content"
     android:layout_marginTop="10dp"
+    android:background="@color/rootbg"
     android:orientation="vertical">
 
 
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/search_bar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginBottom="30dp"
+        android:background="@color/white"
+        android:iconifiedByDefault="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:queryHint="Search Here">
+
+    </androidx.appcompat.widget.SearchView>
 
 
-        <androidx.appcompat.widget.SearchView
-            android:id="@+id/search_bar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@color/white"
-            android:layout_marginHorizontal="10dp"
-            android:layout_marginBottom="30dp"
-            android:iconifiedByDefault="false"
-            app:queryHint="Search Here"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+    <LinearLayout
 
-        </androidx.appcompat.widget.SearchView>
-
-
-
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:layout_margin="10dp"
-    >
-    <TextView
-        android:id="@+id/section_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/search_bar"
-        android:layout_alignParentLeft="true"
-        android:fontFamily="@font/montserrat"
-        android:includeFontPadding="false"
-        android:text="Trending Searches"
-        android:textColor="#0C0C0C"
-        android:textSize="18sp" />
-
-
-    <TextView
-        android:id="@+id/section_label_desc"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/section_label"
-        android:layout_alignParentLeft="true"
-        android:fontFamily="@font/montserrat"
-        android:layout_marginTop="5dp"
-        android:includeFontPadding="false"
-        android:text="What people are searching for on Kakebe Shop"
-        android:textColor="#B1B1B1"
-        android:textSize="14sp" />
-</LinearLayout>
-
-
-    <!--  recycler view for items -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/search_category_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/categorytitle" />
+        android:background="@color/rootbg"
+        android:backgroundTint="@color/white"
+        android:orientation="vertical">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/section_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/search_bar"
+                android:layout_alignParentLeft="true"
+                android:fontFamily="@font/montserrat"
+                android:includeFontPadding="false"
+                android:text="Trending Searches"
+                android:textColor="#0C0C0C"
+                android:textSize="18sp" />
+
+
+            <TextView
+                android:id="@+id/section_label_desc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/section_label"
+                android:layout_alignParentLeft="true"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/montserrat"
+                android:includeFontPadding="false"
+                android:text="What people are searching for on Kakebe Shop"
+                android:textColor="#B1B1B1"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+
+        <!--  recycler view for items -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/search_category_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/categorytitle"
+            android:paddingBottom="20dp"
+            />
+
+    </LinearLayout>
 </LinearLayout>

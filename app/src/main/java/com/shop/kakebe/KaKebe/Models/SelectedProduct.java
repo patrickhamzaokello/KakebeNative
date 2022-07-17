@@ -45,6 +45,9 @@ public class SelectedProduct {
     @SerializedName("min_qtn")
     @Expose
     private Integer minQtn;
+    @SerializedName("unit")
+    @Expose
+    private String unit;
     @SerializedName("published")
     @Expose
     private Integer published;
@@ -152,6 +155,13 @@ public class SelectedProduct {
 
     public void setMinQtn(Integer minQtn) {
         this.minQtn = minQtn;
+    }
+
+    public String  getUnit() {
+        return unit;
+    }
+    public void setUnit(String unit) {
+        this.unit = unit;
     }
 
     public Integer getPublished() {

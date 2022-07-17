@@ -138,6 +138,7 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
 
 
                 heroVh.menu_name.setText(selectedProduct.getName());
+                heroVh.product_unit.setText("/ "+ selectedProduct.getUnit());
 
                 if ((selectedProduct.getMetaDescription()) != null && (selectedProduct.getMetaDescription()).length() >= 20) {
                     heroVh.descriptionlayout.setVisibility(View.VISIBLE);
@@ -537,6 +538,7 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
         private final TextView menu_name;
         private final TextView menu_description;
         private final TextView menu_price;
+        private final TextView product_unit;
         private final TextView itemQuanEt;
         private final TextView menu_total_price;
         private final Button incrementQtn;
@@ -557,6 +559,7 @@ public class OnlineMenuDetailAdapter extends RecyclerView.Adapter<RecyclerView.V
             menu_name = itemView.findViewById(R.id.menu_name);
             menu_description = itemView.findViewById(R.id.menu_description);
             menu_price = itemView.findViewById(R.id.menu_price);
+            product_unit = itemView.findViewById(R.id.product_unit);
             itemQuanEt = itemView.findViewById(R.id.itemQuanEt);
             menu_total_price = itemView.findViewById(R.id.menu_total_price);
             incrementQtn = itemView.findViewById(R.id.addBtn);
