@@ -21,6 +21,9 @@
         android:usesCleartextTraffic="true"
         tools:replace="android:icon">
         <activity
+            android:name=".ForgotPassword"
+            android:exported="false" />
+        <activity
             android:name=".CreateAddress"
             android:exported="false"
             android:screenOrientation="portrait"

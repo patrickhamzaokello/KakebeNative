@@ -34,7 +34,7 @@ public class LoginMaterial extends AppCompatActivity {
 
     TextView logoText, sloganText;
     ImageView image;
-    Button callSignUp, loginbtn;
+    Button callSignUp, loginbtn,forgotPassword;
     TextInputLayout username_layout, password_layout;
     TextInputEditText inputTextUsername, inputTextPassword;
 
@@ -59,6 +59,7 @@ public class LoginMaterial extends AppCompatActivity {
         //Hooks
         callSignUp = findViewById(R.id.signup_screen);
         loginbtn = findViewById(R.id.login_btn);
+        forgotPassword = findViewById(R.id.forgotPassword);
         logoText = findViewById(R.id.login_welcomeback);
         sloganText = findViewById(R.id.login_subtext);
 
@@ -84,17 +85,16 @@ public class LoginMaterial extends AppCompatActivity {
             public void onClick(View view) {
                 //open register screen
                 Intent intent = new Intent(LoginMaterial.this, RegisterMaterial.class);
-//                Pair[] pairs = new Pair[6];
-//                pairs[0] = new Pair<View, String>(image,"logo_image");
-//                pairs[1] = new Pair<View, String>(logoText,"logo_text");
-//                pairs[2] = new Pair<View, String>(sloganText,"logo_desc");
-//                pairs[3] = new Pair<View, String>(username_layout,"username_input");
-//                pairs[4] = new Pair<View, String>(password_layout,"password_input");
-//                pairs[5] = new Pair<View, String>(loginbtn,"account_button");
-//                pairs[6] = new Pair<View, String>(callSignUp,"account_change");
-//
-//                ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(LoginMaterial.this, pairs);
-//                startActivity(intent, options.toBundle());
+                startActivity(intent);
+            }
+        });
+
+
+        forgotPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // open forgot password screen
+                Intent intent = new Intent(LoginMaterial.this, ForgotPassword.class);
                 startActivity(intent);
             }
         });

@@ -7,6 +7,8 @@ import com.shop.kakebe.KaKebe.Models.HomeCategories;
 import com.shop.kakebe.KaKebe.Models.OrderRequest;
 import com.shop.kakebe.KaKebe.Models.OrderResponse;
 import com.shop.kakebe.KaKebe.Models.ProductDetail;
+import com.shop.kakebe.KaKebe.Models.ResetPassword;
+import com.shop.kakebe.KaKebe.Models.Result;
 import com.shop.kakebe.KaKebe.Models.SearchHome;
 import com.shop.kakebe.KaKebe.Models.SearchResult;
 import com.shop.kakebe.KaKebe.Models.SelectedCategory;
@@ -95,6 +97,15 @@ public interface ShopApiEndPoints {
     //http://localhost:8080/projects/KakebeAPI/Requests/City/cities.php
     @GET("City/cities.php")
     Call<String[]> getCities();
+
+
+
+    //Password forget_request
+    // https://xmenfx.kakebe.com/api/v2/auth/password/forget_request
+    @POST("api/v2/auth/password/forget_request")
+    Call<Result> postForget_Request(
+            @Body ResetPassword resetPassword
+    );
 
 
 }

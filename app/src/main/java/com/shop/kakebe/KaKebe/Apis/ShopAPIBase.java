@@ -68,4 +68,15 @@ public class ShopAPIBase {
         return retrofit;
     }
 
+    public static Retrofit getNewBase(Context context){
+        if (retrofit == null) {
+            retrofit = new Retrofit.Builder()
+                    .client(buildClient(context))
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .baseUrl("https://xmenfx.kakebe.com/")
+                    .build();
+        }
+        return retrofit;
+    }
+
 }

@@ -134,12 +134,25 @@
 
 
                 <Button
+                    android:id="@+id/forgotPassword"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="#0000"
+                    android:text="Forgot Password"
+                    android:layout_marginTop="10dp"
+                    android:layout_gravity="right"
+                    android:textColor="@color/purple_200"
+                    android:transitionName="account_button"
+                    />
+
+
+                <Button
                     android:id="@+id/login_btn"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="30dp"
                     android:layout_marginBottom="5dp"
                     android:background="#000000"
+                    android:layout_marginTop="10dp"
                     android:text="Log In"
                     android:textColor="#fff"
                     android:transitionName="account_button"
