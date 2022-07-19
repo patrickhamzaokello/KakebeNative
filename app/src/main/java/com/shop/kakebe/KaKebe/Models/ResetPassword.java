@@ -7,27 +7,27 @@ import com.google.gson.annotations.SerializedName;
 @Generated("jsonschema2pojo")
 public class ResetPassword {
 
-    @SerializedName("email_or_phone")
+    @SerializedName("verification_code")
     @Expose
-    private String emailOrPhone;
-    @SerializedName("send_code_by")
+    private String verificationCode;
+    @SerializedName("password")
     @Expose
-    private String sendCodeBy;
+    private String password;
 
-    public String getEmailOrPhone() {
-        return emailOrPhone;
+    public String getVerificationCode() {
+        return verificationCode;
     }
 
-    public void setEmailOrPhone(String emailOrPhone) {
-        this.emailOrPhone = emailOrPhone;
+    public void setVerificationCode(String verificationCode) {
+        this.verificationCode = verificationCode;
     }
 
-    public String getSendCodeBy() {
-        return sendCodeBy;
+    public String getPassword() {
+        return password;
     }
 
-    public void setSendCodeBy(String sendCodeBy) {
-        this.sendCodeBy = sendCodeBy;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
 }

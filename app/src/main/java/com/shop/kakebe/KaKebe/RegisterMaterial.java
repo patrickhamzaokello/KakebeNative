@@ -88,17 +88,6 @@ public class RegisterMaterial extends AppCompatActivity {
                 //if user pressed on login
                 //we will open the login screen
                 Intent intent = new Intent(RegisterMaterial.this, LoginMaterial.class);
-
-//                Pair[] pairs = new Pair[6];
-//                pairs[0] = new Pair<View, String>(logoText,"logo_text");
-//                pairs[1] = new Pair<View, String>(sloganText,"logo_desc");
-//                pairs[2] = new Pair<View, String>(username_layout,"username_input");
-//                pairs[3] = new Pair<View, String>(password_layout,"password_input");
-//                pairs[4] = new Pair<View, String>(register_btn,"account_button");
-//                pairs[5] = new Pair<View, String>(callLogIN,"account_change");
-//
-//                ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(RegisterMaterial.this, pairs);
-//                startActivity(intent, options.toBundle());
                 startActivity(intent);
             }
         });

@@ -133,17 +133,8 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
 
-                <Button
-                    android:id="@+id/forgotPassword"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="#0000"
-                    android:text="Forgot Password"
-                    android:layout_marginTop="10dp"
-                    android:layout_gravity="right"
-                    android:textColor="@color/purple_200"
-                    android:transitionName="account_button"
-                    />
+
+
 
 
                 <Button
@@ -171,6 +162,22 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:strokeColor="@color/purple_500"
                     app:strokeWidth="1dp" />
+
+
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/forgotPassword"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Forgot Password"
+                    android:layout_marginTop="10dp"
+                    android:textColor="#3F51B5"
+                    android:transitionName="account_change"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:strokeColor="#FFFFFF"
+                    app:strokeWidth="1dp" />
+
 
 
             </LinearLayout>

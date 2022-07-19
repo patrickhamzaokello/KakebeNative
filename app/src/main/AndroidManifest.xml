@@ -21,6 +21,9 @@
         android:usesCleartextTraffic="true"
         tools:replace="android:icon">
         <activity
+            android:name=".NewPassword"
+            android:exported="false" />
+        <activity
             android:name=".ForgotPassword"
             android:exported="false" />
         <activity

@@ -3,23 +3,24 @@ package com.shop.kakebe.KaKebe;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.shop.kakebe.KaKebe.Apis.ShopAPIBase;
 import com.shop.kakebe.KaKebe.Apis.ShopApiEndPoints;
-import com.shop.kakebe.KaKebe.Models.CreateAddressModel;
-import com.shop.kakebe.KaKebe.Models.CreateAddressResponse;
-import com.shop.kakebe.KaKebe.Models.ResetPassword;
+import com.shop.kakebe.KaKebe.Models.ForgotPasswordModel;
 import com.shop.kakebe.KaKebe.Models.Result;
 
+import java.lang.reflect.Type;
 import java.util.concurrent.TimeoutException;
 
 import retrofit2.Call;
@@ -29,10 +30,12 @@ import retrofit2.Response;
 public class ForgotPassword extends AppCompatActivity {
 
     ProgressBar addressprogressBar;
-    ResetPassword resetPassword = new ResetPassword();
+    ForgotPasswordModel forgotPasswordModel = new ForgotPasswordModel();
     private ShopApiEndPoints shopApiEndPoints;
     Button send_reset_code_btn;
     TextInputEditText inputuseremail;
+    Result result;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,7 +47,7 @@ public class ForgotPassword extends AppCompatActivity {
         send_reset_code_btn = findViewById(R.id.send_reset_code);
         inputuseremail = findViewById(R.id.inputuseremail);
         shopApiEndPoints = ShopAPIBase.getNewBase(getApplicationContext()).create(ShopApiEndPoints.class);
-        send_reset_code_btn.setOnClickListener(view -> SendResetCode(inputuseremail,"email"));
+        send_reset_code_btn.setOnClickListener(view -> SendResetCode(inputuseremail, "email"));
     }
 
 
@@ -53,10 +56,6 @@ public class ForgotPassword extends AppCompatActivity {
         String userEmail = email_or_phone.getText().toString().trim();
 
 
-        addressprogressBar.setVisibility(View.VISIBLE);
-
-        resetPassword.setEmailOrPhone(userEmail);
-        resetPassword.setSendCodeBy(send_code_by);
 
         if (TextUtils.isEmpty(userEmail)) {
             email_or_phone.setError("Enter Email");
@@ -65,41 +64,70 @@ public class ForgotPassword extends AppCompatActivity {
             return;
         }
 
+        addressprogressBar.setVisibility(View.VISIBLE);
+
+
+        forgotPasswordModel.setEmailOrPhone(userEmail);
+        forgotPasswordModel.setSendCodeBy(send_code_by);
+        send_reset_code_btn.setEnabled(false);
+        send_reset_code_btn.setClickable(false);
+
         postResetUserPassword().enqueue(new Callback<Result>() {
             @Override
             public void onResponse(Call<Result> call, Response<Result> response) {
+                addressprogressBar.setVisibility(View.VISIBLE);
+                send_reset_code_btn.setEnabled(false);
+                send_reset_code_btn.setClickable(false);
+
+                switch (response.code()){
+                    case 404:
+                        Gson gson = new Gson();
+                        Type type = new TypeToken<Result>() {
+                        }.getType();
+                        result = gson.fromJson(response.errorBody().charStream(), type);
+//                        Toast.makeText(ForgotPassword.this, "ERROR " + result.getMessage(), Toast.LENGTH_SHORT).show();
+                        break;
+
+                    case 200:
+//                        Toast.makeText(ForgotPassword.this, "200 success", Toast.LENGTH_SHORT).show();
+                        // get response...
+                        result = response.body();
+                        break;
+
+                    default:
+//                        Toast.makeText(ForgotPassword.this, "Error: " + response.code() , Toast.LENGTH_SHORT).show();
+                        // get response...
+                        result = null;
+                        break;
+
+                }
 
 
-//                Log.d("weekly", "onResponse: "+ response);
-//
-//                Result result = response.body();
-//                addressprogressBar.setVisibility(View.VISIBLE);
-//
-//                if (result != null) {
-//                    //if no error- that is error = false
-//                    if (!result.getResult()) {
-//
-//                        addressprogressBar.setVisibility(View.GONE);
-//                        Toast.makeText(getApplicationContext(), "Address Saved", Toast.LENGTH_SHORT).show();
-//                        finish();
-//
-//                    } else {
-//                        send_reset_code_btn.setEnabled(true);
-//                        send_reset_code_btn.setClickable(true);
-//                        addressprogressBar.setVisibility(View.GONE);
-//                        Toast.makeText(getApplicationContext(),
-//                                 result.getMessage(), Toast.LENGTH_SHORT).show();
-//                    }
-//
-//
-//                } else {
-//                    Toast.makeText(getApplicationContext(), "null", Toast.LENGTH_SHORT).show();
-//                    addressprogressBar.setVisibility(View.GONE);
-//                    send_reset_code_btn.setEnabled(true);
-//                    send_reset_code_btn.setClickable(true);
-//                    return;
-//
-//                }
+                if (result != null) {
+                    //if no error- that is error = false
+                    if (result.getResult()) {
+                        addressprogressBar.setVisibility(View.GONE);
+                        Toast.makeText(getApplicationContext(), "Result-"+result.getResult() + ", Message-"+result.getMessage(), Toast.LENGTH_SHORT).show();
+                                    // open forgot password screen
+                        Intent intent = new Intent(ForgotPassword.this, NewPassword.class);
+                        startActivity(intent);
+
+                    } else {
+                        send_reset_code_btn.setEnabled(true);
+                        send_reset_code_btn.setClickable(true);
+                        addressprogressBar.setVisibility(View.GONE);
+                        Toast.makeText(getApplicationContext(), "Result-"+result.getResult() + ", Message-"+result.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+
+
+                } else {
+                    Toast.makeText(getApplicationContext(), "null", Toast.LENGTH_SHORT).show();
+                    addressprogressBar.setVisibility(View.GONE);
+                    send_reset_code_btn.setEnabled(true);
+                    send_reset_code_btn.setClickable(true);
+                    return;
+
+                }
 
             }
 
@@ -118,18 +146,11 @@ public class ForgotPassword extends AppCompatActivity {
     }
 
     private Call<Result> postResetUserPassword() {
-        return shopApiEndPoints.postForget_Request(resetPassword);
+        return shopApiEndPoints.postForget_Request(forgotPasswordModel);
     }
 
     private void showErrorView(Throwable throwable) {
-
-//        if (errorLayout.getVisibility() == View.GONE) {
-//            errorLayout.setVisibility(View.VISIBLE);
-//            add_address_layout.setVisibility(View.GONE);
-//            progressBar.setVisibility(View.GONE);
-//
-//            txtError.setText(fetchErrorMessage(throwable));
-//        }
+        Toast.makeText(getApplicationContext(), fetchErrorMessage(throwable), Toast.LENGTH_SHORT).show();
     }
 
 

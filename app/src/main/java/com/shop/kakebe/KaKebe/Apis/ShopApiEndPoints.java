@@ -7,6 +7,7 @@ import com.shop.kakebe.KaKebe.Models.HomeCategories;
 import com.shop.kakebe.KaKebe.Models.OrderRequest;
 import com.shop.kakebe.KaKebe.Models.OrderResponse;
 import com.shop.kakebe.KaKebe.Models.ProductDetail;
+import com.shop.kakebe.KaKebe.Models.ForgotPasswordModel;
 import com.shop.kakebe.KaKebe.Models.ResetPassword;
 import com.shop.kakebe.KaKebe.Models.Result;
 import com.shop.kakebe.KaKebe.Models.SearchHome;
@@ -104,6 +105,14 @@ public interface ShopApiEndPoints {
     // https://xmenfx.kakebe.com/api/v2/auth/password/forget_request
     @POST("api/v2/auth/password/forget_request")
     Call<Result> postForget_Request(
+            @Body ForgotPasswordModel forgotPasswordModel
+    );
+
+
+    //Password forget_request
+    // https://xmenfx.kakebe.com/api/v2/auth/password/confirm_reset
+    @POST("api/v2/auth/password/confirm_reset")
+    Call<Result> postResetPassword(
             @Body ResetPassword resetPassword
     );
 
