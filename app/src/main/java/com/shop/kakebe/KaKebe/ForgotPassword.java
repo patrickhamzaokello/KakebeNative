@@ -8,6 +8,7 @@ import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -23,6 +24,7 @@ import com.shop.kakebe.KaKebe.Models.Result;
 import java.lang.reflect.Type;
 import java.util.concurrent.TimeoutException;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -32,7 +34,7 @@ public class ForgotPassword extends AppCompatActivity {
     ProgressBar addressprogressBar;
     ForgotPasswordModel forgotPasswordModel = new ForgotPasswordModel();
     private ShopApiEndPoints shopApiEndPoints;
-    Button send_reset_code_btn;
+    Button send_reset_code_btn, login_btn;
     TextInputEditText inputuseremail;
     Result result;
 
@@ -40,11 +42,21 @@ public class ForgotPassword extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forgot_password);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         ActionBar actionBar = getSupportActionBar(); // or getActionBar();
         actionBar.hide();
         addressprogressBar = findViewById(R.id.progressBar);
         addressprogressBar.setVisibility(View.GONE);
         send_reset_code_btn = findViewById(R.id.send_reset_code);
+        login_btn = findViewById(R.id.login_btn);
+
+        login_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
         inputuseremail = findViewById(R.id.inputuseremail);
         shopApiEndPoints = ShopAPIBase.getNewBase(getApplicationContext()).create(ShopApiEndPoints.class);
         send_reset_code_btn.setOnClickListener(view -> SendResetCode(inputuseremail, "email"));
@@ -85,18 +97,13 @@ public class ForgotPassword extends AppCompatActivity {
                         Type type = new TypeToken<Result>() {
                         }.getType();
                         result = gson.fromJson(response.errorBody().charStream(), type);
-//                        Toast.makeText(ForgotPassword.this, "ERROR " + result.getMessage(), Toast.LENGTH_SHORT).show();
                         break;
 
                     case 200:
-//                        Toast.makeText(ForgotPassword.this, "200 success", Toast.LENGTH_SHORT).show();
-                        // get response...
                         result = response.body();
                         break;
 
                     default:
-//                        Toast.makeText(ForgotPassword.this, "Error: " + response.code() , Toast.LENGTH_SHORT).show();
-                        // get response...
                         result = null;
                         break;
 
@@ -116,15 +123,15 @@ public class ForgotPassword extends AppCompatActivity {
                         send_reset_code_btn.setEnabled(true);
                         send_reset_code_btn.setClickable(true);
                         addressprogressBar.setVisibility(View.GONE);
-                        Toast.makeText(getApplicationContext(), "Result-"+result.getResult() + ", Message-"+result.getMessage(), Toast.LENGTH_SHORT).show();
+                        showErrorAlert(result.getMessage());
                     }
 
 
                 } else {
-                    Toast.makeText(getApplicationContext(), "null", Toast.LENGTH_SHORT).show();
                     addressprogressBar.setVisibility(View.GONE);
                     send_reset_code_btn.setEnabled(true);
                     send_reset_code_btn.setClickable(true);
+                    showErrorAlert("Service Unavailable now");
                     return;
 
                 }
@@ -134,16 +141,26 @@ public class ForgotPassword extends AppCompatActivity {
             @Override
             public void onFailure(Call<Result> call, Throwable t) {
                 addressprogressBar.setVisibility(View.GONE);
-                Toast.makeText(getApplicationContext(), "Connection Failed!", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getApplicationContext(), "Connection Failed!", Toast.LENGTH_SHORT).show();
                 send_reset_code_btn.setEnabled(true);
                 send_reset_code_btn.setClickable(true);
-                t.printStackTrace();
+                showErrorAlert(fetchErrorMessage(t));
 
             }
         });
 
 
     }
+
+
+    private void showErrorAlert(String message) {
+        new SweetAlertDialog(
+                this, SweetAlertDialog.ERROR_TYPE)
+                .setTitleText("Error")
+                .setContentText(message)
+                .show();
+    }
+
 
     private Call<Result> postResetUserPassword() {
         return shopApiEndPoints.postForget_Request(forgotPasswordModel);

@@ -146,6 +146,10 @@ public class RegisterMaterial extends AppCompatActivity {
             return;
         }
 
+        register_btn.setEnabled(false);
+        register_btn.setClickable(false);
+
+
 
         //if it passes all the validations
 
@@ -183,7 +187,7 @@ public class RegisterMaterial extends AppCompatActivity {
                 //hiding the progressbar after completion
                 progressBar.setVisibility(View.GONE);
 
-                if(s.isEmpty()){
+                if (s.isEmpty()) {
                     //show network error
                     showErrorAlert();
                     return;
@@ -195,7 +199,6 @@ public class RegisterMaterial extends AppCompatActivity {
                     Log.i("obj", URLs.URL_REGISTER);
 
                     JSONObject obj = new JSONObject(s);
-
 
 
                     //if no error in response
@@ -241,6 +244,10 @@ public class RegisterMaterial extends AppCompatActivity {
                 .setTitleText("Oops...")
                 .setContentText("Something went wrong!")
                 .show();
+
+        register_btn.setEnabled(true);
+        register_btn.setClickable(true);
+
     }
 
     private void showUserExists() {
@@ -249,6 +256,10 @@ public class RegisterMaterial extends AppCompatActivity {
                 .setTitleText("User already Exists")
                 .setContentText("Try different Username and Email")
                 .show();
+
+        register_btn.setEnabled(true);
+        register_btn.setClickable(true);
+
     }
 
 }

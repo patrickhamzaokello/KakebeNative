@@ -121,6 +121,7 @@ public class LoginMaterial extends AppCompatActivity {
             return;
         }
 
+
         //if everything is fine
 
         class UserLogin extends AsyncTask<Void, Void, String> {
@@ -132,6 +133,8 @@ public class LoginMaterial extends AppCompatActivity {
                 super.onPreExecute();
                 progressBar = findViewById(R.id.progressBar);
                 progressBar.setVisibility(View.VISIBLE);
+                loginbtn.setEnabled(false);
+                loginbtn.setClickable(false);
             }
 
             @Override
@@ -202,6 +205,8 @@ public class LoginMaterial extends AppCompatActivity {
     }
 
     private void showErrorAlert() {
+        loginbtn.setEnabled(true);
+        loginbtn.setClickable(true);
         new SweetAlertDialog(
                 this, SweetAlertDialog.ERROR_TYPE)
                 .setTitleText("Oops...")
@@ -210,10 +215,12 @@ public class LoginMaterial extends AppCompatActivity {
     }
 
     private void showInvalidUser() {
-
+        loginbtn.setEnabled(true);
+        loginbtn.setClickable(true);
         new SweetAlertDialog(this, SweetAlertDialog.ERROR_TYPE)
                 .setTitleText("Wrong Info")
                 .setContentText("Invalid User or Password")
                 .show();
+
     }
 }

@@ -8,6 +8,7 @@ import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -23,6 +24,7 @@ import com.shop.kakebe.KaKebe.Models.Result;
 import java.lang.reflect.Type;
 import java.util.concurrent.TimeoutException;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -40,7 +42,7 @@ public class NewPassword extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_password);
-
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         ActionBar actionBar = getSupportActionBar(); // or getActionBar();
         actionBar.hide();
         addressprogressBar = findViewById(R.id.progressBar);
@@ -141,15 +143,16 @@ public class NewPassword extends AppCompatActivity {
                         reset_password.setEnabled(true);
                         reset_password.setClickable(true);
                         addressprogressBar.setVisibility(View.GONE);
-                        Toast.makeText(getApplicationContext(), "Result-"+result.getResult() + ", Message-"+result.getMessage(), Toast.LENGTH_SHORT).show();
+//                        showErrorAlert(result.getMessage());
+                        showErrorAlert("Expired / Invalid Verification Code.");
                     }
 
 
                 } else {
-                    Toast.makeText(getApplicationContext(), "null", Toast.LENGTH_SHORT).show();
                     addressprogressBar.setVisibility(View.GONE);
                     reset_password.setEnabled(true);
                     reset_password.setClickable(true);
+                    showErrorAlert("Service Unavailable now");
                     return;
 
                 }
@@ -159,10 +162,10 @@ public class NewPassword extends AppCompatActivity {
             @Override
             public void onFailure(Call<Result> call, Throwable t) {
                 addressprogressBar.setVisibility(View.GONE);
-                Toast.makeText(getApplicationContext(), "Connection Failed!", Toast.LENGTH_SHORT).show();
                 reset_password.setEnabled(true);
                 reset_password.setClickable(true);
                 t.printStackTrace();
+                showErrorAlert(fetchErrorMessage(t));
 
             }
         });
@@ -196,4 +199,14 @@ public class NewPassword extends AppCompatActivity {
 
         return errorMsg;
     }
+
+
+    private void showErrorAlert(String message) {
+        new SweetAlertDialog(
+                this, SweetAlertDialog.ERROR_TYPE)
+                .setTitleText("Error")
+                .setContentText(message)
+                .show();
+    }
+
 }
