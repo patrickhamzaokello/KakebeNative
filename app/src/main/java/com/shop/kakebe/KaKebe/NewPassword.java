@@ -18,6 +18,8 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.shop.kakebe.KaKebe.Apis.ShopAPIBase;
 import com.shop.kakebe.KaKebe.Apis.ShopApiEndPoints;
+import com.shop.kakebe.KaKebe.Dialogs.ResetPasswordDone;
+import com.shop.kakebe.KaKebe.Dialogs.UpdateApp;
 import com.shop.kakebe.KaKebe.Models.ResetPassword;
 import com.shop.kakebe.KaKebe.Models.Result;
 
@@ -135,9 +137,9 @@ public class NewPassword extends AppCompatActivity {
                         addressprogressBar.setVisibility(View.GONE);
                         Toast.makeText(getApplicationContext(), "Result-"+result.getResult() + ", Message-"+result.getMessage(), Toast.LENGTH_SHORT).show();
 
-//                         open forgot password screen
-                        Intent intent = new Intent(NewPassword.this, LoginMaterial.class);
-                        startActivity(intent);
+                        ResetPasswordDone resetPasswordDone = new ResetPasswordDone();
+                        resetPasswordDone.setCancelable(false);
+                        resetPasswordDone.show(getSupportFragmentManager(),"Reset Password Done");
 
                     } else {
                         reset_password.setEnabled(true);
